@@ -1,0 +1,32 @@
+[info]
+T2 from ATVA22
+
+[inputs]
+"a"
+
+[effect]
+F "e"
+
+[lasso]
+AP: "a" "e"
+Prefix: 
+Loop: {1}
+
+[system]
+HOA: v1
+Start: 0
+AP: 2  "a" "e"
+Acceptance: 0 t
+--BODY--
+State: 0
+[(!0&1)] 1
+[(0&!1)] 2
+
+State: 1
+[(!0&1)] 1
+[(0&1)] 1
+
+State: 2
+[(0&!1)] 2
+[(!0&!1)] 2
+--END--

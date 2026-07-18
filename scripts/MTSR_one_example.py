@@ -1,0 +1,199 @@
+import spot
+import re
+import subprocess
+import sys
+import time
+
+GREEN = "\033[92m"
+DIM = "\033[2m"
+RESET = "\033[0m"
+
+
+def _all_accepting(final_hoa):
+    """True when the acceptance condition is trivial ('t') — every run is
+    accepting, so every state of the automaton is an accepting state."""
+    m = re.search(r'^Acceptance:\s*(.+)$', final_hoa, re.MULTILINE)
+    return bool(m) and m.group(1).strip() in ("0 t", "t")
+
+
+def print_hoa_colored(final_hoa):
+    """
+    Display the minimized HOA with the ACCEPTING parts in green:
+      * a 'State:' line is green if the state is accepting — it carries an
+        acceptance mark {..}, or one of its outgoing edges does;
+      * an edge line is green if it carries an acceptance mark;
+      * if the acceptance condition is 't' (all runs accepting), the whole
+        body is green — every state is accepting.
+    """
+    all_acc = _all_accepting(final_hoa)
+    lines = final_hoa.splitlines()
+    try:
+        body_start = lines.index("--BODY--") + 1
+        body_end = lines.index("--END--")
+    except ValueError:
+        print(final_hoa)
+        return
+
+    # Pre-pass: group the body into state blocks to decide which lines are green.
+    green = set()
+    blocks = []                       # (header_line_idx, [edge_line_idx, ...])
+    cur = None
+    for i in range(body_start, body_end):
+        s = lines[i].strip()
+        if s.startswith("State:"):
+            cur = (i, [])
+            blocks.append(cur)
+        elif cur is not None and s:
+            cur[1].append(i)
+    for hdr, edges in blocks:
+        marked_edges = [i for i in edges if "{" in lines[i]]
+        state_marked = "{" in lines[hdr]
+        if all_acc or state_marked or marked_edges:
+            green.add(hdr)            # the state is accepting
+        green.update(edges if all_acc else marked_edges)
+
+    for i, line in enumerate(lines):
+        print(f"{GREEN}{line}{RESET}" if i in green else line)
+
+
+def run_workflow(filename, output_image="final_result.png"):
+    timings = {}
+    t_start = time.perf_counter()
+
+    try:
+        with open(filename, 'r') as f:
+            content = f.read()
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+        sys.exit(1)
+
+    # ==========================================
+    # 1. Extract Inputs
+    # ==========================================
+    inputs_match = re.search(r'\[inputs\]\s*(.*?)\s*\[', content, re.DOTALL)
+    if not inputs_match:
+        print("Error: Could not find [inputs] section")
+        return
+    # Parse "r0" "r1" into a set {'r0', 'r1'}
+    input_aps = set(re.findall(r'"([^"]+)"', inputs_match.group(1)))
+
+    # ==========================================
+    # 2. Extract and Process LTL Effect
+    # ==========================================
+    effect_match = re.search(r'\[effect\]\s*(.*?)\s*\[', content, re.DOTALL)
+    if not effect_match:
+        print("Error: Could not find [effect] section")
+        return
+
+    # Clean up the string (remove newlines/padding)
+    ltl_formula = effect_match.group(1).strip()
+
+    # Translate LTL to Automaton
+    # using spot.translate ensures we get a compatible automaton
+    try:
+        t0 = time.perf_counter()
+        aut_effect = spot.translate(ltl_formula)
+        timings["translate"] = time.perf_counter() - t0
+    except Exception as e:
+        print(f"Error translating LTL: {e}")
+        return
+
+    # ==========================================
+    # 3. Extract and Process HOA System
+    # ==========================================
+    hoa_match = re.search(r'(HOA:.*--END--)', content, re.DOTALL)
+    if not hoa_match:
+        print("Error: Could not find HOA content")
+        return
+
+    hoa_content = hoa_match.group(1)
+    aut_system = spot.automaton(hoa_content)
+
+    if aut_system is None:
+        print("Error parsing HOA system")
+        return
+
+    # ==========================================
+    # 4. Intersection (Product)
+    # ==========================================
+    t0 = time.perf_counter()
+    aut_intersection = spot.product(aut_system, aut_effect)
+    timings["product"] = time.perf_counter() - t0
+
+    # Convert intersection to string so we can pass it to autfilt
+    # (This bypasses the Python binding issues you had with remove_ap/minimization)
+    intersection_hoa = aut_intersection.to_str("hoa")
+
+    # ==========================================
+    # 5. Identify Outputs to Remove
+    # ==========================================
+    # We look at all APs in the intersection and remove those that are NOT inputs
+    all_aps = [str(ap) for ap in aut_intersection.ap()]
+    aps_to_remove = [ap for ap in all_aps if ap not in input_aps]
+
+    # ==========================================
+    # 6. Project & Minimize (using autfilt)
+    # ==========================================
+    # can be changed here to --small for faster results.
+    cmd = ["autfilt", "--sat-minimize"]
+    for ap in aps_to_remove:
+        cmd.append(f"--remove-ap={ap}")
+
+    try:
+        t0 = time.perf_counter()
+        result = subprocess.run(
+            cmd,
+            input=intersection_hoa,
+            text=True,
+            capture_output=True,
+            check=True
+        )
+        timings["minimize"] = time.perf_counter() - t0
+
+        final_hoa = result.stdout
+
+        # ==========================================
+        # 7. Display: the minimized HOA, accepting states in green
+        # ==========================================
+        all_acc = _all_accepting(final_hoa)
+        legend = ("every state is accepting" if all_acc
+                  else "green = accepting states/edges")
+        print(f"{GREEN}found MTSR:{RESET}  {DIM}({legend}){RESET}")
+        print_hoa_colored(final_hoa)
+
+        # ==========================================
+        # 8. Render to PNG
+        # ==========================================
+        # Load back to Spot to get DOT format
+        final_aut = spot.automaton(final_hoa)
+        dot_string = final_aut.to_str("dot")
+
+        t0 = time.perf_counter()
+        subprocess.run(
+            ["dot", "-Tpng", "-o", output_image],
+            input=dot_string,
+            text=True,
+            check=True
+        )
+        timings["render"] = time.perf_counter() - t0
+        print(f"saved: {output_image}")
+
+        timings["total"] = time.perf_counter() - t_start
+
+    except subprocess.CalledProcessError as e:
+        print("Error during autfilt/dot processing:")
+        print(e.stderr)
+    except FileNotFoundError as e:
+        print(f"Error: Tool not found ({e.filename}). Make sure Spot (autfilt) and Graphviz (dot) are installed.")
+
+    return timings
+
+# --- Run the Script ---
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python script_name.py <path_to_input_file> [output_image.png]")
+        sys.exit(1)
+
+    input_filename = sys.argv[1]
+    output_image = sys.argv[2] if len(sys.argv) > 2 else "final_result.png"
+    run_workflow(input_filename, output_image)

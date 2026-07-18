@@ -1,0 +1,29 @@
+[info]
+Example 6, globally
+
+[inputs]
+"r0" "r1"
+
+[effect]
+G !"g1"
+
+[lasso]
+AP: "r0" "r1" "g0" "g1"
+Prefix:
+Loop: {0 1} {0 2}
+
+[system]
+HOA: v1
+Start: 0
+AP: 4 "r0" "r1" "g0" "g1"
+Acceptance: 0 t
+--BODY--
+State: 0
+[(0&!2&!3)] 1
+[(!0&!1&!2&!3)] 0
+[(!0&1&!2&!3)] 2
+State: 1
+[(2&!3)] 0
+State: 2
+[(!2&3)] 0
+--END--

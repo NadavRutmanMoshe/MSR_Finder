@@ -1,0 +1,34 @@
+[info]
+Example 1, mod
+
+[inputs]
+"i1" "i2"
+
+[effect]
+F "o"
+
+[lasso]
+AP: "i1" "i2" "o"
+Prefix: {0 1} {0 1} {0}
+Loop: {2}
+
+[system]
+HOA: v1
+Start: 0
+AP: 3 "i1" "i2" "o"
+Acceptance: 0 t
+--BODY--
+State: 0
+[0&!2] 1 
+[!0&!2] 3 
+State: 1 
+[!2] 2 
+State: 2
+[!0&!1&!2] 2
+[1&!2] 3
+[0&!1&!2] 4
+State: 3 
+[!2] 3
+State: 4
+[2] 4
+--END--

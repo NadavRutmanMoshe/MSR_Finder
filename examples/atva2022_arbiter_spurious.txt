@@ -1,0 +1,25 @@
+[info]
+Example from ATVA 2022
+
+[inputs]
+"r0" "r1"
+
+[effect]
+F "g1"
+
+[lasso]
+AP: "r0" "r1" "g0" "g1"
+Prefix:
+Loop: {1 3} {0 2}
+
+[system]
+HOA: v1
+Start: 0
+AP: 4 "r0" "r1" "g0" "g1"
+Acceptance: 0 t
+--BODY--
+State: 0 
+[(!2&3)] 1
+State: 1
+[(2&!3)] 0
+--END--

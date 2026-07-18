@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+
+# solver / pipeline temporaries
+temp_*
+aut1.hoa
+autRes.hoa
+
+# generated artifacts (written next to the input file)
+*_found_pi.txt
+*_counterexample.txt
+*_mtsr.png
+final_result.png
