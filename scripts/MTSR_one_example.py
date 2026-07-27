@@ -135,7 +135,13 @@ def run_workflow(filename, output_image="final_result.png"):
     # 6. Project & Minimize (using autfilt)
     # ==========================================
     # can be changed here to --small for faster results.
-    cmd = ["autfilt", "--sat-minimize"]
+    # -B forces a Buchi acceptance condition.  Spot >= 2.15 simplifies the
+    # acceptance of these products to 't' ("all runs accepting"), which renders
+    # without the double-circle accepting states of the published figures;
+    # -B restores that presentation so the demo matches the paper under the
+    # current Spot.  The recognized language and the minimal state count are
+    # unchanged -- this is presentation only.
+    cmd = ["autfilt", "--sat-minimize", "-B"]
     for ap in aps_to_remove:
         cmd.append(f"--remove-ap={ap}")
 
