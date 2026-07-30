@@ -52,7 +52,6 @@ def has_lasso(path):
 # The four analyses
 # --------------------------------------------------------------------------- #
 def run_msr_given_pi(path, timeout):
-    print(f"{_C}MSR with the given PI (from the [lasso] block){_0}")
     msr_analyzer.MSR.TIMEOUT_SECONDS = timeout
     cli_viewer.print_cli_results(msr_analyzer.MSR.analyze_trace(path))
 

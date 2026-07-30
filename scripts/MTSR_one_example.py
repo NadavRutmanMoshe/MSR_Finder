@@ -141,15 +141,44 @@ def run_workflow(filename, output_image="final_result.png"):
     # -B restores that presentation so the demo matches the paper under the
     # current Spot.  The recognized language and the minimal state count are
     # unchanged -- this is presentation only.
-    cmd = ["autfilt", "--sat-minimize", "-B"]
-    for ap in aps_to_remove:
-        cmd.append(f"--remove-ap={ap}")
+    proj_cmd = ["autfilt"] + [f"--remove-ap={ap}" for ap in aps_to_remove]
 
     try:
         t0 = time.perf_counter()
-        result = subprocess.run(
-            cmd,
+
+        # Step 1: project the outputs away (the cause lives over the inputs).
+        projected = subprocess.run(
+            proj_cmd,
             input=intersection_hoa,
+            text=True,
+            capture_output=True,
+            check=True
+        ).stdout
+
+        # Step 2: `--sat-minimize` REQUIRES a deterministic input. Two things
+        # here can destroy determinism:
+        #   (a) the effect automaton -- `F G x` translates to a nondeterministic
+        #       Buchi automaton, and no deterministic Buchi automaton exists for
+        #       it (NBA are strictly more expressive than DBA);
+        #   (b) --remove-ap, an existential projection, which can introduce
+        #       nondeterminism even from a deterministic product.
+        # Without this step autfilt aborts with "SAT-based minimization only
+        # works with deterministic automata".
+        #
+        # Determinizing to *Buchi* is therefore impossible in general, but
+        # determinizing at all is always possible with a richer acceptance
+        # condition, so we ask for 'generic' (spot picks co-Buchi/parity). The
+        # language is preserved, and --sat-minimize is then free to return a
+        # minimal -- possibly nondeterministic -- Buchi automaton.
+        aut_projected = spot.automaton(projected)
+        if not aut_projected.is_deterministic():
+            projected = spot.postprocess(
+                aut_projected, 'generic', 'deterministic').to_str('hoa')
+
+        # Step 3: exact SAT-based minimization.
+        result = subprocess.run(
+            ["autfilt", "--sat-minimize", "-B"],
+            input=projected,
             text=True,
             capture_output=True,
             check=True

@@ -155,34 +155,34 @@ def synthesize_txt(path, out_path, aps, prefix_steps, loop_steps, effect_overrid
 _G = "\033[92m"; _Y = "\033[93m"; _R = "\033[91m"; _C = "\033[96m"; _0 = "\033[0m"
 
 
-def _explain(synth_path, timeout):
+def _explain(synth_path, timeout, pi_override=None):
     """Run the MSR pipeline on a synthesized file and render it
-    with the standard CLI viewer."""
+    with the standard CLI viewer.
+
+    `pi_override` is the trace we found ourselves, over the real system and
+    carrying its outputs. The PI the MSR pipeline hands back is the same trace
+    projected onto the INPUTS and re-unrolled, so it is strictly less
+    informative -- we show ours instead of printing both."""
     msr_analyzer.MSR.TIMEOUT_SECONDS = timeout
     result = msr_analyzer.MSR.analyze_trace(synth_path)
-    cli_viewer.print_cli_results(result)
+    cli_viewer.print_cli_results(result, pi_override=pi_override)
     return result
 
 
 def run_find(path, timeout):
     base = os.path.splitext(path)[0]
-    print(f"{_C}PHASE 1 — trace synthesis:  exists pi . Phi   (no user PI needed){_0}")
     found = find_trace(path, negate=False, timeout=timeout)
-    print(f"  effect Phi : {found['effect']}")
     if not found["sat"]:
         print(f"\n{_Y}UNSAT ({found['seconds']:.1f}s) — NO trace of the system "
               f"satisfies the effect.{_0}")
         print("  There is nothing to explain: the effect never happens on this system.")
         print("  (Equivalently: the system MODELS !Phi — this is a model-checking result.)")
         return None
-    print(f"  {_G}found PI ({found['seconds']:.1f}s):{_0}  {found['pi_string']}")
-
     # A temporary .txt with the found PI as its [lasso]; removed after the run.
     synth = synthesize_txt(path, base + "_found_pi.txt", found["aps"],
                            found["prefix_steps"], found["loop_steps"])
-    print(f"\n{_C}PHASE 2 — MSR for the found PI{_0}")
     try:
-        return _explain(synth, timeout)
+        return _explain(synth, timeout, pi_override=found["pi_string"])
     finally:
         if os.path.exists(synth):
             os.remove(synth)
@@ -190,18 +190,16 @@ def run_find(path, timeout):
 
 def run_check(path, timeout):
     base = os.path.splitext(path)[0]
-    print(f"{_C}MODEL CHECKING:  does EVERY trace satisfy Phi?   "
-          f"(query: exists pi . !Phi){_0}")
+    print(f"MODEL CHECKING Phi : {trace_analyzer.parse_txt_effect(path)}")
     found = find_trace(path, negate=True, timeout=timeout)
-    print(f"  effect Phi : {found['effect']}")
     if not found["sat"]:
         print(f"\n{_G}PASSED ({found['seconds']:.1f}s) — every trace of the system "
               f"satisfies Phi.{_0}")
         print("  Causality note: since Phi holds no matter what the inputs do, the")
         print("  EMPTY cause is sufficient on every trace (the MSR is trivially {}).")
         return None
-    print(f"\n{_R}FAILED ({found['seconds']:.1f}s) — counterexample found:{_0}")
-    print(f"  PI |= !Phi :  {found['pi_string']}")
+    print(f"\n{_R}FAILED ({found['seconds']:.1f}s) — counterexample found "
+          f"(looking for minimal sufficient reason):{_0}")
 
     # A temporary .txt: the counterexample as [lasso], effect := !Phi; removed
     # after the run.
@@ -209,10 +207,8 @@ def run_check(path, timeout):
     synth = synthesize_txt(path, base + "_counterexample.txt", found["aps"],
                            found["prefix_steps"], found["loop_steps"],
                            effect_override=neg_effect)
-    print(f"\n{_C}WHY did the violation happen? — MSR of !Phi on the "
-          f"counterexample{_0}")
     try:
-        return _explain(synth, timeout)
+        return _explain(synth, timeout, pi_override=found["pi_string"])
     finally:
         if os.path.exists(synth):
             os.remove(synth)
