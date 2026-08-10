@@ -128,6 +128,14 @@ def print_cli_results(result_data, pi_override=None, show_pi=True):
         print("\n\033[92mStatus: SAT (Minimal Sufficient Reason Found)\033[0m\n")
     elif status == "SAT_SR":
         print("\n\033[93mStatus: SAT (No Minimal Cause found, but found a Sufficient Reason)\033[0m\n")
+        # Not a solver failure: when no MSR exists, every sufficient reason is
+        # infinite and each one strictly contains a smaller sufficient reason,
+        # so there is no smallest one to report. Typical for liveness effects
+        # (G F / F G), where a cause can be pushed further into the future
+        # forever.
+        print("\033[2m  Why: no MSR exists for this instance -- the sufficient reasons form an\033[0m")
+        print("\033[2m  infinite descending chain R0 > R1 > R2 > ..., so none is minimal.\033[0m")
+        print("\033[2m  The reason below is sufficient but not minimal.\033[0m\n")
 
     if show_pi:
         # "found" only when we synthesized the trace ourselves; in option 1 the

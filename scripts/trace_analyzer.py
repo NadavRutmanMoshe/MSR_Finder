@@ -4,6 +4,7 @@ import time
 import subprocess
 import converter
 import hyperLTL
+import proc_guard           # subprocess.run that kills the whole process group
 
 # --- CONFIGURATION ---
 # CAUSALITY_VAR marks the hypothetical alternative trace.
@@ -90,8 +91,10 @@ def _run_autohyper(lts_content, hq_content, temp_sys, temp_hq, executable):
     """
     with open(temp_sys, 'w') as f: f.write(lts_content)
     with open(temp_hq, 'w') as f: f.write(hq_content)
-    res = subprocess.run([executable, "--explicit", temp_sys, temp_hq, "--witness"], 
-                         capture_output=True, text=True, timeout=TIMEOUT_SECONDS)
+    # proc_guard.run, not subprocess.run: killing AutoHyper on timeout leaves
+    # its Spot children (autfilt/ltl2tgba) orphaned and still burning CPU.
+    res = proc_guard.run([executable, "--explicit", temp_sys, temp_hq, "--witness"],
+                         timeout=TIMEOUT_SECONDS)
     return res.stdout, res.stderr
 
 def analyze_trace(input_txt_path):

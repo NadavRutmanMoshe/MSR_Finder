@@ -44,6 +44,7 @@ import trace_analyzer       # noqa: E402  (parse_txt_effect, parse_system_string
 import cli_viewer           # noqa: E402  (print_cli_results)
 import system_builder       # noqa: E402  (build_real_system)
 import msr_analyzer         # noqa: E402  (the MSR pipeline)
+import proc_guard           # noqa: E402  (subprocess.run that kills the group)
 
 
 # --------------------------------------------------------------------------- #
@@ -89,9 +90,11 @@ def find_trace(path, negate, timeout):
         with open(p_hq, "w") as f:
             f.write(hq)
         t0 = time.perf_counter()
-        res = subprocess.run(
+        # proc_guard.run, not subprocess.run: killing AutoHyper on timeout leaves
+        # its Spot children (autfilt/ltl2tgba) orphaned and still burning CPU.
+        res = proc_guard.run(
             [msr_analyzer._exe(), "--explicit", p_sys, p_hq, "--witness"],
-            capture_output=True, text=True, timeout=timeout)
+            timeout=timeout)
         secs = time.perf_counter() - t0
         out, err = res.stdout, res.stderr
         if msr_analyzer._is_solver_error(out, err):

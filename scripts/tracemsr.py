@@ -35,6 +35,7 @@ for p in (_HERE, _SCRIPTS):
 import cli_viewer           # noqa: E402
 import msr_analyzer         # noqa: E402  (the MSR pipeline)
 import pi_finder            # noqa: E402  (find / model-check flows)
+import proc_guard           # noqa: E402  (group kill + orphan reaper)
 
 SPOT_ENV_PY = os.environ.get(
     "SPOT_ENV_PY", os.path.expanduser("~/micromamba/envs/spot/bin/python3"))
@@ -220,8 +221,26 @@ def main():
         except RuntimeError as err:
             print(f"{_R}[!] {err}{_0}")
         finally:
+            # Safety net behind proc_guard's group kill: it cannot reach a
+            # grandchild that put itself in a new process group. Only process
+            # groups THIS run created are ever touched, so a tool running in
+            # another terminal is invisible to it.
+            leaked = proc_guard.reap_leaked_solvers()
+            if leaked:
+                print(f"{_D}(cleaned up {leaked} leftover solver process"
+                      f"{'es' if leaked > 1 else ''}){_0}")
             print(f"{_D}time: {time.perf_counter() - t0:.1f}s{_0}")
 
 
 if __name__ == "__main__":
-    main()
+    # Ctrl-C unwinds through proc_guard's `finally`, so the solver for the
+    # analysis in flight is already dead by the time we get here. This catches
+    # the rest: anything that escaped into its own process group, and the case
+    # where the interrupt lands between two analyses.
+    try:
+        main()
+    except KeyboardInterrupt:
+        print()
+        raise SystemExit(130)
+    finally:
+        proc_guard.reap_leaked_solvers()

@@ -47,6 +47,7 @@ import trace_analyzer       # noqa: E402  (witness/state-map helpers)
 import system_builder       # noqa: E402  (Real + Clique builders)
 import msr_systems          # noqa: E402  (CliqueQ builder)
 import msr_formulas         # noqa: E402  (MSR / SR formulas)
+import proc_guard           # noqa: E402  (subprocess.run that kills the group)
 
 REL_TOOL_PATH = "../external_tools/AutoHyper/app/AutoHyper"
 
@@ -68,7 +69,9 @@ def _exe():
 
 def _run(system_paths, hq_path, timeout):
     cmd = [_exe(), "--explicit", *system_paths, hq_path, "--witness"]
-    res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+    # proc_guard.run, not subprocess.run: killing AutoHyper on timeout leaves
+    # its Spot children (autfilt/ltl2tgba) orphaned and still burning CPU.
+    res = proc_guard.run(cmd, timeout=timeout)
     return res.stdout, res.stderr
 
 

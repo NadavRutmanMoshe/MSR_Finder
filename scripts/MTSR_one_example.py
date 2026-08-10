@@ -3,6 +3,10 @@ import re
 import subprocess
 import sys
 import time
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import proc_guard   # subprocess.run that kills the whole process group
 
 GREEN = "\033[92m"
 DIM = "\033[2m"
@@ -147,11 +151,12 @@ def run_workflow(filename, output_image="final_result.png"):
         t0 = time.perf_counter()
 
         # Step 1: project the outputs away (the cause lives over the inputs).
-        projected = subprocess.run(
+        # proc_guard.run everywhere below: these are leaves with no children of
+        # their own, but `--sat-minimize` can run for a long time and Ctrl-C
+        # through a plain subprocess.run leaves it orphaned and still running.
+        projected = proc_guard.run(
             proj_cmd,
             input=intersection_hoa,
-            text=True,
-            capture_output=True,
             check=True
         ).stdout
 
@@ -176,11 +181,9 @@ def run_workflow(filename, output_image="final_result.png"):
                 aut_projected, 'generic', 'deterministic').to_str('hoa')
 
         # Step 3: exact SAT-based minimization.
-        result = subprocess.run(
+        result = proc_guard.run(
             ["autfilt", "--sat-minimize", "-B"],
             input=projected,
-            text=True,
-            capture_output=True,
             check=True
         )
         timings["minimize"] = time.perf_counter() - t0
@@ -204,10 +207,9 @@ def run_workflow(filename, output_image="final_result.png"):
         dot_string = final_aut.to_str("dot")
 
         t0 = time.perf_counter()
-        subprocess.run(
+        proc_guard.run(
             ["dot", "-Tpng", "-o", output_image],
             input=dot_string,
-            text=True,
             check=True
         )
         timings["render"] = time.perf_counter() - t0
