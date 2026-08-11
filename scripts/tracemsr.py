@@ -18,6 +18,10 @@ Any subset can be selected; the chosen analyses run in order, each reporting
 its wall-clock time.  `--run 1,3` (or `--run all`) skips the menu -- useful
 for scripting and non-TTY runs.
 
+Options 1-3 print the compact result table: one trace column (the actual trace
+Pi) with the positions pinned by the reason R in green.  `--with-tau`, or the
+`t` key in the menu, adds the Tau witness back (extra column + Tau block).
+
 """
 import argparse
 import os
@@ -52,20 +56,21 @@ def has_lasso(path):
 # --------------------------------------------------------------------------- #
 # The four analyses
 # --------------------------------------------------------------------------- #
-def run_msr_given_pi(path, timeout):
+def run_msr_given_pi(path, timeout, show_tau=False):
     msr_analyzer.MSR.TIMEOUT_SECONDS = timeout
-    cli_viewer.print_cli_results(msr_analyzer.MSR.analyze_trace(path))
+    cli_viewer.print_cli_results(msr_analyzer.MSR.analyze_trace(path),
+                                 show_tau=show_tau)
 
 
-def run_msr_find_pi(path, timeout):
-    pi_finder.run_find(path, timeout)
+def run_msr_find_pi(path, timeout, show_tau=False):
+    pi_finder.run_find(path, timeout, show_tau)
 
 
-def run_model_check(path, timeout):
-    pi_finder.run_check(path, timeout)
+def run_model_check(path, timeout, show_tau=False):
+    pi_finder.run_check(path, timeout, show_tau)
 
 
-def run_mtsr(path, timeout):
+def run_mtsr(path, timeout, show_tau=False):     # draws an automaton: no table
     if not os.path.exists(SPOT_ENV_PY):
         print(f"{_R}[!] spot environment python not found at {SPOT_ENV_PY} — "
               f"MTSR needs spot/autfilt/dot (see the README, Setup section).{_0}")
@@ -96,9 +101,10 @@ def _menu_options(path):
     ]
 
 
-def checklist(path, options):
+def checklist(path, options, show_tau=False):
     """Arrow-key multi-select. ENTER (or SPACE) toggles the highlighted option;
-    a Start row at the bottom launches the run. Returns the chosen indices."""
+    a Start row at the bottom launches the run; `t` switches the result table
+    between compact (Pi only) and Tau-next-to-Pi. Returns (indices, show_tau)."""
     import termios
     import tty
 
@@ -107,7 +113,7 @@ def checklist(path, options):
     rows = enabled + [START]                # navigable rows
     cur = enabled[0]
     sel = {enabled[0]}                      # preselect the recommended first choice
-    n_lines = len(options) + 3
+    n_lines = len(options) + 4
 
     def draw(first=False):
         out = [] if first else [f"\x1b[{n_lines}A"]
@@ -122,7 +128,10 @@ def checklist(path, options):
         cursor = f"{_C}>{_0}" if cur == START else " "
         start = f"{_G}{_B}▶ Start{_0}" if sel else f"{_D}▶ Start (select at least one){_0}"
         out.append(f" {cursor}     {start}\x1b[K\r\n")
-        out.append(f"{_D}ENTER/SPACE toggle · ↑/↓ move · a all · "
+        mode = ("Pi + Tau (the witness R was read off)" if show_tau
+                else "Pi only, positions pinned by R in green")
+        out.append(f"{_D}     table [t]: {_0}{_C}{mode}{_0}\x1b[K\r\n")
+        out.append(f"{_D}ENTER/SPACE toggle · ↑/↓ move · a all · t table · "
                    f"ENTER on Start runs · q quit{_0}\x1b[K\r\n")
         sys.stdout.write("".join(out))
         sys.stdout.flush()
@@ -150,18 +159,20 @@ def checklist(path, options):
             elif ch in (b"\r", b"\n", b" "):
                 if cur == START:
                     if ch != b" " and sel:
-                        return sel
+                        return sel, show_tau
                 else:
                     sel.symmetric_difference_update({cur})
             elif ch in (b"a", b"A"):
                 sel = set() if sel == set(enabled) else set(enabled)
+            elif ch in (b"t", b"T"):
+                show_tau = not show_tau
             elif ch in (b"1", b"2", b"3", b"4"):
                 i = int(ch) - 1
                 if i in enabled:
                     sel.symmetric_difference_update({i})
                     cur = i
             elif ch in (b"q", b"Q", b"\x03"):
-                return set()
+                return set(), show_tau
             draw()
     finally:
         termios.tcsetattr(fd, termios.TCSADRAIN, old)
@@ -191,16 +202,20 @@ def main():
     ap.add_argument("file", help="input .txt")
     ap.add_argument("--timeout", type=int, default=600, help="seconds per solver call")
     ap.add_argument("--run", help="skip the menu: comma-separated option numbers, or 'all'")
+    ap.add_argument("--with-tau", action="store_true",
+                    help="show the Tau witness too (extra table column + Tau "
+                         "block); default is the compact Pi-only table")
     args = ap.parse_args()
 
     if not os.path.exists(args.file):
         raise SystemExit(f"no such file: {args.file}")
     options = _menu_options(args.file)
 
+    show_tau = args.with_tau
     if args.run:
         sel = parse_run_arg(args.run, options)
     elif sys.stdin.isatty():
-        sel = checklist(args.file, options)
+        sel, show_tau = checklist(args.file, options, show_tau)
         if not sel:
             print("nothing selected — bye.")
             return
@@ -213,7 +228,7 @@ def main():
         sys.stdout.flush()
         t0 = time.perf_counter()
         try:
-            fn(args.file, args.timeout)
+            fn(args.file, args.timeout, show_tau)
         except ValueError as ve:                  # determinism firewall
             print(f"{_R}[!] {ve}{_0}")
         except subprocess.TimeoutExpired:

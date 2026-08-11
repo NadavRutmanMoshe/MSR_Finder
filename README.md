@@ -35,7 +35,8 @@ Select analyses for example_1.txt
    [ ] 3. Model checking of Phi (counterexample + why)
    [ ] 4. MTSR — Minimal Temporal Sufficient Reason
        ▶ Start
- ENTER/SPACE toggle · ↑/↓ move · a all · ENTER on Start runs · q quit
+     table [t]: Pi only, positions pinned by R in green
+ ENTER/SPACE toggle · ↑/↓ move · a all · t table · ENTER on Start runs · q quit
 ```
 
 ENTER (or SPACE) toggles the highlighted analysis; move down to **▶ Start**
@@ -45,6 +46,44 @@ menu with `--run`:
 ```sh
 python3 tracemsr.py ../examples/example_1.txt --run all
 python3 tracemsr.py ../examples/example_1.txt --run 2,3 --timeout 300
+```
+
+## The result table
+
+Analyses 1–3 print the trace with the reason on it — one column, the actual
+trace π, with the (input, time) positions **pinned by R in green**:
+
+```
+Reason R:
+    { (i1,0), (i2,2), (i2,3), (i1,4), (i2,4) }
+
+=============================================
+TIME  | ACTUAL TRACE (Pi)   | REASON (R)
+=============================================
+0     | i1=T, i2=T          | <-- R pins i1
+1     | i1=T, i2=T          |
+2     | i1=T, i2=F          | <-- R pins i2
+3     | i1=T, i2=F          | <-- R pins i2
+4     | i1=T, i2=F          | <-- R pins i1, i2
+----- + ------------------- + ---------------
+CYCLE | (Repeating Pattern) |
+----- + ------------------- + ---------------
+5     | i1=T, i2=F          |
+=============================================
+```
+
+The witness τ is no longer shown by default. `"ip"_τ` is the *indicator* of
+membership in R — the query pins π with `{"ip"_τ} -> ({"ip"_π} <-> {"ip"_π2})`
+— so τ's `T`/`F` cells are exactly the green cells, and showing them as a
+second column of a *trace* invited reading a green `r1=T` under τ as "r1 is
+true here" even where π has `r1=F` at that pinned position. R itself is
+printed as an explicit set of pairs, which is the thing worth reading.
+
+Add `--with-tau` (or press `t` in the menu) to get the old two-column layout
+back — the `found reason representation Tau` block plus the τ column:
+
+```sh
+python3 tracemsr.py ../examples/example_1.txt --run 1 --with-tau
 ```
 
 ## The four analyses
@@ -155,7 +194,7 @@ scripts/
   converter.py        HOA parsing, determinism firewall, combined LTS
   hyperLTL.py         legacy combined-system formulas (PI_VAL)
   trace_analyzer.py   witness decoding helpers
-  cli_viewer.py       terminal tables; the pinned inputs are colored green
+  cli_viewer.py       terminal tables; pinned inputs green, Tau via --with-tau
   MTSR_one_example.py the MTSR pipeline: colored-HOA view + image (spot env)
   mtsr_view.py        thin compatibility wrapper around MTSR_one_example
 examples/             ready-to-run inputs (reachability, safety, ATVA'22 …)

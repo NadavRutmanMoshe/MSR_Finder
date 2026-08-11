@@ -158,7 +158,7 @@ def synthesize_txt(path, out_path, aps, prefix_steps, loop_steps, effect_overrid
 _G = "\033[92m"; _Y = "\033[93m"; _R = "\033[91m"; _C = "\033[96m"; _0 = "\033[0m"
 
 
-def _explain(synth_path, timeout, pi_override=None):
+def _explain(synth_path, timeout, pi_override=None, show_tau=False):
     """Run the MSR pipeline on a synthesized file and render it
     with the standard CLI viewer.
 
@@ -168,11 +168,11 @@ def _explain(synth_path, timeout, pi_override=None):
     informative -- we show ours instead of printing both."""
     msr_analyzer.MSR.TIMEOUT_SECONDS = timeout
     result = msr_analyzer.MSR.analyze_trace(synth_path)
-    cli_viewer.print_cli_results(result, pi_override=pi_override)
+    cli_viewer.print_cli_results(result, pi_override=pi_override, show_tau=show_tau)
     return result
 
 
-def run_find(path, timeout):
+def run_find(path, timeout, show_tau=False):
     base = os.path.splitext(path)[0]
     found = find_trace(path, negate=False, timeout=timeout)
     if not found["sat"]:
@@ -185,13 +185,14 @@ def run_find(path, timeout):
     synth = synthesize_txt(path, base + "_found_pi.txt", found["aps"],
                            found["prefix_steps"], found["loop_steps"])
     try:
-        return _explain(synth, timeout, pi_override=found["pi_string"])
+        return _explain(synth, timeout, pi_override=found["pi_string"],
+                        show_tau=show_tau)
     finally:
         if os.path.exists(synth):
             os.remove(synth)
 
 
-def run_check(path, timeout):
+def run_check(path, timeout, show_tau=False):
     base = os.path.splitext(path)[0]
     print(f"MODEL CHECKING Phi : {trace_analyzer.parse_txt_effect(path)}")
     found = find_trace(path, negate=True, timeout=timeout)
@@ -211,7 +212,8 @@ def run_check(path, timeout):
                            found["prefix_steps"], found["loop_steps"],
                            effect_override=neg_effect)
     try:
-        return _explain(synth, timeout, pi_override=found["pi_string"])
+        return _explain(synth, timeout, pi_override=found["pi_string"],
+                        show_tau=show_tau)
     finally:
         if os.path.exists(synth):
             os.remove(synth)
@@ -224,17 +226,19 @@ def main():
                     help="model-check Phi (exists pi . !Phi) instead of finding a PI for Phi")
     ap.add_argument("--both", action="store_true", help="run find, then check")
     ap.add_argument("--timeout", type=int, default=600, help="seconds per AutoHyper call")
+    ap.add_argument("--with-tau", action="store_true",
+                    help="also show the Tau witness (extra column + Tau block)")
     args = ap.parse_args()
 
     try:
         if args.both:
-            run_find(args.file, args.timeout)
+            run_find(args.file, args.timeout, args.with_tau)
             print()
-            run_check(args.file, args.timeout)
+            run_check(args.file, args.timeout, args.with_tau)
         elif args.check:
-            run_check(args.file, args.timeout)
+            run_check(args.file, args.timeout, args.with_tau)
         else:
-            run_find(args.file, args.timeout)
+            run_find(args.file, args.timeout, args.with_tau)
     except ValueError as ve:                      # determinism firewall
         print(f"{_R}[!] {ve}{_0}")
         sys.exit(1)
