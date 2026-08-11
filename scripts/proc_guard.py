@@ -47,7 +47,14 @@ _POSIX = os.name == 'posix'
 #: a live run). Listing 'dotnet' would therefore match none of our processes
 #: while matching any unrelated .NET service the user happens to run under
 #: systemd -- which is orphaned by design, and would be killed.
-SOLVERS = ('autfilt', 'ltl2tgba', 'AutoHyper')
+#:
+#: 'HyperRUSTY'/'quabs' are the HyperQB backend, which has the same shape as the
+#: AutoHyper one: HyperRUSTY is not a leaf either -- it shells out to the QBF
+#: solver (`process::Command::new("./quabs")` in its main.rs) and blocks on it.
+#: Killing only HyperRUSTY on a timeout leaves quabs solving at ~100% CPU, which
+#: is exactly the leak this module exists to stop. Both names are short enough
+#: to survive the 15-char truncation of /proc/<pid>/comm.
+SOLVERS = ('autfilt', 'ltl2tgba', 'AutoHyper', 'HyperRUSTY', 'quabs')
 
 #: Process groups this interpreter created, and the subset with a run still in
 #: flight. Membership is what makes a process OURS -- see reap_leaked_solvers.
@@ -82,16 +89,25 @@ def _kill_group(proc):
             pass
 
 
-def run(cmd, timeout=None, input=None, check=False, **popen_kw):
+def run(cmd, timeout=None, input=None, check=False,
+        capture_output=True, text=True, **popen_kw):
     """Drop-in for `subprocess.run(capture_output=True, text=True, ...)`.
 
     Same return value and same exceptions (`TimeoutExpired`,
     `CalledProcessError`), so call sites only change which function they call.
+
+    `capture_output` defaults to True, NOT to subprocess.run's False: capturing
+    was this function's only behaviour before the parameter existed, and callers
+    written against that must keep working. Pass capture_output=False for a call
+    whose output is meant to reach the terminal -- the child's streams are then
+    inherited and `stdout`/`stderr` on the result are None, exactly as
+    subprocess.run behaves without capture. The group kill applies either way.
     """
+    pipe = subprocess.PIPE if capture_output else None
     proc = subprocess.Popen(
         cmd,
         stdin=subprocess.PIPE if input is not None else None,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+        stdout=pipe, stderr=pipe, text=text,
         start_new_session=_POSIX, **popen_kw)
     # start_new_session makes the child a group leader, so pgid == pid.
     pgid = proc.pid if _POSIX else None
