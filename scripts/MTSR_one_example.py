@@ -1,3 +1,4 @@
+import argparse
 import spot
 import re
 import subprocess
@@ -7,6 +8,7 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import proc_guard   # subprocess.run that kills the whole process group
+import cause_check  # --check: is [cause] the same language as the MTSR?
 
 GREEN = "\033[92m"
 DIM = "\033[2m"
@@ -75,7 +77,9 @@ def print_hoa_colored(final_hoa):
         print(f"{GREEN}{line}{RESET}" if i in green else line)
 
 
-def run_workflow(filename, output_image="final_result.png"):
+def run_workflow(filename, output_image="final_result.png", check=False):
+    """Synthesize the MTSR; with `check`, additionally verify the instance's
+    [cause] block against it (see cause_check)."""
     timings = {}
     t_start = time.perf_counter()
 
@@ -223,6 +227,18 @@ def run_workflow(filename, output_image="final_result.png"):
 
         final_hoa = result.stdout
 
+        # Determinization + SAT minimization must preserve the language
+        # exactly. Cheap at these sizes, and it turns a silent wrong answer
+        # into a loud one -- which matters more now that --check reports a
+        # verdict computed against this automaton.
+        equivalent = spot.are_equivalent(spot.automaton(final_hoa),
+                                         spot.automaton(projected))
+        timings["language_preserved"] = equivalent
+        if not equivalent:
+            print("\033[91m[!] BUG: the minimized automaton is NOT "
+                  "language-equivalent to the projected product. The MTSR "
+                  "below is wrong; do not trust it.\033[0m")
+
         # ==========================================
         # 7. Display: the minimized HOA, accepting states in green
         # ==========================================
@@ -247,6 +263,21 @@ def run_workflow(filename, output_image="final_result.png"):
         )
         timings["render"] = time.perf_counter() - t0
         print(f"saved: {output_image}")
+
+        # ==========================================
+        # 9. Optional: verify the given [cause] against what we synthesized
+        # ==========================================
+        # Deliberately AFTER the image: --check is an extra question about the
+        # MTSR, not a different pipeline, so a failed check still leaves the
+        # user with the automaton to look at.
+        if check and not equivalent:
+            print("\033[91m[!] skipping --check: a verdict against a wrong "
+                  "MTSR would be meaningless.\033[0m")
+        elif check:
+            t0 = time.perf_counter()
+            res = cause_check.run(filename, final_hoa)
+            timings["check"] = time.perf_counter() - t0
+            timings["check_verdict"] = res["verdict"] if res else "NO_CAUSE_BLOCK"
 
         timings["total"] = time.perf_counter() - t_start
 
@@ -274,10 +305,13 @@ def run_workflow(filename, output_image="final_result.png"):
 
 # --- Run the Script ---
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python script_name.py <path_to_input_file> [output_image.png]")
-        sys.exit(1)
-
-    input_filename = sys.argv[1]
-    output_image = sys.argv[2] if len(sys.argv) > 2 else "final_result.png"
-    run_workflow(input_filename, output_image)
+    ap = argparse.ArgumentParser(
+        description="MTSR: the minimal temporal sufficient reason, as an "
+                    "automaton over the inputs.")
+    ap.add_argument("input", help="the instance .txt")
+    ap.add_argument("output_image", nargs="?", default="final_result.png")
+    ap.add_argument("--check", action="store_true",
+                    help="also verify the instance's [cause] block against the "
+                         "synthesized MTSR (language equivalence, via spot)")
+    args = ap.parse_args()
+    run_workflow(args.input, args.output_image, check=args.check)

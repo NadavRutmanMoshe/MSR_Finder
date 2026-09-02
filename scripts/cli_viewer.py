@@ -103,6 +103,9 @@ def print_cli_results(result_data, pi_override=None, show_pi=True, show_tau=Fals
     """
     print(f"Effect: {result_data['effect']}")
     status = result_data["status"]
+    # Which solver produced this. The backends fill it in; the default keeps
+    # the wording right for results built before the field existed.
+    solver = result_data.get("solver", "AutoHyper")
 
     # --- ERROR & EDGE CASE HANDLING ---
     if status == "NON_DETERMINISTIC":
@@ -127,7 +130,7 @@ def print_cli_results(result_data, pi_override=None, show_pi=True, show_tau=Fals
         print(f"\n{'='*80}")
         print(" \033[91mSTATUS: INVALID TRACE (Pi is not a valid path or does not satisfy the effect!)\033[0m")
         print(f"{'='*80}")
-        print(" AutoHyper proved that the trace provided in the [lasso] block is either:")
+        print(f" {solver} proved that the trace provided in the [lasso] block is either:")
         print("   - not a physically possible path within the system's HOA graph, or")
         print("   - a valid path on which the [effect] formula does not actually occur.")
         print(" -> Aborting causality check.")
@@ -138,14 +141,42 @@ def print_cli_results(result_data, pi_override=None, show_pi=True, show_tau=Fals
         print(f"\n{'='*80}")
         print(" \033[93mSTATUS: UNSAT (Valid Trace, but No Cause Exists)\033[0m")
         print(f"{'='*80}")
-        print(" The Pi trace is valid, but AutoHyper proved that no sufficient")
+        print(f" The Pi trace is valid, but {solver} proved that no sufficient")
         print(" cause exists for this system configuration.")
+        print(f"{'='*80}\n")
+        return
+
+    if status == "UNKNOWN_BOUNDED":
+        # HyperQB only. A bounded `unsat` is "no witness within k", never "no
+        # cause exists", so it gets its own status rather than being folded into
+        # UNSAT_NO_CAUSE -- the two mean different things and only one is a
+        # proof. See hyperqb_analyzer's module docstring.
+        print(f"\n{'='*80}")
+        print(f" \033[93mSTATUS: UNDECIDED AT THIS BOUND ({solver})\033[0m")
+        print(f"{'='*80}")
+        for line in textwrap.wrap(result_data.get("bounded_note", ""), width=78,
+                                  initial_indent=" ", subsequent_indent=" "):
+            print(line)
+        print(" This is NOT a proof that no cause exists. Raise the bound"
+              " (--k), or re-run")
+        print(" without --hyperQB: the AutoHyper backend is exact.")
         print(f"{'='*80}\n")
         return
 
     # --- SUCCESS HANDLING ---
     if status == "SAT_MSR":
         print("\n\033[92mStatus: SAT (Minimal Sufficient Reason Found)\033[0m\n")
+    elif status == "SAT_SR" and "k" in result_data:
+        # A BOUNDED backend reached SR. That is a much weaker statement than
+        # the exact one below: "no MSR witness inside k", not "no MSR exists".
+        # Printing the exact explanation here would assert a proof the solver
+        # never gave.
+        print("\n\033[93mStatus: SAT (a Sufficient Reason; minimality UNDECIDED at this "
+              "bound)\033[0m\n")
+        print("\033[2m  Why: the MSR query found no witness within the bound, and the SR query\033[0m")
+        print("\033[2m  did. Whether a MINIMAL sufficient reason exists is open -- a bounded\033[0m")
+        print("\033[2m  UNSAT is not a proof. The reason below is genuinely sufficient; it may\033[0m")
+        print("\033[2m  or may not be minimal. Re-run without --hyperQB for an exact answer.\033[0m\n")
     elif status == "SAT_SR":
         print("\n\033[93mStatus: SAT (No Minimal Cause found, but found a Sufficient Reason)\033[0m\n")
         # Not a solver failure: when no MSR exists, every sufficient reason is
@@ -156,6 +187,23 @@ def print_cli_results(result_data, pi_override=None, show_pi=True, show_tau=Fals
         print("\033[2m  Why: no MSR exists for this instance -- the sufficient reasons form an\033[0m")
         print("\033[2m  infinite descending chain R0 > R1 > R2 > ..., so none is minimal.\033[0m")
         print("\033[2m  The reason below is sufficient but not minimal.\033[0m\n")
+
+    if "k" in result_data:
+        # A bounded backend: say so on the result itself. `sat` under
+        # pessimistic semantics means a witness was actually found, so this
+        # reason is real -- the bound is reported for reproducibility, not as a
+        # caveat on the answer.
+        print(f"\033[2m  ({solver}, bounded: k={result_data['k']}, "
+              f"{result_data.get('semantics', 'pes')} semantics -- a witness "
+              f"found within the bound is a proof)\033[0m\n")
+
+    note = result_data.get("bounded_note")
+    if note:
+        for line in textwrap.wrap("Note: " + note, width=88,
+                                  initial_indent="\033[2m  ",
+                                  subsequent_indent="  "):
+            print(line)
+        print(RESET)
 
     if show_pi:
         # "found" only when we synthesized the trace ourselves; in option 1 the
@@ -168,7 +216,11 @@ def print_cli_results(result_data, pi_override=None, show_pi=True, show_tau=Fals
         _print_block("found reason representation Tau",
                      result_data["tau_string"].strip(), trailing_blank=True)
     _td = result_data.get("table_data") or {}
-    _print_block("Reason R",
+    # A bounded backend can only show the part of R that fits inside its bound;
+    # the label has to say so, because a truncated R is not a reason.
+    _r_label = ("Reason R" if result_data.get("reason_complete", True)
+                else "Reason R (TRUNCATED — see the note above)")
+    _print_block(_r_label,
                  format_reason_set(_td.get("tau_prefix", []),
                                    _td.get("tau_cycle", []),
                                    result_data["cause_vars"] or []))
@@ -247,6 +299,14 @@ def print_cli_results(result_data, pi_override=None, show_pi=True, show_tau=Fals
         print_row(i, t_step, p_step)
 
     # --- CYCLE PRINTING ---
+    # A backend can hand back a trace with no repeating part: the bounded
+    # backend does exactly that when its witness is not periodic within the
+    # bound. Printing an empty "(Repeating Pattern)" block there would assert a
+    # loop that was never established.
+    if not pi_c and not tau_c:
+        print(f"{rule}\n")
+        return
+
     if show_tau:
         sep = f"{'-'*5} + {'-'*col_width} + {'-'*col_width} + {'-'*15}"
         head = (f"{'CYCLE':<5} | {'(Repeating Pattern)':<{col_width}} | "

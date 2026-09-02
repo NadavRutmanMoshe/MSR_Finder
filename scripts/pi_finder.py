@@ -5,6 +5,13 @@ pi_finder -- run TraceMSR *without* a user-supplied PI, plus LTL model checking.
 The classic pipeline requires the user to write the actual trace (the [lasso]
 block) into the .txt by hand.  This module removes that requirement:
 
+Both flows are two steps, and only the first one needs an exact solver:
+AutoHyper searches for the trace (the witness has to be read back out, which a
+bounded solver's model dump cannot give us), and then the MSR pipeline explains
+it.  That second step is just `analyze_trace` on a synthesized .txt, so it can
+run on EITHER backend -- pass `pipeline=hyperqb_analyzer.MSR` to explain the
+found trace with HyperQB.  `tracemsr --hyperQB` does exactly that.
+
   FIND (default)   exists pi . Phi        on the plain real system (--witness).
                    SAT   -> AutoHyper hands us a lasso that satisfies the
                             effect; we display it and run the MSR pipeline on
@@ -158,21 +165,26 @@ def synthesize_txt(path, out_path, aps, prefix_steps, loop_steps, effect_overrid
 _G = "\033[92m"; _Y = "\033[93m"; _R = "\033[91m"; _C = "\033[96m"; _0 = "\033[0m"
 
 
-def _explain(synth_path, timeout, pi_override=None, show_tau=False):
+def _explain(synth_path, timeout, pi_override=None, show_tau=False, pipeline=None):
     """Run the MSR pipeline on a synthesized file and render it
     with the standard CLI viewer.
 
     `pi_override` is the trace we found ourselves, over the real system and
     carrying its outputs. The PI the MSR pipeline hands back is the same trace
     projected onto the INPUTS and re-unrolled, so it is strictly less
-    informative -- we show ours instead of printing both."""
-    msr_analyzer.MSR.TIMEOUT_SECONDS = timeout
-    result = msr_analyzer.MSR.analyze_trace(synth_path)
+    informative -- we show ours instead of printing both.
+
+    `pipeline` selects the backend (msr_analyzer.MSR by default,
+    hyperqb_analyzer.MSR for --hyperQB). Only this step is swappable: finding
+    the trace above needs a witness, which the bounded backend cannot decode."""
+    pipeline = pipeline or msr_analyzer.MSR
+    pipeline.TIMEOUT_SECONDS = timeout
+    result = pipeline.analyze_trace(synth_path)
     cli_viewer.print_cli_results(result, pi_override=pi_override, show_tau=show_tau)
     return result
 
 
-def run_find(path, timeout, show_tau=False):
+def run_find(path, timeout, show_tau=False, pipeline=None):
     base = os.path.splitext(path)[0]
     found = find_trace(path, negate=False, timeout=timeout)
     if not found["sat"]:
@@ -186,13 +198,13 @@ def run_find(path, timeout, show_tau=False):
                            found["prefix_steps"], found["loop_steps"])
     try:
         return _explain(synth, timeout, pi_override=found["pi_string"],
-                        show_tau=show_tau)
+                        show_tau=show_tau, pipeline=pipeline)
     finally:
         if os.path.exists(synth):
             os.remove(synth)
 
 
-def run_check(path, timeout, show_tau=False):
+def run_check(path, timeout, show_tau=False, pipeline=None):
     base = os.path.splitext(path)[0]
     print(f"MODEL CHECKING Phi : {trace_analyzer.parse_txt_effect(path)}")
     found = find_trace(path, negate=True, timeout=timeout)
@@ -213,7 +225,7 @@ def run_check(path, timeout, show_tau=False):
                            effect_override=neg_effect)
     try:
         return _explain(synth, timeout, pi_override=found["pi_string"],
-                        show_tau=show_tau)
+                        show_tau=show_tau, pipeline=pipeline)
     finally:
         if os.path.exists(synth):
             os.remove(synth)

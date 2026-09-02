@@ -22,6 +22,21 @@ Options 1-3 print the compact result table: one trace column (the actual trace
 Pi) with the positions pinned by the reason R in green.  `--with-tau`, or the
 `t` key in the menu, adds the Tau witness back (extra column + Tau block).
 
+Two switches change what the analyses do:
+
+  --hyperQB   solve analysis 1 with HyperQB 2.0 instead of AutoHyper.  HyperQB
+              is a BOUNDED model checker, so a `sat` (a reason was found) is a
+              proof, while "nothing found" only means "not within the bound k"
+              -- it is reported as UNDECIDED, never as "no cause exists".  It is
+              often much faster, and on some instances it answers where
+              AutoHyper does not.  `--k` sets the bound.
+
+  --check     turn analysis 4 (MTSR) from a synthesizer into a CHECKER, the way
+              CATS is one: synthesize the MTSR as usual, then ask spot whether
+              it accepts the same input sequences as the instance's [cause]
+              block.  Answers EQUIVALENT, or names which side is the bigger
+              language.
+
 """
 import argparse
 import os
@@ -37,6 +52,7 @@ for p in (_HERE, _SCRIPTS):
         sys.path.insert(0, p)
 
 import cli_viewer           # noqa: E402
+import hyperqb_analyzer     # noqa: E402  (the same pipeline on HyperQB)
 import msr_analyzer         # noqa: E402  (the MSR pipeline)
 import pi_finder            # noqa: E402  (find / model-check flows)
 import proc_guard           # noqa: E402  (group kill + orphan reaper)
@@ -44,7 +60,11 @@ import proc_guard           # noqa: E402  (group kill + orphan reaper)
 SPOT_ENV_PY = os.environ.get(
     "SPOT_ENV_PY", os.path.expanduser("~/micromamba/envs/spot/bin/python3"))
 
-_B = "\033[1m"; _D = "\033[2m"; _C = "\033[96m"; _G = "\033[92m"; _R = "\033[91m"; _0 = "\033[0m"
+_B = "\033[1m"; _D = "\033[2m"; _C = "\033[96m"; _G = "\033[92m"
+_R = "\033[91m"; _Y = "\033[93m"; _0 = "\033[0m"
+
+#: Position of the MTSR analysis in _menu_options -- the one --check acts on.
+MTSR_INDEX = 3
 
 
 def has_lasso(path):
@@ -53,24 +73,69 @@ def has_lasso(path):
     return "[lasso]" in content and re.search(r'Loop:\s*\{', content) is not None
 
 
+def has_cause(path):
+    """Does the file carry a [cause] block for --check to verify?"""
+    # A section header sits alone on its line; the [info] block is free prose
+    # and may mention "[cause]" in a sentence.
+    with open(path, "r", errors="replace") as f:
+        return re.search(r'^[^\S\n]*\[cause\][^\S\n]*$', f.read(),
+                         re.MULTILINE) is not None
+
+
+class Options:
+    """Everything the run switches carry, so adding one does not change every
+    analysis signature."""
+    def __init__(self, show_tau=False, hyperqb=False, k=None,
+                 semantics="pes", check=False):
+        self.show_tau = show_tau
+        self.hyperqb = hyperqb
+        self.k = k
+        self.semantics = semantics
+        self.check = check
+
+
 # --------------------------------------------------------------------------- #
 # The four analyses
 # --------------------------------------------------------------------------- #
-def run_msr_given_pi(path, timeout, show_tau=False):
-    msr_analyzer.MSR.TIMEOUT_SECONDS = timeout
-    cli_viewer.print_cli_results(msr_analyzer.MSR.analyze_trace(path),
-                                 show_tau=show_tau)
+def _pipeline(opts):
+    """The MSR backend this run selected."""
+    if not opts.hyperqb:
+        return msr_analyzer.MSR
+    p = hyperqb_analyzer.MSR
+    p.K, p.SEMANTICS = opts.k, opts.semantics
+    return p
 
 
-def run_msr_find_pi(path, timeout, show_tau=False):
-    pi_finder.run_find(path, timeout, show_tau)
+def run_msr_given_pi(path, timeout, opts):
+    pipeline = _pipeline(opts)
+    pipeline.TIMEOUT_SECONDS = timeout
+    cli_viewer.print_cli_results(pipeline.analyze_trace(path),
+                                 show_tau=opts.show_tau)
 
 
-def run_model_check(path, timeout, show_tau=False):
-    pi_finder.run_check(path, timeout, show_tau)
+def _split_note(opts, step):
+    """Analyses 2 and 3 are two steps, and --hyperQB only moves the second."""
+    if opts.hyperqb:
+        print(f"{_D}(--hyperQB: AutoHyper still {step} — a bounded model dump "
+              f"reports NuSMV VARs only, and the system's outputs are DEFINEs, "
+              f"so the trace cannot be read back out of it. The MSR of that "
+              f"trace is then computed by HyperQB.){_0}")
 
 
-def run_mtsr(path, timeout, show_tau=False):     # draws an automaton: no table
+def run_msr_find_pi(path, timeout, opts):
+    _split_note(opts, "finds the trace")
+    pi_finder.run_find(path, timeout, opts.show_tau, pipeline=_pipeline(opts))
+
+
+def run_model_check(path, timeout, opts):
+    # The verdict half stays exact for a second reason: this analysis reports
+    # PASSED from an UNSAT, and a bounded UNSAT does not prove "every trace
+    # satisfies Phi".
+    _split_note(opts, "model-checks Phi and finds the counterexample")
+    pi_finder.run_check(path, timeout, opts.show_tau, pipeline=_pipeline(opts))
+
+
+def run_mtsr(path, timeout, opts):               # draws an automaton: no table
     if not os.path.exists(SPOT_ENV_PY):
         print(f"{_R}[!] spot environment python not found at {SPOT_ENV_PY} — "
               f"MTSR needs spot/autfilt/dot (see the README, Setup section).{_0}")
@@ -78,11 +143,13 @@ def run_mtsr(path, timeout, show_tau=False):     # draws an automaton: no table
     out_png = os.path.splitext(os.path.abspath(path))[0] + "_mtsr.png"
     env = dict(os.environ)
     env["PATH"] = os.path.dirname(SPOT_ENV_PY) + os.pathsep + env.get("PATH", "")
+    cmd = [SPOT_ENV_PY, os.path.join(_SCRIPTS, "MTSR_one_example.py"),
+           os.path.abspath(path), out_png]
+    if opts.check:
+        cmd.append("--check")
     sys.stdout.flush()          # keep parent/child output ordered when piped
     try:
-        subprocess.run([SPOT_ENV_PY, os.path.join(_SCRIPTS, "MTSR_one_example.py"),
-                        os.path.abspath(path), out_png],
-                       timeout=timeout, env=env, check=False)
+        subprocess.run(cmd, timeout=timeout, env=env, check=False)
     except subprocess.TimeoutExpired:
         print(f"{_R}[!] MTSR TIMED OUT (> {timeout}s).{_0}")
 
@@ -101,19 +168,22 @@ def _menu_options(path):
     ]
 
 
-def checklist(path, options, show_tau=False):
+def checklist(path, options, opts):
     """Arrow-key multi-select. ENTER (or SPACE) toggles the highlighted option;
-    a Start row at the bottom launches the run; `t` switches the result table
-    between compact (Pi only) and Tau-next-to-Pi. Returns (indices, show_tau)."""
+    a Start row at the bottom launches the run. Three switches ride along:
+    `t` (result table: Pi only vs Tau next to Pi), `h` (solver: AutoHyper or
+    HyperQB) and `c` (MTSR: synthesize, or also check the [cause] block).
+    Returns the selected indices; `opts` is mutated in place."""
     import termios
     import tty
 
+    cause_ok = has_cause(path)
     enabled = [i for i, (_l, ok, _f) in enumerate(options) if ok]
     START = len(options)                    # index of the Start row
     rows = enabled + [START]                # navigable rows
     cur = enabled[0]
     sel = {enabled[0]}                      # preselect the recommended first choice
-    n_lines = len(options) + 4
+    n_lines = len(options) + 6
 
     def draw(first=False):
         out = [] if first else [f"\x1b[{n_lines}A"]
@@ -128,11 +198,24 @@ def checklist(path, options, show_tau=False):
         cursor = f"{_C}>{_0}" if cur == START else " "
         start = f"{_G}{_B}▶ Start{_0}" if sel else f"{_D}▶ Start (select at least one){_0}"
         out.append(f" {cursor}     {start}\x1b[K\r\n")
-        mode = ("Pi + Tau (the witness R was read off)" if show_tau
+        mode = ("Pi + Tau (the witness R was read off)" if opts.show_tau
                 else "Pi only, positions pinned by R in green")
-        out.append(f"{_D}     table [t]: {_0}{_C}{mode}{_0}\x1b[K\r\n")
-        out.append(f"{_D}ENTER/SPACE toggle · ↑/↓ move · a all · t table · "
-                   f"ENTER on Start runs · q quit{_0}\x1b[K\r\n")
+        out.append(f"{_D}     table  [t]: {_0}{_C}{mode}{_0}\x1b[K\r\n")
+        solver = ("HyperQB — bounded, fast; 'not found' means only "
+                  "'not within k'" if opts.hyperqb
+                  else "AutoHyper — exact")
+        out.append(f"{_D}     solver [h]: {_0}{_C}{solver}{_0}\x1b[K\r\n")
+        if not cause_ok:
+            chk = f"{_D}(no [cause] block in this file){_0}"
+        elif opts.check:
+            chk = f"{_C}verify [cause] against the MTSR{_0}"
+        else:
+            chk = f"{_C}synthesize the MTSR only{_0}"
+        out.append(f"{_D}     mtsr   [c]: {_0}{chk}\x1b[K\r\n")
+        # Kept under ~80 columns on purpose: the menu redraws in place with a
+        # fixed cursor-up count, and a line that wraps desynchronises it.
+        out.append(f"{_D}ENTER/SPACE toggle · ↑/↓ move · a all · t/h/c switches"
+                   f" · ENTER on Start runs · q quit{_0}\x1b[K\r\n")
         sys.stdout.write("".join(out))
         sys.stdout.flush()
 
@@ -159,20 +242,25 @@ def checklist(path, options, show_tau=False):
             elif ch in (b"\r", b"\n", b" "):
                 if cur == START:
                     if ch != b" " and sel:
-                        return sel, show_tau
+                        return sel
                 else:
                     sel.symmetric_difference_update({cur})
             elif ch in (b"a", b"A"):
                 sel = set() if sel == set(enabled) else set(enabled)
             elif ch in (b"t", b"T"):
-                show_tau = not show_tau
+                opts.show_tau = not opts.show_tau
+            elif ch in (b"h", b"H"):
+                opts.hyperqb = not opts.hyperqb
+            elif ch in (b"c", b"C"):
+                if cause_ok:
+                    opts.check = not opts.check
             elif ch in (b"1", b"2", b"3", b"4"):
                 i = int(ch) - 1
                 if i in enabled:
                     sel.symmetric_difference_update({i})
                     cur = i
             elif ch in (b"q", b"Q", b"\x03"):
-                return set(), show_tau
+                return set()
             draw()
     finally:
         termios.tcsetattr(fd, termios.TCSADRAIN, old)
@@ -205,22 +293,50 @@ def main():
     ap.add_argument("--with-tau", action="store_true",
                     help="show the Tau witness too (extra table column + Tau "
                          "block); default is the compact Pi-only table")
+    ap.add_argument("--hyperQB", dest="hyperqb", action="store_true",
+                    help="solve analysis 1 with HyperQB 2.0 (bounded) instead "
+                         "of AutoHyper (exact). A reason it finds is a proof; "
+                         "finding none only means 'none within the bound'.")
+    ap.add_argument("--k", type=int, default=None,
+                    help="--hyperQB unrolling bound (default |prefix|+|loop|+2; "
+                         "solve time grows steeply in k)")
+    ap.add_argument("--hq-semantics", dest="hq_semantics", default="pes",
+                    choices=("pes", "opt", "hpes", "hopt"),
+                    help="--hyperQB bounded semantics (default pes: a sat is "
+                         "sound)")
+    ap.add_argument("--check", action="store_true",
+                    help="analysis 4 verifies the instance's [cause] block "
+                         "against the synthesized MTSR (language equivalence) "
+                         "instead of only synthesizing it")
     args = ap.parse_args()
 
     if not os.path.exists(args.file):
         raise SystemExit(f"no such file: {args.file}")
     options = _menu_options(args.file)
 
-    show_tau = args.with_tau
+    opts = Options(show_tau=args.with_tau, hyperqb=args.hyperqb, k=args.k,
+                   semantics=args.hq_semantics, check=args.check)
     if args.run:
         sel = parse_run_arg(args.run, options)
     elif sys.stdin.isatty():
-        sel, show_tau = checklist(args.file, options, show_tau)
+        sel = checklist(args.file, options, opts)
         if not sel:
             print("nothing selected — bye.")
             return
     else:
         raise SystemExit("stdin is not a terminal; use --run (e.g. --run 2,3 or --run all)")
+
+    # --check is a question about the MTSR, so it needs the MTSR. Adding it is
+    # what the user asked for; refusing and making them retype --run would not
+    # be.
+    if opts.check and MTSR_INDEX not in sel:
+        print(f"{_D}(--check verifies the MTSR, so analysis "
+              f"{MTSR_INDEX + 1} was added to the run){_0}")
+        sel = set(sel) | {MTSR_INDEX}
+    if opts.check and not has_cause(args.file):
+        print(f"{_Y}[!] --check needs a [cause] block in {os.path.basename(args.file)}, "
+              f"and there is none — analysis {MTSR_INDEX + 1} will synthesize "
+              f"the MTSR without checking it.{_0}")
 
     for i in sorted(sel):
         label, _ok, fn = options[i]
@@ -228,7 +344,7 @@ def main():
         sys.stdout.flush()
         t0 = time.perf_counter()
         try:
-            fn(args.file, args.timeout, show_tau)
+            fn(args.file, args.timeout, opts)
         except ValueError as ve:                  # determinism firewall
             print(f"{_R}[!] {ve}{_0}")
         except subprocess.TimeoutExpired:

@@ -3,6 +3,8 @@ __pycache__/
 
 # solver / pipeline temporaries
 temp_*
+# HyperRUSTY (--hyperQB) writes this NuSMV script into the cwd
+commands.txt
 aut1.hoa
 autRes.hoa
 
@@ -11,3 +13,10 @@ autRes.hoa
 *_counterexample.txt
 *_mtsr.png
 final_result.png
+
+# HyperQB is a local Rust build against a local Z3, not something we ship
+# (see the README, Setup). Drop or symlink the binary here.
+external_tools/HyperQB/
+
+# the --check demo instance (a candidate cause to verify)
+examples/example_1_cause.txt
