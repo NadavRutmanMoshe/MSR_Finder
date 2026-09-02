@@ -12,6 +12,21 @@ GREEN = "\033[92m"
 DIM = "\033[2m"
 RESET = "\033[0m"
 
+#: Wall-clock ceiling for a single autfilt call, matching the 120s used by the
+#: benchmark harness so demo and benchmark time out on the same instances.
+SAT_TIMEOUT = 120
+
+#: Address-space ceiling per autfilt call. RLIMIT_AS caps VIRTUAL size, which
+#: runs ~1.5x ahead of resident, so 6 GB here is roughly a 4 GB resident
+#: ceiling -- deliberately well under the WSL VM's 10 GB budget.
+SAT_MEM = 6 * 1024**3
+
+#: Above this many states, exact SAT-based minimization is not worth starting.
+#: It encodes "does an equivalent k-state automaton exist?" as SAT, so cost is
+#: exponential and it is meant for tens of states. An unguarded 21,840-state
+#: input once ran 21 minutes and exhausted a 10 GB VM without finishing.
+SAT_MINIMIZE_MAX_STATES = 500
+
 
 def _all_accepting(final_hoa):
     """True when the acceptance condition is trivial ('t') — every run is
@@ -157,6 +172,8 @@ def run_workflow(filename, output_image="final_result.png"):
         projected = proc_guard.run(
             proj_cmd,
             input=intersection_hoa,
+            timeout=SAT_TIMEOUT,
+            mem_limit=SAT_MEM,
             check=True
         ).stdout
 
@@ -181,9 +198,25 @@ def run_workflow(filename, output_image="final_result.png"):
                 aut_projected, 'generic', 'deterministic').to_str('hoa')
 
         # Step 3: exact SAT-based minimization.
+        #
+        # Guard first: SAT minimization is exponential, so past a few hundred
+        # states it does not finish and only burns memory until something dies.
+        # Refusing here is strictly better than a 120s timeout, because the
+        # timeout still pays 120s and 6 GB to learn what the state count
+        # already told us.
+        n_states = spot.automaton(projected).num_states()
+        if n_states > SAT_MINIMIZE_MAX_STATES:
+            raise RuntimeError(
+                f"{n_states} states exceeds SAT_MINIMIZE_MAX_STATES "
+                f"({SAT_MINIMIZE_MAX_STATES}); exact minimization would not "
+                f"terminate. Use spot.postprocess(aut, 'small') for a "
+                f"heuristic result.")
+
         result = proc_guard.run(
             ["autfilt", "--sat-minimize", "-B"],
             input=projected,
+            timeout=SAT_TIMEOUT,
+            mem_limit=SAT_MEM,
             check=True
         )
         timings["minimize"] = time.perf_counter() - t0
@@ -217,9 +250,23 @@ def run_workflow(filename, output_image="final_result.png"):
 
         timings["total"] = time.perf_counter() - t_start
 
+    except subprocess.TimeoutExpired as e:
+        # proc_guard has already killed the whole process group by here.
+        print(f"TIMEOUT: {e.cmd[0]} exceeded {SAT_TIMEOUT}s and was killed.")
+    except RuntimeError as e:
+        # The state-count guard: refused before starting, nothing was spawned.
+        print(f"SKIPPED: {e}")
     except subprocess.CalledProcessError as e:
-        print("Error during autfilt/dot processing:")
-        print(e.stderr)
+        # A non-zero exit after a mem_limit hit is std::bad_alloc, not a bug in
+        # the tool -- report it as resource exhaustion so it is not mistaken
+        # for a crash when these runs are tabulated.
+        stderr = e.stderr or ""
+        if "bad_alloc" in stderr or "Cannot allocate memory" in stderr:
+            print(f"RESOURCE-EXHAUSTED: {e.cmd[0]} hit the "
+                  f"{SAT_MEM // 1024**3} GB address-space cap.")
+        else:
+            print("Error during autfilt/dot processing:")
+            print(stderr)
     except FileNotFoundError as e:
         print(f"Error: Tool not found ({e.filename}). Make sure Spot (autfilt) and Graphviz (dot) are installed.")
 

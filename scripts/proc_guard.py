@@ -29,8 +29,9 @@ the need to be right about that.
 
 Platform note: process groups are POSIX-only. On Windows `start_new_session` is
 not available, so this degrades to exactly the old behaviour (kill the direct
-child). Containing a tree there needs a Job object, which is out of scope --
-the tool's own runs are on Linux/WSL.
+child), and `mem_limit` is ignored for the same reason (no `resource` module).
+Containing a tree there needs a Job object, which is out of scope -- the tool's
+own runs are on Linux/WSL.
 """
 import os
 import signal
@@ -38,6 +39,11 @@ import subprocess
 
 #: POSIX only -- see the platform note above.
 _POSIX = os.name == 'posix'
+
+if _POSIX:
+    #: Guarded: the stdlib `resource` module does not exist on Windows, and the
+    #: platform note above commits to this file still importing there.
+    import resource
 
 #: comm names of the processes this tool is responsible for. A second condition,
 #: not a sufficient one -- see reap_leaked_solvers.
@@ -90,7 +96,7 @@ def _kill_group(proc):
 
 
 def run(cmd, timeout=None, input=None, check=False,
-        capture_output=True, text=True, **popen_kw):
+        capture_output=True, text=True, mem_limit=None, **popen_kw):
     """Drop-in for `subprocess.run(capture_output=True, text=True, ...)`.
 
     Same return value and same exceptions (`TimeoutExpired`,
@@ -102,13 +108,37 @@ def run(cmd, timeout=None, input=None, check=False,
     whose output is meant to reach the terminal -- the child's streams are then
     inherited and `stdout`/`stderr` on the result are None, exactly as
     subprocess.run behaves without capture. The group kill applies either way.
+
+    `mem_limit` (bytes, POSIX only) caps the child's ADDRESS SPACE via
+    RLIMIT_AS. This is a different failure mode from `timeout` and neither
+    replaces the other: a timeout bounds how long a runaway lives, but a solver
+    can exhaust RAM long before it expires. An unbounded `autfilt
+    --sat-minimize` once reached 9.1 GB resident / 3.7 GB swap inside a 10 GB
+    WSL VM, which drove the whole VM into a thrash where even `kill(1)` burned
+    38% of a core -- the group kill below cannot help there, because nothing
+    has asked for the process to die yet.
+
+    Note RLIMIT_AS caps VIRTUAL size, which runs ahead of resident: that same
+    run peaked at 13.4 GB virtual against 9.1 GB resident, so budget roughly
+    1.5x the resident ceiling you actually want.
+
+    Spot is C++, so hitting the cap surfaces as std::bad_alloc and a non-zero
+    exit, not as a signal. Callers that record results should classify that as
+    RESOURCE-EXHAUSTED rather than as a tool crash.
     """
+    preexec = None
+    if _POSIX and mem_limit:
+        def preexec():
+            # Runs in the child. CPython applies start_new_session's setsid
+            # BEFORE preexec_fn, so the group kill and this cap compose.
+            resource.setrlimit(resource.RLIMIT_AS, (mem_limit, mem_limit))
+
     pipe = subprocess.PIPE if capture_output else None
     proc = subprocess.Popen(
         cmd,
         stdin=subprocess.PIPE if input is not None else None,
         stdout=pipe, stderr=pipe, text=text,
-        start_new_session=_POSIX, **popen_kw)
+        start_new_session=_POSIX, preexec_fn=preexec, **popen_kw)
     # start_new_session makes the child a group leader, so pgid == pid.
     pgid = proc.pid if _POSIX else None
     if pgid is not None:
