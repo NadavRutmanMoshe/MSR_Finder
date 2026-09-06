@@ -7,18 +7,31 @@ model checker: NuSMV models (one per trace quantifier) + a .hq formula + an
 unrolling bound, discharged with Z3.  Same one-model-per-quantifier convention
 AutoHyper uses, so the symbolic systems in smv_builder plug straight in.
 
-WHAT A VERDICT MEANS (read this before trusting one).  Under pessimistic
-semantics the guarantee is one-way:
+WHAT A VERDICT MEANS (read this before trusting one).  NEITHER direction is a
+proof on our queries:
 
-    sat    -> a witness was found inside the bound.  That witness is real, so
-              this is a PROOF and can be trusted.
-    unsat  -> no witness inside the bound k.  NOT a proof: raising k can turn
-              it into sat, and on our queries it demonstrably does.
+    unsat  -> no witness inside the bound k.  Raising k can turn it into sat,
+              and on our queries it demonstrably does.
+    sat    -> a witness was found inside the bound -- but the bound is also as
+              far as the formula was CHECKED, and ours are quantifier-alternating
+              (`forall pi2`, `forall tau2`).  HyperQB unrolls `G` and `F` with
+              no semantics-dependent tail at all (hltlunroller/src/lib.rs:
+              `Globally` is a plain conjunction over k..=bound, `Eventually` a
+              plain disjunction; only `X`, `U` and `R` read the pes/opt/hpes/
+              hopt flag), so `G psi` is TRUE whenever psi survives to the bound.
+              A universally quantified sufficiency claim is therefore accepted
+              on the strength of a k-step prefix.  Minimal reproducer:
+
+                  Forall pi . (G (~ acc[pi]))    on a 9-state model whose only
+                                                 `acc` state is 8 steps in
+                      k=6 -> sat  (WRONG)    k=8 -> unsat  (right)
+                      identical under -s pes, opt, hpes and hopt.
     error/timeout -> nothing was decided.
 
-hyperqb_analyzer therefore reports `sat` as a result and everything else as
+hyperqb_analyzer therefore treats a `sat` witness as a CANDIDATE and decides it
+exactly with msr_certify before reporting anything; everything else is
 UNKNOWN_BOUNDED, deferring to AutoHyper.  Do not relabel a bounded `unsat` as
-"no cause exists".
+"no cause exists", and do not report a bounded `sat` witness unchecked.
 
 Four things differ from AutoHyper and this module owns all four:
 

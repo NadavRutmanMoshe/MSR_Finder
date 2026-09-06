@@ -18,23 +18,41 @@ solver and, because of the solver, three things:
   the lasso (build_pi_smv is a counter with exactly one trace), which is an
   exact restatement rather than a bounded relaxation.
 
-  WHAT A VERDICT MEANS.  HyperQB is a bounded model checker.  `sat` means a
-  witness was found inside the bound, which is a proof.  `unsat` means only
-  "no witness within k" -- raising k can turn it into `sat`, and on these
-  queries it demonstrably does.  So this module reports:
+  WHAT A VERDICT MEANS.  HyperQB is a bounded model checker, and its `sat` is
+  NOT a proof for these queries.  Both SR and MSR carry a universal trace
+  quantifier, and HyperQB unrolls `G` and `F` with no semantics-dependent tail
+  (hltlunroller/src/lib.rs: `Globally` is a plain conjunction over k..bound,
+  `Eventually` a plain disjunction; only `X`, `U`, `R` consult pes/opt/hpes/
+  hopt).  So `G psi` reads as TRUE whenever psi survives to the bound, in every
+  semantics, and a `forall`-quantified sufficiency claim is checked no further
+  than the unrolling reaches.  One line, on this corpus:
 
-      sat at MSR      -> SAT_MSR        (a real minimal sufficient reason)
-      sat at SR       -> SAT_SR         (a real sufficient reason -- but read
-                                         the next paragraph)
-      anything else   -> UNKNOWN_BOUNDED
+      Forall pi . (G (~ acc[pi]))    on ltl2dba_alpha7__e06's REAL module
+          k=6  -> sat    (WRONG: the acc sink is 8 steps in)
+          k=8  -> unsat  (right)          -- identical under pes/opt/hpes/hopt
+
+  Left unchecked that returns an R which is not sufficient, or not minimal:
+  37 of 818 rows on the SYNTCOMP benchmark, in both flavours.
+
+  So HyperQB is the SEARCH engine here and msr_certify is the CHECKER: every
+  `sat` witness is decided EXACTLY (automaton emptiness, no bound) before it is
+  reported, which is cheap because checking an R costs nothing like finding it.
+  This module reports:
+
+      sat at MSR, R certified sufficient and minimal  -> SAT_MSR
+      sat at MSR, R sufficient but not minimal        -> SAT_SR (after trying
+                                                        to shrink R to an MSR)
+      sat at SR,  R certified sufficient              -> SAT_SR
+      witness fails certification, or anything else   -> UNKNOWN_BOUNDED
 
   SAT_SR MEANS SOMETHING WEAKER HERE than it does on the exact backend.  There,
   it is reached by PROVING the MSR query unsat, so it says "no minimal reason
   exists" -- the liveness case, where the sufficient reasons form an infinite
-  descending chain.  Here it is reached by not finding an MSR witness inside
-  the bound, which is not a proof of anything.  The reason reported is
-  genuinely sufficient; whether a minimal one exists is simply open.
-  cli_viewer prints the two cases differently for exactly this reason.
+  descending chain.  Here the reason IS certified sufficient; whether a minimal
+  one exists is open (though when R was certified non-minimal, the liveness
+  case is usually exactly what happened -- dropping one OCCURRENCE of a
+  periodic pin still suffices).  cli_viewer prints the two cases differently
+  for exactly this reason.
 
   It never reports UNSAT_NO_CAUSE or INVALID_PI, because a bounded `unsat`
   does not support either claim.  Use the default AutoHyper backend when you
@@ -72,6 +90,7 @@ if _HERE not in sys.path:
 
 import converter            # noqa: E402  (parse_hoa, determinism firewall)
 import hyperqb_backend as hq  # noqa: E402  (syntax translation + the runner)
+import msr_certify          # noqa: E402  (the exact check on every witness)
 import smv_builder          # noqa: E402  (the NuSMV modules)
 import smv_formulas         # noqa: E402  (the HyperLTL queries)
 import trace_analyzer       # noqa: E402  (parse_txt_effect)
@@ -181,9 +200,11 @@ def _shape_witness(tau_steps, pmeta, result):
     Guessing a period from a repeated valuation (the usual BMC presentation
     trick) would state more than the witness supports, so we do not.
 
-    Note what is NOT in doubt either way: the verdict.  `sat` says an MSR
-    exists and the solver held a witness for it.  Only our ability to PRINT all
-    of that witness is bounded.
+    Neither shape is trusted on the solver's word: _certify_witness decides the
+    R below exactly before anything is reported.  A FLAT witness is not thrown
+    away either -- read as a FINITE R (nothing pinned after the bound) it is a
+    perfectly good candidate, and when that certifies, `reason_complete` is
+    raised to True because the R that was checked is the whole of it.
     """
     start, period = pmeta["loop_start"], len(pmeta["chain"]) - pmeta["loop_start"]
     n = len(tau_steps)
@@ -214,6 +235,87 @@ def _shape_witness(tau_steps, pmeta, result):
                             "tau_prefix": tau_p, "tau_cycle": tau_c}
     result["pi_string"] = _fmt_lasso(pi_p, pi_c)
     result["tau_string"] = _fmt_lasso(tau_p, tau_c)
+
+
+# --------------------------------------------------------------------------- #
+# Certification -- the bounded verdict is a candidate, not an answer
+# --------------------------------------------------------------------------- #
+def _reshape(path, result, tau_p, tau_c):
+    """Put a certified R back on pi's own lasso, and re-render the strings.
+
+    A finite R decoded from a flat witness may run past pi's loop start; the
+    frame unrolls pi far enough to cover it and to land back on the loop start,
+    so the table shows pi's real loop instead of a flat prefix that stops
+    mid-lasso."""
+    pi_p, pi_c = msr_certify.pi_lasso(path)
+    chain_pi, chain_tau, start = msr_certify.frame(pi_p, pi_c, tau_p, tau_c)
+    result["table_data"] = {"pi_prefix": chain_pi[:start],
+                            "pi_cycle": chain_pi[start:],
+                            "tau_prefix": chain_tau[:start],
+                            "tau_cycle": chain_tau[start:]}
+    result["pi_string"] = _fmt_lasso(chain_pi[:start], chain_pi[start:])
+    result["tau_string"] = _fmt_lasso(chain_tau[:start], chain_tau[start:])
+    result["reason_complete"] = True
+    # _shape_witness may have left the "R is truncated" warning behind; the R
+    # here has been checked whole, so that warning is now false.
+    result["bounded_note"] = ""
+
+
+def _certify_witness(path, result, want_minimal):
+    """Decide the witness in result['table_data'] exactly.
+
+    Returns one of:
+      'MSR'     R is sufficient and subset-minimal   -- a real MSR
+      'SR'      R is sufficient, minimality is not established
+      'REJECT'  R is not sufficient: the bounded `sat` was about the bound
+      'SKIP'    spot is not reachable, so nothing was checked
+
+    On 'MSR'/'SR' the result's R is replaced by the R that was actually
+    certified (shrink may have dropped pins), so what is printed and what was
+    proved are the same object."""
+    td = result.get("table_data") or {}
+    tau_p = [set(s) for s in td.get("tau_prefix", [])]
+    tau_c = [set(s) for s in td.get("tau_cycle", [])]
+    def unchecked():
+        result["bounded_note"] = (
+            "R BELOW IS UNCERTIFIED. HyperQB's `sat` is not a proof for these "
+            "queries (its bounded `G` is optimistic in every semantics), and "
+            "spot -- which decides the question exactly -- was not reachable "
+            "to check the witness. Install the spot bindings, or point "
+            "$SPOT_ENV_PY at an environment that has them.")
+        return "SKIP"
+
+    if not msr_certify.available():
+        return unchecked()
+    cert = msr_certify.certify(path, tau_p, tau_c, want_minimal)
+    if cert == msr_certify.UNAVAILABLE:
+        return unchecked()
+    if not cert["sufficient"]:
+        return "REJECT"
+    if not want_minimal:
+        _reshape(path, result, tau_p, tau_c)
+        return "SR"
+    if cert["minimal"]:
+        _reshape(path, result, tau_p, tau_c)
+        return "MSR"
+
+    # Sufficient but not minimal (or undecided): try to shrink it into an MSR
+    # before settling for the weaker claim.  Dropping a whole pin keeps R a
+    # lasso; where what suffices is dropping a single OCCURRENCE of a periodic
+    # pin, no minimal reason exists and shrinking cannot help.
+    if cert["minimal"] is False:
+        tau_p, tau_c = msr_certify.shrink(path, tau_p, tau_c)
+        again = msr_certify.certify(path, tau_p, tau_c, True)
+        if again != msr_certify.UNAVAILABLE and again.get("minimal"):
+            _reshape(path, result, tau_p, tau_c)
+            return "MSR"
+    _reshape(path, result, tau_p, tau_c)
+    result["bounded_note"] = (
+        "R below is CERTIFIED SUFFICIENT (checked exactly, not at the bound). "
+        + (cert["note"] or "minimality was not decided") + ", so it is reported "
+        "as a sufficient reason and not as a minimal one. Re-run without "
+        "--hyperQB for an exact answer on whether a minimal reason exists.")
+    return "SR"
 
 
 # --------------------------------------------------------------------------- #
@@ -286,23 +388,41 @@ def analyze(path, timeout, k=None, semantics="pes"):
         return r["verdict"], r["states"], r["seconds"]
 
     try:
-        # STEP 1: MSR.  Only `sat` is a result; see the module docstring.
+        # STEP 1: MSR.  `sat` yields a CANDIDATE R, which is then decided
+        # exactly -- see the module docstring for why the verdict alone is not
+        # enough.
         verdict, states, secs = query("MSR")
         timings["MSR"] = secs
-        if verdict == "sat":
-            result["status"] = "SAT_MSR"
-            _shape_witness(_decode_tau(states, inputs, rename), pmeta, result)
-            return result
         msr_verdict = verdict
+        if verdict == "sat":
+            _shape_witness(_decode_tau(states, inputs, rename), pmeta, result)
+            t0 = time.perf_counter()
+            outcome = _certify_witness(path, result, True)
+            timings["certify"] = time.perf_counter() - t0
+            if outcome in ("MSR", "SKIP"):
+                result["status"] = "SAT_MSR"
+                return result
+            if outcome == "SR":
+                result["status"] = "SAT_SR"
+                return result
+            msr_verdict = "sat (witness rejected: R is not sufficient)"
 
-        # STEP 2: SR.
+        # STEP 2: SR.  Same treatment; only sufficiency is claimed, so only
+        # sufficiency is checked.
         verdict, states, secs = query("SR")
         timings["SR"] = secs
-        if verdict == "sat":
-            result["status"] = "SAT_SR"
-            _shape_witness(_decode_tau(states, inputs, rename), pmeta, result)
-            return result
         sr_verdict = verdict
+        if verdict == "sat":
+            _shape_witness(_decode_tau(states, inputs, rename), pmeta, result)
+            t0 = time.perf_counter()
+            outcome = _certify_witness(path, result, False)
+            timings["certify"] = timings.get("certify", 0) + time.perf_counter() - t0
+            if outcome in ("SR", "SKIP"):
+                result["status"] = "SAT_SR"
+                return result
+            sr_verdict = "sat (witness rejected: R is not sufficient)"
+            result["table_data"], result["pi_string"] = None, ""
+            result["tau_string"], result["bounded_note"] = "", ""
 
         # STEP 3: PI_VAL -- not a tiebreaker here, only extra information.  A
         # `sat` proves the lasso is a real system trace on which Phi holds, so
@@ -314,8 +434,12 @@ def analyze(path, timeout, k=None, semantics="pes"):
         if verdict == "sat":
             result["bounded_note"] = (
                 f"Pi IS a valid system trace satisfying the effect (PI_VAL sat, "
-                f"a proof). No sufficient reason was found within the bound "
-                f"k={k}: MSR {msr_verdict}, SR {sr_verdict}.")
+                f"a proof). No sufficient reason survived the bound k={k}: "
+                f"MSR {msr_verdict}, SR {sr_verdict}. A rejected witness means "
+                f"HyperQB answered `sat` but the R it held is not actually "
+                f"sufficient -- its bounded `G` looks no further than k, so "
+                f"raise --k (in steps of 2*|loop|) or re-run without "
+                f"--hyperQB.")
         else:
             result["bounded_note"] = (
                 f"Nothing was decided within the bound k={k}: MSR "

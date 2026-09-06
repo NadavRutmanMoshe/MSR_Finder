@@ -122,11 +122,56 @@ so rather than hiding it:
 
 | HyperQB says | the tool reports | is it a proof? |
 |---|---|---|
-| `sat` | `SAT_MSR` / `SAT_SR`, with the reason | **yes** — a witness inside the bound is a real witness |
+| `sat`, witness certified sufficient **and** minimal | `SAT_MSR`, with the reason | **yes** — but the *certificate* is the proof, not the verdict |
+| `sat`, witness certified sufficient only | `SAT_SR`, with the reason | **yes**, for sufficiency |
+| `sat`, witness fails certification | falls through, ends `UNKNOWN_BOUNDED` | — |
 | `unsat`, timeout, error | `UNKNOWN_BOUNDED` | **no** — only "nothing within `k`" |
 
 So `--hyperQB` never answers `UNSAT_NO_CAUSE` or `INVALID_PI`. When a *negative*
 answer has to mean something, drop the flag: the AutoHyper backend is exact.
+
+### Why a HyperQB `sat` is checked and not believed
+
+A bounded `sat` used to be reported as a result on the strength of the verdict
+alone. That is wrong here, and measurably so. Both the SR and the MSR query
+carry a **universal** trace quantifier (`∀π₂`, `∀τ₂`), and HyperQB unrolls `G`
+and `F` with no semantics-dependent tail at all —
+`hltlunroller/src/lib.rs` builds `Globally` as a plain conjunction over
+`k..=bound` and `Eventually` as a plain disjunction; only `X`, `U` and `R` read
+the `pes`/`opt`/`hpes`/`hopt` flag. So `G ψ` reads as **true** whenever `ψ`
+survives to the bound, and a universally quantified sufficiency claim is
+accepted on the strength of a `k`-step prefix. One line reproduces it:
+
+```
+Forall pi . (G (~ acc[pi]))        on a 9-state model whose only `acc`
+                                   state is 8 steps in
+    k=6 -> sat    (WRONG)          identical under -s pes, opt, hpes, hopt
+    k=8 -> unsat  (right)
+```
+
+Left unchecked that yields an R that is not sufficient, or is sufficient but
+not minimal — 37 wrong rows in 818 on the SYNTCOMP benchmark, plus a further
+182 whose truncated R was not sufficient either.
+
+So HyperQB is the **search** engine and `msr_certify.py` is the **checker**:
+every `sat` witness is decided exactly — plain automaton emptiness with spot,
+no bound — before anything is reported.
+
+```
+sufficiency   L(system) ∩ L(pins(R, π)) ∩ L(¬Φ)  =  ∅
+minimality    Good ∩ { τ₂ : τ₂ ⊆ R, τ₂ ≠ R }     =  ∅
+              where Good = complement( proj_τ₂ ( L(system) ∩ L(agree(τ₂, π)) ∩ L(¬Φ) ) )
+```
+
+Checking an R costs nothing like finding it: on the benchmark the check is
+~10 ms per instance against solve times in seconds to minutes, and it is broken
+out as `certify_s` in the benchmark CSV so a solver-only comparison is still
+available. `python3 msr_certify.py <file> --self-test` checks the checker on any
+instance, with no solver in the loop.
+
+A witness that fails certification is not a result: the pipeline carries on to
+the next query, and where nothing survives the answer is `UNKNOWN_BOUNDED` with
+a note saying the witness was rejected — raise `--k`, or drop `--hyperQB`.
 
 Two more things worth knowing:
 
@@ -143,17 +188,18 @@ Two more things worth knowing:
   status.
 * **`SAT_SR` means something weaker here.** On AutoHyper it is reached by
   *proving* the MSR query unsat, so it says "no minimal reason exists" — the
-  liveness case. Under `--hyperQB` it is reached by not finding an MSR witness
-  inside the bound, which proves nothing. The reason is genuinely sufficient;
-  whether a minimal one exists is simply open, and the tool says so.
-* **The reason may come back truncated.** τ decodes out of the bounded model
-  dump, which only covers `k` steps. When those steps repeat with the lasso's
-  own period, R is periodic and is shown in full. When they do not, what is
-  printed is a *prefix of* R — labelled `Reason R (TRUNCATED)`, with a note and
-  a suggested larger `--k`. The verdict is unaffected (a `sat` still proves an
-  MSR exists); only the display is bounded. On the twelve shipped examples, 6
-  come back complete at the default bound and 4 more become complete at a
-  larger one.
+  liveness case. Under `--hyperQB` the reason **is** certified sufficient, but
+  minimality is open: either the MSR witness was certified non-minimal (and
+  could not be shrunk into a minimal one — usually the liveness case, where
+  dropping a single *occurrence* of a periodic pin still suffices, so no
+  minimal reason exists at all), or no MSR witness turned up inside the bound.
+* **A truncated witness is checked, not discarded.** τ decodes out of the
+  bounded model dump, which only covers `k` steps. When those steps repeat with
+  the lasso's own period, R is periodic and is shown in full. When they do not,
+  the decoded pins are read as a **finite** R — nothing pinned after the bound —
+  and that is certified like any other candidate. It often holds: the reason is
+  then complete (not truncated), printed on an unrolled π, and proved. When it
+  does not hold, the witness is rejected rather than shown with a warning.
 * **Analyses 2 and 3 are split, not skipped.** Each is two steps — find a trace
   (or a counterexample), then explain it — and `--hyperQB` moves the second.
   The first stays on AutoHyper because it has to *read a trace out of the
@@ -441,6 +487,7 @@ scripts/
   mtsr_view.py        thin compatibility wrapper around MTSR_one_example
   hyperqb_analyzer.py --hyperQB: the same waterfall on the bounded solver
   hyperqb_backend.py  AutoHyper dialect -> HyperQB syntax, and the runner
+  msr_certify.py      the exact check every bounded witness has to pass
   smv_builder.py      the symbolic NuSMV modules HyperQB runs on
   smv_formulas.py     the MSR / SR / PI_VAL queries for that layout
 examples/             ready-to-run inputs (reachability, safety, ATVA'22 …)
