@@ -1,0 +1,36 @@
+[info]
+CATS SYNTCOMP: ltl2dba16 (spec=./sc-1/ltl2dba16.json, states=3, inputs=2, aps=3) effect #9 source=randltl
+
+[inputs]
+"q" "p"
+
+[effect]
+((F ((G "acc") -> "acc")) R (G "acc"))
+
+[lasso]
+AP: "acc" "p" "q"
+Prefix: {0 1 2} {1} {0 2}
+Loop: {1 2} {2}
+
+[system]
+HOA: v1
+Start: 0
+AP: 3 "acc" "p" "q"
+Acceptance: 0 t
+--BODY--
+State: 0
+[0&!1&!2] 0
+[!0&1&!2] 2
+[!0&!1&2] 1
+[0&1&2] 0
+State: 1
+[0&!1&!2] 0
+[!0&1&!2] 2
+[!0&!1&2] 1
+[!0&1&2] 1
+State: 2
+[!0&!1&!2] 2
+[!0&1&!2] 2
+[0&!1&2] 1
+[0&1&2] 0
+--END--

@@ -1,0 +1,24 @@
+[info]
+CATS SYNTCOMP: Button (spec=./sc-1/Button.json, states=1, inputs=1, aps=5) effect #3 source=randltl
+
+[inputs]
+"p0p0event0click"
+
+[effect]
+("u0count0f1dincrement0count1b" | (X false))
+
+[lasso]
+AP: "u0count0count" "u0count0f1dincrement0count1b" "p0p0event0click" "u0pic0pic" "u0pic0f1drender2button0count1b"
+Prefix: {1 2 4} {0 4} {0 4}
+Loop: {1 2 4}
+
+[system]
+HOA: v1
+Start: 0
+AP: 5 "u0count0count" "u0count0f1dincrement0count1b" "p0p0event0click" "u0pic0pic" "u0pic0f1drender2button0count1b"
+Acceptance: 0 t
+--BODY--
+State: 0
+[0&!1&!2&!3&4] 0
+[!0&1&2&!3&4] 0
+--END--

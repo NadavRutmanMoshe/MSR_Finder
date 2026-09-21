@@ -1,0 +1,819 @@
+instance,status,size,sufficient,minimal,note,verify_s
+Alarm_2d1010f8__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+Alarm_2d1010f8__e05,SAT_SR,6,True,,,0.011
+Button__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Button__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Button__e03,SAT_MSR,1,True,True,,1.006
+Button__e06,SAT_MSR,1,True,True,,0.506
+Button__e07,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+EnemeyModule__e00,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+EnemeyModule__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+EnemeyModule__e06,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+EnemeyModule__e07,SAT_MSR,2,True,True,,0.904
+EscalatorCountingInit__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+EscalatorCountingInit__e01,SAT_MSR,1,True,True,,6.997
+EscalatorCountingInit__e02,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+EscalatorCountingInit__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+EscalatorCountingInit__e05,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+EscalatorCountingInit__e08,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+EscalatorCounting__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+EscalatorCounting__e02,SAT_SR,6,True,,,0.015
+EscalatorCounting__e05,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+EscalatorCounting__e07,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+EscalatorCounting__e08,SAT_SR,26,,,SKIPPED: R truncated at the solver's bound,0.0
+EscalatorNonCounting__e01,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+EscalatorNonCounting__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+EscalatorNonCounting__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+EscalatorNonCounting__e07,SAT_MSR,1,True,True,,0.56
+EscalatorNonCounting__e08,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+EscalatorNonCounting__e09,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+HeatingMin_d6c5ac79__e00,SAT_MSR,1,True,True,,0.562
+HeatingMin_d6c5ac79__e02,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+HeatingMin_d6c5ac79__e04,SAT_MSR,3,True,True,,0.558
+HeatingMin_d6c5ac79__e05,SAT_MSR,1,True,True,,0.576
+Heating_235467da__e01,SAT_SR,9,True,,,0.016
+Heating_235467da__e02,SAT_SR,9,True,,,0.013
+Heating_235467da__e03,SAT_SR,9,True,,,0.012
+Heating_235467da__e06,SAT_MSR,5,,,SKIPPED: R truncated at the solver's bound,0.0
+Heating_235467da__e07,SAT_SR,30,,,SKIPPED: R truncated at the solver's bound,0.0
+Heating_235467da__e08,SAT_SR,9,True,,,0.015
+Heating_235467da__e09,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+Heating_b02056d6__e00,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+Heating_b02056d6__e04,SAT_SR,12,True,,,0.013
+Heating_b02056d6__e05,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+Heating_b02056d6__e06,SAT_SR,6,True,,,0.011
+Heating_b02056d6__e08,SAT_SR,8,True,,,0.01
+Heating_b02056d6__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Heating_b209ff21__e03,SAT_SR,9,True,,,0.011
+Heating_b209ff21__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Heating_b209ff21__e08,SAT_SR,9,True,,,0.01
+Heating_b209ff21__e09,SAT_SR,6,True,,,0.011
+Increment__e00,SAT_MSR,0,True,True,,0.493
+Increment__e02,SAT_MSR,1,True,True,,0.519
+Increment__e03,SAT_MSR,1,True,True,,0.505
+Increment__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Increment__e05,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+Increment__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Increment__e07,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Increment__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Increment__e09,SAT_MSR,1,True,True,,0.503
+KitchenTimerV0__e00,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+KitchenTimerV0__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+KitchenTimerV0__e03,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+KitchenTimerV0__e04,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+KitchenTimerV0__e07,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+KitchenTimerV0__e09,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+LightsMin_6bea956e__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+LightsMin_6bea956e__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+LightsMin_6bea956e__e05,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+LightsMin_6bea956e__e08,SAT_MSR,1,True,True,,1.591
+SPIReadClk__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+SPIReadClk__e07,SAT_SR,9,True,,,0.013
+SPIReadClk__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+SPIReadClk__e09,SAT_SR,9,True,,,0.008
+SensorRegister__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+SensorRegister__e02,SAT_MSR,1,True,True,,0.498
+SensorRegister__e03,SAT_MSR,1,True,True,,0.494
+SensorRegister__e05,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+SensorRegister__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+SensorRegister__e07,SAT_MSR,1,True,True,,0.49
+SensorRegister__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+SensorRegister__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Shades2Min_63831f8c__e01,SAT_MSR,1,True,True,,1.102
+Shades2Min_63831f8c__e02,SAT_MSR,1,True,True,,0.92
+Shades2Min_63831f8c__e04,SAT_MSR,3,True,True,,1.17
+Shades2Min_63831f8c__e05,SAT_MSR,3,True,True,,1.584
+Shades2Min_63831f8c__e06,SAT_MSR,1,True,True,,0.893
+Shades2Min_63831f8c__e08,SAT_MSR,1,True,True,,0.887
+ShadesMin_aeb1d897__e00,SAT_MSR,1,True,True,,0.566
+ShadesMin_aeb1d897__e04,SAT_MSR,1,True,True,,0.554
+ShadesMin_aeb1d897__e05,SAT_MSR,1,True,True,,0.56
+ShadesMin_aeb1d897__e06,SAT_MSR,2,True,True,,0.565
+Shades_6479ef9a__e01,SAT_SR,12,True,,,0.015
+Shades_6479ef9a__e05,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+Shades_6479ef9a__e07,SAT_SR,12,True,,,0.015
+Shades_6479ef9a__e09,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+Shades_9cac58d3__e01,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+Shades_9cac58d3__e04,SAT_SR,12,True,,,0.015
+Shades_9cac58d3__e05,SAT_SR,3,True,,,0.012
+Shades_9cac58d3__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Shades_a02758ea__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+Shades_a02758ea__e03,SAT_SR,9,True,,,0.016
+Shades_a02758ea__e04,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+Shades_a02758ea__e07,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Shades_a02758ea__e08,SAT_SR,6,True,,,0.014
+Shades_a02758ea__e09,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+SliderDefault__e00,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+SliderDefault__e01,SAT_MSR,2,True,True,,0.59
+SliderDefault__e02,SAT_MSR,1,True,True,,0.61
+SliderDefault__e03,SAT_MSR,1,True,True,,0.658
+SliderDefault__e05,SAT_MSR,1,True,True,,0.626
+SliderDefault__e06,SAT_SR,8,True,,,0.017
+SliderDefault__e07,SAT_MSR,1,True,True,,0.609
+SliderDefault__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Timer_a50cadd7__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Timer_a50cadd7__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+Timer_a50cadd7__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+TorcsAccelerating__e01,SAT_MSR,7,,,SKIPPED: R truncated at the solver's bound,0.0
+TorcsAccelerating__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+TorcsAccelerating__e09,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+TorcsGearing__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+TorcsGearing__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+TorcsGearing__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+TorcsGearing__e05,SAT_MSR,1,True,True,,0.506
+TorcsGearing__e06,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+TorcsGearing__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter1__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter1__e03,SAT_MSR,5,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter1__e04,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter1__e07,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter1__e08,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+abcg_arbiter2__e01,SAT_SR,30,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter2__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter2__e06,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+abcg_arbiter2__e07,SAT_SR,30,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter2__e09,SAT_SR,29,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter3__e01,SAT_SR,42,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter3__e03,SAT_SR,98,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter3__e04,SAT_SR,34,,,SKIPPED: R truncated at the solver's bound,0.0
+abcg_arbiter3__e05,SAT_SR,19,True,,,0.028
+abcg_arbiter3__e06,SAT_SR,47,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_arbiter2__e02,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_arbiter2__e03,SAT_SR,15,True,,,0.014
+amba_decomposed_arbiter2__e04,SAT_MSR,1,True,True,,1.579
+amba_decomposed_arbiter2__e05,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_decode__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_decode__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_decode__e06,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_decode__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_encode2__e00,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_encode2__e01,SAT_MSR,0,True,True,,0.753
+amba_decomposed_encode2__e03,SAT_MSR,2,True,True,,0.83
+amba_decomposed_encode2__e06,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+amba_decomposed_encode2__e07,SAT_MSR,2,True,True,,0.738
+amba_decomposed_encode2__e09,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_shift__e00,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_shift__e01,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_shift__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+amba_decomposed_shift__e03,SAT_MSR,1,True,True,,0.556
+amba_decomposed_shift__e07,SAT_MSR,1,True,True,,0.546
+amba_decomposed_shift__e08,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+amba_decomposed_shift__e09,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter1__e01,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter1__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+arbiter1__e04,SAT_MSR,1,True,True,,0.493
+arbiter1__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter1__e09,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter2__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter2__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter2__e07,SAT_MSR,1,True,True,,0.569
+arbiter3__e00,SAT_SR,39,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter3__e02,SAT_MSR,1,True,True,,2.164
+arbiter3__e03,SAT_SR,10,True,,,0.013
+arbiter3__e06,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+arbiter3__e07,SAT_SR,11,True,,,0.012
+arbiter_with_buffer1__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter_with_buffer1__e03,SAT_MSR,1,True,True,,0.565
+arbiter_with_buffer1__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter_with_buffer1__e07,SAT_MSR,1,True,True,,0.56
+arbiter_with_buffer1__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter_with_cancel1__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter_with_cancel1__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter_with_cancel1__e04,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+arbiter_with_cancel1__e06,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+collector_v13__e00,SAT_SR,23,,,SKIPPED: R truncated at the solver's bound,0.0
+collector_v13__e03,SAT_SR,3,True,,,0.019
+collector_v13__e04,SAT_SR,9,True,,,0.014
+collector_v13__e06,SAT_SR,14,True,,,0.01
+collector_v13__e08,SAT_SR,12,True,,,0.011
+collector_v13__e09,SAT_SR,9,True,,,0.009
+collector_v23__e00,SAT_SR,15,True,,,0.009
+collector_v23__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+collector_v23__e04,SAT_SR,9,True,,,0.014
+collector_v23__e05,SAT_SR,15,True,,,0.011
+collector_v33__e05,SAT_MSR,1,True,True,,0.804
+collector_v33__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+detector1__e00,SAT_MSR,1,True,True,,0.503
+detector1__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+detector1__e04,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+detector1__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+detector1__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+detector2__e00,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+detector2__e02,SAT_MSR,1,True,True,,0.559
+detector2__e03,SAT_MSR,1,True,True,,0.657
+detector2__e05,SAT_MSR,1,True,True,,0.59
+detector2__e08,SAT_MSR,1,True,True,,0.574
+detector2__e09,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+detector3__e00,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+detector3__e02,SAT_SR,6,True,,,0.016
+detector3__e04,SAT_SR,6,True,,,0.011
+detector3__e05,SAT_MSR,1,True,True,,0.784
+detector3__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+detector3__e09,SAT_MSR,0,True,True,,0.803
+example101__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example101__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example102__e00,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+example102__e01,SAT_MSR,1,True,True,,0.516
+example102__e07,SAT_MSR,1,True,True,,0.519
+example102__e08,SAT_MSR,1,True,True,,0.525
+example102__e09,SAT_MSR,1,True,True,,0.506
+example103__e00,SAT_MSR,1,True,True,,0.538
+example103__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example103__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example103__e05,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+example103__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example103__e07,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+example10a1__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example10a1__e02,SAT_MSR,1,True,True,,0.519
+example10a1__e04,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+example10a1__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example10a1__e06,SAT_MSR,0,True,False,a proper subset of R is also sufficient,0.536
+example10a1__e07,SAT_MSR,1,True,True,,0.525
+example10a2__e00,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example10a2__e01,SAT_MSR,1,True,True,,0.533
+example10a2__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example10a2__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example10a2__e07,SAT_MSR,1,True,True,,0.541
+example10a2__e08,SAT_MSR,1,True,True,,0.513
+example10a2__e09,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example10a3__e01,SAT_MSR,1,True,True,,0.512
+example10a3__e03,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example10a3__e04,SAT_MSR,8,,,SKIPPED: R truncated at the solver's bound,0.0
+example10a3__e06,SAT_MSR,1,True,True,,0.546
+example10a3__e08,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example10a3__e09,SAT_MSR,10,,,SKIPPED: R truncated at the solver's bound,0.0
+example71__e00,SAT_MSR,1,True,True,,0.523
+example71__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example71__e05,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+example71__e07,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example71__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example72__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example72__e04,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example72__e08,SAT_SR,8,True,,,0.017
+example72__e09,SAT_MSR,1,True,True,,0.575
+example73__e02,SAT_SR,9,True,,,0.014
+example73__e04,SAT_SR,35,,,SKIPPED: R truncated at the solver's bound,0.0
+example73__e05,SAT_SR,36,,,SKIPPED: R truncated at the solver's bound,0.0
+example73__e06,SAT_SR,3,True,,,0.017
+example7a1__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example7a1__e03,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example7a1__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example7a1__e06,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example7a1__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example7a2__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example7a2__e01,SAT_MSR,1,True,True,,0.562
+example7a2__e08,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example7a3__e04,SAT_SR,15,True,,,0.015
+example7a3__e05,SAT_SR,6,True,,,0.014
+example7a3__e08,SAT_SR,9,True,,,0.015
+example7a3__e09,SAT_SR,12,True,,,0.014
+example81__e00,SAT_MSR,1,True,True,,0.517
+example81__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example81__e03,SAT_MSR,1,True,True,,0.528
+example81__e07,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example81__e09,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+example82__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example82__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example82__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example82__e07,SAT_MSR,1,True,True,,0.571
+example82__e09,SAT_MSR,1,True,True,,0.574
+example83__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example83__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example83__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example83__e06,SAT_SR,9,True,,,0.018
+example83__e09,SAT_SR,9,True,,,0.015
+example91__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example91__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example91__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example91__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example91__e06,SAT_MSR,1,True,True,,0.52
+example91__e07,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example92__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example92__e01,SAT_MSR,1,True,True,,0.509
+example92__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example92__e03,SAT_MSR,1,True,True,,0.504
+example92__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example92__e05,SAT_MSR,1,True,True,,0.535
+example92__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example92__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+example93__e00,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example93__e06,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+example93__e07,SAT_MSR,1,True,True,,0.53
+example93__e08,SAT_MSR,1,True,True,,0.521
+example93__e09,SAT_MSR,1,True,True,,0.534
+full_arbiter2__e01,SAT_MSR,1,True,True,,0.573
+full_arbiter2__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+full_arbiter2__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+full_arbiter2__e05,SAT_MSR,1,True,True,,0.606
+full_arbiter2__e07,SAT_SR,8,True,,,0.015
+full_arbiter2__e08,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+full_arbiter2__e09,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+full_arbiter3__e01,SAT_SR,9,True,,,0.013
+full_arbiter3__e02,SAT_SR,18,True,,,0.01
+full_arbiter3__e03,SAT_MSR,1,True,True,,2.58
+full_arbiter3__e04,SAT_SR,30,,,SKIPPED: R truncated at the solver's bound,0.0
+full_arbiter3__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+full_arbiter3__e07,SAT_SR,45,,,SKIPPED: R truncated at the solver's bound,0.0
+full_arbiter3__e09,SAT_SR,38,,,SKIPPED: R truncated at the solver's bound,0.0
+lift2__e00,SAT_SR,14,True,,,0.015
+lift2__e01,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+lift2__e02,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+lift2__e04,SAT_SR,18,,,SKIPPED: R truncated at the solver's bound,0.0
+lift2__e07,SAT_MSR,8,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_unary_enc2__e00,SAT_MSR,5,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_unary_enc2__e01,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+lift_unary_enc2__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_unary_enc2__e03,SAT_SR,6,True,,,0.017
+lift_unary_enc2__e04,SAT_SR,8,True,,,0.011
+lift_unary_enc2__e07,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_unary_enc2__e08,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_unary_enc3__e01,SAT_SR,46,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_unary_enc3__e04,SAT_SR,3,True,,,0.017
+lift_unary_enc3__e05,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_unary_enc3__e06,SAT_SR,6,True,,,0.016
+lift_unary_enc3__e07,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_wrong_physics_unreal2__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_wrong_physics_unreal2__e04,SAT_SR,10,True,,,0.013
+lift_wrong_physics_unreal2__e06,SAT_SR,19,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_wrong_physics_unreal2__e07,SAT_SR,20,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_wrong_physics_unreal2__e08,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+lift_wrong_physics_unreal2__e09,SAT_SR,10,True,,,0.014
+lilydemo03__e00,SAT_SR,9,True,,,0.01
+lilydemo03__e02,SAT_SR,3,True,,,0.009
+lilydemo03__e05,SAT_MSR,1,True,True,,0.998
+lilydemo03__e09,SAT_SR,7,True,,,0.018
+lilydemo04__e01,SAT_SR,15,True,,,0.016
+lilydemo04__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+lilydemo04__e04,SAT_SR,6,True,,,0.015
+lilydemo04__e07,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+lilydemo04__e08,SAT_SR,12,True,,,0.014
+lilydemo05__e01,SAT_SR,6,True,,,0.012
+lilydemo05__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+lilydemo05__e04,SAT_SR,6,True,,,0.011
+lilydemo05__e06,SAT_SR,18,True,,,0.008
+lilydemo05__e09,SAT_SR,12,True,,,0.015
+lilydemo06__e01,SAT_SR,6,True,,,0.009
+lilydemo06__e03,SAT_SR,3,True,,,0.017
+lilydemo06__e04,SAT_SR,9,True,,,0.013
+lilydemo06__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo06__e06,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo07__e00,SAT_SR,3,True,,,0.015
+lilydemo07__e01,SAT_SR,9,True,,,0.01
+lilydemo07__e02,SAT_SR,12,True,,,0.012
+lilydemo07__e03,SAT_SR,3,True,,,0.01
+lilydemo07__e05,SAT_SR,6,True,,,0.011
+lilydemo07__e07,SAT_SR,35,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo07__e09,SAT_SR,9,True,,,0.014
+lilydemo09__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo09__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo09__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo09__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo12__e01,SAT_MSR,1,True,True,,0.563
+lilydemo12__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+lilydemo12__e03,SAT_MSR,1,True,True,,0.567
+lilydemo12__e05,SAT_MSR,1,True,True,,0.576
+lilydemo12__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo12__e09,SAT_MSR,1,True,True,,0.55
+lilydemo13__e04,SAT_MSR,1,True,True,,0.542
+lilydemo13__e05,SAT_MSR,1,True,True,,0.506
+lilydemo13__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo13__e07,SAT_MSR,2,True,True,,0.529
+lilydemo19__e02,SAT_SR,6,True,,,0.014
+lilydemo19__e03,SAT_MSR,1,True,True,,0.583
+lilydemo19__e06,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+lilydemo19__e09,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo20__e00,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+lilydemo20__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo20__e04,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+lilydemo20__e07,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo20__e08,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo22__e01,SAT_SR,12,True,,,0.014
+lilydemo22__e04,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+lilydemo22__e05,SAT_SR,12,True,,,0.015
+lilydemo22__e06,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo22__e07,SAT_SR,12,True,,,0.014
+lilydemo22__e09,SAT_SR,14,True,,,0.01
+lilydemo23__e01,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo23__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo23__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo23__e07,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+lilydemo23__e09,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+load_balancer2__e01,SAT_MSR,1,True,True,,1.273
+load_balancer2__e02,SAT_SR,23,,,SKIPPED: R truncated at the solver's bound,0.0
+load_balancer2__e03,SAT_SR,29,,,SKIPPED: R truncated at the solver's bound,0.0
+load_balancer2__e05,SAT_SR,9,True,,,0.016
+load_balancer2__e07,SAT_SR,9,True,,,0.011
+load_balancer2__e09,SAT_SR,6,True,,,0.009
+load_balancer_unreal22__e00,SAT_MSR,8,,,SKIPPED: R truncated at the solver's bound,0.0
+load_balancer_unreal22__e03,SAT_MSR,1,True,True,,5.15
+load_balancer_unreal22__e05,SAT_MSR,1,True,True,,2.016
+load_balancer_unreal22__e06,SAT_SR,9,True,,,0.015
+load_balancer_unreal22__e08,SAT_SR,9,True,,,0.012
+load_balancer_unreal22__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba01__e02,SAT_SR,9,True,,,0.012
+ltl2dba01__e03,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba01__e06,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba01__e07,SAT_SR,12,True,,,0.012
+ltl2dba01__e08,SAT_SR,9,True,,,0.012
+ltl2dba02__e00,SAT_SR,9,True,,,0.01
+ltl2dba02__e02,SAT_SR,6,True,,,0.01
+ltl2dba02__e04,SAT_SR,9,True,,,0.01
+ltl2dba02__e05,SAT_SR,6,True,,,0.016
+ltl2dba02__e06,SAT_SR,6,True,,,0.012
+ltl2dba02__e07,SAT_SR,9,True,,,0.009
+ltl2dba02__e08,SAT_SR,6,True,,,0.011
+ltl2dba03__e00,SAT_SR,12,True,,,0.008
+ltl2dba03__e01,SAT_SR,12,True,,,0.008
+ltl2dba03__e02,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba03__e04,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba03__e05,SAT_SR,15,True,,,0.016
+ltl2dba03__e06,SAT_SR,9,True,,,0.012
+ltl2dba04__e00,SAT_SR,3,True,,,0.009
+ltl2dba04__e01,SAT_MSR,2,True,True,,1.754
+ltl2dba04__e03,SAT_MSR,1,True,True,,0.929
+ltl2dba04__e04,SAT_SR,12,True,,,0.014
+ltl2dba04__e05,SAT_MSR,2,True,True,,0.84
+ltl2dba04__e08,SAT_MSR,0,True,True,,0.677
+ltl2dba09__e02,SAT_MSR,0,True,True,,1.026
+ltl2dba09__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba09__e07,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba09__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba10__e00,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba10__e01,SAT_MSR,2,True,True,,0.576
+ltl2dba10__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba10__e05,SAT_MSR,1,True,True,,0.583
+ltl2dba10__e06,SAT_MSR,3,True,True,,0.576
+ltl2dba10__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba11__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba11__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba11__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba11__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba11__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba11__e07,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba11__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba12__e00,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba12__e02,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba12__e03,SAT_MSR,2,True,True,,0.575
+ltl2dba12__e05,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba12__e06,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba12__e07,SAT_MSR,2,True,True,,0.566
+ltl2dba13__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba13__e04,SAT_MSR,1,True,True,,0.762
+ltl2dba13__e05,SAT_MSR,1,True,True,,0.924
+ltl2dba14__e00,SAT_MSR,1,True,True,,0.977
+ltl2dba14__e01,SAT_MSR,1,True,True,,0.802
+ltl2dba14__e02,SAT_MSR,1,True,True,,0.969
+ltl2dba14__e04,SAT_MSR,1,True,True,,4.985
+ltl2dba15__e00,SAT_MSR,2,True,True,,0.586
+ltl2dba15__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba15__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba15__e04,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba15__e05,SAT_MSR,1,True,True,,0.569
+ltl2dba15__e07,SAT_MSR,2,True,True,,0.572
+ltl2dba15__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba15__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba16__e00,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dba16__e02,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba16__e03,SAT_MSR,3,True,True,,0.622
+ltl2dba16__e05,SAT_MSR,3,True,True,,0.59
+ltl2dba16__e07,SAT_MSR,2,True,True,,0.622
+ltl2dba16__e08,SAT_MSR,0,True,True,,0.591
+ltl2dba17__e01,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba17__e05,SAT_MSR,1,True,True,,0.604
+ltl2dba17__e06,SAT_MSR,10,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba17__e08,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba17__e09,SAT_MSR,1,True,True,,0.605
+ltl2dba18__e00,SAT_SR,12,True,,,0.014
+ltl2dba18__e04,SAT_SR,6,True,,,0.01
+ltl2dba18__e05,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba18__e06,SAT_SR,0,True,,,0.012
+ltl2dba18__e08,SAT_SR,9,True,,,0.009
+ltl2dba18__e09,SAT_SR,9,True,,,0.011
+ltl2dba19__e01,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba19__e02,SAT_SR,10,True,,,0.014
+ltl2dba19__e09,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba21__e00,SAT_SR,12,True,,,0.014
+ltl2dba21__e01,SAT_MSR,1,True,True,,0.701
+ltl2dba21__e03,SAT_SR,10,True,,,0.013
+ltl2dba21__e08,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dba22__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba22__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba22__e06,SAT_MSR,1,True,True,,0.538
+ltl2dba23__e00,SAT_MSR,2,True,True,,0.629
+ltl2dba23__e03,SAT_MSR,2,True,True,,0.605
+ltl2dba23__e05,SAT_MSR,2,True,True,,0.59
+ltl2dba23__e06,SAT_SR,22,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba23__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba24__e00,SAT_MSR,1,True,True,,0.532
+ltl2dba24__e01,SAT_MSR,1,True,True,,0.528
+ltl2dba24__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba24__e05,SAT_MSR,1,True,True,,0.534
+ltl2dba24__e08,SAT_MSR,1,True,True,,0.537
+ltl2dba25__e00,SAT_MSR,1,True,True,,0.907
+ltl2dba25__e01,SAT_MSR,1,True,True,,0.906
+ltl2dba25__e05,SAT_MSR,1,True,True,,0.953
+ltl2dba25__e06,SAT_SR,6,True,,,0.012
+ltl2dba25__e07,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba26__e00,SAT_SR,12,True,,,0.01
+ltl2dba26__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba26__e04,SAT_SR,23,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba26__e09,SAT_MSR,1,True,True,,1.733
+ltl2dba_C21__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_C21__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_C21__e05,SAT_MSR,1,True,True,,0.542
+ltl2dba_C21__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_C21__e07,SAT_MSR,1,True,True,,0.522
+ltl2dba_C22__e00,SAT_MSR,2,True,True,,0.607
+ltl2dba_C22__e01,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_C22__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_C23__e01,SAT_MSR,2,True,True,,0.862
+ltl2dba_C23__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dba_C23__e03,SAT_MSR,1,True,True,,0.94
+ltl2dba_C23__e05,SAT_MSR,1,True,True,,0.807
+ltl2dba_C23__e07,SAT_SR,12,True,,,0.012
+ltl2dba_C23__e08,SAT_SR,6,True,,,0.01
+ltl2dba_E1__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_E1__e04,SAT_MSR,1,True,True,,0.531
+ltl2dba_E1__e05,SAT_MSR,1,True,True,,0.535
+ltl2dba_E1__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_E1__e07,SAT_MSR,1,True,True,,0.525
+ltl2dba_E2__e04,SAT_SR,10,True,,,0.012
+ltl2dba_E2__e05,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_E2__e09,SAT_MSR,1,True,True,,0.59
+ltl2dba_E3__e02,SAT_SR,6,True,,,0.01
+ltl2dba_E3__e05,SAT_MSR,1,True,True,,0.998
+ltl2dba_E3__e09,SAT_SR,9,True,,,0.011
+ltl2dba_Q1__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_Q1__e01,SAT_MSR,1,True,True,,0.524
+ltl2dba_Q1__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_Q1__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_Q1__e09,SAT_MSR,1,True,True,,0.538
+ltl2dba_Q2__e01,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_Q2__e02,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_Q2__e04,SAT_SR,6,True,,,0.013
+ltl2dba_Q2__e08,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_Q2__e09,SAT_MSR,1,True,True,,0.584
+ltl2dba_Q3__e03,SAT_MSR,3,True,True,,1.003
+ltl2dba_Q3__e04,SAT_SR,9,True,,,0.014
+ltl2dba_Q3__e05,SAT_SR,3,True,,,0.009
+ltl2dba_Q3__e06,SAT_SR,6,True,,,0.009
+ltl2dba_Q3__e08,SAT_SR,9,True,,,0.012
+ltl2dba_Q3__e09,SAT_SR,5,True,,,0.012
+ltl2dba_R1__e01,SAT_MSR,2,True,True,,0.518
+ltl2dba_R1__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_R1__e04,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dba_R1__e06,SAT_MSR,1,True,True,,0.516
+ltl2dba_R1__e09,SAT_MSR,1,True,True,,0.523
+ltl2dba_U11__e02,SAT_MSR,1,True,True,,0.542
+ltl2dba_U11__e03,SAT_MSR,1,True,True,,0.511
+ltl2dba_U11__e04,SAT_MSR,1,True,True,,0.532
+ltl2dba_U11__e05,SAT_MSR,1,True,True,,0.528
+ltl2dba_U11__e06,SAT_MSR,1,True,True,,0.515
+ltl2dba_U11__e07,SAT_MSR,1,True,True,,0.524
+ltl2dba_U11__e08,SAT_MSR,1,True,True,,0.518
+ltl2dba_U11__e09,SAT_MSR,1,True,True,,0.52
+ltl2dba_U12__e02,SAT_MSR,1,True,True,,0.725
+ltl2dba_U12__e03,SAT_MSR,1,True,True,,0.556
+ltl2dba_U12__e04,SAT_MSR,1,True,True,,0.588
+ltl2dba_U12__e08,SAT_MSR,2,True,True,,0.565
+ltl2dba_U12__e09,SAT_MSR,1,True,True,,0.59
+ltl2dba_U13__e00,SAT_MSR,1,True,True,,0.858
+ltl2dba_U13__e01,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_U13__e02,SAT_SR,8,True,,,0.015
+ltl2dba_U13__e03,SAT_MSR,1,True,True,,0.88
+ltl2dba_U13__e04,SAT_SR,6,True,,,0.015
+ltl2dba_U13__e07,SAT_MSR,1,True,True,,1.973
+ltl2dba_U13__e08,SAT_SR,6,True,,,0.014
+ltl2dba_alpha10__e01,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.011
+ltl2dba_alpha10__e02,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.012
+ltl2dba_alpha10__e05,SAT_SR,24,True,,,0.014
+ltl2dba_alpha10__e06,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.011
+ltl2dba_alpha10__e08,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.011
+ltl2dba_alpha10__e09,SAT_SR,35,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha12__e01,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.013
+ltl2dba_alpha12__e02,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.011
+ltl2dba_alpha12__e06,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.015
+ltl2dba_alpha14__e01,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.012
+ltl2dba_alpha14__e04,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.013
+ltl2dba_alpha14__e08,SAT_SR,35,True,,,0.013
+ltl2dba_alpha16__e00,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.01
+ltl2dba_alpha16__e02,SAT_SR,38,True,,,0.009
+ltl2dba_alpha16__e04,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.01
+ltl2dba_alpha16__e06,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.01
+ltl2dba_alpha16__e09,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.016
+ltl2dba_alpha1__e00,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha1__e06,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha1__e07,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha1__e08,SAT_MSR,4,True,True,,0.618
+ltl2dba_alpha25__e02,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.015
+ltl2dba_alpha25__e08,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.01
+ltl2dba_alpha2__e01,SAT_MSR,1,True,True,,0.604
+ltl2dba_alpha2__e03,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha2__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha2__e05,SAT_SR,12,True,,,0.013
+ltl2dba_alpha2__e08,SAT_MSR,0,True,True,,0.592
+ltl2dba_alpha3__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha3__e06,SAT_MSR,1,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.018
+ltl2dba_alpha3__e09,SAT_SR,12,True,,,0.012
+ltl2dba_alpha4__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha4__e05,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.014
+ltl2dba_alpha4__e06,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.01
+ltl2dba_alpha4__e08,SAT_MSR,1,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.012
+ltl2dba_alpha50__e08,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.013
+ltl2dba_alpha5__e03,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.012
+ltl2dba_alpha5__e04,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha5__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha5__e07,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.015
+ltl2dba_alpha5__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha6__e01,SAT_SR,16,True,,,0.01
+ltl2dba_alpha6__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_alpha6__e04,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.013
+ltl2dba_alpha6__e09,SAT_MSR,1,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.011
+ltl2dba_alpha7__e00,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.01
+ltl2dba_alpha7__e04,SAT_SR,16,True,,,0.009
+ltl2dba_alpha7__e06,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.016
+ltl2dba_alpha7__e07,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.01
+ltl2dba_alpha7__e08,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.011
+ltl2dba_alpha8__e02,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.012
+ltl2dba_alpha8__e04,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.01
+ltl2dba_alpha8__e05,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.012
+ltl2dba_alpha8__e06,SAT_MSR,0,False,,NOT SUFFICIENT -- a system trace agrees with pi everywhere R pins and still violates Phi,0.013
+ltl2dba_beta1__e00,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_beta1__e02,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_beta1__e04,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_beta1__e05,SAT_MSR,1,True,True,,0.608
+ltl2dba_beta1__e06,SAT_MSR,5,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dba_beta1__e07,SAT_SR,10,True,,,0.012
+ltl2dba_beta1__e09,SAT_MSR,2,True,True,,0.588
+ltl2dpa01__e02,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa01__e03,SAT_MSR,2,True,True,,0.532
+ltl2dpa01__e05,SAT_MSR,1,True,True,,0.544
+ltl2dpa01__e07,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa01__e08,SAT_MSR,3,True,True,,0.536
+ltl2dpa01__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa02__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa02__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa02__e02,SAT_MSR,5,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa02__e03,SAT_MSR,1,True,True,,0.63
+ltl2dpa02__e04,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa02__e05,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa02__e07,SAT_MSR,3,True,True,,0.597
+ltl2dpa02__e08,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa02__e09,SAT_MSR,1,True,True,,0.607
+ltl2dpa03__e00,SAT_SR,12,True,,,0.018
+ltl2dpa03__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa03__e04,SAT_SR,30,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa03__e05,SAT_SR,28,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa03__e06,SAT_SR,12,True,,,0.016
+ltl2dpa03__e07,SAT_SR,18,True,,,0.013
+ltl2dpa03__e08,SAT_SR,11,True,,,0.015
+ltl2dpa04__e01,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa04__e02,SAT_MSR,2,True,True,,0.606
+ltl2dpa04__e05,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa04__e08,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa04__e09,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa05__e01,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa05__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa05__e03,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa05__e04,SAT_MSR,5,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa05__e08,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa06__e00,SAT_MSR,1,True,True,,0.954
+ltl2dpa06__e02,SAT_MSR,3,True,True,,1.441
+ltl2dpa06__e03,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa06__e04,SAT_MSR,2,True,True,,1.037
+ltl2dpa06__e05,SAT_MSR,2,True,True,,1.033
+ltl2dpa06__e06,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa07__e03,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa07__e05,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa07__e06,SAT_SR,9,True,,,0.017
+ltl2dpa07__e08,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa07__e09,SAT_MSR,1,True,True,,1.06
+ltl2dpa08__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa08__e02,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa08__e06,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa08__e07,SAT_MSR,1,True,True,,0.582
+ltl2dpa08__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa08__e09,SAT_MSR,3,True,True,,0.596
+ltl2dpa09__e07,SAT_MSR,2,True,True,,1.451
+ltl2dpa09__e08,SAT_SR,9,True,,,0.012
+ltl2dpa10__e00,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa10__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa10__e03,SAT_SR,12,True,,,0.012
+ltl2dpa10__e08,SAT_SR,28,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa10__e09,SAT_MSR,1,True,True,,1.082
+ltl2dpa11__e00,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa11__e01,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa11__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa11__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa11__e04,SAT_SR,12,True,,,0.014
+ltl2dpa11__e05,SAT_MSR,1,True,True,,1.521
+ltl2dpa11__e06,SAT_SR,23,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa11__e07,SAT_SR,6,True,,,0.011
+ltl2dpa11__e09,SAT_SR,9,True,,,0.011
+ltl2dpa12__e03,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa12__e04,SAT_SR,22,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa12__e05,SAT_MSR,7,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa12__e08,SAT_SR,10,True,,,0.015
+ltl2dpa12__e09,SAT_SR,6,True,,,0.013
+ltl2dpa13__e01,SAT_MSR,4,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa13__e02,SAT_MSR,5,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa13__e06,SAT_SR,6,True,,,0.014
+ltl2dpa13__e07,SAT_SR,4,True,,,0.011
+ltl2dpa13__e09,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa14__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa14__e03,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa14__e04,SAT_MSR,1,True,True,,0.557
+ltl2dpa14__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa14__e07,SAT_MSR,1,True,True,,0.539
+ltl2dpa14__e09,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa15__e02,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa15__e04,SAT_MSR,1,True,True,,0.638
+ltl2dpa16__e00,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa16__e01,SAT_MSR,1,True,True,,0.59
+ltl2dpa16__e05,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa16__e07,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa16__e08,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa17__e04,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa17__e05,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa17__e06,SAT_MSR,2,True,True,,0.669
+ltl2dpa17__e09,SAT_SR,8,True,,,0.012
+ltl2dpa18__e00,SAT_SR,6,True,,,0.009
+ltl2dpa18__e01,SAT_MSR,5,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa18__e03,SAT_SR,12,True,,,0.013
+ltl2dpa18__e04,SAT_SR,9,True,,,0.01
+ltl2dpa18__e05,SAT_MSR,2,True,True,,1.01
+ltl2dpa18__e08,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa18__e09,SAT_SR,6,True,,,0.019
+ltl2dpa19__e02,SAT_SR,9,True,,,0.01
+ltl2dpa19__e03,SAT_SR,9,True,,,0.01
+ltl2dpa19__e04,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa19__e06,SAT_SR,29,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa19__e08,SAT_SR,32,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa20__e01,SAT_SR,26,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa20__e05,SAT_SR,12,True,,,0.014
+ltl2dpa20__e06,SAT_SR,34,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa20__e08,SAT_SR,15,True,,,0.014
+ltl2dpa21__e00,SAT_SR,22,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa21__e01,SAT_SR,30,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa21__e02,SAT_SR,8,True,,,0.017
+ltl2dpa21__e03,SAT_SR,36,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa21__e04,SAT_SR,10,True,,,0.015
+ltl2dpa21__e05,SAT_SR,10,True,,,0.012
+ltl2dpa21__e07,SAT_SR,12,True,,,0.014
+ltl2dpa21__e08,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa23__e00,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa23__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa23__e03,SAT_MSR,0,True,False,a proper subset of R is also sufficient,0.611
+ltl2dpa23__e05,SAT_MSR,0,True,False,a proper subset of R is also sufficient,0.747
+ltl2dpa23__e08,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa24__e01,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+ltl2dpa24__e02,SAT_MSR,3,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa24__e03,SAT_MSR,1,True,False,a proper subset of R is also sufficient,0.571
+ltl2dpa24__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+ltl2dpa24__e06,SAT_MSR,0,True,False,a proper subset of R is also sufficient,0.614
+ltl2dpa24__e08,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+prioritized_arbiter1__e00,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+prioritized_arbiter1__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+prioritized_arbiter1__e07,SAT_SR,6,True,,,0.014
+prioritized_arbiter1__e08,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+prioritized_arbiter2__e00,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+prioritized_arbiter2__e01,SAT_SR,39,,,SKIPPED: R truncated at the solver's bound,0.0
+prioritized_arbiter2__e02,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+prioritized_arbiter2__e06,SAT_SR,15,True,,,0.014
+prioritized_arbiter2__e09,SAT_SR,15,True,,,0.011
+round_robin_arbiter2__e00,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+round_robin_arbiter2__e02,SAT_MSR,3,True,True,,0.607
+round_robin_arbiter2__e05,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+round_robin_arbiter2__e06,SAT_MSR,6,,,SKIPPED: R truncated at the solver's bound,0.0
+round_robin_arbiter2__e07,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+round_robin_arbiter2__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+round_robin_arbiter3__e02,SAT_SR,6,True,,,0.012
+round_robin_arbiter3__e09,SAT_SR,27,,,SKIPPED: R truncated at the solver's bound,0.0
+simple_arbiter2__e01,SAT_MSR,1,True,True,,0.585
+simple_arbiter2__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+simple_arbiter2__e03,SAT_MSR,1,True,True,,0.607
+simple_arbiter2__e06,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+simple_arbiter2__e07,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+simple_arbiter2__e09,SAT_MSR,1,True,True,,0.592
+simple_arbiter3__e04,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+simple_arbiter3__e05,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+simple_arbiter3__e06,SAT_MSR,1,True,True,,2.174
+simple_arbiter3__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+test5_6cbc6174__e02,SAT_MSR,1,True,True,,0.614
+test5_6cbc6174__e05,SAT_MSR,0,True,True,,0.619
+test5_6cbc6174__e08,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+test5_6cbc6174__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+test6_0f5381e9__e00,SAT_MSR,5,,,SKIPPED: R truncated at the solver's bound,0.0
+test6_0f5381e9__e01,SAT_MSR,1,True,True,,0.926
+test6_0f5381e9__e02,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+test6_0f5381e9__e03,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+test6_0f5381e9__e04,SAT_MSR,2,,,SKIPPED: R truncated at the solver's bound,0.0
+test6_0f5381e9__e06,SAT_MSR,2,True,True,,0.911
+test6_0f5381e9__e09,SAT_MSR,2,True,True,,0.898
+test7_2c5b09da__e03,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+test7_2c5b09da__e07,SAT_MSR,1,True,True,,1.326
+test7_2c5b09da__e08,SAT_SR,6,True,,,0.014
+test_f3987563__e00,SAT_MSR,1,True,True,,0.617
+test_f3987563__e01,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0
+test_f3987563__e02,UNKNOWN_BOUNDED,,,,nothing to verify,0.0
+test_f3987563__e09,SAT_MSR,1,,,SKIPPED: R truncated at the solver's bound,0.0

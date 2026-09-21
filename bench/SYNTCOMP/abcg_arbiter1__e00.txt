@@ -1,0 +1,39 @@
+[info]
+CATS SYNTCOMP: abcg_arbiter1 (spec=./sc-1/abcg_arbiter1.json, states=6, inputs=1, aps=5) effect #0 source=template
+
+[inputs]
+"r_0"
+
+[effect]
+(F "a_0")
+
+[lasso]
+AP: "g_0" "r_0" "a_0" "b_0" "c_0"
+Prefix: {0 1} {}
+Loop: {} {} {}
+
+[system]
+HOA: v1
+Start: 0
+AP: 5 "g_0" "r_0" "a_0" "b_0" "c_0"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&!2&!3&!4] 1
+[0&1&!2&!3&!4] 1
+State: 1
+[!0&!1&!2&!3&!4] 1
+[!0&1&!2&!3&!4] 2
+State: 2
+[!0&!1&2&!3&!4] 3
+[!0&1&2&!3&!4] 3
+State: 3
+[!0&!1&!2&3&!4] 4
+[!0&1&!2&3&!4] 4
+State: 4
+[!0&!1&!2&!3&4] 5
+[!0&1&!2&!3&4] 5
+State: 5
+[0&!1&!2&!3&!4] 1
+[0&1&!2&!3&!4] 1
+--END--

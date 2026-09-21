@@ -1,0 +1,30 @@
+[info]
+CATS SYNTCOMP: ltl2dba_U11 (spec=./sc-1/ltl2dba_U11.json, states=3, inputs=1, aps=2) effect #5 source=randltl
+
+[inputs]
+"p_0"
+
+[effect]
+((true U (F "acc")) W (F "acc"))
+
+[lasso]
+AP: "acc" "p_0"
+Prefix: {1} {0}
+Loop: {0 1} {0 1}
+
+[system]
+HOA: v1
+Start: 1
+AP: 2 "acc" "p_0"
+Acceptance: 0 t
+--BODY--
+State: 0
+[0&!1] 0
+[0&1] 0
+State: 1
+[!0&!1] 2
+[!0&1] 0
+State: 2
+[!0&!1] 2
+[!0&1] 2
+--END--

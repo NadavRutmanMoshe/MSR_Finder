@@ -1,0 +1,26 @@
+[info]
+CATS SYNTCOMP: arbiter_with_buffer1 (spec=./sc-1/arbiter_with_buffer1.json, states=1, inputs=2, aps=4) effect #8 source=template
+
+[inputs]
+"try_0" "r_0"
+
+[effect]
+(F (G (! "g_0")))
+
+[lasso]
+AP: "r_0" "try_0" "g_0" "ack_0"
+Prefix: 
+Loop: {1} {} {}
+
+[system]
+HOA: v1
+Start: 0
+AP: 4 "r_0" "try_0" "g_0" "ack_0"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&!2&!3] 0
+[0&!1&2&!3] 0
+[!0&1&!2&!3] 0
+[0&1&2&!3] 0
+--END--

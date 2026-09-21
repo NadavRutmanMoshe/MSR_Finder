@@ -1,0 +1,46 @@
+[info]
+CATS SYNTCOMP: lilydemo19 (spec=./sc-1/lilydemo19.json, states=5, inputs=2, aps=4) effect #4 source=template
+
+[inputs]
+"ec" "ets"
+
+[effect]
+(F (G (! "fl")))
+
+[lasso]
+AP: "fl" "hl" "ec" "ets"
+Prefix: 
+Loop: {1} {0 3}
+
+[system]
+HOA: v1
+Start: 0
+AP: 4 "fl" "hl" "ec" "ets"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&1&!2&!3] 1
+[!0&1&!2&3] 0
+[!0&1&2&!3] 1
+[!0&1&2&3] 2
+State: 1
+[!0&1&!2&!3] 1
+[0&!1&!2&3] 0
+[!0&1&2&!3] 1
+[0&!1&2&3] 0
+State: 2
+[!0&1&!2&!3] 1
+[!0&1&!2&3] 3
+[!0&1&2&!3] 1
+[!0&1&2&3] 3
+State: 3
+[0&!1&!2&!3] 4
+[0&!1&!2&3] 0
+[0&!1&2&!3] 4
+[0&!1&2&3] 0
+State: 4
+[0&!1&!2&!3] 4
+[!0&1&!2&3] 0
+[0&!1&2&!3] 4
+[!0&1&2&3] 2
+--END--

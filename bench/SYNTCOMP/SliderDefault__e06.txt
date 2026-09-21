@@ -1,0 +1,61 @@
+[info]
+CATS SYNTCOMP: SliderDefault (spec=./sc-1/SliderDefault.json, states=8, inputs=2, aps=5) effect #6 source=template
+
+[inputs]
+"p0p0right2most0pos" "p0p0left2most0pos"
+
+[effect]
+(F "u0pos0f1dsub0pos0vel1b")
+
+[lasso]
+AP: "u0pos0f1dsub0pos0vel1b" "u0pos0pos" "u0pos0f1dadd0pos0vel1b" "p0p0left2most0pos" "p0p0right2most0pos"
+Prefix: {2 3} {2 3 4} {2 3 4} {0 3}
+Loop: {0 3 4} {0 3 4} {0 3}
+
+[system]
+HOA: v1
+Start: 0
+AP: 5 "u0pos0f1dsub0pos0vel1b" "u0pos0pos" "u0pos0f1dadd0pos0vel1b" "p0p0left2most0pos" "p0p0right2most0pos"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&2&!3&!4] 1
+[!0&!1&2&3&!4] 1
+[0&!1&!2&!3&4] 2
+[!0&!1&2&3&4] 3
+State: 1
+[!0&!1&2&!3&!4] 1
+[!0&!1&2&3&!4] 5
+[0&!1&!2&!3&4] 2
+[!0&!1&2&3&4] 4
+State: 2
+[0&!1&!2&!3&!4] 2
+[!0&!1&2&3&!4] 1
+[!0&!1&2&!3&4] 6
+[!0&!1&2&3&4] 4
+State: 3
+[0&!1&!2&!3&!4] 7
+[0&!1&!2&3&!4] 6
+[0&!1&!2&!3&4] 2
+[!0&!1&2&3&4] 4
+State: 4
+[!0&!1&2&!3&!4] 4
+[0&!1&!2&3&!4] 6
+[!0&!1&2&!3&4] 6
+[!0&!1&2&3&4] 4
+State: 5
+[0&!1&!2&!3&!4] 6
+[0&!1&!2&3&!4] 6
+[!0&!1&2&!3&4] 6
+[!0&!1&2&3&4] 4
+State: 6
+[0&!1&!2&!3&!4] 6
+[0&!1&!2&3&!4] 6
+[0&!1&!2&!3&4] 6
+[0&!1&!2&3&4] 6
+State: 7
+[!0&!1&2&!3&!4] 1
+[!0&!1&2&3&!4] 1
+[!0&!1&2&!3&4] 6
+[!0&!1&2&3&4] 4
+--END--

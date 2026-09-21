@@ -1,0 +1,13 @@
+# solver / driver temporaries
+temp_*
+commands.txt
+aut1.hoa
+autRes.hoa
+__pycache__/
+*.pyc
+
+# the baselines are fetched, not vendored -- tools/fetch.sh pins the commits
+tools/CATS/
+tools/CORP/
+tools/ExplainHyper/
+tools/.cats-src/

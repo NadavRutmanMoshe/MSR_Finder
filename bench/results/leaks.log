@@ -1,0 +1,15 @@
+2026-09-02 22:14:22  ORPHAN KILLED  ltl2tgba(184339)  age=121s  stage=MSR / autohyper  
+2026-09-03 13:03:49  ORPHAN KILLED  autfilt(198460)  age=434s  stage=MSR / autohyper  
+2026-09-03 13:08:17  ORPHAN KILLED  autfilt(198499)  age=441s  stage=MSR / autohyper  
+2026-09-03 14:28:16  ORPHAN KILLED  autfilt(201863)  age=576s  stage=MSR / autohyper  
+2026-09-04 08:21:23  ORPHAN KILLED  autfilt(211817)  age=142s  stage=MTSR vs CORP  
+2026-09-04 09:40:08  ORPHAN KILLED  autfilt(243949)  age=178s  stage=MTSR vs CATS --check  
+2026-09-06 14:33:38  ORPHAN KILLED  HyperRUSTY(298593)  age=4s  stage=msr_bench.py  /mnt/c/Users/nadav/final_project/demo_tool/MSR_Finder/external_tools/HyperQB/target/release/HyperRUSTY -n /mnt/c/Users/n
+2026-09-06 14:33:54  ORPHAN KILLED  AutoHyper(298818)  age=2s  stage=msr_bench.py  /mnt/c/Users/nadav/final_project/demo_tool/MSR_Finder/external_tools/AutoHyper/app/AutoHyper --explicit /mnt/c/Users/nad
+2026-09-06 14:33:54  ORPHAN KILLED  autfilt(298853)  age=1s  stage=msr_bench.py  
+2026-09-06 14:33:54  ORPHAN KILLED  AutoHyper(298854)  age=1s  stage=msr_bench.py  /mnt/c/Users/nadav/final_project/demo_tool/MSR_Finder/external_tools/AutoHyper/app/AutoHyper --explicit /mnt/c/Users/nad
+2026-09-06 14:33:55  ORPHAN KILLED  AutoHyper(298878)  age=1s  stage=msr_bench.py  /mnt/c/Users/nadav/final_project/demo_tool/MSR_Finder/external_tools/AutoHyper/app/AutoHyper --explicit /mnt/c/Users/nad
+2026-09-06 14:33:55  ORPHAN KILLED  AutoHyper(298890)  age=1s  stage=msr_bench.py  /mnt/c/Users/nadav/final_project/demo_tool/MSR_Finder/external_tools/AutoHyper/app/AutoHyper --explicit /mnt/c/Users/nad
+2026-09-06 14:35:01  PRE-EXISTING (untouched)  HyperRUSTY(298976)  age=60s  /mnt/c/Users/nadav/final_project/demo_tool/MSR_Finder/external_tools/HyperQB/target/release/HyperRUSTY -n /tmp/claude-10
+2026-09-06 14:35:01  PRE-EXISTING (untouched)  HyperRUSTY(299231)  age=20s  /mnt/c/Users/nadav/final_project/demo_tool/MSR_Finder/external_tools/HyperQB/target/release/HyperRUSTY -n /tmp/claude-10
+2026-09-06 14:36:42  PRE-EXISTING (untouched)  HyperRUSTY(298976)  age=161s  /mnt/c/Users/nadav/final_project/demo_tool/MSR_Finder/external_tools/HyperQB/target/release/HyperRUSTY -n /tmp/claude-10

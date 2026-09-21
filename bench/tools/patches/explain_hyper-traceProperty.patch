@@ -1,0 +1,16 @@
+--- /tmp/explain_hyper.orig.py	2026-08-24 18:33:37.319022830 +0300
++++ explainhyper/explain_hyper.py	2026-08-24 18:33:37.348962800 +0300
+@@ -348,6 +348,13 @@
+     if args.stateMachine:
+         list, counterfactual_0, counterfactual_1, candidate_list_0, candidate_list_1  = highlighter.Highlighter.dot_minimization(args.stateMachine, trace, args.outName, all_aps)
+     dict = out.trace_to_json(all_aps, trace, args.outName, lasso_start, list)
++    # A trace property lifted to HyperLTL mentions only trace 0, so by Def. 6 no
++    # event on trace 1 can satisfy CF and none can be part of a cause. The
++    # candidate set is built from the state path alone and does not know that,
++    # so without this the minimality search enumerates subsets of a candidate
++    # set twice the necessary size.
++    if getattr(args, 'traceProperty', False):
++        candidate_list_1 = []
+     if (negate):
+         f = Translator.negate(f, True)
+     end = time.time()

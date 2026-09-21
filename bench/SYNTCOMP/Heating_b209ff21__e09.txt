@@ -1,0 +1,57 @@
+[info]
+CATS SYNTCOMP: Heating_b209ff21 (spec=./sc-1/Heating_b209ff21.json, states=4, inputs=3, aps=6) effect #9 source=randltl
+
+[inputs]
+"p0p0gt0outside29temperature02room29temperature" "p0b02heating29on" "p0b02heating29off"
+
+[effect]
+(F (X (F ("u02heating29ctrl0f1d2heating29turn2off1b" R (G "u02heating29ctrl0f1d2heating29turn2off1b")))))
+
+[lasso]
+AP: "u02heating29ctrl02heating29ctrl" "u02heating29ctrl0f1d2heating29turn2off1b" "u02heating29ctrl0f1d2heating29turn2on1b" "p0b02heating29off" "p0b02heating29on" "p0p0gt0outside29temperature02room29temperature"
+Prefix: {2 4} {1 4 5}
+Loop: {1 4} {1 4 5}
+
+[system]
+HOA: v1
+Start: 0
+AP: 6 "u02heating29ctrl02heating29ctrl" "u02heating29ctrl0f1d2heating29turn2off1b" "u02heating29ctrl0f1d2heating29turn2on1b" "p0b02heating29off" "p0b02heating29on" "p0p0gt0outside29temperature02room29temperature"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&2&!3&!4&!5] 3
+[!0&!1&2&3&!4&!5] 1
+[!0&!1&2&!3&4&!5] 1
+[!0&!1&2&3&4&!5] 3
+[!0&!1&2&!3&!4&5] 3
+[!0&!1&2&3&!4&5] 1
+[!0&!1&2&!3&4&5] 2
+[!0&!1&2&3&4&5] 3
+State: 1
+[!0&!1&2&!3&!4&!5] 2
+[!0&!1&2&3&!4&!5] 1
+[!0&!1&2&!3&4&!5] 1
+[!0&!1&2&3&4&!5] 2
+[!0&!1&2&!3&!4&5] 2
+[!0&!1&2&3&!4&5] 1
+[!0&1&!2&!3&4&5] 3
+[!0&!1&2&3&4&5] 2
+State: 2
+[!0&!1&2&!3&!4&!5] 2
+[!0&!1&2&3&!4&!5] 2
+[!0&1&!2&!3&4&!5] 3
+[!0&1&!2&3&4&!5] 3
+[!0&!1&2&!3&!4&5] 2
+[!0&!1&2&3&!4&5] 2
+[!0&1&!2&!3&4&5] 3
+[!0&1&!2&3&4&5] 3
+State: 3
+[!0&!1&2&!3&!4&!5] 3
+[!0&!1&2&3&!4&!5] 1
+[!0&1&!2&!3&4&!5] 3
+[!0&!1&2&3&4&!5] 3
+[!0&!1&2&!3&!4&5] 3
+[!0&!1&2&3&!4&5] 1
+[!0&1&!2&!3&4&5] 3
+[!0&!1&2&3&4&5] 3
+--END--

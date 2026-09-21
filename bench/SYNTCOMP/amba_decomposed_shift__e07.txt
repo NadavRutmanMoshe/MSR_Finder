@@ -1,0 +1,31 @@
+[info]
+CATS SYNTCOMP: amba_decomposed_shift (spec=./sc-1/amba_decomposed_shift.json, states=2, inputs=2, aps=3) effect #7 source=randltl
+
+[inputs]
+"locked" "hready"
+
+[effect]
+("hmastlock" <-> (X "hmastlock"))
+
+[lasso]
+AP: "hready" "locked" "hmastlock"
+Prefix: {0}
+Loop: {} {0} {0}
+
+[system]
+HOA: v1
+Start: 0
+AP: 3 "hready" "locked" "hmastlock"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&!2] 0
+[0&!1&!2] 0
+[!0&1&!2] 0
+[0&1&!2] 1
+State: 1
+[!0&!1&2] 1
+[0&!1&2] 0
+[!0&1&2] 1
+[0&1&2] 1
+--END--

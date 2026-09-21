@@ -1,0 +1,33 @@
+#!/bin/sh
+# Resource-capped autfilt, for tools that call spot WITHOUT a bound of their own.
+#
+# Why this exists
+# ---------------
+# FsOmegaLib (the automata library CATS builds on) launches spot and then waits
+# unconditionally:
+#
+#     src/FsOmegaLib/Util.fs:62
+#         let p = System.Diagnostics.Process.Start(psi)
+#         ...
+#         p.WaitForExit()          // no timeout, no kill, no memory cap
+#
+# So a CATS run has no upper bound on what its autfilt child may consume. On
+# 2026-08-26 one reached 8.4 GB, drove swap to zero and load to 42 on a 9 GB
+# box. This is the same class of bug proc_guard fixes on our side, except it
+# lives in a library we do not own and cannot fix without rebuilding their
+# artifact.
+#
+# CATS resolves solver paths through its `paths.json`, so pointing that file at
+# this wrapper caps the child without touching their source or their semantics:
+# a capped autfilt exits non-zero, and CATS reports the instance as an error
+# instead of taking the machine down with it.
+#
+# Do NOT try to cap the .NET process instead. Its GC reserves a large virtual
+# range at startup, so any `ulimit -v` (tested at 6, 8 and 12 GB) makes CoreCLR
+# fail with 0x8007000E before `main` runs. The cap has to target the leaf.
+#
+# RLIMIT_AS is virtual, which runs well ahead of resident; 6 GB virtual is
+# roughly a 4 GB resident ceiling. It is inherited by any grandchild.
+ulimit -v 6291456
+exec timeout -s KILL "${TRACEMSR_SOLVER_TIMEOUT:-120}" \
+     "$HOME/micromamba/envs/spot/bin/autfilt" "$@"

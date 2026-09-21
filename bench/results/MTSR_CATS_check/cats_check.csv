@@ -1,0 +1,819 @@
+instance,inputs,aps,sys_states,effect,cats_cause,cats_status,cats_failed,cats_stages,cats_s
+Alarm_2d1010f8__e02.txt,3,6,5,"(G (F (! ""u02alarm29control0f1d2alarm29turn2off1b"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.749
+Alarm_2d1010f8__e05.txt,3,6,5,"(X ""u02alarm29control0f1d2alarm29turn2off1b"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.75
+Button__e00.txt,1,5,1,"(F (! ""u0count0f1dincrement0count1b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.736
+Button__e02.txt,1,5,1,"(F (G ""u0count0count""))","((F ""p0p0event0click"") | (! ((F ""p0p0event0click"") | ((X false) U ""p0p0event0click""))) | (""p0p0event0click"" <-> (G ""p0p0event0click"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.725
+Button__e03.txt,1,5,1,"(""u0count0f1dincrement0count1b"" | (X false))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.727
+Button__e06.txt,1,5,1,"(F ""u0count0count"")","(""p0p0event0click"" U (G (""p0p0event0click"" <-> (! (X (X (X false)))))))",NO_CAUSE,PC1,PC1=does not hold,0.563
+Button__e07.txt,1,5,1,"(F ((G ""u0count0f1dincrement0count1b"") R ""u0count0count""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.739
+EnemeyModule__e00.txt,2,9,1,"(G (F ""u0radius0radius""))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.536
+EnemeyModule__e02.txt,2,9,1,"(F (! ""u0radius0f1ddec0radius1b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.754
+EnemeyModule__e06.txt,2,9,1,"(G (F (! ""u0radius0f1dstartradius1b"")))","((G (! (F ((X false) R (F ""p0p0on0reset""))))) R (""p0p0on0clock"" R (! ""p0p0on0clock"")))",NO_CAUSE,PC1,PC1=does not hold,0.565
+EnemeyModule__e07.txt,2,9,1,"((G (""u0angle0angle"" & ""u0radius0f1ddec0radius1b"")) W ""u0radius0radius"")","((! (X (G ((F (! (X ((X false) W false)))) W ((! ""p0p0on0clock"") R ""p0p0on0clock""))))) | (X (! ""p0p0on0reset"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.047
+EscalatorCountingInit__e00.txt,3,10,3,"(G (F (! ""u0users0f1ddec0users1b"")))","((((! ""p0p0enter2event0bottom"") <-> (""p0p0enter2event0bottom"" & ""p0p0zero0users"")) & (""p0p0enter2event0bottom"" | ""p0p0exit2event0top"")) W (F (G ""p0p0enter2event0bottom"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.82
+EscalatorCountingInit__e01.txt,3,10,3,"((G ""u0steps0f1dmove1b"") -> (""u0users0users"" R (! (F ""u0users0users""))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.73
+EscalatorCountingInit__e02.txt,3,10,3,"(F ""u0users0f1ddec0users1b"")","(""p0p0enter2event0bottom"" -> ((X (F ((! ""p0p0zero0users"") R ""p0p0enter2event0bottom""))) <-> ((false R (G ""p0p0enter2event0bottom"")) -> (X ""p0p0exit2event0top""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.262
+EscalatorCountingInit__e03.txt,3,10,3,"(! ((G (! (G ""u0steps0steps""))) W (G ""u0steps0f1dmove1b"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.561
+EscalatorCountingInit__e05.txt,3,10,3,"(X (X (! (G (""u0users0users"" U ""u0steps0f1dstop1b"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.765
+EscalatorCountingInit__e08.txt,3,10,3,"(G (F ""u0users0f1ddec0users1b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.76
+EscalatorCounting__e00.txt,3,9,2,"(F (! ""u0steps0f1dmove1b""))","(F (((! (G ""p0p0exit2event0top"")) -> (X (X ""p0p0zero0users""))) U (true U ""p0p0enter2event0bottom"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.097
+EscalatorCounting__e02.txt,3,9,2,"(G (F ""u0steps0steps""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.752
+EscalatorCounting__e05.txt,3,9,2,"((X ""u0users0f1ddec0users1b"") & (X (X ""u0steps0steps"")))","((X (! (F (""p0p0enter2event0bottom"" & ((! ""p0p0enter2event0bottom"") R (X ""p0p0enter2event0bottom"")))))) & (G ""p0p0exit2event0top""))",NO_CAUSE,PC1,PC1=does not hold,0.617
+EscalatorCounting__e07.txt,3,9,2,"((G (""u0steps0f1dstop1b"" R ""u0users0f1ddec0users1b"")) U (G (F ""u0users0users"")))","((! (""p0p0enter2event0bottom"" R ((X (! ""p0p0zero0users"")) R ""p0p0enter2event0bottom""))) & (! (((F ""p0p0zero0users"") R ""p0p0zero0users"") R ((G ""p0p0zero0users"") -> ""p0p0exit2event0top""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.483
+EscalatorCounting__e08.txt,3,9,2,"(F (! ""u0users0users""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.752
+EscalatorNonCounting__e01.txt,2,5,1,"(! (G ""u0steps0steps""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.756
+EscalatorNonCounting__e02.txt,2,5,1,"(F (G (! ""u0steps0f1dstop1b"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.522
+EscalatorNonCounting__e06.txt,2,5,1,"(F (G (! ""u0steps0f1dmove1b"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.544
+EscalatorNonCounting__e07.txt,2,5,1,"(! (X ""u0steps0f1dstop1b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.753
+EscalatorNonCounting__e08.txt,2,5,1,"(G (F (! ""u0steps0f1dstop1b"")))","(((! ""p0p0exit2event0top"") U ((F ""p0p0enter2event0bottom"") | (F (X (F ""p0p0enter2event0bottom""))))) W (true U (""p0p0exit2event0top"" | (X false))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.792
+EscalatorNonCounting__e09.txt,2,5,1,"(G ((X (G ""u0steps0steps"")) W (true U ""u0steps0f1dmove1b"")))","(X ""p0p0enter2event0bottom"")",NO_CAUSE,PC1,PC1=does not hold,1.112
+HeatingMin_d6c5ac79__e00.txt,2,5,3,"(G (! ""u0room29heating29ctrl0f1dturn2on1b""))","(G ((F (! (""p0b0room29heating29off"" W ""p0p0gt0outside29temperature0room29temperature""))) | (X false)))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.805
+HeatingMin_d6c5ac79__e02.txt,2,5,3,"(F ""u0room29heating29ctrl0f1dturn2on1b"")","((X false) & (F ((! ""p0b0room29heating29off"") W false)))",NO_CAUSE,PC1,PC1=does not hold,0.55
+HeatingMin_d6c5ac79__e04.txt,2,5,3,"(F (! ""u0room29heating29ctrl0f1dturn2off1b""))","((! (G (F ((X (! (F ""p0p0gt0outside29temperature0room29temperature""))) | (((F ""p0b0room29heating29off"") W ""p0b0room29heating29off"") W ""p0b0room29heating29off""))))) <-> (X false))",NO_CAUSE,PC1,PC1=does not hold,0.535
+HeatingMin_d6c5ac79__e05.txt,2,5,3,"(! (X ""u0room29heating29ctrl0f1dturn2on1b""))","((G (true U ((X ""p0p0gt0outside29temperature0room29temperature"") U ((! ""p0b0room29heating29off"") W (""p0p0gt0outside29temperature0room29temperature"" & (F ""p0p0gt0outside29temperature0room29temperature"")))))) R (! ((! ""p0b0room29heating29off"") | (F (G ""p0p0gt0outside29temperature0room29temperature"")))))",NO_CAUSE,PC1,PC1=does not hold,0.559
+Heating_235467da__e01.txt,3,6,4,"(! (X ""u0room29heating29ctrl0f1dturn2off1b""))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.518
+Heating_235467da__e02.txt,3,6,4,"(G (F (! ""u0room29heating29ctrl0room29heating29ctrl"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.726
+Heating_235467da__e03.txt,3,6,4,"(! (((G (F ""u0room29heating29ctrl0room29heating29ctrl"")) U ""u0room29heating29ctrl0f1dturn2off1b"") U ""u0room29heating29ctrl0room29heating29ctrl""))","((((X (! ""p0b0room29heating29off"")) W (G ""p0b0room29heating29on"")) -> (! (G (F ""p0b0room29heating29on"")))) R ((X false) U ""p0b0room29heating29off""))",NO_CAUSE,PC1,PC1=does not hold,0.565
+Heating_235467da__e06.txt,3,6,4,"(G (! ""u0room29heating29ctrl0f1dturn2off1b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.748
+Heating_235467da__e07.txt,3,6,4,"((G (""u0room29heating29ctrl0room29heating29ctrl"" U (! ""u0room29heating29ctrl0f1dturn2off1b""))) R (F ""u0room29heating29ctrl0f1dturn2on1b""))","((! ((X ""p0b0room29heating29off"") R (F ""p0p0gt0outside29temperature0room29temperature""))) <-> (! (G ""p0b0room29heating29off"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,2.58
+Heating_235467da__e08.txt,3,6,4,"(F (G ""u0room29heating29ctrl0room29heating29ctrl""))","(X ((! (""p0b0room29heating29on"" W (""p0b0room29heating29off"" & (X ""p0p0gt0outside29temperature0room29temperature"")))) -> (! ""p0b0room29heating29off"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.362
+Heating_235467da__e09.txt,3,6,4,"(! ((""u0room29heating29ctrl0f1dturn2on1b"" <-> (X ""u0room29heating29ctrl0f1dturn2on1b"")) U (X ""u0room29heating29ctrl0room29heating29ctrl"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.799
+Heating_b02056d6__e00.txt,3,6,4,"(F (G (! ""u0room29heating29ctrl0f1dturn2off1b"")))","(true U (((X (X (! ""p0p0gt0outside29temperature0room29temperature""))) -> (X ""p0b0room29heating29off"")) & (G ""p0p0gt0outside29temperature0room29temperature"")))",NO_CAUSE,PC1,PC1=does not hold,0.556
+Heating_b02056d6__e04.txt,3,6,4,"(G (! ""u0room29heating29ctrl0room29heating29ctrl""))","((G (F ""p0b0room29heating29on"")) | (! (""p0p0gt0outside29temperature0room29temperature"" U (! ((G (X (X (true U (""p0p0gt0outside29temperature0room29temperature"" <-> (! (X ""p0p0gt0outside29temperature0room29temperature""))))))) W (! ""p0b0room29heating29on""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.837
+Heating_b02056d6__e05.txt,3,6,4,"(! ((""u0room29heating29ctrl0f1dturn2on1b"" <-> (X ""u0room29heating29ctrl0f1dturn2on1b"")) U (X ""u0room29heating29ctrl0room29heating29ctrl"")))","(((! ""p0b0room29heating29on"") & (""p0b0room29heating29off"" <-> (""p0p0gt0outside29temperature0room29temperature"" <-> (F ""p0b0room29heating29off"")))) W (X (F (((F (true U ""p0b0room29heating29off"")) W ""p0p0gt0outside29temperature0room29temperature"") & (! (X (G ""p0b0room29heating29off"")))))))",NO_CAUSE,PC1,PC1=does not hold,0.562
+Heating_b02056d6__e06.txt,3,6,4,"(G (F (! ""u0room29heating29ctrl0f1dturn2on1b"")))","(""p0b0room29heating29on"" | (G (F (""p0p0gt0outside29temperature0room29temperature"" -> (""p0b0room29heating29off"" | ""p0b0room29heating29on"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.799
+Heating_b02056d6__e08.txt,3,6,4,"(G (F (! ""u0room29heating29ctrl0room29heating29ctrl"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.549
+Heating_b02056d6__e09.txt,3,6,4,"(F (X (((! ""u0room29heating29ctrl0f1dturn2on1b"") W ""u0room29heating29ctrl0f1dturn2on1b"") U ""u0room29heating29ctrl0f1dturn2on1b"")))","((F ((! ""p0b0room29heating29on"") R (X (! ""p0p0gt0outside29temperature0room29temperature"")))) -> (! ((X false) <-> (((F ""p0b0room29heating29on"") U ""p0p0gt0outside29temperature0room29temperature"") W ""p0b0room29heating29off""))))",NO_CAUSE,PC1,PC1=does not hold,0.548
+Heating_b209ff21__e03.txt,3,6,4,"(X (X ""u02heating29ctrl0f1d2heating29turn2off1b""))","(((""p0b02heating29off"" R (""p0b02heating29off"" -> ""p0p0gt0outside29temperature02room29temperature"")) <-> (! (F (X ""p0p0gt0outside29temperature02room29temperature"")))) | ((""p0b02heating29on"" W false) & (""p0b02heating29on"" <-> (! ((G ""p0b02heating29off"") -> ""p0b02heating29off"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.455
+Heating_b209ff21__e06.txt,3,6,4,"(G (F (! ""u02heating29ctrl0f1d2heating29turn2off1b"")))","((X ""p0b02heating29on"") U (F ((""p0p0gt0outside29temperature02room29temperature"" -> (G (X ""p0b02heating29off""))) U (G ((X ""p0p0gt0outside29temperature02room29temperature"") R ""p0p0gt0outside29temperature02room29temperature"")))))",NO_CAUSE,PC1,PC1=does not hold,0.568
+Heating_b209ff21__e08.txt,3,6,4,"(F ""u02heating29ctrl0f1d2heating29turn2off1b"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.772
+Heating_b209ff21__e09.txt,3,6,4,"(F (X (F (""u02heating29ctrl0f1d2heating29turn2off1b"" R (G ""u02heating29ctrl0f1d2heating29turn2off1b"")))))","(F (! (G ((""p0b02heating29off"" U (G ""p0b02heating29off"")) W false))))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.289
+Increment__e00.txt,1,3,1,"(G ""u0count0count"")",false,NO_CAUSE,PC1,PC1=does not hold,0.556
+Increment__e02.txt,1,3,1,"(F (! ""u0count0f1dincrement0count1b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.76
+Increment__e03.txt,1,3,1,"((""u0count0f1dincrement0count1b"" -> (X (! ""u0count0count""))) W (! ""u0count0f1dincrement0count1b""))","(! ((""p0p0event0click"" W false) & (X false)))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.775
+Increment__e04.txt,1,3,1,"(F ""u0count0count"")","((! (""p0p0event0click"" W false)) | ((""p0p0event0click"" <-> (X ""p0p0event0click"")) W (! ""p0p0event0click"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.768
+Increment__e05.txt,1,3,1,"((F ""u0count0f1dincrement0count1b"") -> ""u0count0f1dincrement0count1b"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.754
+Increment__e06.txt,1,3,1,"(G (F ""u0count0count""))",false,NO_CAUSE,PC1,PC1=does not hold,0.557
+Increment__e07.txt,1,3,1,"(! ((X false) R ""u0count0f1dincrement0count1b""))","((true U ((X (! ""p0p0event0click"")) <-> (G (X false)))) & (""p0p0event0click"" | (X false)))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.093
+Increment__e08.txt,1,3,1,"(G (F (! ""u0count0f1dincrement0count1b"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.743
+Increment__e09.txt,1,3,1,"(""u0count0count"" W (F ""u0count0count""))","(F (! (((! (G ""p0p0event0click"")) U ""p0p0event0click"") -> (X false))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.047
+KitchenTimerV0__e00.txt,2,4,1,"(G (F (! ""u0time0time"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.764
+KitchenTimerV0__e01.txt,2,4,1,"(F (G (F (""u0time0time"" R (F ""u0time0time"")))))","""p0b0btn2sec""",NO_CAUSE,PC1,PC1=does not hold,0.575
+KitchenTimerV0__e03.txt,2,4,1,"(! ((! ""u0time0time"") R ""u0time0time""))",false,NO_CAUSE,PC1,PC1=does not hold,0.571
+KitchenTimerV0__e04.txt,2,4,1,"(F (! ""u0time0time""))","(G ((X false) -> ((G (X (""p0b0btn2min"" -> (G ""p0b0btn2sec"")))) & ((X (""p0b0btn2min"" <-> ""p0b0btn2sec"")) R (F (X (""p0b0btn2min"" U (F ""p0b0btn2min""))))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.756
+KitchenTimerV0__e07.txt,2,4,1,"((X (G ""u0time0time"")) W (! (X ""u0time0time"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.765
+KitchenTimerV0__e09.txt,2,4,1,"(G (""u0time0f1dzero1b"" R (X (F (true U ""u0time0time"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.761
+LightsMin_6bea956e__e00.txt,3,7,8,"(F (! ""u0room29light0f1dturn2off1b""))","(! ((""p0b0room29empty"" R ""p0b0room29light29on"") U ""p0b0room29empty""))",NO_CAUSE,PC1,PC1=does not hold,0.567
+LightsMin_6bea956e__e01.txt,3,7,8,"(G (! ((G ""u0room29light0f1dtoggle1b"") W ""u0room29light0room29light"")))","((X (""p0b0room29light29off"" R (F ((X (F ""p0b0room29light29off"")) R (G ""p0b0room29light29on""))))) & (F ((G ((! (F ""p0b0room29light29on"")) -> (""p0b0room29light29off"" W (G ""p0b0room29light29off"")))) & (X ""p0b0room29light29on""))))",NO_CAUSE,PC1,PC1=does not hold,0.568
+LightsMin_6bea956e__e05.txt,3,7,8,"(G (""u0room29light0f1dtoggle1b"" R ((F ""u0room29light0f1dtoggle1b"") | (G ""u0room29light0room29light""))))","(F (""p0b0room29empty"" | (F (""p0b0room29empty"" | ((! (X ""p0b0room29empty"")) W ""p0b0room29light29off"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.786
+LightsMin_6bea956e__e08.txt,3,7,8,"(F ""u0room29light0f1dturn2on1b"")","(F ((G (F (! (F ""p0b0room29light29on"")))) U (F (X (F (! ""p0b0room29light29off""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.182
+SPIReadClk__e05.txt,3,6,1,"(G ((X (G ""u0spc0spc"")) W (true U ""u0spc0f1dhigh1b"")))","((((F ""p0p0gt0counter0f1dthirtyfour1b"") R (! ""p0p0is2even0counter"")) W ((G (F (""p0p0is2even0counter"" <-> (""p0p0eqz0counter"" & (F ""p0p0gt0counter0f1dthirtyfour1b""))))) W (! (X ""p0p0is2even0counter"")))) R (! ((! ""p0p0eqz0counter"") | (F ""p0p0eqz0counter""))))",NO_CAUSE,PC1,PC1=does not hold,1.124
+SPIReadClk__e07.txt,3,6,1,"((F ""u0spc0f1dlow1b"") <-> (! (X (""u0spc0f1dhigh1b"" <-> ""u0spc0spc""))))","((((X (! (""p0p0gt0counter0f1dthirtyfour1b"" W (X ""p0p0gt0counter0f1dthirtyfour1b"")))) U ""p0p0is2even0counter"") R (X (! ""p0p0gt0counter0f1dthirtyfour1b""))) <-> (false R ""p0p0eqz0counter""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,2.04
+SPIReadClk__e08.txt,3,6,1,"(F ""u0spc0f1dhigh1b"")","(((""p0p0is2even0counter"" -> ""p0p0gt0counter0f1dthirtyfour1b"") & (X (F (G (F (X (G (! ""p0p0eqz0counter"")))))))) <-> (""p0p0gt0counter0f1dthirtyfour1b"" | (G (! (""p0p0gt0counter0f1dthirtyfour1b"" W (X ""p0p0gt0counter0f1dthirtyfour1b""))))))",NO_CAUSE,PC1,PC1=does not hold,0.564
+SPIReadClk__e09.txt,3,6,1,"(""u0spc0f1dlow1b"" U (""u0spc0f1dlow1b"" <-> (X false)))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+SensorRegister__e01.txt,1,3,1,"((F ""u0reg2val0reg2data"") W false)",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.77
+SensorRegister__e02.txt,1,3,1,"(F ""u0reg2val0reg2val"")","((F ""p0p0reg2cmp0f1dmy2type1b0reg2type"") -> ((""p0p0reg2cmp0f1dmy2type1b0reg2type"" R (G ""p0p0reg2cmp0f1dmy2type1b0reg2type"")) R (F ((G ""p0p0reg2cmp0f1dmy2type1b0reg2type"") -> (true U (X false))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.764
+SensorRegister__e03.txt,1,3,1,"(""u0reg2val0reg2data"" | (""u0reg2val0reg2data"" U (false R (X false))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.743
+SensorRegister__e05.txt,1,3,1,"(X (X (! (""u0reg2val0reg2data"" U ""u0reg2val0reg2val""))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.757
+SensorRegister__e06.txt,1,3,1,"(G (F (! ""u0reg2val0reg2val"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.754
+SensorRegister__e07.txt,1,3,1,"(! ((X false) R ""u0reg2val0reg2val""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.739
+SensorRegister__e08.txt,1,3,1,"(F (! ""u0reg2val0reg2data""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.767
+SensorRegister__e09.txt,1,3,1,"(! (G ""u0reg2val0reg2val""))",false,NO_CAUSE,PC1,PC1=does not hold,0.561
+Shades2Min_63831f8c__e01.txt,3,5,2,"(true U (F (""u0room29shades29ctrl0room29shades29ctrl"" <-> (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b""))))","(""p0p0bright0outside29brightness"" & (! ""p0p0bright0outside29brightness"") & (X false))",NO_CAUSE,PC1,PC1=does not hold,0.557
+Shades2Min_63831f8c__e02.txt,3,5,2,"(F (! ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b""))","(((! ""p0p0bright0outside29brightness"") | (! (F (! ""p0p0bright0outside29brightness"")))) U (((F (""p0p0bright0outside29brightness"" & (G ""p0b0room29shades29closed""))) W (F ""p0b0room29screen29lowered"")) & (G (F ""p0b0room29shades29closed""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.244
+Shades2Min_63831f8c__e04.txt,3,5,2,"(G (! ""u0room29shades29ctrl0room29shades29ctrl""))","(true U ((G (F ""p0b0room29shades29closed"")) R (""p0b0room29shades29closed"" & (F ""p0b0room29shades29closed""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.824
+Shades2Min_63831f8c__e05.txt,3,5,2,"""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b""","((! (G ""p0p0bright0outside29brightness"")) W false)",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.82
+Shades2Min_63831f8c__e06.txt,3,5,2,"(F ""u0room29shades29ctrl0room29shades29ctrl"")","(F ((X (""p0b0room29shades29closed"" -> ""p0b0room29screen29lowered"")) U ""p0b0room29shades29closed""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.094
+Shades2Min_63831f8c__e08.txt,3,5,2,"(! ((! ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"") R ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b""))","(F ((! ""p0b0room29shades29closed"") -> (G (X (G (F (""p0b0room29screen29lowered"" R (""p0b0room29shades29closed"" & (X ""p0p0bright0outside29brightness"")))))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.12
+ShadesMin_aeb1d897__e00.txt,2,4,2,"(F (! ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b""))",false,NO_CAUSE,PC1,PC1=does not hold,0.559
+ShadesMin_aeb1d897__e04.txt,2,4,2,"(F ""u0room29shades29ctrl0room29shades29ctrl"")","(G (! (F (((F ""p0b0room29shades29closed"") U (G ""p0p0bright0outside29brightness"")) <-> (X false)))))",NO_CAUSE,PC1,PC1=does not hold,0.556
+ShadesMin_aeb1d897__e05.txt,2,4,2,"(true U (F (""u0room29shades29ctrl0room29shades29ctrl"" <-> (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b""))))",false,NO_CAUSE,PC1,PC1=does not hold,0.554
+ShadesMin_aeb1d897__e06.txt,2,4,2,"(G (! ""u0room29shades29ctrl0room29shades29ctrl""))","(G (((F ""p0p0bright0outside29brightness"") U (! ""p0b0room29shades29closed"")) <-> (((! ""p0p0bright0outside29brightness"") W ""p0p0bright0outside29brightness"") -> (F (G ((""p0b0room29shades29closed"" W false) W (true U ""p0p0bright0outside29brightness"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.974
+Shades_6479ef9a__e01.txt,3,6,5,"(X (X ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b""))","""p0b02shades29closed""",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.175
+Shades_6479ef9a__e05.txt,3,6,5,"(! (X ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b""))","((G (X (""p0b02shades29closed"" -> (((G (""p0b02shades29closed"" W ""p0b02shades29open"")) U (F ""p0b02shades29closed"")) R ""p0p0bright0outside29brightness"")))) <-> (F (G ""p0b02shades29closed"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.406
+Shades_6479ef9a__e07.txt,3,6,5,"((F ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"") <-> (! (X (""u02shades29ctrl02shades29ctrl"" <-> ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b""))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.786
+Shades_6479ef9a__e09.txt,3,6,5,"(F (G (F (""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"" R (F ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"")))))","(""p0b02shades29closed"" <-> (F ((X ((X (! ((F ""p0p0bright0outside29brightness"") <-> (X ""p0b02shades29open"")))) -> ""p0b02shades29open"")) <-> ((! ""p0b02shades29open"") <-> (G ""p0p0bright0outside29brightness"")))))",NO_CAUSE,PC1,PC1=does not hold,0.608
+Shades_9cac58d3__e01.txt,3,6,5,"((F (""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"" | ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")) U (""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" R ""u0room29shades29ctrl0room29shades29ctrl""))","(((X (G (""p0b0room29shades29closed"" & (G ""p0p0bright0outside29brightness"")))) R ((! (F ""p0p0bright0outside29brightness"")) W (F (G ""p0p0bright0outside29brightness"")))) -> ""p0b0room29shades29open"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.285
+Shades_9cac58d3__e04.txt,3,6,5,"(F ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"")","(F (X (X ((F (! (X ((! ""p0b0room29shades29open"") | (G (! ""p0p0bright0outside29brightness"")))))) R (""p0p0bright0outside29brightness"" R (""p0b0room29shades29open"" | (G ""p0b0room29shades29closed"")))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,19.233
+Shades_9cac58d3__e05.txt,3,6,5,"(! (G ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.76
+Shades_9cac58d3__e06.txt,3,6,5,"(F (G (! ""u0room29shades29ctrl0room29shades29ctrl"")))","((""p0b0room29shades29closed"" | (""p0b0room29shades29open"" R ""p0p0bright0outside29brightness"")) -> (G (F (X (! ""p0b0room29shades29closed"")))))",NO_CAUSE,PC1,PC1=does not hold,0.564
+Shades_a02758ea__e02.txt,3,6,5,"(G (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.754
+Shades_a02758ea__e03.txt,3,6,5,"((G (""u0room29shades29ctrl0room29shades29ctrl"" U (! ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b""))) R (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.767
+Shades_a02758ea__e04.txt,3,6,5,"(G (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.753
+Shades_a02758ea__e07.txt,3,6,5,"(! (((G (F ""u0room29shades29ctrl0room29shades29ctrl"")) U ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"") U ""u0room29shades29ctrl0room29shades29ctrl""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+Shades_a02758ea__e08.txt,3,6,5,"(G (F (! ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"")))","(G ((X (F ""p0p0bright0outside29brightness"")) | (""p0b0room29shades29closed"" R ""p0p0bright0outside29brightness"")))",NO_CAUSE,PC1,PC1=does not hold,0.567
+Shades_a02758ea__e09.txt,3,6,5,"(F (X (((! ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"") W ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"") U ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))","((G ""p0b0room29shades29closed"") | (! (X (F ((""p0b0room29shades29closed"" W (X ""p0b0room29shades29open"")) U (G ""p0b0room29shades29open""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.835
+SliderDefault__e00.txt,2,5,8,"(G (F (! ""u0pos0f1dadd0pos0vel1b"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.783
+SliderDefault__e01.txt,2,5,8,"""u0pos0f1dsub0pos0vel1b""","((G (X (! (F (""p0p0right2most0pos"" W ""p0p0left2most0pos""))))) | (F ""p0p0right2most0pos""))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.266
+SliderDefault__e02.txt,2,5,8,"(F (! ""u0pos0f1dsub0pos0vel1b""))","((F (! (true U (true U (G ""p0p0right2most0pos""))))) R ((F ""p0p0right2most0pos"") W false))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.798
+SliderDefault__e03.txt,2,5,8,"(""u0pos0f1dsub0pos0vel1b"" -> ((F ""u0pos0pos"") U ""u0pos0pos""))","(""p0p0left2most0pos"" & ""p0p0right2most0pos"")",NO_CAUSE,PC1,PC1=does not hold,0.557
+SliderDefault__e05.txt,2,5,8,"((""u0pos0f1dadd0pos0vel1b"" & ""u0pos0f1dsub0pos0vel1b"") W (""u0pos0f1dadd0pos0vel1b"" U (! ""u0pos0f1dsub0pos0vel1b"")))","((G ((X ""p0p0left2most0pos"") R (F (G ""p0p0left2most0pos"")))) U (! ""p0p0left2most0pos""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.153
+SliderDefault__e06.txt,2,5,8,"(F ""u0pos0f1dsub0pos0vel1b"")","(((X (G ""p0p0right2most0pos"")) <-> ((! ""p0p0right2most0pos"") | (true U ""p0p0left2most0pos""))) <-> ((G (X false)) -> ""p0p0right2most0pos""))",NO_CAUSE,PC1,PC1=does not hold,0.578
+SliderDefault__e07.txt,2,5,8,"((F ""u0pos0f1dadd0pos0vel1b"") -> ""u0pos0f1dadd0pos0vel1b"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.781
+SliderDefault__e09.txt,2,5,8,"((F ""u0pos0f1dadd0pos0vel1b"") | (X (F ""u0pos0f1dadd0pos0vel1b"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.305
+Timer_a50cadd7__e02.txt,1,5,1,"(G (F ""u0system29start2new2timer0system29start2new2timer""))","(F (! (""p0b0timeout"" | (false R (! (X (F ""p0b0timeout"")))))))",NO_CAUSE,PC1,PC1=does not hold,0.565
+Timer_a50cadd7__e06.txt,1,5,1,"(F (! ""u0system29start2new2timer0system29start2new2timer""))",(false R (X false)),NO_CAUSE,PC1,PC1=does not hold,0.545
+Timer_a50cadd7__e08.txt,1,5,1,"(F ""u0system29start2new2timer0f1dmin25231b"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.77
+TorcsAccelerating__e01.txt,2,8,1,"(""u0accel0f1dspeed2up1b"" W (G (""u0accel0accel"" R ""u0accel0f1ddeaccel1b"")))","(""p0p0slow0speed"" W ((G ""p0p0clear2ahead0track"") R ((""p0p0clear2ahead0track"" & (G ""p0p0slow0speed"")) -> (X (""p0p0slow0speed"" W ""p0p0clear2ahead0track"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.79
+TorcsAccelerating__e05.txt,2,8,1,"((! ""u0brakes0f1dhit2brakes1b"") | ((! ""u0accel0f1ddeaccel1b"") W (F ""u0brakes0f1doff2brakes1b"")))",(! (X (G (X false)))),NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.78
+TorcsAccelerating__e09.txt,2,8,1,"(F ((G (""u0accel0accel"" <-> ""u0brakes0f1dhit2brakes1b"")) U (X ""u0accel0f1ddeaccel1b"")))","(F (G (""p0p0slow0speed"" | (X false))))",NO_CAUSE,PC1,PC1=does not hold,0.553
+TorcsGearing__e02.txt,1,4,2,"(G (F ""u0gear0gear""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.722
+TorcsGearing__e03.txt,1,4,2,"(! (X (""u0gear0f1dshift2by2r2p2m0gear0rpm1b"" R (G ""u0gear0gear""))))","(! ""p0p0acceling0accel0brakes"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.048
+TorcsGearing__e04.txt,1,4,2,"(G (F (! ""u0gear0f1dshift2by2r2p2m0gear0rpm1b"")))","((! ((G ""p0p0acceling0accel0brakes"") W ""p0p0acceling0accel0brakes"")) -> (G ""p0p0acceling0accel0brakes""))",NO_CAUSE,PC1,PC1=does not hold,0.534
+TorcsGearing__e05.txt,1,4,2,"((""u0gear0f1dshift2by2speed0gear0speed1b"" | ""u0gear0gear"") R (G ""u0gear0gear""))","((F (X (F ""p0p0acceling0accel0brakes""))) | (""p0p0acceling0accel0brakes"" U (X false)))",NO_CAUSE,PC1,PC1=does not hold,0.537
+TorcsGearing__e06.txt,1,4,2,"(F ""u0gear0f1dshift2by2r2p2m0gear0rpm1b"")",(X false),NO_CAUSE,PC1,PC1=does not hold,0.542
+TorcsGearing__e08.txt,1,4,2,"(F ""u0gear0gear"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.756
+abcg_arbiter1__e02.txt,1,5,6,"(F (G (! ""c_0"")))","(false R (! ""r_0""))",NO_CAUSE,PC1,PC1=does not hold,0.571
+abcg_arbiter1__e03.txt,1,5,6,"(G (! ((G ""g_0"") W ""a_0"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.749
+abcg_arbiter1__e04.txt,1,5,6,"(G (! ""b_0""))","(! (""r_0"" <-> (X (X (X false)))))",NO_CAUSE,PC1,PC1=does not hold,0.573
+abcg_arbiter1__e07.txt,1,5,6,"((F ""a_0"") | (false R ""c_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.745
+abcg_arbiter1__e08.txt,1,5,6,"(G (F ""g_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.764
+abcg_arbiter2__e01.txt,2,10,22,"((X (X (F ""a_1""))) R (""a_1"" -> ""a_0""))","(true U ""r_0"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.136
+abcg_arbiter2__e03.txt,2,10,22,"((F (""c_0"" -> (""a_1"" & ""b_0""))) U ""c_0"")","(X (((G ""r_1"") W ""r_0"") -> (false R ""r_1"")))",NO_CAUSE,PC1,PC1=does not hold,0.582
+abcg_arbiter2__e06.txt,2,10,22,"(G (F ""c_0""))","(G (X (((""r_1"" R ""r_0"") & ((F (G (X false))) -> (! (""r_0"" | ""r_1"")))) R ""r_0"")))",NO_CAUSE,PC1,PC1=does not hold,0.563
+abcg_arbiter2__e07.txt,2,10,22,"(""a_1"" | (F ""b_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.765
+abcg_arbiter2__e09.txt,2,10,22,"((G (""a_1"" R ""g_0"")) U (G (F ""b_0"")))","((! ""r_0"") | ((F ""r_1"") -> ((X (! ""r_1"")) W false)))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.239
+abcg_arbiter3__e01.txt,3,15,82,"((! ""a_2"") U (F (""b_1"" <-> (F ""a_0""))))","(((G (F ""r_2"")) U (! ""r_0"")) & (X (""r_0"" <-> ""r_1"")))",NO_CAUSE,PC1,PC1=does not hold,0.591
+abcg_arbiter3__e03.txt,3,15,82,"(""g_0"" <-> (X (F (""b_1"" R (G ""a_1"")))))",false,NO_CAUSE,PC1,PC1=does not hold,0.562
+abcg_arbiter3__e04.txt,3,15,82,"(F ""a_1"")","((""r_2"" <-> ((! ""r_2"") & (X ""r_0""))) | ((G ((! ""r_1"") <-> (G ""r_1""))) U ""r_0""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,2.29
+abcg_arbiter3__e05.txt,3,15,82,"(X (F (""c_1"" W (""b_1"" | (G ""g_2"")))))","(((! (X (! ((""r_0"" W false) W false)))) R (G (""r_1"" W ""r_2""))) -> ""r_0"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.847
+abcg_arbiter3__e06.txt,3,15,82,"(F ""a_2"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.812
+amba_decomposed_arbiter2__e02.txt,3,7,3,"(G (! ""hgrant_0""))",false,NO_CAUSE,PC1,PC1=does not hold,0.56
+amba_decomposed_arbiter2__e03.txt,3,7,3,"((F ""busreq"") | (false R ""decide""))",false,NO_CAUSE,PC1,PC1=does not hold,0.565
+amba_decomposed_arbiter2__e04.txt,3,7,3,"(F ""hgrant_0"")","(((((! ""allready"") | (F (G (X ""allready"")))) -> (F (X ""allready""))) W ((X (F ""allready"")) R ""hbusreq_1"")) W (X ""hbusreq_0""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,2.09
+amba_decomposed_arbiter2__e05.txt,3,7,3,"(X (((! ""busreq"") R ""decide"") U (F ""busreq"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.287
+amba_decomposed_decode__e01.txt,2,5,1,"(! (X (""incr"" R (G ""burst4""))))","(F ((""hburst_0"" W (! ""hburst_1"")) -> ((X ""hburst_1"") | (! (X ""hburst_1"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.772
+amba_decomposed_decode__e02.txt,2,5,1,"(F (! ""single""))","(X (X (! (G ""hburst_1""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.095
+amba_decomposed_decode__e06.txt,2,5,1,"(G (F ""single""))",false,NO_CAUSE,PC1,PC1=does not hold,0.557
+amba_decomposed_decode__e08.txt,2,5,1,"(G (F (! ""incr"")))","(F (X ""hburst_1""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.068
+amba_decomposed_encode2__e00.txt,3,4,2,"(G (F (! ""hmaster_0"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.728
+amba_decomposed_encode2__e01.txt,3,4,2,"(false R (! ""hmaster_0""))","(((""hgrant_1"" W ""hgrant_0"") U (! (""hgrant_1"" & (! ""hgrant_1"")))) -> ((X ((G ""hready"") -> ""hgrant_0"")) -> ""hgrant_1""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.519
+amba_decomposed_encode2__e03.txt,3,4,2,"(""hmaster_0"" <-> (X ""hmaster_0""))","(X (((""hgrant_1"" -> (X ""hgrant_0"")) | (F ""hgrant_1"")) W false))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.776
+amba_decomposed_encode2__e06.txt,3,4,2,"(G (F ""hmaster_0""))","(G (((! ""hgrant_0"") W ""hgrant_1"") W (! (G (((X (X ""hgrant_1"")) | (X (""hgrant_1"" U ""hgrant_0""))) R (true U ""hgrant_1""))))))",NO_CAUSE,PC1,PC1=does not hold,0.568
+amba_decomposed_encode2__e07.txt,3,4,2,"(X (! ""hmaster_0""))",false,NO_CAUSE,PC1,PC1=does not hold,0.576
+amba_decomposed_encode2__e09.txt,3,4,2,"(""hmaster_0"" | (F ""hmaster_0""))","(! (F (! (X (G (X (""hready"" <-> (""hgrant_1"" <-> ""hready""))))))))",NO_CAUSE,PC1,PC1=does not hold,0.58
+amba_decomposed_shift__e00.txt,2,3,2,"(F (G ""hmastlock""))",false,NO_CAUSE,PC1,PC1=does not hold,0.544
+amba_decomposed_shift__e01.txt,2,3,2,"((X (G ""hmastlock"")) W (! (X ""hmastlock"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.157
+amba_decomposed_shift__e02.txt,2,3,2,"(G (F (! ""hmastlock"")))","((""locked"" & ((! (X (F ""locked""))) <-> (F (""hready"" & (F ""locked""))))) W (((G ((X ""locked"") W ""locked"")) W false) U ""hready""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.359
+amba_decomposed_shift__e03.txt,2,3,2,"(X (! ""hmastlock""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+amba_decomposed_shift__e07.txt,2,3,2,"(""hmastlock"" <-> (X ""hmastlock""))","(((""locked"" U (((X ""locked"") -> ""locked"") R ""hready"")) -> (G ""locked"")) | (F (G (""hready"" R ((G ""hready"") -> (F ""hready""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+amba_decomposed_shift__e08.txt,2,3,2,"(F (G (! ""hmastlock"")))","(G ((X ((X ""locked"") -> ""hready"")) W ""locked""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.094
+amba_decomposed_shift__e09.txt,2,3,2,"(! (true U (F ""hmastlock"")))","(X ((! (F (! ""locked""))) U (! (((X ""locked"") -> ""locked"") U (G ((F ""locked"") <-> (""locked"" W ""hready"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.776
+arbiter1__e01.txt,1,2,2,"(! (true U (F ""g_0"")))","(G ""r_0"")",NO_CAUSE,PC1,PC1=does not hold,0.502
+arbiter1__e02.txt,1,2,2,"(G (F ""g_0""))","(((X (X ((! ""r_0"") R ""r_0""))) U (! ""r_0"")) U ((! (""r_0"" W (false R ""r_0""))) W false))",NO_CAUSE,PC1,PC1=does not hold,0.543
+arbiter1__e04.txt,1,2,2,"(F ""g_0"")",(G (X false)),NO_CAUSE,PC1,PC1=does not hold,0.534
+arbiter1__e06.txt,1,2,2,"(F (G (! ""g_0"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.741
+arbiter1__e09.txt,1,2,2,"(F (G (F (""g_0"" R (F ""g_0"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.785
+arbiter2__e00.txt,2,4,3,"(F (G (! ""g_0"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.761
+arbiter2__e02.txt,2,4,3,"(F ""g_0"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.761
+arbiter2__e07.txt,2,4,3,"(""g_0"" W (! ""g_1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.821
+arbiter3__e00.txt,3,6,8,"(F ""g_2"")","(""r_2"" U ""r_1"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.253
+arbiter3__e02.txt,3,6,8,"(F ""g_0"")","((! (F (! ""r_0""))) <-> (""r_1"" R (F ""r_2"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.891
+arbiter3__e03.txt,3,6,8,"((G (""g_0"" U (! ""g_2""))) R (F ""g_1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.75
+arbiter3__e06.txt,3,6,8,"(G (F ""g_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.795
+arbiter3__e07.txt,3,6,8,"(""g_0"" W (F ""g_2""))","((! (X (F (""r_1"" U (""r_0"" & (G ""r_1"")))))) <-> (G (X (F ""r_0""))))",NO_CAUSE,PC1,PC1=does not hold,0.573
+arbiter_with_buffer1__e01.txt,2,4,1,"(""g_0"" -> ((G ""ack_0"") W ""ack_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+arbiter_with_buffer1__e03.txt,2,4,1,"(""g_0"" | (""g_0"" U (false R (X false))))",(! (X (true U (F (X (X false)))))),NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.765
+arbiter_with_buffer1__e05.txt,2,4,1,"(G (""ack_0"" R (X (F (true U ""g_0"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.748
+arbiter_with_buffer1__e07.txt,2,4,1,"(! (F (! (G ""g_0""))))","(G (""r_0"" R (X ""try_0"")))",NO_CAUSE,PC1,PC1=does not hold,0.531
+arbiter_with_buffer1__e08.txt,2,4,1,"(F (G (! ""g_0"")))","(! ""r_0"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.093
+arbiter_with_cancel1__e02.txt,2,3,2,"(F (G (! ""g_0"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.767
+arbiter_with_cancel1__e03.txt,2,3,2,"(X (! ""g_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.769
+arbiter_with_cancel1__e04.txt,2,3,2,"(F ""g_0"")","((! ((! ((true U ""r_0"") R ((X (! ""c_0"")) -> ""r_0""))) & (X ""r_0""))) U (! ""c_0""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.141
+arbiter_with_cancel1__e06.txt,2,3,2,"(G (! ""g_0""))","(X (((G ""c_0"") & (G ""r_0"")) -> (X false)))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.075
+collector_v13__e00.txt,3,4,13,"(F (! ""allfinished""))","(F ((X (! ""finished_1"")) R (F (G ""finished_0""))))",NO_CAUSE,PC1,PC1=does not hold,0.542
+collector_v13__e03.txt,3,4,13,"(true U (! ""allfinished""))","(((X (G (! ""finished_2""))) -> (X ""finished_2"")) & (F (! ""finished_0"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.207
+collector_v13__e04.txt,3,4,13,"(G (F ""allfinished""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.784
+collector_v13__e06.txt,3,4,13,"(G (F (! ""allfinished"")))","(X ((F (! (""finished_2"" W false))) <-> (X (""finished_0"" R ""finished_2""))))",NO_CAUSE,PC1,PC1=does not hold,0.594
+collector_v13__e08.txt,3,4,13,"(F (G (! ""allfinished"")))","(! (X (F ((((G ""finished_1"") <-> (""finished_0"" U (X ""finished_2""))) & ((false R ""finished_2"") W ""finished_1"")) W ""finished_1""))))",NO_CAUSE,PC1,PC1=does not hold,0.569
+collector_v13__e09.txt,3,4,13,"(X (! ""allfinished""))","(""finished_2"" <-> (F ((""finished_0"" | ""finished_2"") U (((! ""finished_0"") U (X ""finished_0"")) W (F (G ""finished_2""))))))",NO_CAUSE,PC1,PC1=does not hold,0.553
+collector_v23__e00.txt,3,4,8,"(F (G (! ""allfinished"")))","(false R (true U ((X (! (X ""finished_0""))) <-> (X ((G ""finished_1"") W (""finished_1"" R ""finished_0""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.958
+collector_v23__e02.txt,3,4,8,"(G (F ""allfinished""))",false,NO_CAUSE,PC1,PC1=does not hold,0.553
+collector_v23__e04.txt,3,4,8,"(F ((G (! ""allfinished"")) U (X ""allfinished"")))","(""finished_2"" U (G ((! (""finished_1"" | (! ""finished_1"") | (G (""finished_1"" R (X (! ""finished_2"")))))) <-> ((X false) <-> (G ""finished_1"")))))",NO_CAUSE,PC1,PC1=does not hold,0.558
+collector_v23__e05.txt,3,4,8,"(F (X ""allfinished""))","(! ((F (G (F (! ""finished_2"")))) | (X false) | (X ""finished_0"")))",NO_CAUSE,PC1,PC1=does not hold,0.607
+collector_v33__e05.txt,3,4,2,"((X (G ""all_finished"")) W (! (X ""all_finished"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.805
+collector_v33__e06.txt,3,4,2,"(F (G (! ""all_finished"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.576
+detector1__e00.txt,1,2,1,"(F ""g"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.787
+detector1__e03.txt,1,2,1,"(F (G (F (""g"" R (F ""g"")))))",false,NO_CAUSE,PC1,PC1=does not hold,0.564
+detector1__e04.txt,1,2,1,"(G (F (! ""g"")))","(""r_0"" & (X ""r_0"") & (! (G (X (""r_0"" | (! ""r_0""))))))",NO_CAUSE,PC1,PC1=does not hold,0.564
+detector1__e06.txt,1,2,1,"(F (G (! ""g"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.545
+detector1__e09.txt,1,2,1,"((true U ""g"") W false)","((G ((X (! ""r_0"")) & (false R (! (G (X (X (F ""r_0"")))))))) <-> (X false))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.267
+detector2__e00.txt,2,3,2,"(F (G ""g""))","(X (X (F ""r_1"")))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.293
+detector2__e02.txt,2,3,2,"(G (! ""g""))",false,NO_CAUSE,PC1,PC1=does not hold,0.571
+detector2__e03.txt,2,3,2,"(true U (! ""g""))","(((false R ""r_1"") W (""r_1"" | (X (F ""r_0"")))) <-> (! (F (G ""r_0""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.17
+detector2__e05.txt,2,3,2,"(""g"" | (""g"" <-> (F ""g"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.783
+detector2__e08.txt,2,3,2,"(F (! ""g""))","((""r_0"" <-> ((F (! ""r_0"")) -> (X false))) | ((X (G ""r_0"")) W (""r_0"" U (G (! ""r_0"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.104
+detector2__e09.txt,2,3,2,"(F ((G (! ""g"")) U (X ""g"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.796
+detector3__e00.txt,3,4,3,"(F ""g"")","((F (! (F ((F ""r_1"") & (G ""r_2""))))) | (true U (! ((X ""r_0"") U (F ""r_0"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.9
+detector3__e02.txt,3,4,3,"(G (F (! ""g"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.59
+detector3__e04.txt,3,4,3,"(G (F ""g""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.778
+detector3__e05.txt,3,4,3,"(! ((X false) R ""g""))","(X ""r_2"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.155
+detector3__e08.txt,3,4,3,"(F (G (! ""g"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.787
+detector3__e09.txt,3,4,3,"(""g"" | (""g"" <-> (F ""g"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.543
+example101__e02.txt,1,2,1,"(F (! ""g""))",false,NO_CAUSE,PC1,PC1=does not hold,0.525
+example101__e04.txt,1,2,1,"(G (F (! ""g"")))","(F (false R (! ""r"")))",NO_CAUSE,PC1,PC1=does not hold,0.555
+example102__e00.txt,1,2,6,"(G (F ""g""))","((G (X false)) U (! (G (! (X ""r"")))))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.226
+example102__e01.txt,1,2,6,"(""g"" | (""g"" <-> (F ""g"")))","(F (X (G (F (X (! (X (! (F ""r"")))))))))",NO_CAUSE,PC1,PC1=does not hold,0.565
+example102__e07.txt,1,2,6,"(""g"" | (F ""g""))",false,NO_CAUSE,PC1,PC1=does not hold,0.563
+example102__e08.txt,1,2,6,"(F ""g"")","(F (! (""r"" & (true U (X (F ((X ""r"") W (! ""r""))))))))",NO_CAUSE,PC1,PC1=does not hold,0.56
+example102__e09.txt,1,2,6,"(F (X ""g""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.77
+example103__e00.txt,1,2,8,"(F (G (! ""g"")))","(X (true U ((! ""r"") U (F (X (F (X (X (X ""r"")))))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.105
+example103__e01.txt,1,2,8,"(false R (! ""g""))","((X (X false)) -> (G ""r""))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.763
+example103__e02.txt,1,2,8,"(G (F (! ""g"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.566
+example103__e05.txt,1,2,8,"((true U ""g"") W false)",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.768
+example103__e06.txt,1,2,8,"(G (! ""g""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.79
+example103__e07.txt,1,2,8,"(F (G (F (G ""g""))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.807
+example10a1__e01.txt,1,2,6,"(""g"" <-> (""g"" <-> (X ""g"")))","((! ((G ((F (X false)) & (! (G (F (X false)))))) W false)) | ((X false) R (""r"" W false)))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.788
+example10a1__e02.txt,1,2,6,"(F ""g"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.769
+example10a1__e04.txt,1,2,6,"(F (G (! ""g"")))","((! (X false)) W ""r"")",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.787
+example10a1__e05.txt,1,2,6,"((true U (F ""g"")) W (F ""g""))","(X (X (! ""r"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.114
+example10a1__e06.txt,1,2,6,"(G (F ""g""))","(X (true U ""r""))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.255
+example10a1__e07.txt,1,2,6,"(""g"" <-> (! (X ""g"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.569
+example10a2__e00.txt,1,2,12,"(G (F ""g""))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.529
+example10a2__e01.txt,1,2,12,"(F (X ""g""))",false,NO_CAUSE,PC1,PC1=does not hold,0.535
+example10a2__e02.txt,1,2,12,"(F ""g"")",(X false),NO_CAUSE,PC1,PC1=does not hold,0.549
+example10a2__e03.txt,1,2,12,"(""g"" | (F ""g""))",false,NO_CAUSE,PC1,PC1=does not hold,0.568
+example10a2__e07.txt,1,2,12,"((true U (F ""g"")) W (F ""g""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.779
+example10a2__e08.txt,1,2,12,"(F ((G (! ""g"")) U (X ""g"")))","(F (! ((X (""r"" W false)) W (""r"" <-> (F ""r"")))))",NO_CAUSE,PC1,PC1=does not hold,0.579
+example10a2__e09.txt,1,2,12,"((true U ""g"") W false)",false,NO_CAUSE,PC1,PC1=does not hold,0.561
+example10a3__e01.txt,1,2,16,"((true U (F ""g"")) W (F ""g""))",(X (X false)),NO_CAUSE,PC1,PC1=does not hold,0.574
+example10a3__e03.txt,1,2,16,"((true U ""g"") W false)","(! (""r"" | (F (! ""r""))))",NO_CAUSE,PC1,PC1=does not hold,0.567
+example10a3__e04.txt,1,2,16,"(G (! ""g""))","((F (G ""r"")) -> (F (true U ""r"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.775
+example10a3__e06.txt,1,2,16,"(F ""g"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.744
+example10a3__e08.txt,1,2,16,"(F (G (F (""g"" R (F ""g"")))))","((X (! (G (X (X false))))) U ((! ""r"") | (F (false R ""r""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.766
+example10a3__e09.txt,1,2,16,"(! (true U (F ""g"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.577
+example71__e00.txt,1,2,1,"(F ""g_0"")","(false R (G ((! (X (""r_0"" <-> (X ""r_0"")))) & ((G ""r_0"") <-> (""r_0"" W false)))))",NO_CAUSE,PC1,PC1=does not hold,0.576
+example71__e01.txt,1,2,1,"(""g_0"" <-> (""g_0"" <-> (X ""g_0"")))","((false R ""r_0"") & (((X (G ""r_0"")) U (! (X false))) R (! (X (X (X ""r_0""))))))",NO_CAUSE,PC1,PC1=does not hold,0.572
+example71__e05.txt,1,2,1,"(""g_0"" <-> (X ""g_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.778
+example71__e07.txt,1,2,1,"(! ""g_0"")","(F ""r_0"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.053
+example71__e08.txt,1,2,1,"(F (! ""g_0""))","((G (! (F (X ""r_0"")))) -> (F (""r_0"" | (X ""r_0""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.066
+example72__e03.txt,2,4,3,"(! (G ""g_1""))","(((! ""r_0"") U ((""r_1"" R ""r_0"") -> (F ""r_1""))) -> (G (X (X false))))",NO_CAUSE,PC1,PC1=does not hold,0.58
+example72__e04.txt,2,4,3,"(G (F (! ""g_0"")))",(F (G (X false))),NO_CAUSE,PC1,PC1=does not hold,0.542
+example72__e08.txt,2,4,3,"(G (F ""g_1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.742
+example72__e09.txt,2,4,3,"(""g_0"" W (F ""g_0""))",false,NO_CAUSE,PC1,PC1=does not hold,0.573
+example73__e02.txt,3,6,10,"(F ""g_1"")","(F (G (""r_0"" -> (""r_1"" R (""r_1"" W false)))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.874
+example73__e04.txt,3,6,10,"(G (F (! ""g_1"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.809
+example73__e05.txt,3,6,10,"""g_2""","((! (X ""r_1"")) -> (! ((X ""r_2"") R (F (X (! (G (F (G ""r_2"")))))))))",NO_CAUSE,PC1,PC1=does not hold,0.604
+example73__e06.txt,3,6,10,"(F (G (! ""g_2"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.808
+example7a1__e01.txt,1,2,1,"(F ((G (! ""g_0"")) U (X ""g_0"")))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.549
+example7a1__e03.txt,1,2,1,"((true U ""g_0"") W false)",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.774
+example7a1__e05.txt,1,2,1,"(X (! ""g_0""))",false,NO_CAUSE,PC1,PC1=does not hold,0.547
+example7a1__e06.txt,1,2,1,"(G (F ""g_0""))","((! (G ""r_0"")) U ""r_0"")",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.242
+example7a1__e08.txt,1,2,1,"(F (! ""g_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.796
+example7a2__e00.txt,2,4,5,"(F ""g_0"")","((! (G ""r_0"")) W (X (X ((G ""r_0"") | (F (! ((X false) U (X ""r_0""))))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.797
+example7a2__e01.txt,2,4,5,"""g_0""",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.778
+example7a2__e08.txt,2,4,5,"(G (F ""g_1""))","((((G ""r_1"") W false) R (X ""r_0"")) W false)",NO_CAUSE,PC1,PC1=does not hold,0.566
+example7a3__e04.txt,3,6,19,"(F ""g_0"")","(G (((X ((""r_0"" R ""r_2"") W ""r_1"")) U ""r_2"") | (G ((true U ""r_0"") R ""r_2""))))",NO_CAUSE,PC1,PC1=does not hold,0.567
+example7a3__e05.txt,3,6,19,"(F (X (((! ""g_1"") W ""g_1"") U ""g_1"")))","(G (""r_0"" | (F ((""r_1"" R (! ""r_2"")) R ((X ""r_0"") <-> (G ""r_0""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.18
+example7a3__e08.txt,3,6,19,"(F (! ""g_0""))","(((! ""r_0"") & (G ""r_0"")) W (X (((G ""r_0"") W (G ""r_2"")) W (X ((X false) & (F (G (! ""r_0""))))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,2.206
+example7a3__e09.txt,3,6,19,"(! (X (""g_1"" R (G ""g_0""))))","(X (((F ""r_1"") R ""r_1"") R ((""r_2"" & (G ""r_0"") & (X ""r_0"")) U ((F ""r_0"") R (G (X (F ""r_1"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.929
+example81__e00.txt,1,2,2,"(F ""g_0"")","(true U ((F (! ""r_0"")) & (F (X false))))",NO_CAUSE,PC1,PC1=does not hold,0.571
+example81__e01.txt,1,2,2,"(F ((G (! ""g_0"")) U (X ""g_0"")))","((! (X ""r_0"")) W (! (F (""r_0"" <-> (G (""r_0"" | (F (X ""r_0""))))))))",NO_CAUSE,PC1,PC1=does not hold,0.601
+example81__e03.txt,1,2,2,"(X ""g_0"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.785
+example81__e07.txt,1,2,2,"((true U (F ""g_0"")) W (F ""g_0""))","(F (false R (! (G ""r_0""))))",NO_CAUSE,PC1,PC1=does not hold,0.574
+example81__e09.txt,1,2,2,"((X (G ""g_0"")) W (! (X ""g_0"")))","(! ((X ""r_0"") W (X (X false))))",NO_CAUSE,PC1,PC1=does not hold,0.552
+example82__e02.txt,2,4,2,"(G (F ""g_0""))","(((""r_0"" | (! ""r_0"") | ""r_1"") R (F ""r_0"")) W false)",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.82
+example82__e05.txt,2,4,2,"(! (G ""g_1""))","((""r_1"" <-> (! (F (""r_1"" -> ((""r_0"" U ""r_1"") -> ""r_1""))))) R (X ""r_1""))",NO_CAUSE,PC1,PC1=does not hold,0.585
+example82__e06.txt,2,4,2,"(F (G (! ""g_0"")))","(F ((X false) & (""r_0"" <-> (! (F (! (G ""r_1"")))))))",NO_CAUSE,PC1,PC1=does not hold,0.56
+example82__e07.txt,2,4,2,"(X ""g_1"")",false,NO_CAUSE,PC1,PC1=does not hold,0.542
+example82__e09.txt,2,4,2,"(! (X ""g_1""))","(G ((! ((! ""r_0"") W ""r_1"")) | (X ""r_1"") | (X false)))",NO_CAUSE,PC1,PC1=does not hold,0.57
+example83__e01.txt,3,6,6,"(F (X (((! ""g_1"") W ""g_1"") U ""g_1"")))","(X (F ((! (X ""r_2"")) | (""r_1"" & ((! ""r_1"") W (X ""r_1""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.245
+example83__e04.txt,3,6,6,"(F (G (! ""g_0"")))","(((X ((G ""r_0"") R (true U ""r_0""))) U ((X ""r_1"") W ""r_0"")) <-> (X (G (! ((! ""r_1"") W (F ""r_2""))))))",NO_CAUSE,PC1,PC1=does not hold,0.582
+example83__e05.txt,3,6,6,"(! (X (""g_1"" R (G ""g_0""))))","(! (false R (X (""r_0"" <-> ""r_1""))))",NO_CAUSE,PC1,PC1=does not hold,0.565
+example83__e06.txt,3,6,6,"(F ""g_2"")","(X ""r_0"")",NO_CAUSE,PC1,PC1=does not hold,0.57
+example83__e09.txt,3,6,6,"((F ""g_1"") | (X (F ""g_1"")))","(G (((G ""r_1"") R (G (((""r_0"" -> (! ""r_2"")) -> ""r_1"") & (F (! ""r_1""))))) <-> (true U ""r_1"")))",NO_CAUSE,PC1,PC1=does not hold,0.567
+example91__e00.txt,1,2,3,"(F (G (! ""g"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.77
+example91__e01.txt,1,2,3,"(F ((G (! ""g"")) U (X ""g"")))","((! ""r"") & (X false))",NO_CAUSE,PC1,PC1=does not hold,0.571
+example91__e02.txt,1,2,3,"(G (F (! ""g"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.583
+example91__e05.txt,1,2,3,"((true U (F ""g"")) W (F ""g""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.861
+example91__e06.txt,1,2,3,"(F ""g"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.803
+example91__e07.txt,1,2,3,"(""g"" | (F ""g""))",false,NO_CAUSE,PC1,PC1=does not hold,0.554
+example92__e00.txt,1,2,6,"(G (F (! ""g"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.561
+example92__e01.txt,1,2,6,"(! (X (""g"" <-> (F (X false)))))","(false R (F (! (""r"" & ((! ""r"") U (F ""r""))))))",NO_CAUSE,PC1,PC1=does not hold,0.569
+example92__e02.txt,1,2,6,"(F (G ""g""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.775
+example92__e03.txt,1,2,6,"(X ""g"")","(! ""r"")",NO_CAUSE,PC1,PC1=does not hold,0.553
+example92__e04.txt,1,2,6,"(G (F ""g""))","((! (X ((""r"" R (true U (G ""r""))) <-> (! (false R (X ""r"")))))) W ((X (F ""r"")) U (X false)))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.166
+example92__e05.txt,1,2,6,"(""g"" <-> (! (X ""g"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.794
+example92__e06.txt,1,2,6,"(F (G (! ""g"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.775
+example92__e08.txt,1,2,6,"((true U ""g"") W false)","(X (X ""r""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.138
+example93__e00.txt,1,2,11,"(G (F ""g""))",(! (X (X false))),NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.806
+example93__e06.txt,1,2,11,"(G (F (! ""g"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.774
+example93__e07.txt,1,2,11,"(""g"" <-> (""g"" <-> (X ""g"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.778
+example93__e08.txt,1,2,11,"(""g"" <-> (! (X ""g"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.768
+example93__e09.txt,1,2,11,"(""g"" <-> (X ""g""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.769
+full_arbiter2__e01.txt,2,4,6,"((X ""g_1"") <-> (X (X false)))","(""r_1"" -> ((! (X ""r_1"")) U ""r_1""))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.792
+full_arbiter2__e02.txt,2,4,6,"(G (F ""g_1""))",false,NO_CAUSE,PC1,PC1=does not hold,0.561
+full_arbiter2__e03.txt,2,4,6,"(true U (F (""g_1"" <-> (F ""g_0""))))","(X (F (false R (G ""r_0""))))",NO_CAUSE,PC1,PC1=does not hold,0.584
+full_arbiter2__e05.txt,2,4,6,"(! (X (! (true U ""g_1""))))","(F ((F ""r_1"") & (X (G (X false))) & ((! (""r_1"" W ((F (X ""r_0"")) U (F ""r_0"")))) W ""r_1"")))",NO_CAUSE,PC1,PC1=does not hold,0.554
+full_arbiter2__e07.txt,2,4,6,"(X (X (! (""g_0"" U ""g_1""))))","(G ((! (F (G ((""r_0"" | (X ""r_0"")) -> (F ""r_0""))))) & ((! ""r_0"") U (F ""r_1""))))",NO_CAUSE,PC1,PC1=does not hold,0.548
+full_arbiter2__e08.txt,2,4,6,"(F (G (! ""g_1"")))","(((((""r_0"" | (! ""r_1"")) W ""r_0"") W (X ""r_0"")) U ""r_1"") | (X ""r_1""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.234
+full_arbiter2__e09.txt,2,4,6,"(G (""g_1"" R (X (F (true U ""g_0"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.771
+full_arbiter3__e01.txt,3,6,13,"((F ""g_0"") <-> (! (X (""g_1"" <-> ""g_2""))))","(X ((! (""r_2"" U ""r_1"")) & ((! ""r_0"") | (""r_0"" R ""r_2""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.53
+full_arbiter3__e02.txt,3,6,13,"(G (! ""g_1""))",false,NO_CAUSE,PC1,PC1=does not hold,0.563
+full_arbiter3__e03.txt,3,6,13,"(! (X ""g_0""))","(""r_1"" & ((G ((X ""r_0"") & (G (X ""r_2"")))) | ((X false) W (X (F (X ""r_0""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.557
+full_arbiter3__e04.txt,3,6,13,"(F ""g_1"")","(! (F (X (((""r_1"" & ""r_2"") -> (X ""r_2"")) -> ""r_1""))))",NO_CAUSE,PC1,PC1=does not hold,0.584
+full_arbiter3__e06.txt,3,6,13,"(F ""g_2"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.773
+full_arbiter3__e07.txt,3,6,13,"((G (""g_0"" U (! ""g_2""))) R (F ""g_1""))","((((F (((! ""r_2"") R ""r_2"") R (! ""r_1""))) U ""r_2"") R (X (F ""r_1""))) U (G (X ((! (X false)) W (F ""r_1"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.781
+full_arbiter3__e09.txt,3,6,13,"(F ((""g_0"" & ""g_2"") U (F ""g_0"")))","((G ""r_0"") U (G ((! ""r_1"") U (""r_0"" & (! ""r_2"")))))",NO_CAUSE,PC1,PC1=does not hold,0.58
+lift2__e00.txt,2,6,10,"(F (G (! ""f_0"")))",(! ((X false) W false)),NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.782
+lift2__e01.txt,2,6,10,"(X (G (! ""down"")))","((F (G ""b_0"")) & (X false))",NO_CAUSE,PC1,PC1=does not hold,0.553
+lift2__e02.txt,2,6,10,"(G (! ""serve""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.759
+lift2__e04.txt,2,6,10,"(F (G (! ""up"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.787
+lift2__e07.txt,2,6,10,"((F ""down"") -> ""serve"")","(! ((X (F (! ((true U (! (G ""b_1""))) -> (X (! (X ""b_1""))))))) W ""b_0""))",NO_CAUSE,PC1,PC1=does not hold,0.584
+lift_unary_enc2__e00.txt,2,7,16,"(G (F (! ""f_0"")))","((""b_0"" R (X ""b_1"")) W false)",NO_CAUSE,PC1,PC1=does not hold,0.589
+lift_unary_enc2__e01.txt,2,7,16,"(G ((X (G ""down"")) W (true U ""f_0"")))","(! (G (((false R ""b_1"") U ""b_1"") & ((! (false R ""b_1"")) <-> (G ""b_1"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.759
+lift_unary_enc2__e02.txt,2,7,16,"(F (G (! ""up"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.763
+lift_unary_enc2__e03.txt,2,7,16,"(! (X ""f_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.786
+lift_unary_enc2__e04.txt,2,7,16,"(G (F ""f_1""))","(X (X (G (false R (! (""b_1"" W ((""b_1"" W false) -> (X false))))))))",NO_CAUSE,PC1,PC1=does not hold,0.569
+lift_unary_enc2__e07.txt,2,7,16,"(""serve"" <-> (F (true U (F ""up""))))","((F ((F (G ((F (! (""b_1"" <-> (G ""b_1"")))) R (X ""b_0"")))) U (F (""b_0"" W false)))) W (X (! ""b_0"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.807
+lift_unary_enc2__e08.txt,2,7,16,"(F (! ""f_0""))","((G ""b_1"") U (F ""b_0""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.121
+lift_unary_enc3__e01.txt,3,9,44,"((X (X (F ""up""))) R (""f_2"" -> ""serve""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.779
+lift_unary_enc3__e04.txt,3,9,44,"(G (! ""down""))","(X (! (((""b_0"" & ""b_1"") R ""b_0"") U (G (! ((G ""b_2"") & (F (G ""b_2""))))))))",NO_CAUSE,PC1,PC1=does not hold,0.543
+lift_unary_enc3__e05.txt,3,9,44,"(G (X (G ((! ""f_1"") | (F ""up"")))))","""b_2""",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,5.039
+lift_unary_enc3__e06.txt,3,9,44,"(F (! ""f_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.865
+lift_unary_enc3__e07.txt,3,9,44,"(""serve"" <-> (F (true U (F ""up""))))","(((((true U ""b_1"") -> ""b_0"") U (G ""b_1"")) -> (true U ""b_1"")) W (""b_2"" <-> (G ""b_2"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.797
+lift_wrong_physics_unreal2__e03.txt,2,6,10,"(! (((G (F ""up"")) U ""serve"") U ""up""))","(G (((X false) -> (""b_0"" & ""b_1"")) | (! (F (X ""b_1"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.913
+lift_wrong_physics_unreal2__e04.txt,2,6,10,"(F (G (! ""serve"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.798
+lift_wrong_physics_unreal2__e06.txt,2,6,10,"(F (G (! ""up"")))","((F (X (((! (X ""b_1"")) <-> (X ""b_0"")) <-> (G ""b_1"")))) R (X ((X ""b_1"") W (X (! ""b_1"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.75
+lift_wrong_physics_unreal2__e07.txt,2,6,10,"(X (F ((G (X ""up"")) U (F ""down""))))","(G (((F ""b_1"") & (F (G ""b_0""))) -> (true U (F (X ((X (! (""b_1"" & (G ""b_0"")))) -> ""b_1""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.357
+lift_wrong_physics_unreal2__e08.txt,2,6,10,"(G (F (! ""down"")))","(G ((X ((F ""b_1"") W false)) <-> (""b_1"" & (G ""b_0""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.297
+lift_wrong_physics_unreal2__e09.txt,2,6,10,"((! ""down"") U (F (""up"" <-> (F ""serve""))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.746
+lilydemo03__e00.txt,3,4,6,"(F (G ""grant""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.733
+lilydemo03__e02.txt,3,4,6,"(F ""grant"")","""go""",NO_CAUSE,PC1,PC1=does not hold,0.567
+lilydemo03__e05.txt,3,4,6,"((X ""grant"") U ""grant"")","((F (X ""req"")) R ((G (! ""req"")) -> (G ""go"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.208
+lilydemo03__e09.txt,3,4,6,"((true U ""grant"") W false)",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.749
+lilydemo04__e01.txt,3,4,8,"(F ((G (! ""grant"")) U (X ""grant"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.796
+lilydemo04__e02.txt,3,4,8,"(G (F ""grant""))","(((G (! ""cancel"")) U (X (F (G (F ""cancel""))))) R (X ((""go"" W false) | (""req"" -> ((F ""go"") & (X ""req""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,4.703
+lilydemo04__e04.txt,3,4,8,"(G (F (! ""grant"")))","((! (G (""cancel"" <-> ((X ""req"") W ""go"")))) U (X (""go"" | ""req"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.953
+lilydemo04__e07.txt,3,4,8,"(F (G (F (""grant"" R (F ""grant"")))))","((! ((F ""go"") <-> (X ""cancel""))) U (""req"" & (X (! (X false)))))",NO_CAUSE,PC1,PC1=does not hold,0.559
+lilydemo04__e08.txt,3,4,8,"(F ""grant"")","((F ""cancel"") | ((false R (X (X false))) R (""go"" <-> (G ""cancel""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.173
+lilydemo05__e01.txt,3,4,8,"(X ""grant"")","(""cancel"" R (G (""cancel"" W false)))",NO_CAUSE,PC1,PC1=does not hold,0.574
+lilydemo05__e02.txt,3,4,8,"(G (F ""grant""))","((! ((! (false R (G (! ""req"")))) R (! ((F ""cancel"") W ""go"")))) W (! ((X (! ""req"")) W ""cancel"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,3.447
+lilydemo05__e04.txt,3,4,8,"(G (F (! ""grant"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.728
+lilydemo05__e06.txt,3,4,8,"(F ""grant"")","(! (X (((F ""req"") W (! ""go"")) <-> (""req"" | (G ""req"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.757
+lilydemo05__e09.txt,3,4,8,"(false R (! ""grant""))","((G ((G ""go"") & ((! ""go"") | (""cancel"" W false)))) U (X (F ((""req"" U ""cancel"") R (""req"" W ""cancel"")))))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.932
+lilydemo06__e01.txt,3,4,10,"(""grant"" | (F ""grant""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.786
+lilydemo06__e03.txt,3,4,10,"((true U (F ""grant"")) W (F ""grant""))","((! ((X ""cancel"") -> ""cancel"")) U (! ""go""))",NO_CAUSE,PC1,PC1=does not hold,0.57
+lilydemo06__e04.txt,3,4,10,"(F (G (! ""grant"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.764
+lilydemo06__e05.txt,3,4,10,"((X (G ""grant"")) W (! (X ""grant"")))","(X ((! ""req"") | (G (X false))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.257
+lilydemo06__e06.txt,3,4,10,"(G (F (! ""grant"")))","((false R ""go"") -> ""req"")",NO_CAUSE,PC1,PC1=does not hold,0.575
+lilydemo07__e00.txt,3,4,6,"(F (G (! ""grant"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.549
+lilydemo07__e01.txt,3,4,6,"((X (G ""grant"")) W (! (X ""grant"")))","(((! (G (! ""go""))) <-> (X ""go"")) | (""cancel"" R (X ((F ""go"") W ""req""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,2.206
+lilydemo07__e02.txt,3,4,6,"(G (F ""grant""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+lilydemo07__e03.txt,3,4,6,"(X (! ""grant""))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.542
+lilydemo07__e05.txt,3,4,6,"(""grant"" | (""grant"" <-> (F ""grant"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.746
+lilydemo07__e07.txt,3,4,6,"(F (X ""grant""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.776
+lilydemo07__e09.txt,3,4,6,"(F ((G (! ""grant"")) U (X ""grant"")))","(G (true U (G ((X (! ""go"")) U (G ""go"")))))",NO_CAUSE,PC1,PC1=does not hold,0.566
+lilydemo09__e00.txt,1,2,3,"(F ""grant"")","(G (X (((F ""req"") <-> (! (X false))) W false)))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.808
+lilydemo09__e03.txt,1,2,3,"(F ((G (! ""grant"")) U (X ""grant"")))","(G ((F (G (X (F (X false))))) & (true U (X ""req""))))",NO_CAUSE,PC1,PC1=does not hold,0.563
+lilydemo09__e04.txt,1,2,3,"(G (F ""grant""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.77
+lilydemo09__e09.txt,1,2,3,"(X ""grant"")",false,NO_CAUSE,PC1,PC1=does not hold,0.557
+lilydemo12__e01.txt,2,4,3,"""ack""","(true U ""req"")",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.216
+lilydemo12__e02.txt,2,4,3,"(G (F (! ""ack"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.773
+lilydemo12__e03.txt,2,4,3,"((X ""ack"") <-> (X (X false)))","((""req"" -> ((! (G ""go"")) <-> (X ""req""))) U (! ""req""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.149
+lilydemo12__e05.txt,2,4,3,"((X ""grant"") & ((! ""ack"") -> (X ""grant"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.567
+lilydemo12__e08.txt,2,4,3,"(F ""ack"")","(! (((! ""req"") <-> (((X (G ""req"")) W (G ""req"")) W false)) <-> ((X ""req"") | ((F ""req"") -> ""go""))))",NO_CAUSE,PC1,PC1=does not hold,0.554
+lilydemo12__e09.txt,2,4,3,"((F ""ack"") -> ""ack"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.766
+lilydemo13__e04.txt,1,2,1,"(F ""a1"")",false,NO_CAUSE,PC1,PC1=does not hold,0.546
+lilydemo13__e05.txt,1,2,1,"(! (G ""a1""))",(X (X false)),NO_CAUSE,PC1,PC1=does not hold,0.555
+lilydemo13__e06.txt,1,2,1,"(G (F (! ""a1"")))","(G ""r1"")",NO_CAUSE,PC1,PC1=does not hold,0.55
+lilydemo13__e07.txt,1,2,1,"(""a1"" <-> (! (X ""a1"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.765
+lilydemo19__e02.txt,2,4,5,"(G (F ""fl""))","(""ec"" & (! ""ec"") & ((X (! (G (! ""ets"")))) -> ((X ""ec"") R (F (""ec"" & ""ets"")))))",NO_CAUSE,PC1,PC1=does not hold,0.539
+lilydemo19__e03.txt,2,4,5,"((X (G ""fl"")) W (! (X ""fl"")))","((! (G (F ((X (! (F ""ec""))) | (((F ""ets"") W ""ets"") W ""ets""))))) <-> (X false))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.815
+lilydemo19__e06.txt,2,4,5,"(G (F (! ""fl"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.769
+lilydemo19__e09.txt,2,4,5,"(! ((X false) R ""hl""))",false,NO_CAUSE,PC1,PC1=does not hold,0.54
+lilydemo20__e00.txt,2,5,4,"(G (F ""sts""))","(G (! ((X ((X false) W ((G ""etc"") U (""etc"" W ""ec"")))) U (G (true U (X ""etc""))))))",NO_CAUSE,PC1,PC1=does not hold,0.564
+lilydemo20__e01.txt,2,5,4,"(! (X ""sts""))","(G ((! ((X false) U ""etc"")) <-> (F (! (""etc"" | (G ""ec""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.217
+lilydemo20__e04.txt,2,5,4,"(G (F (! ""sts"")))","(""ec"" -> ((""etc"" & ((F (G (! (G ""ec"")))) U ""etc"")) W (((""etc"" R ""ec"") U (! ""etc"")) U (! ""ec""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.167
+lilydemo20__e07.txt,2,5,4,"(G ((X (G ""shlr"")) W (true U ""sts"")))","(((""etc"" W ""ec"") -> ""ec"") U (F (! (F ((! ""ec"") <-> (! (X ""etc"")))))))",NO_CAUSE,PC1,PC1=does not hold,0.533
+lilydemo20__e08.txt,2,5,4,"(F (G (! ""sts"")))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.564
+lilydemo22__e01.txt,3,4,14,"(X (! ""ss""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.775
+lilydemo22__e04.txt,3,4,14,"(G (F (! ""ss"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.798
+lilydemo22__e05.txt,3,4,14,"(F (G (F (G ""ss""))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.783
+lilydemo22__e06.txt,3,4,14,"(F (G ""ss""))","(X ((G ""ws"") W (G (""godown"" U (true U (G (X false)))))))",NO_CAUSE,PC1,PC1=does not hold,0.572
+lilydemo22__e07.txt,3,4,14,"(F ((G (! ""ss"")) U (X ""ss"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.74
+lilydemo22__e09.txt,3,4,14,"(F (X ""ss""))","((X false) R (""godown"" <-> (G (""godown"" W false))))",NO_CAUSE,PC1,PC1=does not hold,0.533
+lilydemo23__e01.txt,1,2,3,"(F ((G (! ""s"")) U (X ""s"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.735
+lilydemo23__e02.txt,1,2,3,"(F (G (! ""s"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.752
+lilydemo23__e04.txt,1,2,3,"(G (F (! ""s"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.761
+lilydemo23__e07.txt,1,2,3,"((true U (F ""s"")) W (F ""s""))","(""e"" | (G (! (X ""e""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.085
+lilydemo23__e09.txt,1,2,3,"(F (X ""s""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.75
+load_balancer2__e01.txt,3,5,7,"""grant_1""",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.75
+load_balancer2__e02.txt,3,5,7,"(F (G (! ""grant_1"")))","(! ""request_0"")",NO_CAUSE,PC1,PC1=does not hold,0.555
+load_balancer2__e03.txt,3,5,7,"(! (X ""grant_1""))","(! (true U (""idle"" | (! ((! ""request_0"") <-> (F ""request_0""))))))",NO_CAUSE,PC1,PC1=does not hold,0.547
+load_balancer2__e05.txt,3,5,7,"(""grant_0"" | (X ""grant_0""))","(! (F (false R ((X ""idle"") -> ""request_0""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.812
+load_balancer2__e07.txt,3,5,7,"((""grant_1"" -> (X (! ""grant_0""))) W (! ""grant_1""))","((G ((""idle"" | ""request_1"") -> ((! (G ""request_0"")) R (F ((""idle"" & ""request_1"") | (F (G ""idle""))))))) & (X (G ((X false) -> (! ""request_1"")))))",NO_CAUSE,PC1,PC1=does not hold,0.553
+load_balancer2__e09.txt,3,5,7,"((F ""grant_1"") -> ""grant_1"")","(! (""request_1"" -> (F (""request_0"" | (X ""request_1"")))))",NO_CAUSE,PC1,PC1=does not hold,0.557
+load_balancer_unreal22__e00.txt,3,5,7,"(F ""grant_1"")","(X (((F ""idle"") -> (X ""idle"")) R ((! ""request_1"") <-> (""request_1"" <-> (""idle"" <-> (! ""request_1""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.343
+load_balancer_unreal22__e03.txt,3,5,7,"((""grant_1"" -> (X (! ""grant_0""))) W (! ""grant_1""))","(((F (""idle"" & (X (G (F (X ""request_1"")))))) <-> ((false R ""request_0"") W (""request_1"" W (! ""request_0"")))) R ((! ""request_0"") R (G ""request_1"")))",NO_CAUSE,PC1,PC1=does not hold,0.563
+load_balancer_unreal22__e05.txt,3,5,7,"((F ""grant_1"") -> ""grant_1"")","((G (""idle"" -> ((G (! ""request_0"")) -> (""request_0"" U (X false))))) & (G ((X false) | (G (""request_0"" W (X ""request_1""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.389
+load_balancer_unreal22__e06.txt,3,5,7,"(F (G (! ""grant_1"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.773
+load_balancer_unreal22__e08.txt,3,5,7,"(G (! ""grant_1""))","(X ((true U (F ""request_0"")) U (! ""request_1"")))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.419
+load_balancer_unreal22__e09.txt,3,5,7,"(true U (X (""grant_1"" W ""grant_0"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.792
+ltl2dba01__e02.txt,3,4,3,"(G (! ""acc""))","(X ((G ""p"") -> (false R (""p"" -> ""r""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.189
+ltl2dba01__e03.txt,3,4,3,"(F (G (F (G ""acc""))))","(X (((F (X ""r"")) W (X ""r"")) <-> ((""p"" <-> (X false)) -> ""p"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.248
+ltl2dba01__e06.txt,3,4,3,"(F (G (! ""acc"")))","(F ((""p"" W (X ""r"")) | (""p"" <-> ((G ((""p"" U (""r"" -> (X ""q""))) | (F ""q""))) -> (X ((F ""r"") -> ""r""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.396
+ltl2dba01__e07.txt,3,4,3,"(F (X ""acc""))","(X (((""p"" <-> (""r"" <-> (""p"" -> ""r""))) R (X false)) U (""r"" | (X (X ""q"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.252
+ltl2dba01__e08.txt,3,4,3,"(F ""acc"")","(((! ""p"") <-> ((""p"" W (F ""r"")) & ((! ""r"") W ""p""))) -> (! ""p""))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.307
+ltl2dba02__e00.txt,3,4,12,"(G (! ""acc""))","(! (F (X (((F ""r"") W (""p"" W ""q"")) R ((""p"" <-> (""q"" | ""r"")) -> ""p"")))))",NO_CAUSE,PC1,PC1=does not hold,0.587
+ltl2dba02__e02.txt,3,4,12,"(G (F (! ""acc"")))","(((G ((X (F (X ""p""))) <-> ((! ""r"") R ""p""))) W ""q"") W ((! ""q"") | (X (F (G ""p"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.756
+ltl2dba02__e04.txt,3,4,12,"(F (G ""acc""))","(! (X (((F ""p"") W (! ""r"")) <-> (""p"" | (G ""p"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.868
+ltl2dba02__e05.txt,3,4,12,"(X (! ""acc""))",false,NO_CAUSE,PC1,PC1=does not hold,0.559
+ltl2dba02__e06.txt,3,4,12,"(G (F ""acc""))","(""r"" | ((! ""p"") U (! (X ((G ""p"") -> (""p"" U (""r"" <-> (X ((""p"" -> ""r"") W (F (""r"" W ""p"")))))))))))",NO_CAUSE,PC1,PC1=does not hold,0.568
+ltl2dba02__e07.txt,3,4,12,"(F (G (F (""acc"" R (F ""acc"")))))","(X ""r"")",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.461
+ltl2dba02__e08.txt,3,4,12,"(F ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.768
+ltl2dba03__e00.txt,3,4,4,"(F (G ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.762
+ltl2dba03__e01.txt,3,4,4,"(F (X ""acc""))","((! (((G ""r"") & (! (false R ""q""))) W (G ""q""))) W (X (X ""p"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,6.882
+ltl2dba03__e02.txt,3,4,4,"(G (F (! ""acc"")))","(""p"" R (X (true U (! ""p""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.165
+ltl2dba03__e04.txt,3,4,4,"(G (! ""acc""))","(F (((G ""p"") R ""r"") W (true U ""q"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.298
+ltl2dba03__e05.txt,3,4,4,"(! (true U (F ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.789
+ltl2dba03__e06.txt,3,4,4,"(F ""acc"")","(! (G ((F (""r"" W (X false))) <-> (((! ""p"") <-> (! ""q"")) -> (X (G ""r""))))))",NO_CAUSE,PC1,PC1=does not hold,0.57
+ltl2dba04__e00.txt,3,4,3,"(G (F ""acc""))","((""p"" & ""r"") -> (""q"" & ((G ""p"") <-> ((""r"" W ""q"") | (X (F (""r"" & (F ""q""))))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.18
+ltl2dba04__e01.txt,3,4,3,"((X ""acc"") U ""acc"")","(F ""q"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.116
+ltl2dba04__e03.txt,3,4,3,"((X false) U ""acc"")","(true U (G (""p"" <-> (F (""p"" & ""r"")))))",NO_CAUSE,PC1,PC1=does not hold,0.562
+ltl2dba04__e04.txt,3,4,3,"(F (! ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.335
+ltl2dba04__e05.txt,3,4,3,"(! (G ""acc""))",false,NO_CAUSE,PC1,PC1=does not hold,0.546
+ltl2dba04__e08.txt,3,4,3,"(F (G ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.771
+ltl2dba09__e02.txt,3,4,1,"(G ""acc"")","(! (((X ((X ""p"") U ((F ""p"") -> ""q""))) W ((X false) W (! ""r""))) -> (""r"" -> (G ""p""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.71
+ltl2dba09__e05.txt,3,4,1,"((true U (F ""acc"")) W (F ""acc""))","((X false) & (F ""q"") & (F (""r"" U (""r"" | (G (X (""r"" -> (""q"" -> (F (""p"" -> ""q""))))))))))",NO_CAUSE,PC1,PC1=does not hold,0.559
+ltl2dba09__e07.txt,3,4,1,"(""acc"" | (F ""acc""))","((X ""q"") | (G (X (false R (""r"" | (G ""p"") | (""q"" & (X ""q"")))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.358
+ltl2dba09__e08.txt,3,4,1,"(F (G ""acc""))",(G (X false)),NO_CAUSE,PC1,PC1=does not hold,0.58
+ltl2dba10__e00.txt,2,3,2,"(G (F (! ""acc"")))","(! ((! ""q"") U (false R ((X false) R ""p""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.088
+ltl2dba10__e01.txt,2,3,2,"((true U ""acc"") W false)","(""q"" <-> (""p"" & (F ((G (F ""q"")) R (""p"" W ""q"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.173
+ltl2dba10__e02.txt,2,3,2,"(G (F ""acc""))","(F ((""q"" <-> ((""q"" U (F ""p"")) | (G ""p""))) <-> (((! ""q"") -> (""p"" <-> (G ""p""))) W (! ""p""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.097
+ltl2dba10__e05.txt,2,3,2,"((X ""acc"") U ""acc"")","(((G ""q"") R ((X (F ""q"")) R ""p"")) & ((F (X (X false))) R (F (X (""q"" <-> ((F ""p"") R ""q""))))))",NO_CAUSE,PC1,PC1=does not hold,0.561
+ltl2dba10__e06.txt,2,3,2,"(F (G (! ""acc"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.544
+ltl2dba10__e08.txt,2,3,2,"(F ""acc"")",false,NO_CAUSE,PC1,PC1=does not hold,0.536
+ltl2dba11__e00.txt,2,3,1,"(F ""acc"")","((X (! (G ""p""))) -> (F ((! (G ((! (""p"" & (F (X false)))) <-> (G ""q"")))) U (! (G (! (X false)))))))",NO_CAUSE,PC1,PC1=does not hold,0.579
+ltl2dba11__e02.txt,2,3,1,"(F (! ""acc""))","(! ((X false) W (G (! (""p"" U (G ""q""))))))",NO_CAUSE,PC1,PC1=does not hold,0.542
+ltl2dba11__e03.txt,2,3,1,"(true U (! ""acc""))","((! ((! ""q"") U ""p"")) -> (true U ""q""))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.226
+ltl2dba11__e04.txt,2,3,1,"(F (G (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.763
+ltl2dba11__e05.txt,2,3,1,"(! (G ""acc""))","(((G ""p"") W ""p"") | (""q"" W false))",NO_CAUSE,PC1,PC1=does not hold,0.571
+ltl2dba11__e07.txt,2,3,1,"(""acc"" | (""acc"" <-> (F ""acc"")))","(! ((F ""p"") R ((""p"" & (! ""p"")) | (F (X (X ""p""))))))",NO_CAUSE,PC1,PC1=does not hold,0.582
+ltl2dba11__e09.txt,2,3,1,"((X (G ""acc"")) W (! (X ""acc"")))","(! (F ""p""))",NO_CAUSE,PC1,PC1=does not hold,0.558
+ltl2dba12__e00.txt,2,3,4,"(F (G ""acc""))","""q""",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.079
+ltl2dba12__e02.txt,2,3,4,"(G (F ""acc""))","((X ((""q"" R (G ""q"")) R ((! ""q"") -> (G ""q"")))) W (true U (G (F ""p""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.826
+ltl2dba12__e03.txt,2,3,4,"(""acc"" <-> (X ""acc""))","(((! ""p"") R (G ""p"")) W (F (G (X (X (((""q"" | (G ""q"")) W false) W (""p"" | (X ""q""))))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.822
+ltl2dba12__e05.txt,2,3,4,"(F (G (F (""acc"" R (F ""acc"")))))","((""q"" & (G ""p"")) W (F (! ""q"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.12
+ltl2dba12__e06.txt,2,3,4,"(F ""acc"")","(((X false) R ""q"") <-> ((X ((F (""q"" | (F (true U ""q"")))) -> (X ((! ""q"") -> ""p"")))) U ((X ""p"") W false)))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.415
+ltl2dba12__e07.txt,2,3,4,"(""acc"" <-> (! (X ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.785
+ltl2dba13__e00.txt,3,4,2,"(G (F (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.773
+ltl2dba13__e04.txt,3,4,2,"(G (! ""acc""))","(X (! ""p""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.143
+ltl2dba13__e05.txt,3,4,2,"(! (true U (F ""acc"")))","(""p"" U ((G ""r"") -> ""q""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.12
+ltl2dba14__e00.txt,3,4,3,"(F (G (! ""acc"")))","(F (((X false) -> ""r"") | ((G ""p"") W false)))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.408
+ltl2dba14__e01.txt,3,4,3,"(! (true U (F ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.768
+ltl2dba14__e02.txt,3,4,3,"(F (! ""acc""))","(((""q"" & (""q"" <-> (! ""q""))) <-> (""q"" | ((X (X ""p"")) U (G ""q"")))) W (X (X false)))",NO_CAUSE,PC1,PC1=does not hold,0.585
+ltl2dba14__e04.txt,3,4,3,"(G (F (! ""acc"")))","((G (X (! (X ""r"")))) U (G ((""r"" | (F (X ""r""))) W (! ""r""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.763
+ltl2dba15__e00.txt,2,3,1,"(F (! ""acc""))","(! ((F (""q"" W (F (""p"" <-> (X ""q""))))) <-> ((X false) W false)))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.139
+ltl2dba15__e02.txt,2,3,1,"(G (F ""acc""))","(F (! ""p""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.077
+ltl2dba15__e03.txt,2,3,1,"(""acc"" | (F ""acc""))","(F (G (X (false R (G (! (F (""p"" -> (! (F ""p""))))))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.796
+ltl2dba15__e04.txt,2,3,1,"(G (F (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.773
+ltl2dba15__e05.txt,2,3,1,"((X ""acc"") U ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.76
+ltl2dba15__e07.txt,2,3,1,"(true U (! ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.75
+ltl2dba15__e08.txt,2,3,1,"(F ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.74
+ltl2dba15__e09.txt,2,3,1,"(F (G (F (G ""acc""))))",false,NO_CAUSE,PC1,PC1=does not hold,0.54
+ltl2dba16__e00.txt,2,3,3,"(G (F ""acc""))","(X (false R (((G ""q"") U (F (X ""q""))) | (true U ""q""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.795
+ltl2dba16__e02.txt,2,3,3,"(F ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.737
+ltl2dba16__e03.txt,2,3,3,"(F ((G (! ""acc"")) U (X ""acc"")))","(F ((! ""q"") & (F ((G (((F ""q"") W (""p"" W false)) W false)) W ""q""))))",NO_CAUSE,PC1,PC1=does not hold,0.557
+ltl2dba16__e05.txt,2,3,3,"(F (X ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.752
+ltl2dba16__e07.txt,2,3,3,"(! (G ""acc""))","((! ((""q"" -> (G ""q"")) & (! (F ""p"")))) | (G (F (! ""p""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.775
+ltl2dba16__e08.txt,2,3,3,"(G ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.746
+ltl2dba17__e01.txt,2,3,4,"((X (G ""acc"")) W (! (X ""acc"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.546
+ltl2dba17__e05.txt,2,3,4,"((X ""acc"") U ""acc"")",false,NO_CAUSE,PC1,PC1=does not hold,0.529
+ltl2dba17__e06.txt,2,3,4,"(G (! ""acc""))","(! ""p"")",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.162
+ltl2dba17__e08.txt,2,3,4,"(G (F (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.724
+ltl2dba17__e09.txt,2,3,4,"(""acc"" | (""acc"" <-> (F ""acc"")))","((F (""q"" W (F (X false)))) <-> (! (""q"" W false)))",NO_CAUSE,PC1,PC1=does not hold,0.557
+ltl2dba18__e00.txt,3,4,4,"(F (G (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.746
+ltl2dba18__e04.txt,3,4,4,"(G (F ""acc""))","((""p"" | ""r"") <-> (! ((F ((! ""q"") & (""q"" <-> ""r""))) U ""q"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.564
+ltl2dba18__e05.txt,3,4,4,"(true U (! ""acc""))","(! ""q"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.165
+ltl2dba18__e06.txt,3,4,4,"(F (G ""acc""))","(G (true U (G (X (F (""p"" U (F ""r"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.825
+ltl2dba18__e08.txt,3,4,4,"(F (! ""acc""))","(X (! ((true U ""p"") W (G (! ((G ""r"") U (""r"" -> (X ""q""))))))))",NO_CAUSE,PC1,PC1=does not hold,0.571
+ltl2dba18__e09.txt,3,4,4,"(! (X (""acc"" <-> (F (X false)))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.775
+ltl2dba19__e01.txt,2,3,9,"(F (G (F (""acc"" R (F ""acc"")))))",false,NO_CAUSE,PC1,PC1=does not hold,0.555
+ltl2dba19__e02.txt,2,3,9,"(G ""acc"")","((""p"" & (! ""p"") & (""q"" W (""p"" W (! ""p"")))) R (X ((""p"" R ""q"") & (X ""p""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.8
+ltl2dba19__e09.txt,2,3,9,"((F ((G ""acc"") -> ""acc"")) R (G ""acc""))","(! (F (G (""p"" <-> (! ((X ((F ""p"") W ""q"")) & (X false)))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.816
+ltl2dba21__e00.txt,2,3,8,"(F (! ""acc""))","((X ((X false) <-> (""q"" U ""p""))) U (F (""p"" | ((F (""p"" | (X (G ""p"")))) R ""q""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.844
+ltl2dba21__e01.txt,2,3,8,"(true U (! ""acc""))","(((X (F (X (""p"" U (! (X ""p"")))))) U ((F ""q"") R (F (X ""p"")))) R (! ""q""))",NO_CAUSE,PC1,PC1=does not hold,0.58
+ltl2dba21__e03.txt,2,3,8,"(X (! ""acc""))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.564
+ltl2dba21__e08.txt,2,3,8,"(G (F (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.777
+ltl2dba22__e02.txt,1,2,2,"(F (! ""acc""))","(F (X (X (F ((""p"" R (G ""p"")) U ""p"")))))",NO_CAUSE,PC1,PC1=does not hold,0.569
+ltl2dba22__e03.txt,1,2,2,"(! ((X false) R ""acc""))","(F (G (""p"" & (G ((F ""p"") R (! (X (X false))))))))",NO_CAUSE,PC1,PC1=does not hold,0.579
+ltl2dba22__e06.txt,1,2,2,"(G (F (! ""acc"")))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.526
+ltl2dba23__e00.txt,2,3,3,"(F (G (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.757
+ltl2dba23__e03.txt,2,3,3,"(""acc"" <-> (! (X ""acc"")))","(true U (F ""p""))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.855
+ltl2dba23__e05.txt,2,3,3,"((X (G ""acc"")) W (! (X ""acc"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.569
+ltl2dba23__e06.txt,2,3,3,"(G (F (! ""acc"")))","((! (X (((true U (X false)) R ""q"") R ""q""))) U (G (X (true U (G ((F ""q"") R (X false)))))))",NO_CAUSE,PC1,PC1=does not hold,0.568
+ltl2dba23__e08.txt,2,3,3,"(F (! ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+ltl2dba24__e00.txt,1,2,2,"(G (F ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+ltl2dba24__e01.txt,1,2,2,"(F (G (F (G ""acc""))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.755
+ltl2dba24__e04.txt,1,2,2,"(F (G ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.75
+ltl2dba24__e05.txt,1,2,2,"(F (X ""acc""))","(((X false) U (! ""p"")) -> (X (X (G (X false)))))",NO_CAUSE,PC1,PC1=does not hold,0.552
+ltl2dba24__e08.txt,1,2,2,"(F ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.748
+ltl2dba25__e00.txt,3,4,3,"(G (F (! ""acc"")))","(((! ""r"") -> (F ""r"")) R (""q"" | (F (X ""p""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.276
+ltl2dba25__e01.txt,3,4,3,"(! ""acc"")","(! ""r"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.118
+ltl2dba25__e05.txt,3,4,3,"(""acc"" | (""acc"" <-> (F ""acc"")))","(G ((G ((X ""q"") R ((G ""p"") U ""p""))) -> (X (F ((X (X (F ""r""))) <-> (G (X ""p"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.856
+ltl2dba25__e06.txt,3,4,3,"(F (! ""acc""))","((""q"" R ((X (G ""q"")) -> (((F ""p"") R ""p"") W (G (F (G (X ""p""))))))) | (X (F ""q"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.754
+ltl2dba25__e07.txt,3,4,3,"((X (G ""acc"")) W (! (X ""acc"")))","((X (((""q"" <-> (G ""r"")) W ""q"") -> ""p"")) W (! (G (X (G ((F ""q"") -> ((X false) W (! ""r""))))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.457
+ltl2dba26__e00.txt,3,4,3,"(F (! ""acc""))","((X (G ((! (G ""q"")) | (G (""p"" | ""q""))))) <-> ((! ""q"") U (X (! ""q""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.415
+ltl2dba26__e03.txt,3,4,3,"((X ""acc"") U ""acc"")","(F (! (X ((! ""q"") & (""p"" | ""q"" | (! ""r""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.113
+ltl2dba26__e04.txt,3,4,3,"(F (G (! ""acc"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.538
+ltl2dba26__e09.txt,3,4,3,"(! ""acc"")","(((""q"" & (X (! (X ""r"")))) W false) U ((F (G ""r"")) W (X ((""p"" <-> (((G ""p"") & (! (G ""r""))) U ""p"")) R ""p""))))",NO_CAUSE,PC1,PC1=does not hold,0.56
+ltl2dba_C21__e00.txt,1,2,1,"(F (G ""acc""))",false,NO_CAUSE,PC1,PC1=does not hold,0.521
+ltl2dba_C21__e01.txt,1,2,1,"""acc""",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.778
+ltl2dba_C21__e05.txt,1,2,1,"(""acc"" | (F ""acc""))",false,NO_CAUSE,PC1,PC1=does not hold,0.581
+ltl2dba_C21__e06.txt,1,2,1,"(G (F ""acc""))",false,NO_CAUSE,PC1,PC1=does not hold,0.55
+ltl2dba_C21__e07.txt,1,2,1,"((X ""acc"") U ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.76
+ltl2dba_C22__e00.txt,2,3,2,"(F ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.792
+ltl2dba_C22__e01.txt,2,3,2,"(X ""acc"")",false,NO_CAUSE,PC1,PC1=does not hold,0.55
+ltl2dba_C22__e04.txt,2,3,2,"(F (! ""acc""))","((! (X (""p_0"" -> (! ""p_1"")))) & (F (! (G ""p_1""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.137
+ltl2dba_C23__e01.txt,3,4,3,"(""acc"" <-> (X ""acc""))","(G (X (F (! ((X ((X (X ""p_0"")) W (""p_0"" <-> (F ""p_1"")))) R (X (F (""p_0"" | ((G ""p_2"") W ""p_2"")))))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.812
+ltl2dba_C23__e02.txt,3,4,3,"(G (F (! ""acc"")))","((G (((X (X ""p_2"")) -> ""p_2"") -> (true U ""p_2""))) U (X false))",NO_CAUSE,PC1,PC1=does not hold,0.557
+ltl2dba_C23__e03.txt,3,4,3,"(! ""acc"")","(G (! (((G (! ""p_2"")) & ((X ""p_2"") R (""p_1"" | ((F ""p_0"") U ""p_2"")))) -> (""p_2"" W (""p_0"" <-> (F ""p_1""))))))",NO_CAUSE,PC1,PC1=does not hold,0.585
+ltl2dba_C23__e05.txt,3,4,3,"(! ((X false) R ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.752
+ltl2dba_C23__e07.txt,3,4,3,"((X ""acc"") U ""acc"")","(F ((X (""p_0"" & ""p_1"")) R (""p_0"" <-> (""p_2"" U (G (X ""p_0""))))))",NO_CAUSE,PC1,PC1=does not hold,0.577
+ltl2dba_C23__e08.txt,3,4,3,"(G (! ""acc""))","(! (""p_1"" | (G ((X false) <-> (X ""p_0"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.204
+ltl2dba_E1__e00.txt,1,2,2,"(G (F ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.776
+ltl2dba_E1__e04.txt,1,2,2,"(F (G ""acc""))","((! ""p_0"") W (F ""p_0""))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.78
+ltl2dba_E1__e05.txt,1,2,2,"(F ((G (! ""acc"")) U (X ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+ltl2dba_E1__e06.txt,1,2,2,"(F ""acc"")","((((""p_0"" W (G (F ((! ""p_0"") <-> (F ""p_0""))))) R (X false)) W (""p_0"" | (X false))) R (""p_0"" W false))",NO_CAUSE,PC1,PC1=does not hold,0.573
+ltl2dba_E1__e07.txt,1,2,2,"(! (X (""acc"" <-> (F (X false)))))","((G (X (F ""p_0""))) R (! (X ""p_0"")))",NO_CAUSE,PC1,PC1=does not hold,0.576
+ltl2dba_E2__e04.txt,2,3,4,"(F (G ""acc""))","(F ((G ""p_0"") R ((F ""p_0"") U (F (! (F (((F ""p_1"") W false) -> ""p_0"")))))))",NO_CAUSE,PC1,PC1=does not hold,0.556
+ltl2dba_E2__e05.txt,2,3,4,"(F (X ""acc""))","(((G (F (X false))) W (F (G (X false)))) U (! (X ""p_1"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.116
+ltl2dba_E2__e09.txt,2,3,4,"(""acc"" <-> (X ""acc""))","((X (""p_1"" | (G (! ((G ""p_1"") & (F (! ""p_0""))))))) U (""p_0"" -> ""p_1""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.156
+ltl2dba_E3__e02.txt,3,4,8,"(G (F ""acc""))","(G (F (! (X ((X ""p_2"") R (X (G (X false))))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.773
+ltl2dba_E3__e05.txt,3,4,8,"(X (! ""acc""))",false,NO_CAUSE,PC1,PC1=does not hold,0.567
+ltl2dba_E3__e09.txt,3,4,8,"(F (X ""acc""))","(! (((F (X (! ""p_1""))) U (! ""p_1"")) -> (""p_0"" | (! ""p_0"") | (G ""p_1""))))",NO_CAUSE,PC1,PC1=does not hold,0.545
+ltl2dba_Q1__e00.txt,1,2,2,"(F (G ""acc""))",false,NO_CAUSE,PC1,PC1=does not hold,0.536
+ltl2dba_Q1__e01.txt,1,2,2,"(X (! ""acc""))","(X (F ((X false) | (X (F (G ((G ""p_0"") W (F ""p_0""))))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.796
+ltl2dba_Q1__e03.txt,1,2,2,"((true U (F ""acc"")) W (F ""acc""))","(! (F ((X false) & (G ""p_0""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.743
+ltl2dba_Q1__e08.txt,1,2,2,"(G (F ""acc""))","(false R ((G ""p_0"") R (X ""p_0"")))",NO_CAUSE,PC1,PC1=does not hold,0.55
+ltl2dba_Q1__e09.txt,1,2,2,"(""acc"" <-> (X ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.769
+ltl2dba_Q2__e01.txt,2,3,6,"(! (true U (F ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+ltl2dba_Q2__e02.txt,2,3,6,"(F (G ""acc""))","(((! ""p_0"") & (X false)) U (! ""p_1""))",NO_CAUSE,PC1,PC1=does not hold,0.536
+ltl2dba_Q2__e04.txt,2,3,6,"(F ""acc"")",false,NO_CAUSE,PC1,PC1=does not hold,0.539
+ltl2dba_Q2__e08.txt,2,3,6,"(G (F ""acc""))","(((""p_0"" & (""p_1"" -> ""p_0"")) -> (F ""p_0"")) W false)",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+ltl2dba_Q2__e09.txt,2,3,6,"(X (! ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.775
+ltl2dba_Q3__e03.txt,3,4,13,"(""acc"" <-> (! (X ""acc"")))","(X (G ((""p_1"" & ((G (! ""p_2"")) -> (G ""p_1""))) R (F ""p_1""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.815
+ltl2dba_Q3__e04.txt,3,4,13,"(F ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.75
+ltl2dba_Q3__e05.txt,3,4,13,"(X ""acc"")","((""p_2"" -> ""p_0"") & (((G (X ""p_2"")) -> (F (! ""p_2""))) <-> ((! ""p_0"") U (F ""p_0""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.407
+ltl2dba_Q3__e06.txt,3,4,13,"(F (G ""acc""))","(G (F (X (! (F (! (true U (X ""p_2""))))))))",NO_CAUSE,PC1,PC1=does not hold,0.54
+ltl2dba_Q3__e08.txt,3,4,13,"(G (F ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.757
+ltl2dba_Q3__e09.txt,3,4,13,"(X (! ""acc""))",false,NO_CAUSE,PC1,PC1=does not hold,0.518
+ltl2dba_R1__e01.txt,1,2,1,"(""acc"" W false)","(X (F ((X (! (""p_0"" W (X false)))) R (X false))))",NO_CAUSE,PC1,PC1=does not hold,0.522
+ltl2dba_R1__e02.txt,1,2,1,"(G (F ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.741
+ltl2dba_R1__e04.txt,1,2,1,"(G (F (! ""acc"")))","(G ((X ""p_0"") W (F (X ""p_0""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.78
+ltl2dba_R1__e06.txt,1,2,1,"(F ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.732
+ltl2dba_R1__e09.txt,1,2,1,"(F ((G (! ""acc"")) U (X ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.738
+ltl2dba_U11__e02.txt,1,2,3,"(F (G (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.747
+ltl2dba_U11__e03.txt,1,2,3,"((X ""acc"") U ""acc"")","(X ((X false) | (G ""p_0"")))",NO_CAUSE,PC1,PC1=does not hold,0.546
+ltl2dba_U11__e04.txt,1,2,3,"(F ""acc"")",(X (X (X false))),NO_CAUSE,PC1,PC1=does not hold,0.534
+ltl2dba_U11__e05.txt,1,2,3,"((true U (F ""acc"")) W (F ""acc""))","(F (X ((X ""p_0"") W (""p_0"" -> (G (X false))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.781
+ltl2dba_U11__e06.txt,1,2,3,"(G (! ""acc""))","((G ""p_0"") & (! (F ""p_0"")))",NO_CAUSE,PC1,PC1=does not hold,0.548
+ltl2dba_U11__e07.txt,1,2,3,"(""acc"" <-> (X ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.746
+ltl2dba_U11__e08.txt,1,2,3,"(G (F ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.731
+ltl2dba_U11__e09.txt,1,2,3,"(""acc"" | (""acc"" <-> (F ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.756
+ltl2dba_U12__e02.txt,2,3,3,"(F ""acc"")","(! (((X false) U ""p_1"") R (! (""p_1"" | (! ((F ((X ""p_1"") U ""p_0"")) -> (X false)))))))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.209
+ltl2dba_U12__e03.txt,2,3,3,"(F (X ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.757
+ltl2dba_U12__e04.txt,2,3,3,"(G (F ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.76
+ltl2dba_U12__e08.txt,2,3,3,"(G (F (! ""acc"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.539
+ltl2dba_U12__e09.txt,2,3,3,"(F ((G (! ""acc"")) U (X ""acc"")))","((! (""p_1"" U (X ""p_0""))) & (! (G (X (F (""p_0"" U ""p_1""))))))",NO_CAUSE,PC1,PC1=does not hold,0.555
+ltl2dba_U13__e00.txt,3,4,5,"(F (G ""acc""))","(((G ((G ""p_1"") -> (F ""p_0""))) <-> (F (G (X (F (X ""p_2"")))))) & (G ((F ""p_1"") R ""p_0"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.462
+ltl2dba_U13__e01.txt,3,4,5,"(F (G (F (G ""acc""))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.417
+ltl2dba_U13__e02.txt,3,4,5,"(G (F ""acc""))","((! ((F (X ""p_2"")) W ""p_0"")) R (! (X (! (G (true U ""p_1""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.844
+ltl2dba_U13__e03.txt,3,4,5,"(""acc"" <-> (! (X ""acc"")))","(F (G (""p_0"" <-> ((! ""p_1"") & (false R (""p_0"" R (G ""p_2"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.861
+ltl2dba_U13__e04.txt,3,4,5,"(F (G (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.767
+ltl2dba_U13__e07.txt,3,4,5,"(! (X (""acc"" <-> (F (X false)))))","((X ""p_2"") W (F (! (X (false R ((""p_0"" -> (""p_0"" | (X (X ""p_1"")))) W (X (G ""p_1""))))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.297
+ltl2dba_U13__e08.txt,3,4,5,"(F ""acc"")","(""p_2"" & ((G (X false)) | (""p_0"" & ""p_1"" & (G ""p_2""))))",NO_CAUSE,PC1,PC1=does not hold,0.58
+ltl2dba_alpha10__e01.txt,2,3,12,"(""acc"" | (""acc"" <-> (F ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.767
+ltl2dba_alpha10__e02.txt,2,3,12,"(G (F (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.767
+ltl2dba_alpha10__e05.txt,2,3,12,"(F (G (F (""acc"" R (F ""acc"")))))","(! ((! ""p"") | (G ((X (X ((! ""p"") R ""p""))) R ""p""))))",NO_CAUSE,PC1,PC1=does not hold,0.554
+ltl2dba_alpha10__e06.txt,2,3,12,"(F (G (! ""acc"")))","(X (X (G (! ""q""))))",NO_CAUSE,PC1,PC1=does not hold,0.572
+ltl2dba_alpha10__e08.txt,2,3,12,"(G (! ""acc""))","((true U (G ""q"")) & (! (F ((F (X ""p"")) U (""q"" -> (""p"" -> (X ""p"")))))))",NO_CAUSE,PC1,PC1=does not hold,0.565
+ltl2dba_alpha10__e09.txt,2,3,12,"(F (G (F (G ""acc""))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.736
+ltl2dba_alpha12__e01.txt,2,3,14,"(false R (! ""acc""))","((G (! (""p"" | (! ""p"")))) W (X ((! ((""q"" | (X false)) R ""p"")) U (X ""p""))))",NO_CAUSE,PC1,PC1=does not hold,0.569
+ltl2dba_alpha12__e02.txt,2,3,14,"(G (! ""acc""))","((""p"" W (""p"" & ""q"")) R (""q"" | (G (! ""q""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.18
+ltl2dba_alpha12__e06.txt,2,3,14,"(G (F (! ""acc"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.56
+ltl2dba_alpha14__e01.txt,2,3,16,"(""acc"" | (""acc"" <-> (F ""acc"")))","(! ""p"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.163
+ltl2dba_alpha14__e04.txt,2,3,16,"(F (G (! ""acc"")))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.577
+ltl2dba_alpha14__e08.txt,2,3,16,"(G (F ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.766
+ltl2dba_alpha16__e00.txt,2,3,18,"(G (! ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.786
+ltl2dba_alpha16__e02.txt,2,3,18,"(F ""acc"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.778
+ltl2dba_alpha16__e04.txt,2,3,18,"(G (F (! ""acc"")))","((G (true U (! (X ""p"")))) U (F (G (F (! (""p"" W (G ""p"")))))))",NO_CAUSE,PC1,PC1=does not hold,0.551
+ltl2dba_alpha16__e06.txt,2,3,18,"(F (G (! ""acc"")))",(! (F (X false))),NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.761
+ltl2dba_alpha16__e09.txt,2,3,18,"(""acc"" | (""acc"" <-> (F ""acc"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.581
+ltl2dba_alpha1__e00.txt,2,3,3,"(F (G ""acc""))","(F ((F (((""p"" R ""q"") W ""p"") U ((G (F ""q"")) U (X (X ""q""))))) | (G ((! ""p"") | (X (G ""p""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.82
+ltl2dba_alpha1__e06.txt,2,3,3,"(G (! ""acc""))","(! (F ((! ""p"") -> ((X false) R (""q"" | (F (""q"" <-> (G (! ""p"")))))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.168
+ltl2dba_alpha1__e07.txt,2,3,3,"(false R (! ""acc""))","((! (""q"" -> ""p"")) W (((X (! (F (! ""p"")))) <-> (X (! (G ""p"")))) | (""p"" <-> (F ""q""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.134
+ltl2dba_alpha1__e08.txt,2,3,3,"(G (F ""acc""))","(G ""q"")",NO_CAUSE,PC1,PC1=does not hold,0.584
+ltl2dba_alpha25__e02.txt,2,3,27,"(G (! ""acc""))","(F ""q"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.117
+ltl2dba_alpha25__e08.txt,2,3,27,"(F (G (! ""acc"")))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.562
+ltl2dba_alpha2__e01.txt,2,3,4,"(! (true U (F ""acc"")))","(F (X (X (true U (F (! ""q""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.127
+ltl2dba_alpha2__e03.txt,2,3,4,"(""acc"" | (""acc"" <-> (F ""acc"")))","((X (X false)) U (! ((G ""p"") | (""q"" & (X ""p"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.139
+ltl2dba_alpha2__e04.txt,2,3,4,"(G (F (! ""acc"")))","((! ((! (X (! ""p""))) -> (G ""p""))) U (! (F (""q"" W ""p""))))",NO_CAUSE,PC1,PC1=does not hold,0.571
+ltl2dba_alpha2__e05.txt,2,3,4,"(F (X ""acc""))","(F (X (! (""p"" <-> ""q""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.728
+ltl2dba_alpha2__e08.txt,2,3,4,"(F (G (! ""acc"")))","(F ((G (X false)) W (! ((F (X (! (F (X ""q""))))) -> (""q"" R ""p"")))))",NO_CAUSE,PC1,PC1=does not hold,0.57
+ltl2dba_alpha3__e04.txt,2,3,5,"(G (! ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.765
+ltl2dba_alpha3__e06.txt,2,3,5,"(G (F (! ""acc"")))","((! ""q"") U (""p"" & ((""q"" R (! ""p"")) W (""p"" | (G (X ""q""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.144
+ltl2dba_alpha3__e09.txt,2,3,5,"(F (G (F (""acc"" R (F ""acc"")))))","(((F (""p"" <-> ""q"")) U (F (X ""p""))) W (X ""q""))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.315
+ltl2dba_alpha4__e03.txt,2,3,6,"(false R (! ""acc""))","(((G ""p"") & (""p"" | ((X false) U (X (F (G ""q"")))))) R (X (""q"" | (X ""q""))))",NO_CAUSE,PC1,PC1=does not hold,0.581
+ltl2dba_alpha4__e05.txt,2,3,6,"(! (true U (F ""acc"")))","((F (X false)) <-> (G ((G (X (X (G ""q"")))) & (G (! (""q"" & (! ""q"")))))))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.252
+ltl2dba_alpha4__e06.txt,2,3,6,"(F (G (! ""acc"")))","(((F ""q"") & (""p"" U ""q"")) R ((F ""p"") & ((! ""q"") R (G ""p""))))",NO_CAUSE,PC1,PC1=does not hold,0.574
+ltl2dba_alpha4__e08.txt,2,3,6,"(G (F (! ""acc"")))","((G (F (! ((""p"" R (! ""q"")) R ""q"")))) R (X ((""p"" <-> ""q"") W false)))",NO_CAUSE,PC1,PC1=does not hold,0.554
+ltl2dba_alpha50__e08.txt,2,3,52,"(G (! ""acc""))","(((""p"" <-> (! (G (X ""q"")))) U (""p"" -> (F (! (F (! (F (G ""q"")))))))) R (G ""q""))",NO_CAUSE,PC1,PC1=does not hold,0.723
+ltl2dba_alpha5__e03.txt,2,3,7,"(""acc"" | (""acc"" <-> (F ""acc"")))","(X (X ((F ""q"") U (""p"" | ((! ""q"") -> (true U (false R (G ""p""))))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.841
+ltl2dba_alpha5__e04.txt,2,3,7,"(G (F (! ""acc"")))","(G (F (! ((X false) -> ((X (""p"" R ((! ""q"") R ""p""))) -> (""p"" -> (F ""q"")))))))",NO_CAUSE,PC1,PC1=does not hold,0.57
+ltl2dba_alpha5__e06.txt,2,3,7,"(G (! ""acc""))","(G (""q"" R (""p"" <-> (! ""q""))))",NO_CAUSE,PC1,PC1=does not hold,0.55
+ltl2dba_alpha5__e07.txt,2,3,7,"(! (true U (F ""acc"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.552
+ltl2dba_alpha5__e09.txt,2,3,7,"(false R (! ""acc""))","(! (G ""q""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.063
+ltl2dba_alpha6__e01.txt,2,3,8,"((true U (F ""acc"")) W (F ""acc""))","(! (F (G (((! ""p"") -> (X (! (true U (""q"" W ""p""))))) | (G (! (false R (true U (X false)))))))))",NO_CAUSE,PC1,PC1=does not hold,0.58
+ltl2dba_alpha6__e02.txt,2,3,8,"(G (! ""acc""))","((true U (""q"" <-> (G ""p""))) & (X ((false R (G ""q"")) <-> (true U ""p""))))",NO_CAUSE,PC1,PC1=does not hold,0.589
+ltl2dba_alpha6__e04.txt,2,3,8,"(F (G (! ""acc"")))","(! (((F ""q"") <-> (G ""q"")) U ((! ""p"") W false)))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.244
+ltl2dba_alpha6__e09.txt,2,3,8,"(! (true U (F ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.759
+ltl2dba_alpha7__e00.txt,2,3,9,"(G (! ""acc""))","((((F ""p"") W ""p"") R ((! ""q"") -> (X (F ""p"")))) W (F ""p""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.125
+ltl2dba_alpha7__e04.txt,2,3,9,"(F ""acc"")","(""p"" W (G (""q"" U (G (""q"" <-> (G (! ""q"")))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.204
+ltl2dba_alpha7__e06.txt,2,3,9,"(F (G (! ""acc"")))","(X (! ((G (! (false R (X (G (X (X (F (G ""q""))))))))) <-> (""p"" | (F ""q"")))))",NO_CAUSE,PC1,PC1=does not hold,0.587
+ltl2dba_alpha7__e07.txt,2,3,9,"(""acc"" | (""acc"" <-> (F ""acc"")))","((G (F ((! (X ""q"")) W false))) W false)",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.83
+ltl2dba_alpha7__e08.txt,2,3,9,"(G (F (! ""acc"")))",(F (G (X false))),NO_CAUSE,PC1,PC1=does not hold,0.56
+ltl2dba_alpha8__e02.txt,2,3,10,"(F (G (! ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.753
+ltl2dba_alpha8__e04.txt,2,3,10,"(G (! ""acc""))",false,NO_CAUSE,PC1,PC1=does not hold,0.562
+ltl2dba_alpha8__e05.txt,2,3,10,"(false R (! ""acc""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.752
+ltl2dba_alpha8__e06.txt,2,3,10,"(G (F (! ""acc"")))","((G (false R ""q"")) W ((! ((! ""q"") W ""p"")) W (F ""q"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.083
+ltl2dba_beta1__e00.txt,2,3,4,"(G (! ""acc""))","(! (F ((G ((X ""q_0"") <-> (! (X ""p_0"")))) <-> (F (X (X ""q_0""))))))",NO_CAUSE,PC1,PC1=does not hold,0.586
+ltl2dba_beta1__e02.txt,2,3,4,"(F (G ""acc""))",false,NO_CAUSE,PC1,PC1=does not hold,0.569
+ltl2dba_beta1__e04.txt,2,3,4,"(G (F ""acc""))","(true U (F (! (""q_0"" <-> (false R (G ""p_0""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.156
+ltl2dba_beta1__e05.txt,2,3,4,"(X (! ""acc""))","((! ""q_0"") R (F (X (! (""p_0"" <-> (! (G ""p_0"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.411
+ltl2dba_beta1__e06.txt,2,3,4,"(G (F (! ""acc"")))","((((G ""p_0"") W (F ""q_0"")) U ((""q_0"" U (! ""q_0"")) R (F ""q_0""))) R ((""q_0"" W (! (F ""q_0""))) R ((X ""p_0"") R (G ""q_0""))))",NO_CAUSE,PC1,PC1=does not hold,0.577
+ltl2dba_beta1__e07.txt,2,3,4,"(F ((G (! ""acc"")) U (X ""acc"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.75
+ltl2dba_beta1__e09.txt,2,3,4,"((X ""acc"") U ""acc"")","(((! ""p_0"") <-> (! (F ""q_0""))) W (F (! ((G ""p_0"") <-> (""q_0"" & (G (""q_0"" R (""q_0"" <-> (G ""p_0"")))))))))",NO_CAUSE,PC1,PC1=does not hold,0.587
+ltl2dpa01__e02.txt,1,4,4,"(G (F (! ""p2"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.786
+ltl2dpa01__e03.txt,1,4,4,"(! (""p0"" -> (! (F ""p2""))))","(""a"" <-> (F (true U (G (F ""a"")))))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.263
+ltl2dpa01__e05.txt,1,4,4,"((X ""p1"") U (""p2"" U ""p1""))","((""a"" W false) & (F (true U (X (X false)))))",NO_CAUSE,PC1,PC1=does not hold,0.548
+ltl2dpa01__e07.txt,1,4,4,"(F (G (F (""p1"" R (F ""p1"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.75
+ltl2dpa01__e08.txt,1,4,4,"(G ""p0"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.79
+ltl2dpa01__e09.txt,1,4,4,"((F ""p2"") | (X (F ""p2"")))","""a""",NO_CAUSE,PC1,PC1=does not hold,0.551
+ltl2dpa02__e00.txt,2,4,3,"(G (F ""p0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.753
+ltl2dpa02__e01.txt,2,4,3,"(""p1"" R (X (! ""p1"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.761
+ltl2dpa02__e02.txt,2,4,3,"(G ""p1"")","(F (G (X (G ((F (X false)) U (! ""a""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.788
+ltl2dpa02__e03.txt,2,4,3,"(! ((X false) R ""p1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.795
+ltl2dpa02__e04.txt,2,4,3,"(F (G (! ""p0"")))","(G (! (((F (! ""b"")) U ""b"") <-> (X (F (G (X false)))))))",NO_CAUSE,PC1,PC1=does not hold,0.567
+ltl2dpa02__e05.txt,2,4,3,"((""p1"" -> (X (! ""p0""))) W (! ""p1""))","((! ""a"") & (G ((X false) U ""a"")) & (! (F ((""b"" R ""a"") R ""b""))))",NO_CAUSE,PC1,PC1=does not hold,0.59
+ltl2dpa02__e07.txt,2,4,3,"(! (X (! (true U ""p1""))))","((X (""b"" -> (! ""b""))) & (F (""a"" U ""b"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.11
+ltl2dpa02__e08.txt,2,4,3,"(G (F ""p1""))","((((F (! ((! ""a"") <-> (X false)))) R (X false)) | (F (G (X (X false))))) -> (! ""b""))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.754
+ltl2dpa02__e09.txt,2,4,3,"(! (G ""p1""))",false,NO_CAUSE,PC1,PC1=does not hold,0.546
+ltl2dpa03__e00.txt,3,6,72,"(G (F (! ""p1"")))","(G (F (((true U (G ""b"")) R (""a"" <-> (G ""b""))) | (G (F ((""a"" & (""c"" R ""b"")) W false))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.644
+ltl2dpa03__e03.txt,3,6,72,"(! (X (""p2"" R (G ""p1""))))",false,NO_CAUSE,PC1,PC1=does not hold,0.591
+ltl2dpa03__e04.txt,3,6,72,"(F ""p0"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.768
+ltl2dpa03__e05.txt,3,6,72,"(F ((""p0"" & ""p1"") U (F ""p1"")))","(G (F ((G ""a"") -> (true U (""a"" U ""b"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.449
+ltl2dpa03__e06.txt,3,6,72,"(F ""p1"")","(! (X (((! ""b"") <-> (G ""b"")) W false)))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.902
+ltl2dpa03__e07.txt,3,6,72,"(! (X ""p0""))","((! ""a"") | ((F (! ""a"")) W (X ""c"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.044
+ltl2dpa03__e08.txt,3,6,72,"(G (F ""p0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.867
+ltl2dpa04__e01.txt,2,4,2,"(""p0"" U (""p0"" U (G ""p1"")))","((X (true U (G (F (true U (""a"" & (X ""b""))))))) U ((G ""a"") & (""a"" <-> (G ""b""))))",NO_CAUSE,PC1,PC1=does not hold,0.626
+ltl2dpa04__e02.txt,2,4,2,"(G (F ""p0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.761
+ltl2dpa04__e05.txt,2,4,2,"((""p1"" | (X false)) U (false R ""p1""))","(G ((! ((F (X false)) | (F ""a""))) <-> (""b"" | ((""a"" W false) U (! (G (""b"" <-> (F ""b""))))))))",NO_CAUSE,PC3.1,PC1=holds;PC4=holds;PC2=holds;PC3.2=holds;PC3.1=does not hold,1.83
+ltl2dpa04__e08.txt,2,4,2,"(F (G ""p0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.89
+ltl2dpa04__e09.txt,2,4,2,"(X (X (! (""p0"" U ""p1""))))","(G (""a"" | (! ((! ""b"") U ""a""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.206
+ltl2dpa05__e01.txt,2,4,2,"(F (G (F (""p0"" R (F ""p0"")))))","(X (((F (! ""a"")) W (! ""b"")) U (F ""a"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.234
+ltl2dpa05__e02.txt,2,4,2,"(G (F ""p0""))","(""b"" -> (""b"" <-> (! ""b"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.364
+ltl2dpa05__e03.txt,2,4,2,"(G (""p1"" R (X (F (true U ""p0"")))))","(false R (G (F ""b"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.814
+ltl2dpa05__e04.txt,2,4,2,"(G (F (! ""p1"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.391
+ltl2dpa05__e08.txt,2,4,2,"((F ""p0"") W false)",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.937
+ltl2dpa06__e00.txt,3,5,3,"(G (F ""p0""))","(G (! (F (""a"" | (X false)))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.358
+ltl2dpa06__e02.txt,3,5,3,"(F (G ""p1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.758
+ltl2dpa06__e03.txt,3,5,3,"(! (G ""p1""))","(X ((F (""a"" U (X ""a""))) U (! (false R (! ""a"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.326
+ltl2dpa06__e04.txt,3,5,3,"(F (G ""p0""))","(((G (""a"" | (""a"" W (! ""b"")))) & (""b"" U (G ""c""))) W ((""a"" <-> ""b"") & (X (""b"" R (F (""b"" U ""c""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.862
+ltl2dpa06__e05.txt,3,5,3,"(! (X ""p1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.956
+ltl2dpa06__e06.txt,3,5,3,"(F (! ""p1""))","(G (X ((! ((G (X false)) R ""c"")) | ((false R ""b"") <-> ((G (""b"" -> ""a"")) R (G (X ""a"")))))))",NO_CAUSE,PC1,PC1=does not hold,0.635
+ltl2dpa07__e03.txt,3,5,4,"((F ""p0"") W false)","((! (G ""b"")) U (! (F ((! ""b"") R (((""a"" | ""b"") <-> (X (""a"" <-> ""b""))) -> (G ""c""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.099
+ltl2dpa07__e05.txt,3,5,4,"(G (""p1"" R (X (F (true U ""p0"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.746
+ltl2dpa07__e06.txt,3,5,4,"(G (F ""p1""))","(! ((F ""c"") & (G ""b"")))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.313
+ltl2dpa07__e08.txt,3,5,4,"(F (G ""p0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.749
+ltl2dpa07__e09.txt,3,5,4,"(""p1"" R (X (! ""p1"")))","((X (""a"" | (X (F ""b"")))) U (X (F ((F ""a"") <-> (! (X (! ""a"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.793
+ltl2dpa08__e01.txt,2,4,4,"(G (""p1"" R (X (F (true U ""p0"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.789
+ltl2dpa08__e02.txt,2,4,4,"(G (F (! ""p1"")))","(((F (! ""b"")) R (X false)) & (""a"" W ((X ""b"") -> ""b"")))",NO_CAUSE,PC1,PC1=does not hold,0.539
+ltl2dpa08__e06.txt,2,4,4,"(F (! ""p1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.766
+ltl2dpa08__e07.txt,2,4,4,"(! (G ""p1""))",false,NO_CAUSE,PC1,PC1=does not hold,0.533
+ltl2dpa08__e08.txt,2,4,4,"(F (G ""p0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.764
+ltl2dpa08__e09.txt,2,4,4,"(! (X ""p1""))","(G (""a"" <-> (! (F (G (true U (F ""a"")))))))",NO_CAUSE,PC1,PC1=does not hold,0.554
+ltl2dpa09__e07.txt,3,5,4,"(! (X (! (true U ""p1""))))","((""a"" R (! (X (X (X ""c""))))) W (G ""c""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.61
+ltl2dpa09__e08.txt,3,5,4,"(F (G (! ""p0"")))","(G (X (F (! (X ((X ""a"") R (F ""a"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.881
+ltl2dpa10__e00.txt,2,5,64,"(F ""p2"")","(G ""a"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.769
+ltl2dpa10__e02.txt,2,5,64,"(G (F (! ""p2"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.619
+ltl2dpa10__e03.txt,2,5,64,"(F (G (F (""p1"" R (F ""p1"")))))","(F ((G (false R ""b"")) -> (""b"" W ""a"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.811
+ltl2dpa10__e08.txt,2,5,64,"(G (F ""p2""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.862
+ltl2dpa10__e09.txt,2,5,64,"(! (X ""p0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.845
+ltl2dpa11__e00.txt,3,5,4,"(G (F (! ""p0"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.538
+ltl2dpa11__e01.txt,3,5,4,"(""p1"" R (X (! ""p1"")))","(! (((G ""c"") <-> ((X ((! ""a"") W ""a"")) U (X (""a"" U (F ""c""))))) & ((""c"" R (X ""c"")) U ""a"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.441
+ltl2dpa11__e02.txt,3,5,4,"(F (G ""p0""))","(G (""c"" U ((! (G ((! (G ((false R (""c"" -> ""b"")) W false))) | (X (""a"" U ""c""))))) W (X (! (F ""a""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,3.68
+ltl2dpa11__e03.txt,3,5,4,"(G (""p1"" R (X (F (true U ""p0"")))))","((X (! ""b"")) W ((((G (true U (F ((! ""b"") U (X ""a""))))) W (X (X ""a""))) U ""b"") | ((G ""c"") W ""a"")))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.03
+ltl2dpa11__e04.txt,3,5,4,"(F (G (! ""p0"")))","(F ((F (! ""c"")) U ""a""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.347
+ltl2dpa11__e05.txt,3,5,4,"(! (X ""p1""))","(! (G ((G ((G ""c"") R (! ""b""))) W (""b"" | (X ""a"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.441
+ltl2dpa11__e06.txt,3,5,4,"(F (G (! ""p1"")))","(X ((""c"" R (G (! ""b""))) R ((! ""a"") U (F ""c""))))",NO_CAUSE,PC1,PC1=does not hold,0.608
+ltl2dpa11__e07.txt,3,5,4,"((X (G ""p0"")) W (! (X ""p0"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.763
+ltl2dpa11__e09.txt,3,5,4,"(true U (F (""p1"" <-> (F ""p0""))))","(G ((((F (""c"" W ""a"")) -> (""a"" W (! ""b""))) -> (! ""c"")) W ((X (G ""a"")) <-> ((""c"" U (X ""a"")) W ""b""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,3.943
+ltl2dpa12__e03.txt,2,6,24,"(G ((""p1"" U (F ""p2"")) W false))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.066
+ltl2dpa12__e04.txt,2,6,24,"(G (F ""p2""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.767
+ltl2dpa12__e05.txt,2,6,24,"(X (G (F (! (F ""p3"")))))","(F ((G ""a"") | (! (F ""b""))))",NO_CAUSE,PC1,PC1=does not hold,0.567
+ltl2dpa12__e08.txt,2,6,24,"(F ""p3"")",false,NO_CAUSE,PC1,PC1=does not hold,0.601
+ltl2dpa12__e09.txt,2,6,24,"(X (X ""p2""))","(X (! ((X (! ""a"")) <-> (! ((X ""a"") W false)))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.279
+ltl2dpa13__e01.txt,2,5,10,"((X ""p1"") U (""p2"" U ""p1""))","(F (G ((! (""b"" R ""a"")) U (""b"" W (G (! (X ((X false) & (true U ""b"")))))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.888
+ltl2dpa13__e02.txt,2,5,10,"(F (G (! ""p1"")))","((X (! (G (X (""a"" & (G ""a"")))))) -> ""a"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.49
+ltl2dpa13__e06.txt,2,5,10,"(G (! ""p1""))","(""b"" <-> (true U (X false)))",IS_CAUSE,,PC1=holds;PC4=holds;PC2=holds;PC3.2=holds;PC3.1=holds,1.858
+ltl2dpa13__e07.txt,2,5,10,"(G ((X (G ""p2"")) W (true U ""p0"")))","(G (""b"" & (((true U (G (F ""a""))) -> (X (""b"" U (! ""a"")))) W (G (true U (X (X (G (! (X ""a""))))))))))",NO_CAUSE,PC1,PC1=does not hold,0.637
+ltl2dpa13__e09.txt,2,5,10,"(! (G ""p2""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.757
+ltl2dpa14__e00.txt,1,4,4,"(F (! ""p0""))","(""a"" <-> (X (! (X ""a""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.386
+ltl2dpa14__e03.txt,1,4,4,"((F ""p2"") | (X (F ""p2"")))","""a""",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.37
+ltl2dpa14__e04.txt,1,4,4,"(F ""p1"")","(X (! (""a"" R (! (X false)))))",NO_CAUSE,PC1,PC1=does not hold,0.647
+ltl2dpa14__e05.txt,1,4,4,"(F ((""p0"" & ""p1"") U (F ""p1"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.888
+ltl2dpa14__e07.txt,1,4,4,"(""p1"" W (F ""p0""))","(! (((""a"" U ((F ""a"") W (! (false R ""a"")))) U (G ""a"")) W false))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.988
+ltl2dpa14__e09.txt,1,4,4,"((F ""p1"") <-> (! (X (""p0"" <-> ""p2""))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.921
+ltl2dpa15__e02.txt,2,4,4,"(G (F ""p1""))","(G ((G ""a"") <-> ((G ""a"") R (""a"" <-> (F ""a"")))))",NO_CAUSE,PC1,PC1=does not hold,0.718
+ltl2dpa15__e04.txt,2,4,4,"(F ""p1"")","((! ((""a"" & (F (G ""a""))) U (""a"" U (G ""b"")))) | ((F ((""a"" R (! ""a"")) W (F (X ""a"")))) & (F ((! ""a"") -> ""b""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.864
+ltl2dpa16__e00.txt,2,4,4,"(F (G ""p0""))","((G (""b"" & (X ""a""))) -> (G (X (G ((G ((F ""a"") R (""b"" R (G ""a"")))) | (""b"" W ""a""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.835
+ltl2dpa16__e01.txt,2,4,4,"(! (X (! (true U ""p1""))))","(X (""a"" <-> (X (F (true U ""a"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.156
+ltl2dpa16__e05.txt,2,4,4,"(F (G (F (""p0"" R (F ""p0"")))))","(""b"" | (! ""b""))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.778
+ltl2dpa16__e07.txt,2,4,4,"(! (G ""p1""))","((! ""a"") <-> (false R (""a"" & (! ((X false) U (X ((! ""a"") & (G ""b""))))))))",NO_CAUSE,PC1,PC1=does not hold,0.569
+ltl2dpa16__e08.txt,2,4,4,"(F (G (! ""p1"")))","(! ((X (X ""b"")) R ((G ""a"") R ""b"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.769
+ltl2dpa17__e04.txt,2,4,5,"(G (F ""p1""))","((F (G (""b"" W (""c"" | (X ""b""))))) U (G ""b""))",NO_CAUSE,PC1,PC1=does not hold,0.576
+ltl2dpa17__e05.txt,2,4,5,"(X (X (! (""p0"" U ""p1""))))","(G (! (G (X (F (! ""c""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.8
+ltl2dpa17__e06.txt,2,4,5,"(G (F (! ""p0"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.752
+ltl2dpa17__e09.txt,2,4,5,"((X ""p1"") <-> (X (X false)))","((false R ((G ""b"") U (G (! ""b"")))) | (! ((F ""c"") U (G (F ""c"")))))",NO_CAUSE,PC1,PC1=does not hold,0.59
+ltl2dpa18__e00.txt,3,5,6,"(F (G ""p0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.779
+ltl2dpa18__e01.txt,3,5,6,"(G (""p1"" R (X (F (true U ""p0"")))))","((! (""b"" & ""c"")) & ((X (X (""a"" | ""c""))) | (G ""b"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.4
+ltl2dpa18__e03.txt,3,5,6,"((X ""p1"") R (true U ""p1""))",false,NO_CAUSE,PC1,PC1=does not hold,0.572
+ltl2dpa18__e04.txt,3,5,6,"(G (F (! ""p0"")))","((! (""c"" & (""b"" U (! ""c"")))) W ((""a"" W ""b"") & (X ""b"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.34
+ltl2dpa18__e05.txt,3,5,6,"(! (X ""p1""))","(X (true U (X (G ""a""))))",NO_CAUSE,PC1,PC1=does not hold,0.571
+ltl2dpa18__e08.txt,3,5,6,"(F (! ""p1""))","(((X false) -> (! (""c"" <-> (X false)))) R (""c"" W (G ((""a"" U ((X false) W (! ""a""))) | (F ""a"")))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.775
+ltl2dpa18__e09.txt,3,5,6,"(! ((X false) R ""p1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.762
+ltl2dpa19__e02.txt,3,6,11,"(G (F (! ""p1"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.764
+ltl2dpa19__e03.txt,3,6,11,"(F (X (((! ""p2"") W ""p2"") U ""p2"")))","(X (! (X (((true U ""c"") U (""a"" & (G ""c""))) U (F ""a"")))))",NO_CAUSE,PC1,PC1=does not hold,0.576
+ltl2dpa19__e04.txt,3,6,11,"(G (F (! ""p2"")))","((G ((""a"" -> (F (! ((F ""a"") | (G (! (""a"" R ""c""))))))) W (X ""c""))) W (G (""b"" & (F ""b""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,38.094
+ltl2dpa19__e06.txt,3,6,11,"(G (! ""p0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.737
+ltl2dpa19__e08.txt,3,6,11,"(F (! ""p2""))","(X ((X (G ((! (G ""a"")) W ((F ""c"") W false)))) W (! (""c"" <-> (""b"" <-> (F ""a""))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.846
+ltl2dpa20__e01.txt,3,5,6,"(! ((X false) R ""p1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.739
+ltl2dpa20__e05.txt,3,5,6,"(""p0"" W (F ""p0""))","(""c"" -> ""b"")",NO_CAUSE,PC1,PC1=does not hold,0.556
+ltl2dpa20__e06.txt,3,5,6,"(F (! ""p1""))",false,NO_CAUSE,PC1,PC1=does not hold,0.556
+ltl2dpa20__e08.txt,3,5,6,"(G (F ""p0""))","(X (((F (G (""b"" | (F (X false))))) W (! ""c"")) R ((X ""b"") R (G ((X (X ""b"")) U ""b"")))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.429
+ltl2dpa21__e00.txt,2,5,64,"(G (F (! ""p1"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.776
+ltl2dpa21__e01.txt,2,5,64,"(! (X ""p1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.843
+ltl2dpa21__e02.txt,2,5,64,"(G (! ""p0""))","(""a"" -> (((""a"" -> (X ""b"")) -> (""a"" R (! ""b""))) U (X ""a"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,2.235
+ltl2dpa21__e03.txt,2,5,64,"((F ""p2"") | (X (F ""p2"")))","((X false) R (""b"" | (G ""b"")))",NO_CAUSE,PC1,PC1=does not hold,0.613
+ltl2dpa21__e04.txt,2,5,64,"(G (F ""p2""))","((F ((X ""b"") <-> (F ""a""))) | (G ""a""))",NO_CAUSE,PC1,PC1=does not hold,0.699
+ltl2dpa21__e05.txt,2,5,64,"(F (X (F (""p1"" R (G ""p1"")))))","(! (""a"" <-> (F ""a"")))",TIMEOUT,,,122.173
+ltl2dpa21__e07.txt,2,5,64,"(F (G (F (""p1"" R (F ""p1"")))))","(F (true U (! ""a"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.322
+ltl2dpa21__e08.txt,2,5,64,"(G (F ""p0""))","(F (((F (! ""a"")) R (X (""b"" <-> (! (""a"" <-> ""b""))))) -> ""a""))",NO_CAUSE,PC1,PC1=does not hold,0.67
+ltl2dpa23__e00.txt,2,4,2,"(G (F (! ""p1"")))","(((G (""a"" | (""a"" W (! ""b"")))) & (""a"" U (G ""b""))) W ((""a"" <-> ""b"") & (X (""b"" R ((F ""b"") | (true U ""a""))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.329
+ltl2dpa23__e01.txt,2,4,2,"(true U (F (""p1"" <-> (F ""p0""))))","(G ((! ""b"") U (X (! (F (X false))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.834
+ltl2dpa23__e03.txt,2,4,2,"(G (""p1"" R (X (F (true U ""p0"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.869
+ltl2dpa23__e05.txt,2,4,2,"((F ""p0"") W false)","(""b"" U (G (""a"" W false)))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.289
+ltl2dpa23__e08.txt,2,4,2,"(F (G (F (""p0"" R (F ""p0"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,1.005
+ltl2dpa24__e01.txt,2,4,2,"(G (""p1"" R (X (F (true U ""p0"")))))","((G (""b"" U ((X false) R (! ((""a"" <-> ""b"") W false))))) R ((X ""a"") <-> (G (false R ""b""))))",NO_CAUSE,PC1,PC1=does not hold,0.636
+ltl2dpa24__e02.txt,2,4,2,"(G (F ""p0""))","((! (F ""a"")) -> (G ((""a"" | ""b"") -> (! (X (""a"" <-> (! ""b"")))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.311
+ltl2dpa24__e03.txt,2,4,2,"(F (G (F (""p0"" R (F ""p0"")))))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.979
+ltl2dpa24__e05.txt,2,4,2,"(true U (F (""p1"" <-> (F ""p0""))))","(false R ""a"")",NO_CAUSE,PC1,PC1=does not hold,0.582
+ltl2dpa24__e06.txt,2,4,2,"(G (F (! ""p1"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.724
+ltl2dpa24__e08.txt,2,4,2,"((F ""p0"") W false)",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.864
+prioritized_arbiter1__e00.txt,2,4,3,"(G (F ""g_m""))","(X (F (X ((! (G ""r_m"")) R ""r_m""))))",NO_CAUSE,PC3.2,PC1=holds;PC4=holds;PC2=holds;PC3.2=does not hold,1.528
+prioritized_arbiter1__e05.txt,2,4,3,"((F ""g_0"") W false)","(! ((! (X (G (! ""r_m"")))) W (G ((G (! ""r_m"")) W ""r_m""))))",NO_CAUSE,PC1,PC1=does not hold,0.543
+prioritized_arbiter1__e07.txt,2,4,3,"((X ""g_m"") R (true U ""g_m""))","(G (F (X ((true U ""r_m"") U ((! (F (! ""r_m""))) | (X false))))))",NO_CAUSE,PC1,PC1=does not hold,0.562
+prioritized_arbiter1__e08.txt,2,4,3,"(F ""g_m"")",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.751
+prioritized_arbiter2__e00.txt,3,6,10,"(F (! ""g_0""))","(G (X (""r_m"" U (F ((""r_0"" | ""r_1"") & (F (X ""r_m"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.874
+prioritized_arbiter2__e01.txt,3,6,10,"(""g_1"" W (F ""g_0""))","(F (! (G (F ((G ((""r_m"" & (X ""r_0"")) R (false R ""r_m""))) W ""r_1"")))))",NO_CAUSE,PC1,PC1=does not hold,0.581
+prioritized_arbiter2__e02.txt,3,6,10,"(F ""g_0"")","(! ((""r_m"" <-> (""r_1"" <-> ""r_m"")) U (! (((! ((F ""r_1"") -> ""r_0"")) & (G (""r_1"" & ""r_m""))) -> ""r_1""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.767
+prioritized_arbiter2__e06.txt,3,6,10,"(F (! ""g_1""))","((G ((! ""r_m"") W (! (X ""r_m"")))) U (F (X (X ""r_1""))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.31
+prioritized_arbiter2__e09.txt,3,6,10,"(! ((""g_m"" <-> (X ""g_m"")) U (X ""g_1"")))","((((F ""r_m"") W (F (""r_1"" W ((X (F ""r_0"")) R (F (true U ""r_m"")))))) R (F (""r_1"" R ""r_0""))) R (""r_0"" | ""r_m""))",NO_CAUSE,PC1,PC1=does not hold,0.572
+round_robin_arbiter2__e00.txt,2,4,3,"(F (G ""g_0""))","(false R (X (((X ""r_0"") U (""r_1"" W false)) R ""r_0"")))",NO_CAUSE,PC1,PC1=does not hold,0.572
+round_robin_arbiter2__e02.txt,2,4,3,"(G (F ""g_1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.789
+round_robin_arbiter2__e05.txt,2,4,3,"(G (""g_1"" R (X (F (true U ""g_0"")))))","(X (G (""r_0"" W (F ""r_0""))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.815
+round_robin_arbiter2__e06.txt,2,4,3,"(G (F (! ""g_0"")))","(F ((true U (X ""r_1"")) W false))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.786
+round_robin_arbiter2__e07.txt,2,4,3,"((""g_1"" -> (X (! ""g_0""))) W (! ""g_1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.763
+round_robin_arbiter2__e09.txt,2,4,3,"((X ""g_1"") R (true U ""g_1""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.736
+round_robin_arbiter3__e02.txt,3,6,12,"(F (! ""g_1""))","(((true U ""r_2"") U (! (X ""r_1""))) U ""r_2"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.444
+round_robin_arbiter3__e09.txt,3,6,12,"((""g_1"" -> (X (! ""g_2""))) W (! ""g_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.764
+simple_arbiter2__e01.txt,2,4,3,"(""g_0"" | (""g_0"" U (false R (X false))))","(F (G (F (((G ""r_1"") R (""r_0"" W (G (""r_0"" | ""r_1"")))) W (X (! (F ""r_0"")))))))",NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.812
+simple_arbiter2__e02.txt,2,4,3,"(F ""g_1"")","((! (F ""r_1"")) W (""r_0"" <-> (X ((G ""r_0"") <-> (F ""r_0"")))))",NO_CAUSE,PC1,PC1=does not hold,0.564
+simple_arbiter2__e03.txt,2,4,3,"(! (G ""g_1""))",false,NO_CAUSE,PC1,PC1=does not hold,0.536
+simple_arbiter2__e06.txt,2,4,3,"(G (F (! ""g_1"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.731
+simple_arbiter2__e07.txt,2,4,3,"((X (G ""g_0"")) W (! (X ""g_0"")))",(! ((false R (X false)) W (X false))),NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.749
+simple_arbiter2__e09.txt,2,4,3,"(""g_0"" W (F ""g_0""))","(false R ((! ""r_1"") & (F (! ""r_1""))))",NO_CAUSE,PC1,PC1=does not hold,0.566
+simple_arbiter3__e04.txt,3,6,10,"(G (F ""g_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.741
+simple_arbiter3__e05.txt,3,6,10,"(""g_0"" W (F ""g_2""))","((G (X ""r_1"")) R ((X (F ((! ""r_1"") R ""r_2""))) <-> (""r_1"" | (""r_0"" U (""r_1"" <-> ""r_2"")))))",NO_CAUSE,PC1,PC1=does not hold,0.594
+simple_arbiter3__e06.txt,3,6,10,"(F (! ""g_0""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.771
+simple_arbiter3__e08.txt,3,6,10,"(F ""g_1"")","(""r_2"" U ((F ""r_2"") R ((""r_2"" R (F ""r_1"")) R (! (""r_1"" <-> (X false))))))",NO_CAUSE,PC1,PC1=does not hold,0.567
+test5_6cbc6174__e02.txt,1,7,4,"(F ""u0a0f1dval241b"")","(G (! (""p0b0in24"" | (X ""p0b0in24""))))",NO_CAUSE,PC1,PC1=does not hold,0.563
+test5_6cbc6174__e05.txt,1,7,4,"(G (X (G ((! ""u0b0f1dval251b"") | (F ""u0a0a"")))))",false,NO_CAUSE,PC1,PC1=does not hold,0.551
+test5_6cbc6174__e08.txt,1,7,4,"(F ""u0a0f1dval251b"")",false,NO_CAUSE,PC1,PC1=does not hold,0.55
+test5_6cbc6174__e09.txt,1,7,4,"(""u0a0f1dval251b"" <-> (X (F (""u0b0f1dval241b"" R (G ""u0b0f1dval241b"")))))","(((""p0b0in24"" -> (G ((! ""p0b0in24"") R ""p0b0in24""))) R (G ""p0b0in24"")) R (""p0b0in24"" W false))",NO_CAUSE,PC1,PC1=does not hold,0.579
+test6_0f5381e9__e00.txt,1,9,4,"(G (F (! ""u0c0val3"")))",false,NO_CAUSE,PC1,PC1=does not hold,0.567
+test6_0f5381e9__e01.txt,1,9,4,"((F (""u0b0f1dval251b"" -> (""u0b0b"" & ""u0b0f1dval241b""))) U ""u0b0f1dval251b"")",false,NO_CAUSE,PC1,PC1=does not hold,0.543
+test6_0f5381e9__e02.txt,1,9,4,"(G (F ""u0a0f1dval241b""))","((true U ""p0b0in24"") <-> (X (X ""p0b0in24"")))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.143
+test6_0f5381e9__e03.txt,1,9,4,"((F ""u0b0f1dval251b"") U (G (X (F (X ""u0b0f1dval251b"")))))","(""p0b0in24"" | (X (F (X (! ((X false) W (F (X ""p0b0in24""))))))))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.121
+test6_0f5381e9__e04.txt,1,9,4,"(F (G ""u0b0f1dval241b""))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.773
+test6_0f5381e9__e06.txt,1,9,4,"(F (G (! ""u0a0f1dval251b"")))","(X (G ""p0b0in24""))",NO_CAUSE,PC1,PC1=does not hold,0.561
+test6_0f5381e9__e09.txt,1,9,4,"(! (F (true U ""u0a0f1dval251b"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.751
+test7_2c5b09da__e03.txt,2,8,8,"((F ""u0b0f1dval241b"") U (G (X (F (X ""u0b0f1dval241b"")))))","(G (! ((X false) <-> ((""p0b0in24"" -> (""p0b0in25"" & (! (X ""p0b0in25"")))) <-> ((X false) | (false R ""p0b0in24""))))))",NO_CAUSE,PC1,PC1=does not hold,0.556
+test7_2c5b09da__e07.txt,2,8,8,"(""u0b0f1dval241b"" U (""u0b0f1dval241b"" <-> (X ""u0b0b"")))","(((G ((X false) & (G ""p0b0in24""))) -> (G ((! ""p0b0in25"") R (X false)))) U (""p0b0in24"" | (X false)))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.095
+test7_2c5b09da__e08.txt,2,8,8,"(F (G ""u0b0b""))","(X ""p0b0in24"")",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.177
+test_f3987563__e00.txt,2,6,1,"(F ""u0out0out"")","(((G ""p0b0c"") <-> (F ""p0b0c"")) & (X ""p0b0a""))",NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.833
+test_f3987563__e01.txt,2,6,1,"(X (F ((G (X ""u0out250f1dfun0p1db0a1b1b"")) U (F ""u0out250out25""))))",(X false),NO_CAUSE,PC1,PC1=does not hold,0.57
+test_f3987563__e02.txt,2,6,1,"(G (F (! ""u0out250out25"")))",true,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.832
+test_f3987563__e09.txt,2,6,1,"((F ""u0out0out"") | (false R ""u0out250out25""))","(G ((""p0b0c"" -> (F (G ((""p0b0c"" <-> ((G (! (X false))) U (X false))) R (""p0b0a"" | (G ""p0b0a"")))))) -> ""p0b0c""))",NO_CAUSE,PC1,PC1=does not hold,0.747

@@ -1,0 +1,26 @@
+[info]
+CATS SYNTCOMP: amba_decomposed_decode (spec=./sc-1/amba_decomposed_decode.json, states=1, inputs=2, aps=5) effect #8 source=template
+
+[inputs]
+"hburst_0" "hburst_1"
+
+[effect]
+(G (F (! "incr")))
+
+[lasso]
+AP: "single" "burst4" "incr" "hburst_0" "hburst_1"
+Prefix: {3 4} {1 3}
+Loop: {3 4} {2 4} {0}
+
+[system]
+HOA: v1
+Start: 0
+AP: 5 "single" "burst4" "incr" "hburst_0" "hburst_1"
+Acceptance: 0 t
+--BODY--
+State: 0
+[0&!1&!2&!3&!4] 0
+[!0&!1&2&!3&4] 0
+[!0&1&!2&3&!4] 0
+[!0&!1&!2&3&4] 0
+--END--

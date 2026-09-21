@@ -1,0 +1,39 @@
+[info]
+CATS SYNTCOMP: example92 (spec=./sc-1/example92.json, states=6, inputs=1, aps=2) effect #4 source=template
+
+[inputs]
+"r"
+
+[effect]
+(G (F "g"))
+
+[lasso]
+AP: "g" "r"
+Prefix: {1} {0 1}
+Loop: {0 1} {0 1} {0 1}
+
+[system]
+HOA: v1
+Start: 0
+AP: 2 "g" "r"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1] 1
+[!0&1] 1
+State: 1
+[!0&!1] 3
+[0&1] 5
+State: 2
+[!0&!1] 2
+[!0&1] 3
+State: 3
+[!0&!1] 4
+[!0&1] 5
+State: 4
+[0&!1] 2
+[0&1] 3
+State: 5
+[0&!1] 4
+[0&1] 5
+--END--

@@ -1,0 +1,33 @@
+[info]
+CATS SYNTCOMP: test6_0f5381e9 (spec=./sc-1/test6_0f5381e9.json, states=4, inputs=1, aps=9) effect #5 source=randltl
+
+[inputs]
+"p0b0in24"
+
+[effect]
+(F ((G ("u0a0a" <-> "u0c0c")) U (X "u0a0f1dval241b")))
+
+[lasso]
+AP: "u0a0a" "u0a0f1dval251b" "u0a0f1dval241b" "u0b0b" "u0b0f1dval251b" "u0b0f1dval241b" "u0c0c" "u0c0val3" "p0b0in24"
+Prefix: {2 5 7 8}
+Loop: {1 5 7 8}
+
+[system]
+HOA: v1
+Start: 0
+AP: 9 "u0a0a" "u0a0f1dval251b" "u0a0f1dval241b" "u0b0b" "u0b0f1dval251b" "u0b0f1dval241b" "u0c0c" "u0c0val3" "p0b0in24"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&2&!3&!4&5&6&!7&!8] 1
+[!0&!1&2&!3&!4&5&!6&7&8] 1
+State: 1
+[!0&!1&2&!3&4&!5&6&!7&!8] 2
+[!0&1&!2&!3&!4&5&!6&7&8] 1
+State: 2
+[!0&!1&2&!3&!4&5&!6&7&!8] 3
+[!0&1&!2&!3&!4&5&!6&7&8] 1
+State: 3
+[!0&!1&2&!3&!4&5&!6&7&!8] 3
+[!0&!1&2&!3&!4&5&!6&7&8] 3
+--END--

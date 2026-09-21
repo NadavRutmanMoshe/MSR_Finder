@@ -1,0 +1,11 @@
+--- /tmp/altautomaton.orig.py	2026-08-24 18:11:07.611104673 +0300
++++ explainhyper/altautomaton.py	2026-08-24 18:11:07.623813100 +0300
+@@ -108,7 +108,7 @@
+             i = 0
+             for target in self.get_targets():
+                 for t2 in other.get_targets():
+-                    if target.get_label() == t2.get_label:
++                    if target.get_label() == t2.get_label():
+                         i = i + 1
+                 if i == len(self.get_targets()) and i == len(other.get_targets()):
+                     return True

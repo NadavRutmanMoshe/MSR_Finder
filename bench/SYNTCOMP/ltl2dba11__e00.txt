@@ -1,0 +1,26 @@
+[info]
+CATS SYNTCOMP: ltl2dba11 (spec=./sc-1/ltl2dba11.json, states=1, inputs=2, aps=3) effect #0 source=template
+
+[inputs]
+"q" "p"
+
+[effect]
+(F "acc")
+
+[lasso]
+AP: "acc" "q" "p"
+Prefix: {1}
+Loop: {1} {0 2}
+
+[system]
+HOA: v1
+Start: 0
+AP: 3 "acc" "q" "p"
+Acceptance: 0 t
+--BODY--
+State: 0
+[0&!1&!2] 0
+[0&!1&2] 0
+[!0&1&!2] 0
+[!0&1&2] 0
+--END--
