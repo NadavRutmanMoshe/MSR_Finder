@@ -1,0 +1,43 @@
+[info]
+Example 1, with a candidate cause to verify.
+
+The cause block below is the CATS block: an LTL formula over the inputs naming
+the input behaviour claimed to be responsible for the effect.  Running with
+--check synthesizes the MTSR as usual and then asks spot whether the two accept
+the same input sequences.  This one does; weaken it -- drop the second
+conjunct, say -- and the check reports which side is the bigger language.
+
+[inputs]
+"i1" "i2"
+
+[cause]
+"i1" & (X X (((!"i1") & (!"i2")) U ("i1" & (!"i2"))))
+
+[effect]
+F "error"
+
+[lasso]
+AP: "i1" "i2" "error"
+Prefix: {0 1} {0 1} {0}
+Loop: {0 2}
+
+[system]
+HOA: v1
+Start: 0
+AP: 3 "i1" "i2" "error"
+Acceptance: 0 t
+--BODY--
+State: 0
+[0&!2] 1 
+[!0&!2] 3 
+State: 1 
+[!2] 2 
+State: 2
+[!0&!1&!2] 2
+[1&!2] 3
+[0&!1&!2] 4
+State: 3 
+[!2] 3
+State: 4
+[2] 4
+--END--

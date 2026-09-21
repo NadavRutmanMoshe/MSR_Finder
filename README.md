@@ -26,6 +26,13 @@ cd scripts
 python3 tracemsr.py ../examples/example_1.txt
 ```
 
+or, with nothing installed but Docker (see [Docker](#docker) below):
+
+```sh
+docker build -t msr-finder .
+docker run --rm -it msr-finder
+```
+
 This opens an interactive checklist:
 
 ```
@@ -435,9 +442,52 @@ construction a valid system trace satisfying Φ. **Model checking** (analysis
 3) is the dual `∃π.¬Φ` — UNSAT proves `∀π.Φ`, and a SAT witness is the
 counterexample fed back into the causality analysis.
 
+## Docker
+
+Two images. The first is the tool; the second adds the baselines the paper
+compares against and is only needed to re-run the benchmark.
+
+```sh
+docker build -t msr-finder .                                # the tool
+docker build -t msr-finder-bench -f Dockerfile.bench .      # + CATS, CORP, ExplainHyper
+```
+
+```sh
+docker run --rm -it msr-finder                              # the menu, on example_1
+docker run --rm msr-finder python3 tracemsr.py ../examples/example_1.txt --run all
+docker run --rm -v "$PWD/out:/data" msr-finder \
+    python3 tracemsr.py /data/my_instance.txt --run 1       # your own instance
+```
+
+The working directory inside the image is `scripts/`, so the commands in this
+README work unchanged. Analyses 2–4 write next to the input file, so mount a
+directory (`-v`) when you want to keep what they produce — a rendered
+`<base>_mtsr.png`, say.
+
+**The build is its own test.** It ends with `docker/smoke.sh`, which runs
+analysis 1, the MTSR and `--check` and compares the answers with the ones in
+this README (the 5-pin reason for `example_1`, the 4-state MTSR, `EQUIVALENT`).
+An image that finished building is one whose solver, spot bindings and graphviz
+all work. You can re-run it at any time:
+
+```sh
+docker run --rm msr-finder /opt/msr_finder/docker/smoke.sh
+```
+
+| build arg | default | what it does |
+|---|---|---|
+| `WITH_HYPERQB` | `0` | `--build-arg WITH_HYPERQB=1` also builds HyperQB 2.0 (Rust, against Z3 4.16) so `--hyperQB` works. ~10 extra minutes; AutoHyper answers everything without it |
+| `SPOT_VERSION` | `2.15.1` | the spot the recorded results were produced with |
+| `PY_VERSION` | `3.14` | the interpreter of the spot environment |
+| `DOTNET_CHANNEL` | `8.0` | the .NET runtime AutoHyper runs on |
+
+The benchmark image is documented in [`bench/README.md`](bench/README.md); it
+fetches CATS, CORP and ExplainHyper at pinned commits rather than vendoring
+them (`bench/tools/fetch.sh`).
+
 ## Setup
 
-Runs on Linux / WSL. Requirements:
+Without Docker. Runs on Linux / WSL. Requirements:
 
 1. **Python 3.8+** (standard library only for the pipelines).
 2. **.NET 8 runtime** — AutoHyper (shipped in `external_tools/AutoHyper/app/`)
@@ -492,6 +542,11 @@ scripts/
   smv_formulas.py     the MSR / SR / PI_VAL queries for that layout
 examples/             ready-to-run inputs (reachability, safety, ATVA'22 …)
 external_tools/AutoHyper/   the AutoHyper model checker (binary + license)
+bench/                the benchmark suite: corpora, drivers, recorded results,
+                      and the generators that built the corpora (bench/README.md)
+docker/smoke.sh       does this installation work? (run during `docker build`)
+Dockerfile            the tool image
+Dockerfile.bench      + the baselines, for re-running the benchmark
 ```
 
 The only persistent artifact is the rendered `<base>_mtsr.png` (written next

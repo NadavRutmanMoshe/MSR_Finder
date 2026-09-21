@@ -1,0 +1,24 @@
+.git
+.gitignore
+**/__pycache__
+**/*.pyc
+
+# fetched at build time, pinned by bench/tools/fetch.sh
+bench/tools/CATS
+bench/tools/CORP
+bench/tools/ExplainHyper
+bench/tools/.cats-src
+
+# built inside the image when WITH_HYPERQB=1
+external_tools/HyperQB
+
+# solver / pipeline temporaries
+temp_*
+commands.txt
+aut1.hoa
+autRes.hoa
+**/aut1.hoa
+**/autRes.hoa
+*_found_pi.txt
+*_counterexample.txt
+final_result.png

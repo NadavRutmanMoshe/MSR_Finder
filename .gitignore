@@ -18,5 +18,3 @@ final_result.png
 # (see the README, Setup). Drop or symlink the binary here.
 external_tools/HyperQB/
 
-# the --check demo instance (a candidate cause to verify)
-examples/example_1_cause.txt

@@ -1,0 +1,72 @@
+# MSR_Finder — the benchmark image: the tool, plus the three baselines it is
+# compared against and the environments they need.
+#
+#     docker build -t msr-finder .                       # the base, first
+#     docker build -t msr-finder-bench -f Dockerfile.bench .
+#
+#     docker run --rm -it msr-finder-bench ./run.sh --list
+#     docker run --rm -it -v "$PWD/results:/opt/msr_finder/bench/results" \
+#         msr-finder-bench ./run.sh --sample 20
+#
+# Mount bench/results to keep what a run measures; without a mount the CSVs the
+# repository ships are used read-only inside the container and thrown away with
+# it. Every driver is resumable, so a mounted results/ also means Ctrl-C and
+# re-run continues where it stopped.
+#
+# The baselines are fetched here, not vendored: bench/tools/fetch.sh pins the
+# exact commit each number in bench/results was measured with. See
+# bench/tools/README.md.
+ARG BASE=msr-finder:latest
+
+# --------------------------------------------------------------------------- #
+# CATS is F# and needs an SDK to build; only its output is kept.
+# CATS targets net7.0 (src/CATS/CATS.fsproj upstream), so it is built and run on
+# .NET 7 -- the same pair the recorded numbers come from.
+# --------------------------------------------------------------------------- #
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS cats-build
+# No apt here on purpose: this image is Debian 11, whose package index no longer
+# matches its pool (`apt-get install git` 404s), and it already ships git.
+WORKDIR /opt/msr_finder
+# The paths.json fetch.sh writes is absolute, so CATS is built under the path it
+# will be used at.
+COPY bench/tools /opt/msr_finder/bench/tools
+COPY bench/scripts/solver_wrappers /opt/msr_finder/bench/scripts/solver_wrappers
+RUN chmod +x bench/tools/fetch.sh && bench/tools/fetch.sh cats
+
+# --------------------------------------------------------------------------- #
+FROM ${BASE}
+
+ARG EH_PY_VERSION=3.11
+ARG EH_SPOT_VERSION=2.11.6
+
+# CATS is a .NET 7 apphost; AutoHyper is .NET 8. Both runtimes, side by side,
+# as on the measured host.
+RUN curl -sSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh \
+    && bash /tmp/dotnet-install.sh --channel 7.0 --runtime dotnet \
+         --install-dir /root/.dotnet --no-path \
+    && rm /tmp/dotnet-install.sh
+
+# ExplainHyper's stack (py-aiger / python-sat / satispy) does not coexist with
+# the spot env, so it gets its own -- the layout $EXPLAINHYPER_ENV_PY expects.
+RUN micromamba create -y -p /root/micromamba/envs/explainhyper -c conda-forge \
+        "python=${EH_PY_VERSION}" "spot=${EH_SPOT_VERSION}" pygraphviz graphviz pip \
+    && /root/micromamba/envs/explainhyper/bin/python3 -m pip install --no-cache-dir \
+        "py-aiger==8.1.0" "python-sat==1.9.dev15" "satispy==1.4" "numpy==2.4.6" \
+    && micromamba clean -a -y
+ENV EXPLAINHYPER_ENV_PY=/root/micromamba/envs/explainhyper/bin/python3
+
+WORKDIR /opt/msr_finder/bench
+
+# CORP and ExplainHyper are Python; only ExplainHyper is patched (patches/).
+RUN tools/fetch.sh corp explainhyper
+COPY --from=cats-build /opt/msr_finder/bench/tools/CATS /opt/msr_finder/bench/tools/CATS
+
+# The baselines are reachable and start. Not a benchmark run -- that is the
+# reviewer's call, and it is long.
+RUN tools/fetch.sh --list \
+    && test -x tools/CATS/app/CATS \
+    && "$EXPLAINHYPER_ENV_PY" -c "import aiger, pysat, satispy, spot" \
+    && "$SPOT_ENV_PY" -c "import spot" \
+    && ./run.sh --list
+
+CMD ["./run.sh", "--list"]
