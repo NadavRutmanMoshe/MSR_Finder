@@ -476,10 +476,17 @@ docker run --rm msr-finder /opt/msr_finder/docker/smoke.sh
 
 | build arg | default | what it does |
 |---|---|---|
-| `WITH_HYPERQB` | `0` | `--build-arg WITH_HYPERQB=1` also builds HyperQB 2.0 (Rust, against Z3 4.16) so `--hyperQB` works. ~10 extra minutes; AutoHyper answers everything without it |
+| `WITH_HYPERQB` | `0` | `--build-arg WITH_HYPERQB=1` also builds HyperQB 2.0 (Rust, against conda-forge `libz3` 4.16, the build the measurements used) so `--hyperQB` works. ~4 extra minutes; AutoHyper answers everything without it. With it on, `smoke.sh` runs a bounded query too and certifies the witness |
 | `SPOT_VERSION` | `2.15.1` | the spot the recorded results were produced with |
 | `PY_VERSION` | `3.14` | the interpreter of the spot environment |
 | `DOTNET_CHANNEL` | `8.0` | the .NET runtime AutoHyper runs on |
+
+With `WITH_HYPERQB=1` the binary lands at
+`external_tools/HyperQB/target/release/HyperRUSTY` and the tool runs it with
+`$HYPERQB_LIB` on `LD_LIBRARY_PATH`. Running it *by hand* needs that too
+(`LD_LIBRARY_PATH=$HYPERQB_LIB HyperRUSTY …`): the variable is deliberately not
+set image-wide, because that directory also carries conda's `libstdc++` and
+`libgomp`, which would then shadow the system C++ runtime for spot and .NET.
 
 The benchmark image is documented in [`bench/README.md`](bench/README.md); it
 fetches CATS, CORP and ExplainHyper at pinned commits rather than vendoring

@@ -9,8 +9,10 @@
 #
 # Build args:
 #     WITH_HYPERQB=1    also build HyperQB 2.0 (Rust + Z3) for `--hyperQB`.
-#                       Off by default: it is a ~10 min compile and the exact
-#                       backend is optional -- AutoHyper answers everything.
+#                       Off by default: it adds a Rust toolchain stage and ~4
+#                       minutes (108 crates), and the backend is optional --
+#                       AutoHyper answers everything without it. When it is on,
+#                       smoke.sh checks it too.
 #     SPOT_VERSION / PY_VERSION / DOTNET_CHANNEL
 #                       pinned to what produced the numbers in bench/results.
 ARG WITH_HYPERQB=0
