@@ -69,20 +69,196 @@ def parse_hoa(filepath):
 
     return inputs, aps, start_state, states
 
+def _eval_cond_slow(cond_str, val):
+    """The original string-rewrite + eval() evaluator; kept as the fallback for
+    a condition _compile_cond cannot parse (e.g. HOA aliases)."""
+    if cond_str.strip() == "t": return True
+    if cond_str.strip() == "f": return False
+
+    # Convert HOA syntax to standard Python evaluation syntax
+    s = cond_str.replace('!', ' not ').replace('&', ' and ').replace('|', ' or ')
+
+    # Replace AP index numbers with their actual boolean values from the 'val' tuple
+    s = re.sub(r'\b\d+\b', lambda m: str(val[int(m.group(0))]), s)
+    return eval(s)
+
+
+# --- Fast, exact condition evaluation -------------------------------------
+# Unrolling an HOA used to test every edge against all 2^|AP| valuations, one
+# regex + eval() each: on a 20-AP instance (4 inputs, 16 outputs) that is ~1M
+# evals per edge and took ~3.7 h before the solver even started.  Conditions
+# are now parsed once into a small AST, and the satisfying output valuations
+# for fixed inputs are found by backtracking with three-valued evaluation, so
+# a branch is cut as soon as the condition is decided.  The valuations come
+# out in exactly the itertools.product order of the old loops, so every
+# builder discovers states in the same order and emits identical systems.
+
+_COND_CACHE = {}
+_TOK = re.compile(r'\s*(\d+|[tf!&|()])')
+
+
+def _compile_cond(cond_str):
+    """AST of an HOA label, or None if it uses syntax we do not parse.
+    Nodes: ('c', bool) | ('v', ap_index) | ('not', n) | ('and', [n..]) |
+    ('or', [n..]).  Precedence ! > & > |, as in HOA (and in Python)."""
+    if cond_str in _COND_CACHE:
+        return _COND_CACHE[cond_str]
+    toks, pos, s = [], 0, cond_str.rstrip()
+    while pos < len(s):
+        m = _TOK.match(s, pos)
+        if not m:
+            _COND_CACHE[cond_str] = None
+            return None
+        toks.append(m.group(1))
+        pos = m.end()
+    i = 0
+
+    def atom():
+        nonlocal i
+        tk = toks[i]; i += 1
+        if tk == '!':
+            return ('not', atom())
+        if tk == '(':
+            n = disj()
+            if toks[i] != ')':
+                raise ValueError
+            i += 1
+            return n
+        if tk in ('t', 'f'):
+            return ('c', tk == 't')
+        if tk.isdigit():
+            return ('v', int(tk))
+        raise ValueError
+
+    def conj():
+        nonlocal i
+        parts = [atom()]
+        while i < len(toks) and toks[i] == '&':
+            i += 1
+            parts.append(atom())
+        return parts[0] if len(parts) == 1 else ('and', parts)
+
+    def disj():
+        nonlocal i
+        parts = [conj()]
+        while i < len(toks) and toks[i] == '|':
+            i += 1
+            parts.append(conj())
+        return parts[0] if len(parts) == 1 else ('or', parts)
+
+    try:
+        ast = disj()
+        if i != len(toks):
+            raise ValueError
+    except (ValueError, IndexError):
+        ast = None
+    _COND_CACHE[cond_str] = ast
+    return ast
+
+
+def _ev3(n, env):
+    """Three-valued evaluation: env[i] is True, False or None (unassigned)."""
+    k = n[0]
+    if k == 'v':
+        return env[n[1]]
+    if k == 'c':
+        return n[1]
+    if k == 'not':
+        r = _ev3(n[1], env)
+        return None if r is None else not r
+    if k == 'and':
+        unknown = False
+        for c in n[1]:
+            r = _ev3(c, env)
+            if r is False:
+                return False
+            if r is None:
+                unknown = True
+        return None if unknown else True
+    unknown = False                                   # 'or'
+    for c in n[1]:
+        r = _ev3(c, env)
+        if r is True:
+            return True
+        if r is None:
+            unknown = True
+    return None if unknown else False
+
+
 def eval_cond(cond_str, val):
     """
     Evaluates an HOA boolean condition string (e.g., "0 & !1") against a specific truth assignment.
     val is a tuple of booleans representing the current truth value of all APs.
     """
-    if cond_str.strip() == "t": return True
-    if cond_str.strip() == "f": return False
-    
-    # Convert HOA syntax to standard Python evaluation syntax
-    s = cond_str.replace('!', ' not ').replace('&', ' and ').replace('|', ' or ')
-    
-    # Replace AP index numbers with their actual boolean values from the 'val' tuple
-    s = re.sub(r'\b\d+\b', lambda m: str(val[int(m.group(0))]), s)
-    return eval(s)
+    ast = _compile_cond(cond_str)
+    if ast is None:
+        return _eval_cond_slow(cond_str, val)
+    return bool(_ev3(ast, val))
+
+
+def _sat_walk(cond, inputs, outputs, aps, i_vals, on_true):
+    """Backtrack over the outputs (in `outputs` order, False before True) with
+    the inputs fixed to i_vals.  on_true(prefix, j) is called for each maximal
+    partial assignment of outputs[:j] under which `cond` is already True."""
+    ast = _compile_cond(cond)
+    idx = {a: k for k, a in enumerate(aps)}
+    env = [None] * len(aps)
+    for name, v in zip(inputs, i_vals):
+        env[idx[name]] = v
+    opos = [idx[o] for o in outputs]
+    n = len(outputs)
+    cur = [False] * n
+
+    def rec(j):
+        r = _ev3(ast, env)
+        if r is False:
+            return
+        if r is True:
+            on_true(cur[:j], j)
+            return
+        if j == n:
+            return
+        p = opos[j]
+        for b in (False, True):
+            cur[j] = b
+            env[p] = b
+            rec(j + 1)
+        env[p] = None
+
+    rec(0)
+
+
+def sat_outputs(cond, inputs, outputs, aps, i_vals):
+    """The output valuations o_vals (tuples, `outputs` order) for which `cond`
+    holds under input valuation i_vals -- the same list, in the same order, as
+    filtering itertools.product([False, True], repeat=len(outputs)) with
+    eval_cond, without visiting all 2^|outputs| of them."""
+    if _compile_cond(cond) is None:
+        return [o for o in itertools.product([False, True], repeat=len(outputs))
+                if _eval_cond_slow(cond, get_val_tuple(inputs, outputs, aps, i_vals, o))]
+    out = []
+    n = len(outputs)
+
+    def on_true(prefix, j):
+        for rest in itertools.product([False, True], repeat=n - j):
+            out.append(tuple(prefix) + rest)
+
+    _sat_walk(cond, inputs, outputs, aps, i_vals, on_true)
+    return out
+
+
+def count_sat_outputs(cond, inputs, outputs, aps, i_vals):
+    """len(sat_outputs(...)), without materialising the valuations."""
+    if _compile_cond(cond) is None:
+        return len(sat_outputs(cond, inputs, outputs, aps, i_vals))
+    total = [0]
+    n = len(outputs)
+
+    def on_true(_prefix, j):
+        total[0] += 1 << (n - j)
+
+    _sat_walk(cond, inputs, outputs, aps, i_vals, on_true)
+    return total[0]
 
 def get_val_tuple(inputs, outputs, aps, i_vals, o_vals):
     """
@@ -109,16 +285,12 @@ def check_determinism(inputs, outputs, aps, states):
     num_inputs = len(inputs)
     num_outputs = len(outputs)
     input_combos = list(itertools.product([False, True], repeat=num_inputs))
-    output_combos = list(itertools.product([False, True], repeat=num_outputs))
 
     for state, transitions in states.items():
         for i_vals in input_combos:
             valid_paths = 0
             for cond, target in transitions:
-                for o_vals in output_combos:
-                    val = get_val_tuple(inputs, outputs, aps, i_vals, o_vals)
-                    if eval_cond(cond, val):
-                        valid_paths += 1
+                valid_paths += count_sat_outputs(cond, inputs, outputs, aps, i_vals)
             
             if valid_paths > 1:
                 # Format the inputs that caused the ambiguity for the error message
@@ -140,7 +312,6 @@ def generate_lts(inputs, aps, start_state, states):
 
     # Generate all possible boolean combinations for inputs and outputs (2^N)
     input_combos = list(itertools.product([False, True], repeat=num_inputs))
-    output_combos = list(itertools.product([False, True], repeat=num_outputs))
 
     # To avoid infinite loops and duplicate processing, track states we've built.
     # A state is uniquely defined by: (original HOA state, boolean values, current q value)
@@ -155,7 +326,7 @@ def generate_lts(inputs, aps, start_state, states):
     # We evaluate all possible input/output combinations against the starting state's conditions.
     for cond, target in states.get(start_state, []):
         for i_vals in input_combos:
-            for o_vals in output_combos:
+            for o_vals in sat_outputs(cond, inputs, outputs, aps, i_vals):
                 val = get_val_tuple(inputs, outputs, aps, i_vals, o_vals)
                 if eval_cond(cond, val):
                     
@@ -180,7 +351,7 @@ def generate_lts(inputs, aps, start_state, states):
         
         for cond, target in states.get(curr_hoa, []):
             for i_vals in input_combos:
-                for o_vals in output_combos:
+                for o_vals in sat_outputs(cond, inputs, outputs, aps, i_vals):
                     val = get_val_tuple(inputs, outputs, aps, i_vals, o_vals)
                     if eval_cond(cond, val):
                         

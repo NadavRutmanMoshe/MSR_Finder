@@ -31,6 +31,14 @@ the bound) and decides every witness exactly with spot before reporting it.
 That check is part of the answer, so it is inside `wall_s`; it is broken out so
 a solver-only comparison is still available.
 
+THE WALL LIMIT. `--timeout` is handed to the pipeline, which applies it to each
+solver call separately -- MSR, SR and PI_VAL can each use all of it, and
+building the systems is not covered at all (a 20-AP instance once spent 3.7 h
+there and was recorded as a SAT_MSR "answered" in 13,400 s). The tables count
+an answer only inside timeout + 10 s of wall clock, so `--wall-limit` (default
+exactly that) stops the whole instance there; it is recorded as
+status=ERROR / err "... TIMED OUT ...", the same as a solver timeout.
+
 THE REASON, AS DATA. `reason` is the R the tool found, rendered as a
 comma-separated list of `<input>@<t>` pairs; a pin inside the lasso's loop gets
 a `*` suffix, because it recurs at t, t+L, t+2L, ... and is not one position.
@@ -48,6 +56,7 @@ import argparse
 import csv
 import glob
 import os
+import signal
 import sys
 import time
 
@@ -58,6 +67,7 @@ sys.path.insert(0, BL._DEMO_SCRIPTS)
 import converter            # noqa: E402
 import hyperqb_analyzer     # noqa: E402
 import msr_analyzer         # noqa: E402
+import proc_guard           # noqa: E402
 
 FIELDS = [
     "instance", "model", "effect", "sys_states", "inputs", "outputs", "P", "L",
@@ -88,7 +98,17 @@ def reason_of(result):
     return len(fixed), len(loop), ",".join(fixed + loop)
 
 
-def measure(path, model, timeout, k, semantics):
+class _WallLimit(BaseException):
+    """Raised from SIGALRM. A BaseException, so the pipelines' `except
+    Exception` handlers do not swallow it; their `finally` blocks (temp dirs,
+    proc_guard's group kill of a running solver) still run on the way out."""
+
+
+def _on_alarm(_sig, _frm):
+    raise _WallLimit()
+
+
+def measure(path, model, timeout, k, semantics, wall_limit=None):
     inputs, aps, _s, states = converter.parse_hoa(path)
     row = {"instance": os.path.splitext(os.path.basename(path))[0],
            "model": model, "sys_states": len(states),
@@ -106,13 +126,27 @@ def measure(path, model, timeout, k, semantics):
         pipe = msr_analyzer.MSR
     pipe.TIMEOUT_SECONDS = timeout
 
+    use_alarm = bool(wall_limit) and hasattr(signal, "SIGALRM")
+    if use_alarm:
+        prev = signal.signal(signal.SIGALRM, _on_alarm)
+        signal.alarm(wall_limit)
     t0 = time.perf_counter()
     try:
         res = pipe.analyze_trace(path)
+    except _WallLimit:
+        proc_guard.reap_leaked_solvers()
+        row.update(status="ERROR",
+                   err=f"{model} TIMED OUT (wall > {wall_limit}s, whole instance)",
+                   wall_s=round(time.perf_counter() - t0, 3))
+        return row
     except Exception as e:
         row.update(status="EXCEPTION", err=f"{type(e).__name__}: {e}"[:200],
                    wall_s=round(time.perf_counter() - t0, 3))
         return row
+    finally:
+        if use_alarm:
+            signal.alarm(0)
+            signal.signal(signal.SIGALRM, prev)
     row["wall_s"] = round(time.perf_counter() - t0, 3)
     row["effect"] = res.get("effect", "")
     row["status"] = res.get("status", "")
@@ -132,6 +166,10 @@ def main():
     ap.add_argument("--corpus", default=SYNTCOMP)
     ap.add_argument("--out", default=None)
     ap.add_argument("--timeout", type=int, default=120)
+    ap.add_argument("--wall-limit", type=int, default=None,
+                    help="stop a whole instance (build + every solver call) "
+                         "after this many seconds; default timeout + 10, the "
+                         "tables' cut-off. 0 disables it")
     ap.add_argument("--sample", type=int, default=0)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--k", type=int, default=None, help="hyperqb bound")
@@ -141,6 +179,7 @@ def main():
                          "pipeline's rejection path, not its work)")
     args = ap.parse_args()
     BL.install_sigint()
+    wall_limit = args.timeout + 10 if args.wall_limit is None else args.wall_limit
 
     out = args.out or os.path.join(RESULTS, "MSR", f"msr_{args.model}.csv")
     rows = BL.Rows(out, FIELDS)
@@ -160,7 +199,8 @@ def main():
     print(f"{len(paths)} gated instances, {len(rows.done)} already done, "
           f"{len(todo)} to run\n", flush=True)
     for i, p in enumerate(todo, 1):
-        row = measure(p, args.model, args.timeout, args.k, args.semantics)
+        row = measure(p, args.model, args.timeout, args.k, args.semantics,
+                      wall_limit)
         rows.write(row)
         BL.progress(i, len(todo), row["instance"],
                     f"{row.get('status', ''):<16} |R|={row.get('size', '')} "

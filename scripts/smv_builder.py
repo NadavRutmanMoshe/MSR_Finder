@@ -109,7 +109,6 @@ def _enumerate_transitions(inputs, outputs, aps, start_state, states):
     idmap = {sid: k for k, sid in enumerate(ids)}
 
     input_combos = list(itertools.product([False, True], repeat=len(inputs)))
-    output_combos = list(itertools.product([False, True], repeat=len(outputs)))
 
     trans = {}
     for sid in ids:
@@ -117,7 +116,7 @@ def _enumerate_transitions(inputs, outputs, aps, start_state, states):
         for iv in input_combos:
             hit = None
             for cond, target in states.get(sid, []):
-                for ov in output_combos:
+                for ov in converter.sat_outputs(cond, inputs, outputs, aps, iv):
                     val = converter.get_val_tuple(inputs, outputs, aps, iv, ov)
                     if converter.eval_cond(cond, val):
                         hit = (ov, idmap[target])

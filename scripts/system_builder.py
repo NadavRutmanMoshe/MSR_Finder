@@ -146,7 +146,6 @@ def build_real_system(filepath):
     converter.check_determinism(inputs, outputs, aps, states)
 
     input_combos = list(itertools.product([False, True], repeat=len(inputs)))
-    output_combos = list(itertools.product([False, True], repeat=len(outputs)))
 
     discovered = {}          # (hoa_target, val_tuple) -> id
     state_details = {}
@@ -171,7 +170,7 @@ def build_real_system(filepath):
     # converter.generate_lts, so pi2's t=0 lines up with pi's prefix[0]).
     for cond, target in states.get(start_state, []):
         for i_vals in input_combos:
-            for o_vals in output_combos:
+            for o_vals in converter.sat_outputs(cond, inputs, outputs, aps, i_vals):
                 val = converter.get_val_tuple(inputs, outputs, aps, i_vals, o_vals)
                 if converter.eval_cond(cond, val):
                     init_ids.add(ensure_state(target, val))
@@ -182,7 +181,7 @@ def build_real_system(filepath):
         cur_hoa = state_details[cur]["__hoa__"]
         for cond, target in states.get(cur_hoa, []):
             for i_vals in input_combos:
-                for o_vals in output_combos:
+                for o_vals in converter.sat_outputs(cond, inputs, outputs, aps, i_vals):
                     val = converter.get_val_tuple(inputs, outputs, aps, i_vals, o_vals)
                     if converter.eval_cond(cond, val):
                         nxt = ensure_state(target, val)
