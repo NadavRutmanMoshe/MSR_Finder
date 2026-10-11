@@ -21,7 +21,7 @@ whether the two denote the same omega-language:
         L( [cause] )   ==   L( MTSR )
 
 Both are omega-languages over the same input alphabet, so `spot.are_equivalent`
-settles it, and when they differ the inclusion direction says HOW.
+settles it.
 
 RESTRICTED TO WHAT THE SYSTEM CAN PRODUCE
 -----------------------------------------
@@ -31,7 +31,7 @@ words the SYSTEM CAN PRODUCE.  A hand-written cause has no reason to be written
 that way.  CATS's own `atva2022_arbiter_simple` is `X "r1"` on a system whose
 first step is forced to `!r0 & !r1`: as raw languages, `X "r1"` is a strict
 superset of the MTSR -- it "admits" words like `r0 & X r1` -- and a plain
-equivalence check calls it TOO WEAK.  That verdict is false as a statement
+equivalence check calls it NOT the MTSR.  That verdict is false as a statement
 about causality: those extra words are not traces of the system at all, so
 nothing is claimed about them either way.
 
@@ -41,26 +41,16 @@ So the comparison is made inside the system's own input language:
 
 `L_in(system)` is the system automaton projected onto the inputs -- the same
 projection MTSR does, minus the effect.  With it, `X "r1"` comes out
-EQUIVALENT, which is the true answer.  When the restriction is what made the
+MTSR, which is the true answer.  When the restriction is what made the
 difference, the result says so, so the raw fact ("this cause also mentions
 input words the system cannot produce") is reported rather than hidden.
 
-WHY THE DIRECTION MATTERS, AND WHY IT IS NAMED AND NOT SUMMARISED
------------------------------------------------------------------
-The two ways to be wrong are not symmetric:
-
-  cause SUBSET-OF mtsr   the given cause is too STRONG -- every input word it
-                         admits does force the effect, so it is sufficient, but
-                         it rules out words that would have forced it too.  A
-                         correct-but-not-weakest explanation.
-  mtsr SUBSET-OF cause   the given cause is too WEAK -- it admits input words
-                         that do NOT force the effect.  It is not sufficient,
-                         i.e. not a cause at all.
-  incomparable           it does both.
-
-"subsumes"/"stronger" wording has inverted a finding in this project before, so
-the verdicts are named by direction and the human-readable line spells out which
-side is the offender.
+ONE ANSWER: THE MTSR, OR NOT
+----------------------------
+The question is whether the given cause IS the MTSR, so the answer is yes or
+no: MTSR when the two languages are equal, NOT_MTSR otherwise.  A cause that
+is stronger or weaker than the MTSR is not the MTSR, and the check does not
+grade it further (Nadav, 2026-10-11).
 
 THE `[cause]` BLOCK
 -------------------
@@ -169,7 +159,9 @@ def system_input_language(path):
         return None
     aut = spot.automaton(m.group(1))
     inputs = parse_inputs(path)
-    outputs = [str(ap) for ap in aut.ap() if str(ap) not in inputs]
+    # Membership by ap_name(): str(ap) quotes names like "Go" or "i-1", which
+    # then never matched an input. str(ap) is what remove_ap parses, though.
+    outputs = [str(ap) for ap in aut.ap() if ap.ap_name() not in inputs]
     if not outputs:
         return aut
     strip = spot.remove_ap()
@@ -179,15 +171,11 @@ def system_input_language(path):
 
 
 def _compare(a, b):
-    """(verdict, ok) for two automata, naming the inclusion direction.
-    `product(x, complement(y)).is_empty()` is "L(x) subset-of L(y)"."""
+    """(verdict, ok): MTSR when the two automata accept the same language,
+    NOT_MTSR otherwise."""
     if spot.are_equivalent(a, b):
-        return "EQUIVALENT", True
-    if spot.product(a, spot.complement(b)).is_empty():
-        return "CAUSE_SUBSET_OF_MTSR", False
-    if spot.product(b, spot.complement(a)).is_empty():
-        return "MTSR_SUBSET_OF_CAUSE", False
-    return "INCOMPARABLE", False
+        return "MTSR", True
+    return "NOT_MTSR", False
 
 
 def check(cause_text, mtsr_hoa, inputs=None, sys_inputs=None):
@@ -197,10 +185,9 @@ def check(cause_text, mtsr_hoa, inputs=None, sys_inputs=None):
     L_in(system) from `system_input_language`; when given, the cause is
     restricted to it before comparing (see the module docstring -- without that
     restriction, a cause that simply does not bother to exclude impossible input
-    words is misreported as too weak).  Returns a dict:
-        verdict   EQUIVALENT / CAUSE_SUBSET_OF_MTSR / MTSR_SUBSET_OF_CAUSE /
-                  INCOMPARABLE / ERROR
-        ok        True only for EQUIVALENT
+    words is misreported as not the MTSR).  Returns a dict:
+        verdict   MTSR / NOT_MTSR / ERROR
+        ok        True only for MTSR
         detail    one human-readable sentence
         raw_verdict  the same comparison WITHOUT the restriction (present only
                      when the restriction changed the answer)
@@ -226,7 +213,7 @@ def check(cause_text, mtsr_hoa, inputs=None, sys_inputs=None):
     if inputs:
         # The quantified propositions are bound by the formula, not supplied by
         # the environment, so they are not required to be inputs.
-        stray = sorted({str(ap) for ap in spot.atomic_prop_collect(formula)}
+        stray = sorted({ap.ap_name() for ap in spot.atomic_prop_collect(formula)}
                        - set(inputs) - set(qvars))
         if stray:
             return {"verdict": "ERROR", "ok": False,
@@ -255,22 +242,11 @@ def check(cause_text, mtsr_hoa, inputs=None, sys_inputs=None):
         verdict, ok = raw_verdict, _ok
 
     DETAIL = {
-        "EQUIVALENT":
-            "the given cause and the synthesized MTSR accept exactly the same "
-            "input sequences.",
-        "CAUSE_SUBSET_OF_MTSR":
-            "the given cause is STRICTLY STRONGER than needed: every input "
-            "sequence it admits does force the effect, but it excludes "
-            "sequences that also force it. Sufficient, but not the weakest "
-            "explanation.",
-        "MTSR_SUBSET_OF_CAUSE":
-            "the given cause is TOO WEAK: it admits input sequences the system "
-            "CAN produce and that do NOT force the effect, so it is not a "
-            "sufficient reason.",
-        "INCOMPARABLE":
-            "neither language contains the other: the given cause both admits "
-            "sequences that do not force the effect and excludes sequences "
-            "that do.",
+        "MTSR":
+            "the given cause IS the MTSR: it accepts exactly the input "
+            "sequences that force the effect.",
+        "NOT_MTSR":
+            "the given cause is NOT the MTSR: the two languages differ.",
     }
     res = {"verdict": verdict, "ok": ok, "detail": DETAIL[verdict]}
     if verdict != raw_verdict:
@@ -287,7 +263,7 @@ def print_result(cause_text, res):
     import textwrap
     print()
     print(f"{'=' * 78}")
-    print(f" CAUSE CHECK  {DIM}(is [cause] the same language as the MTSR?){RESET}")
+    print(f" CAUSE CHECK  {DIM}(is [cause] the MTSR?){RESET}")
     print(f"{'=' * 78}")
     for line in textwrap.wrap(f"[cause]: {cause_text}", width=76,
                              initial_indent=" ", subsequent_indent="          "):

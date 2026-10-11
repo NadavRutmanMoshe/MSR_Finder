@@ -12,4 +12,8 @@ if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("Usage: python3 mtsr_view.py <input.txt> <output.png>")
         sys.exit(1)
-    MTSR_one_example.run_workflow(sys.argv[1], sys.argv[2])
+    MTSR_one_example.proc_guard.install_termination_handlers()
+    try:
+        MTSR_one_example.run_workflow(sys.argv[1], sys.argv[2])
+    except KeyboardInterrupt:
+        sys.exit(130)

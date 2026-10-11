@@ -397,3 +397,31 @@ the content.
 
 The baselines are byte-identical to the copies that were measured: `fetch.sh`
 was checked against them after it was written.
+
+Three changes to the tool itself (2026-09-29) are inside what `msr_bench.py`
+times, none of them in what it answers on this corpus:
+
+* both MSR backends first check, exactly and in plain Python, that the lasso
+  is a word of the system (`scripts/trace_check.py`) — milliseconds, and all
+  818 gated instances pass it (it agrees with `pi_gate.py` on all 1610). It
+  stops a vacuous "MSR" on a lasso the system cannot produce, which the gate
+  already excluded here;
+* every solver call runs in a private temporary directory that is also its
+  working directory — AutoHyper writes `aut1.hoa`/`autRes.hoa` into its CWD,
+  so two concurrent runs could read each other's automata. The drivers here are
+  serial, so the recorded rows could not have been affected;
+* SIGTERM/SIGHUP unwind like Ctrl-C, so a stopped run no longer leaves its
+  solver running.
+
+The 12 shipped examples give byte-identical output before and after.
+
+Two more (2026-10-11):
+
+* `scripts/mtsr_min.py` is no longer a copy of the MTSR construction: it calls
+  the tool's own `MTSR_one_example.synthesize`, so the benchmark measures the
+  code `tracemsr.py` runs. On 60 of the 818 gated instances the old copy and the
+  tool give the same automata (same state counts and determinism,
+  spot-equivalent languages). `--cause` adds the tool's `--check` in the same
+  process.
+* `--check` answers `MTSR` or `NOT_MTSR` (is the given cause the MTSR); it no
+  longer names a direction when they differ.

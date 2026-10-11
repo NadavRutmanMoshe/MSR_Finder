@@ -259,12 +259,16 @@ def _certify_here(path, tau_prefix, tau_cycle, want_minimal=True):
     if not want_minimal:
         return out
 
-    agree = spot.automaton(agree_hoa(chain_pi, start, inputs, [str(a) for a in system.ap()]))
+    # ap_name(), not str(): str() is spot's printed form and quotes names like
+    # "Go" -- written into a HOA AP list that came out as `""Go""`, and compared
+    # against `keep` it never matched.
+    agree = spot.automaton(agree_hoa(chain_pi, start, inputs,
+                                     [a.ap_name() for a in system.ap()]))
     bad = spot.product(spot.product(system, agree), not_phi)
     keep = {a + PIN_SUFFIX for a in inputs}
     strip = spot.remove_ap()
     for a in bad.ap():
-        if str(a) not in keep:
+        if a.ap_name() not in keep:
             strip.add_ap(str(a))
     bad = strip.strip(bad).postprocess("Small")
     if bad.num_states() > MAX_COMPLEMENT_STATES:

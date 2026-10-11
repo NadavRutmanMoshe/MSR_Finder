@@ -457,7 +457,11 @@ def run(model_paths, hq_text, k=10, semantics="pes", witness=True,
     `hq_text` is OUR (AutoHyper-dialect) formula; it is translated here, and
     dualized when `witness` is set so that `-c` yields the model.  Returns
     {verdict, states, seconds, cmd, raw} with `verdict` already corrected for
-    the `-c` inversion, i.e. it always refers to OUR query."""
+    the `-c` inversion, i.e. it always refers to OUR query.
+
+    HyperRUSTY runs with `work_dir` as its current directory: it drops a
+    NuSMV script (`commands.txt`) and `flattened.txt` there, so a shared CWD
+    is shared state between concurrent runs.  Pass a private directory."""
     if semantics not in SEMANTICS:
         raise ValueError(f"semantics must be one of {SEMANTICS}")
     if not available():
@@ -480,7 +484,7 @@ def run(model_paths, hq_text, k=10, semantics="pes", witness=True,
         # proc_guard, not subprocess: HyperRUSTY shells out to quabs and blocks
         # on it, so a plain `subprocess.run` timeout kills the parent and leaves
         # the QBF solve running. Same TimeoutExpired, so callers are unchanged.
-        res = proc_guard.run(cmd, timeout=timeout, env=_env())
+        res = proc_guard.run(cmd, timeout=timeout, env=_env(), cwd=work_dir)
     finally:
         if os.path.exists(p_hq):
             try:

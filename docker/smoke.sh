@@ -53,8 +53,12 @@ fi
 
 step "3. --check  (cause checking, the CATS question)"
 if run example_1_cause.txt --run 4 --check; then
-    grep -q 'EQUIVALENT' "$WORK/out.txt" && ok "the shipped candidate cause is the MTSR" \
-                                         || bad "verdict is not EQUIVALENT"
+    v="$(grep 'verdict:' "$WORK/out.txt")"
+    if [[ "$v" == *MTSR* && "$v" != *NOT_MTSR* ]]; then
+        ok "the shipped candidate cause is the MTSR"
+    else
+        bad "verdict is not MTSR: $v"
+    fi
 else
     bad "--check did not finish"; tail -15 "$WORK/out.txt"
 fi

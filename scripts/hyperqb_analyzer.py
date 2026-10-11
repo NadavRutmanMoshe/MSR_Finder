@@ -54,9 +54,13 @@ solver and, because of the solver, three things:
   periodic pin still suffices).  cli_viewer prints the two cases differently
   for exactly this reason.
 
-  It never reports UNSAT_NO_CAUSE or INVALID_PI, because a bounded `unsat`
-  does not support either claim.  Use the default AutoHyper backend when you
-  need a negative answer to mean something.
+  It never reports UNSAT_NO_CAUSE, and never derives INVALID_PI from a
+  solver, because a bounded `unsat` does not support either claim.  The one
+  INVALID_PI it does report comes from trace_check, which decides exactly --
+  before any query -- whether the lasso is a word of the system at all (on one
+  that is not, a vacuously "sufficient" reason certifies just as well as a
+  real one).  Use the default AutoHyper backend when you need any other
+  negative answer to mean something.
 
 RAISING THE BOUND IS NOT A FREE WIN.  A larger k gives the witness more room
 (so R comes back complete more often), but the MSR query is the expensive one
@@ -80,8 +84,10 @@ the trace beside the cause is reconstructed exactly rather than guessed.
 """
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 import time
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -91,9 +97,11 @@ if _HERE not in sys.path:
 import converter            # noqa: E402  (parse_hoa, determinism firewall)
 import hyperqb_backend as hq  # noqa: E402  (syntax translation + the runner)
 import msr_certify          # noqa: E402  (the exact check on every witness)
+import proc_guard           # noqa: E402  (SIGTERM/SIGHUP -> clean unwind)
 import smv_builder          # noqa: E402  (the NuSMV modules)
 import smv_formulas         # noqa: E402  (the HyperLTL queries)
 import trace_analyzer       # noqa: E402  (parse_txt_effect)
+import trace_check          # noqa: E402  (is the lasso a system word at all?)
 
 #: Quantifier order -> module, mirroring msr_analyzer._layout.  HyperQB, like
 #: AutoHyper, resolves the i-th quantifier on the i-th system.
@@ -328,7 +336,6 @@ def analyze(path, timeout, k=None, semantics="pes"):
               "bounded_note": ""}
     timings = result["timings"]
     t_start = time.perf_counter()
-    work_dir = os.path.dirname(os.path.abspath(path))
 
     if not hq.available():
         result["error_msg"] = (
@@ -358,18 +365,25 @@ def analyze(path, timeout, k=None, semantics="pes"):
     result["k"] = k
     result["semantics"] = semantics
 
+    # STEP 0: is the lasso a system word?  Exact, no bound -- see the module
+    # docstring; without it a vacuous R certifies like a real one.
+    t0 = time.perf_counter()
+    ok, why = trace_check.check_lasso(path)
+    timings["trace_check"] = time.perf_counter() - t0
+    if not ok:
+        result["status"] = "INVALID_PI"
+        result["invalid_detail"] = why
+        return result
+
+    # A private directory for the models, the formula and HyperRUSTY's own
+    # droppings (commands.txt, flattened.txt land in its CWD, which is this).
+    work_dir = tempfile.mkdtemp(prefix="msr_finder_")
     paths = {}
     for label, content in models.items():
-        p = os.path.join(work_dir, f"temp_hq_{label}.smv")
+        p = os.path.join(work_dir, f"hq_{label}.smv")
         with open(p, "w") as f:
             f.write(content)
         paths[label] = p
-    # HyperRUSTY drops a NuSMV command script called `commands.txt` into the
-    # CURRENT DIRECTORY (not the work dir), so a run from scripts/ litters the
-    # repository. Remember whether one was already there, so cleanup can tell
-    # its own droppings from a file the user owns.
-    leftover = os.path.abspath("commands.txt")
-    pre_existing = os.path.exists(leftover)
 
     def query(mode):
         """One HyperQB call. Returns (verdict, states, seconds)."""
@@ -454,34 +468,8 @@ def analyze(path, timeout, k=None, semantics="pes"):
         result["error_msg"] = str(e)
     finally:
         timings["total"] = time.perf_counter() - t_start
-        for p in paths.values():
-            if os.path.exists(p):
-                try:
-                    os.remove(p)
-                except OSError:
-                    pass
-        _clean_solver_droppings(leftover, pre_existing, paths.values())
+        shutil.rmtree(work_dir, ignore_errors=True)
     return result
-
-
-def _clean_solver_droppings(path, pre_existing, model_paths):
-    """Remove HyperRUSTY's `commands.txt` -- but only if it is HyperRUSTY's.
-
-    Two guards, because the name is generic enough that someone could have their
-    own: it must not have existed before this run, and its contents must name a
-    model file WE wrote."""
-    if pre_existing or not os.path.exists(path):
-        return
-    try:
-        with open(path, "r", errors="replace") as f:
-            body = f.read()
-        if not body.startswith("read_model -i "):
-            return
-        if not any(os.path.basename(m) in body for m in model_paths):
-            return
-        os.remove(path)
-    except OSError:
-        pass
 
 
 class Pipeline:
@@ -508,6 +496,7 @@ if __name__ == "__main__":
                     help="unrolling bound (default |prefix|+|loop|+2)")
     ap.add_argument("--semantics", default="pes", choices=hq.SEMANTICS)
     args = ap.parse_args()
+    proc_guard.install_termination_handlers()
     res = analyze(args.file, args.timeout, args.k, args.semantics)
     print(json.dumps({k: v for k, v in res.items() if k != "table_data"},
                      indent=2))

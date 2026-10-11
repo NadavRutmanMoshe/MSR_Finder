@@ -1,5 +1,7 @@
 import os
 import re
+import shutil
+import tempfile
 import time
 import subprocess
 import converter
@@ -88,13 +90,15 @@ def _run_autohyper(lts_content, hq_content, temp_sys, temp_hq, executable):
     """
     Helper function to safely invoke the AutoHyper binary with timeouts.
     Uses temporary files rather than standard input for robust C++ execution.
+    AutoHyper runs in the temp files' (private) directory, because it writes
+    aut1.hoa/autRes.hoa into its current one.
     """
     with open(temp_sys, 'w') as f: f.write(lts_content)
     with open(temp_hq, 'w') as f: f.write(hq_content)
     # proc_guard.run, not subprocess.run: killing AutoHyper on timeout leaves
     # its Spot children (autfilt/ltl2tgba) orphaned and still burning CPU.
     res = proc_guard.run([executable, "--explicit", temp_sys, temp_hq, "--witness"],
-                         timeout=TIMEOUT_SECONDS)
+                         timeout=TIMEOUT_SECONDS, cwd=os.path.dirname(temp_sys))
     return res.stdout, res.stderr
 
 def analyze_trace(input_txt_path):
@@ -138,9 +142,11 @@ def analyze_trace(input_txt_path):
     result["effect"] = parse_txt_effect(input_txt_path)
     result["cause_vars"] = get_cause_vars_from_system(state_map)
 
-    # Prepare temporary files for AutoHyper
-    temp_sys = os.path.join(os.path.dirname(input_txt_path), "temp_sys.txt")
-    temp_hq = os.path.join(os.path.dirname(input_txt_path), "temp_hq.hq")
+    # Prepare temporary files for AutoHyper, in a private directory: fixed
+    # names next to the input collided when two runs shared a folder.
+    temp_dir = tempfile.mkdtemp(prefix="msr_finder_")
+    temp_sys = os.path.join(temp_dir, "sys.txt")
+    temp_hq = os.path.join(temp_dir, "hq.hq")
     
     # Path resolution for the external C++ binary
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -149,6 +155,7 @@ def analyze_trace(input_txt_path):
         tool_executable += ".exe"
 
     if not os.path.exists(tool_executable):
+        shutil.rmtree(temp_dir, ignore_errors=True)
         result["error_msg"] = "AutoHyper executable not found."
         return result
 
@@ -198,11 +205,8 @@ def analyze_trace(input_txt_path):
         result["error_msg"] = f"AutoHyper TIMED OUT (> {TIMEOUT_SECONDS}s)."
     finally:
         timings["total"] = time.perf_counter() - t_start
-        # Cleanup temporary files
-        for tf in [temp_sys, temp_hq, "aut1.hoa", "autRes.hoa"]:
-            if os.path.exists(tf):
-                try: os.remove(tf)
-                except OSError: pass
+        # Cleanup temporary files (AutoHyper's aut1.hoa/autRes.hoa included)
+        shutil.rmtree(temp_dir, ignore_errors=True)
 
     return result
 

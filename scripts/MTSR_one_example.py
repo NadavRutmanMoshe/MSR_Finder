@@ -1,5 +1,7 @@
 import argparse
+import itertools
 import spot
+import buddy
 import re
 import subprocess
 import sys
@@ -28,6 +30,44 @@ SAT_MEM = 6 * 1024**3
 #: exponential and it is meant for tens of states. An unguarded 21,840-state
 #: input once ran 21 minutes and exhausted a 10 GB VM without finishing.
 SAT_MINIMIZE_MAX_STATES = 500
+
+
+def input_nondeterminism(aut, inputs):
+    """None when `aut` is input-deterministic, else a sentence naming a state
+    and an input valuation with more than one (outputs, successor) choice.
+
+    MTSR projects the outputs away EXISTENTIALLY: an input word is kept when
+    SOME run of the system on it satisfies Phi.  That is "the inputs force Phi"
+    only when each input word has one run, which is the firewall the other
+    analyses enforce (converter.check_determinism) and this one used to skip --
+    a nondeterministic system got a confident, wrong MTSR.
+
+    Decided on spot's BDDs rather than by enumerating output valuations: per
+    state and input valuation, count the (output valuation, successor) pairs
+    the edges allow.  Enumeration is 2^|outputs| per edge, and 12 outputs
+    already cost converter's version hours."""
+    ins = [ap for ap in aut.ap() if ap.ap_name() in inputs]
+    in_vars = [aut.register_ap(ap) for ap in ins]
+    out_set = buddy.bddtrue
+    for ap in aut.ap():
+        if ap.ap_name() not in inputs:
+            out_set &= buddy.bdd_ithvar(aut.register_ap(ap))
+    for s in range(aut.num_states()):
+        by_dst = {}
+        for e in aut.out(s):
+            by_dst[e.dst] = by_dst.get(e.dst, buddy.bddfalse) | e.cond
+        for bits in itertools.product([False, True], repeat=len(in_vars)):
+            cube = buddy.bddtrue
+            for v, b in zip(in_vars, bits):
+                cube &= buddy.bdd_ithvar(v) if b else buddy.bdd_nithvar(v)
+            choices = sum(buddy.bdd_satcountset(buddy.bdd_restrict(c, cube), out_set)
+                          for c in by_dst.values())
+            if choices > 1:
+                vals = ", ".join(f"{ap.ap_name()}={'T' if b else 'F'}"
+                                 for ap, b in zip(ins, bits))
+                return (f"state {s} has {choices:g} possible (outputs, successor) "
+                        f"choices when inputs are [{vals}]")
+    return None
 
 
 def _all_accepting(final_hoa):
@@ -77,26 +117,39 @@ def print_hoa_colored(final_hoa):
         print(f"{GREEN}{line}{RESET}" if i in green else line)
 
 
-def run_workflow(filename, output_image="final_result.png", check=False):
-    """Synthesize the MTSR; with `check`, additionally verify the instance's
-    [cause] block against it (see cause_check)."""
-    timings = {}
-    t_start = time.perf_counter()
+class MTSRRefused(Exception):
+    """An instance MTSR must not answer, because the answer would be wrong
+    without any error: `kind` is "unknown_ap" or "nondeterministic"."""
 
-    try:
-        with open(filename, 'r') as f:
-            content = f.read()
-    except FileNotFoundError:
-        print(f"Error: File '{filename}' not found.")
-        sys.exit(1)
+    def __init__(self, kind, msg):
+        super().__init__(msg)
+        self.kind = kind
+
+
+def synthesize(content, timings=None):
+    """The MTSR of one instance (the text of its .txt file): the computation
+    alone, with no printing and no picture.
+
+    This is the one implementation of analysis 4.  run_workflow below wraps it
+    for the user, and the benchmark (bench/scripts/mtsr_min.py) calls it
+    directly, so the paper measures the tool as shipped.
+
+    Returns {"inputs", "effect", "final_hoa", "projected_hoa",
+    "product_states", "projected_deterministic", "language_preserved"}, and
+    fills `timings` (translate / product / minimize) when one is given.
+    Raises ValueError for a malformed file, MTSRRefused, and whatever the
+    autfilt calls raise: subprocess.TimeoutExpired, CalledProcessError (a
+    bad_alloc there is the memory cap), RuntimeError (the state-count guard).
+    """
+    if timings is None:
+        timings = {}
 
     # ==========================================
     # 1. Extract Inputs
     # ==========================================
     inputs_match = re.search(r'\[inputs\]\s*(.*?)\s*\[', content, re.DOTALL)
     if not inputs_match:
-        print("Error: Could not find [inputs] section")
-        return
+        raise ValueError("Could not find [inputs] section")
     # Parse "r0" "r1" into a set {'r0', 'r1'}
     input_aps = set(re.findall(r'"([^"]+)"', inputs_match.group(1)))
 
@@ -105,8 +158,7 @@ def run_workflow(filename, output_image="final_result.png", check=False):
     # ==========================================
     effect_match = re.search(r'\[effect\]\s*(.*?)\s*\[', content, re.DOTALL)
     if not effect_match:
-        print("Error: Could not find [effect] section")
-        return
+        raise ValueError("Could not find [effect] section")
 
     # Clean up the string (remove newlines/padding)
     ltl_formula = effect_match.group(1).strip()
@@ -115,26 +167,41 @@ def run_workflow(filename, output_image="final_result.png", check=False):
     # using spot.translate ensures we get a compatible automaton
     try:
         t0 = time.perf_counter()
-        aut_effect = spot.translate(ltl_formula)
+        effect_formula = spot.formula(ltl_formula)
+        aut_effect = spot.translate(effect_formula)
         timings["translate"] = time.perf_counter() - t0
     except Exception as e:
-        print(f"Error translating LTL: {e}")
-        return
+        raise ValueError(f"translating LTL: {e}")
 
     # ==========================================
     # 3. Extract and Process HOA System
     # ==========================================
     hoa_match = re.search(r'(HOA:.*--END--)', content, re.DOTALL)
     if not hoa_match:
-        print("Error: Could not find HOA content")
-        return
+        raise ValueError("Could not find HOA content")
 
     hoa_content = hoa_match.group(1)
     aut_system = spot.automaton(hoa_content)
 
     if aut_system is None:
-        print("Error parsing HOA system")
-        return
+        raise ValueError("parsing HOA system")
+
+    # Two inputs the product would otherwise accept and answer WRONGLY, with
+    # no error: an effect over a proposition the system does not have (spot
+    # treats it as a free letter, the projection below then drops it
+    # existentially, and the MTSR comes out as "every input word"), and a
+    # nondeterministic system (see input_nondeterminism).
+    sys_aps = {ap.ap_name() for ap in aut_system.ap()}
+    unknown = sorted({ap.ap_name() for ap in spot.atomic_prop_collect(effect_formula)}
+                     - sys_aps)
+    if unknown:
+        raise MTSRRefused(
+            "unknown_ap",
+            f"The [effect] mentions {unknown}, which the [system] does not "
+            f"declare (its APs: {sorted(sys_aps)}).")
+    why = input_nondeterminism(aut_system, input_aps)
+    if why:
+        raise MTSRRefused("nondeterministic", why)
 
     # ==========================================
     # 4. Intersection (Product)
@@ -150,9 +217,13 @@ def run_workflow(filename, output_image="final_result.png", check=False):
     # ==========================================
     # 5. Identify Outputs to Remove
     # ==========================================
-    # We look at all APs in the intersection and remove those that are NOT inputs
-    all_aps = [str(ap) for ap in aut_intersection.ap()]
-    aps_to_remove = [ap for ap in all_aps if ap not in input_aps]
+    # We look at all APs in the intersection and remove those that are NOT inputs.
+    # Compare by ap_name(): str(ap) is spot's PRINTED form, which quotes names
+    # such as "Go", "Fa" or "i-1" -- '"Go"' is not in {'Go', ...}, so such an
+    # input used to be projected away as if it were an output. str(ap) is still
+    # what goes to --remove-ap, since that option parses its argument.
+    aps_to_remove = [str(ap) for ap in aut_intersection.ap()
+                     if ap.ap_name() not in input_aps]
 
     # ==========================================
     # 6. Project & Minimize (using autfilt)
@@ -166,74 +237,112 @@ def run_workflow(filename, output_image="final_result.png", check=False):
     # unchanged -- this is presentation only.
     proj_cmd = ["autfilt"] + [f"--remove-ap={ap}" for ap in aps_to_remove]
 
+    t0 = time.perf_counter()
+
+    # Step 1: project the outputs away (the cause lives over the inputs).
+    # proc_guard.run everywhere below: these are leaves with no children of
+    # their own, but `--sat-minimize` can run for a long time and Ctrl-C
+    # through a plain subprocess.run leaves it orphaned and still running.
+    projected = proc_guard.run(
+        proj_cmd,
+        input=intersection_hoa,
+        timeout=SAT_TIMEOUT,
+        mem_limit=SAT_MEM,
+        check=True
+    ).stdout
+
+    # Step 2: `--sat-minimize` REQUIRES a deterministic input. Two things
+    # here can destroy determinism:
+    #   (a) the effect automaton -- `F G x` translates to a nondeterministic
+    #       Buchi automaton, and no deterministic Buchi automaton exists for
+    #       it (NBA are strictly more expressive than DBA);
+    #   (b) --remove-ap, an existential projection, which can introduce
+    #       nondeterminism even from a deterministic product.
+    # Without this step autfilt aborts with "SAT-based minimization only
+    # works with deterministic automata".
+    #
+    # Determinizing to *Buchi* is therefore impossible in general, but
+    # determinizing at all is always possible with a richer acceptance
+    # condition, so we ask for 'generic' (spot picks co-Buchi/parity). The
+    # language is preserved, and --sat-minimize is then free to return a
+    # minimal -- possibly nondeterministic -- Buchi automaton.
+    aut_projected = spot.automaton(projected)
+    projected_deterministic = aut_projected.is_deterministic()
+    if not projected_deterministic:
+        projected = spot.postprocess(
+            aut_projected, 'generic', 'deterministic').to_str('hoa')
+
+    # Step 3: exact SAT-based minimization.
+    #
+    # Guard first: SAT minimization is exponential, so past a few hundred
+    # states it does not finish and only burns memory until something dies.
+    # Refusing here is strictly better than a 120s timeout, because the
+    # timeout still pays 120s and 6 GB to learn what the state count
+    # already told us.
+    n_states = spot.automaton(projected).num_states()
+    if n_states > SAT_MINIMIZE_MAX_STATES:
+        raise RuntimeError(
+            f"{n_states} states exceeds SAT_MINIMIZE_MAX_STATES "
+            f"({SAT_MINIMIZE_MAX_STATES}); exact minimization would not "
+            f"terminate. Use spot.postprocess(aut, 'small') for a "
+            f"heuristic result.")
+
+    result = proc_guard.run(
+        ["autfilt", "--sat-minimize", "-B"],
+        input=projected,
+        timeout=SAT_TIMEOUT,
+        mem_limit=SAT_MEM,
+        check=True
+    )
+    timings["minimize"] = time.perf_counter() - t0
+
+    final_hoa = result.stdout
+
+    # Determinization + SAT minimization must preserve the language
+    # exactly. Cheap at these sizes, and it turns a silent wrong answer
+    # into a loud one -- which matters more now that --check reports a
+    # verdict computed against this automaton.
+    equivalent = spot.are_equivalent(spot.automaton(final_hoa),
+                                     spot.automaton(projected))
+    timings["language_preserved"] = equivalent
+
+    return {"inputs": input_aps, "effect": ltl_formula,
+            "final_hoa": final_hoa, "projected_hoa": projected,
+            "product_states": aut_intersection.num_states(),
+            "projected_deterministic": projected_deterministic,
+            "language_preserved": equivalent}
+
+
+def run_workflow(filename, output_image="final_result.png", check=False):
+    """Synthesize the MTSR; with `check`, additionally verify the instance's
+    [cause] block against it (see cause_check)."""
+    timings = {}
+    t_start = time.perf_counter()
+
     try:
-        t0 = time.perf_counter()
+        with open(filename, 'r') as f:
+            content = f.read()
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+        sys.exit(1)
 
-        # Step 1: project the outputs away (the cause lives over the inputs).
-        # proc_guard.run everywhere below: these are leaves with no children of
-        # their own, but `--sat-minimize` can run for a long time and Ctrl-C
-        # through a plain subprocess.run leaves it orphaned and still running.
-        projected = proc_guard.run(
-            proj_cmd,
-            input=intersection_hoa,
-            timeout=SAT_TIMEOUT,
-            mem_limit=SAT_MEM,
-            check=True
-        ).stdout
-
-        # Step 2: `--sat-minimize` REQUIRES a deterministic input. Two things
-        # here can destroy determinism:
-        #   (a) the effect automaton -- `F G x` translates to a nondeterministic
-        #       Buchi automaton, and no deterministic Buchi automaton exists for
-        #       it (NBA are strictly more expressive than DBA);
-        #   (b) --remove-ap, an existential projection, which can introduce
-        #       nondeterminism even from a deterministic product.
-        # Without this step autfilt aborts with "SAT-based minimization only
-        # works with deterministic automata".
-        #
-        # Determinizing to *Buchi* is therefore impossible in general, but
-        # determinizing at all is always possible with a richer acceptance
-        # condition, so we ask for 'generic' (spot picks co-Buchi/parity). The
-        # language is preserved, and --sat-minimize is then free to return a
-        # minimal -- possibly nondeterministic -- Buchi automaton.
-        aut_projected = spot.automaton(projected)
-        if not aut_projected.is_deterministic():
-            projected = spot.postprocess(
-                aut_projected, 'generic', 'deterministic').to_str('hoa')
-
-        # Step 3: exact SAT-based minimization.
-        #
-        # Guard first: SAT minimization is exponential, so past a few hundred
-        # states it does not finish and only burns memory until something dies.
-        # Refusing here is strictly better than a 120s timeout, because the
-        # timeout still pays 120s and 6 GB to learn what the state count
-        # already told us.
-        n_states = spot.automaton(projected).num_states()
-        if n_states > SAT_MINIMIZE_MAX_STATES:
-            raise RuntimeError(
-                f"{n_states} states exceeds SAT_MINIMIZE_MAX_STATES "
-                f"({SAT_MINIMIZE_MAX_STATES}); exact minimization would not "
-                f"terminate. Use spot.postprocess(aut, 'small') for a "
-                f"heuristic result.")
-
-        result = proc_guard.run(
-            ["autfilt", "--sat-minimize", "-B"],
-            input=projected,
-            timeout=SAT_TIMEOUT,
-            mem_limit=SAT_MEM,
-            check=True
-        )
-        timings["minimize"] = time.perf_counter() - t0
-
-        final_hoa = result.stdout
-
-        # Determinization + SAT minimization must preserve the language
-        # exactly. Cheap at these sizes, and it turns a silent wrong answer
-        # into a loud one -- which matters more now that --check reports a
-        # verdict computed against this automaton.
-        equivalent = spot.are_equivalent(spot.automaton(final_hoa),
-                                         spot.automaton(projected))
-        timings["language_preserved"] = equivalent
+    try:
+        try:
+            res = synthesize(content, timings)
+        except ValueError as e:
+            print(f"Error: {e}")
+            return
+        except MTSRRefused as e:
+            if e.kind == "nondeterministic":
+                print(f"\033[95m[!] AMBIGUOUS SYSTEM (non-deterministic): {e}.\033[0m")
+                print("    MTSR keeps an input word when SOME run on it satisfies the "
+                      "effect; that means\n    the inputs FORCE it only when every "
+                      "input word has exactly one run.")
+            else:
+                print(f"\033[91m[!] {e}\033[0m")
+            return
+        final_hoa = res["final_hoa"]
+        equivalent = res["language_preserved"]
         if not equivalent:
             print("\033[91m[!] BUG: the minimized automaton is NOT "
                   "language-equivalent to the projected product. The MTSR "
@@ -314,4 +423,12 @@ if __name__ == "__main__":
                     help="also verify the instance's [cause] block against the "
                          "synthesized MTSR (language equivalence, via spot)")
     args = ap.parse_args()
-    run_workflow(args.input, args.output_image, check=args.check)
+    # This process drives autfilt, which proc_guard starts in a process group
+    # of its own; only an unwind through proc_guard's `finally` reaches it.
+    # tracemsr stops this process with SIGTERM on a timeout, so SIGTERM has to
+    # unwind like Ctrl-C does rather than end the interpreter in place.
+    proc_guard.install_termination_handlers()
+    try:
+        run_workflow(args.input, args.output_image, check=args.check)
+    except KeyboardInterrupt:
+        sys.exit(130)

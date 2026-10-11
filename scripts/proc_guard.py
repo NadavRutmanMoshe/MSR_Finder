@@ -160,6 +160,27 @@ def run(cmd, timeout=None, input=None, check=False,
     return subprocess.CompletedProcess(cmd, proc.returncode, out, err)
 
 
+def install_termination_handlers():
+    """Make SIGTERM and SIGHUP unwind like Ctrl-C does.
+
+    Every cleanup in this module lives in a `finally`, and Ctrl-C reaches it
+    because SIGINT raises KeyboardInterrupt.  SIGTERM and SIGHUP do not: their
+    default action ends the interpreter on the spot, so `timeout 60 python3
+    tracemsr.py ...`, a `kill`, or closing the terminal left AutoHyper /
+    HyperRUSTY / autfilt running at 100% CPU in a process group nobody owns
+    any more.  Raising KeyboardInterrupt (a BaseException, so `except
+    Exception` does not swallow it) sends those signals down the same path.
+
+    Call it from an entry point's `__main__` only -- never at import time,
+    since a caller importing these modules may have handlers of its own."""
+    def _interrupt(signum, _frame):
+        raise KeyboardInterrupt(f"terminated by signal {signum}")
+    for name in ("SIGTERM", "SIGHUP"):
+        sig = getattr(signal, name, None)          # SIGHUP does not exist on Windows
+        if sig is not None:
+            signal.signal(sig, _interrupt)
+
+
 def reap_leaked_solvers():
     """Kill solver processes left behind by OUR OWN finished runs. Returns count.
 

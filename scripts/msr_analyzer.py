@@ -26,14 +26,27 @@ combined product:
         CliqueQ     Clique       Real         Clique        Real
   SR :  exists pi . exists tau . forall pi2      ->  CliqueQ Clique Real
 
+Before any of that, trace_check decides exactly (plain Python, no solver)
+whether the lasso is a word of the system at all.  It has to come first: MSR
+and SR only see pi's inputs, so on a lasso the system cannot produce, a cause
+may pin an input to a value no system trace takes there and be "sufficient"
+vacuously -- the solver then reports an MSR for a trace that does not exist.
+
 PI_VAL (is the user's lasso a real system trace on which the effect holds?)
 needs pi together with the outputs, so it runs on the legacy combined system
 (converter.generate_lts + hyperLTL.generate_hq); it is only reached when both
 MSR and SR are UNSAT, to tell "valid trace, no cause" from "invalid trace".
+
+Every solver call runs in a private temporary directory, which also holds the
+systems and formulas.  AutoHyper writes `aut1.hoa` and reads back `autRes.hoa`
+in its CURRENT directory, so two runs sharing one -- two terminals in
+scripts/, say -- used to read each other's automata and answer wrongly.
 """
 import os
 import re
+import shutil
 import sys
+import tempfile
 import time
 import subprocess
 
@@ -48,6 +61,7 @@ import system_builder       # noqa: E402  (Real + Clique builders)
 import msr_systems          # noqa: E402  (CliqueQ builder)
 import msr_formulas         # noqa: E402  (MSR / SR formulas)
 import proc_guard           # noqa: E402  (subprocess.run that kills the group)
+import trace_check          # noqa: E402  (is the lasso a system word at all?)
 
 REL_TOOL_PATH = "../external_tools/AutoHyper/app/AutoHyper"
 
@@ -67,11 +81,29 @@ def _exe():
     return e
 
 
-def _run(system_paths, hq_path, timeout):
+def work_dir():
+    """A fresh private directory for one run's temporaries and solver CWD."""
+    return tempfile.mkdtemp(prefix="msr_finder_")
+
+
+def _run(system_paths, hq_path, timeout, cwd=None):
+    """One AutoHyper call.  `cwd` is where AutoHyper drops aut1.hoa/autRes.hoa;
+    without one, the call gets a private directory of its own."""
+    own = cwd is None
+    if own:
+        cwd = work_dir()
     cmd = [_exe(), "--explicit", *system_paths, hq_path, "--witness"]
-    # proc_guard.run, not subprocess.run: killing AutoHyper on timeout leaves
-    # its Spot children (autfilt/ltl2tgba) orphaned and still burning CPU.
-    res = proc_guard.run(cmd, timeout=timeout)
+    try:
+        # proc_guard.run, not subprocess.run: killing AutoHyper on timeout
+        # leaves its Spot children (autfilt/ltl2tgba) orphaned and still
+        # burning CPU.
+        res = proc_guard.run(cmd, timeout=timeout, cwd=cwd)
+    except PermissionError:
+        # A checkout on a filesystem that dropped the +x bit.
+        raise RuntimeError(f"AutoHyper is not executable: run  chmod +x {cmd[0]}")
+    finally:
+        if own:
+            shutil.rmtree(cwd, ignore_errors=True)
     return res.stdout, res.stderr
 
 
@@ -116,7 +148,6 @@ def analyze(path, timeout):
               "error_msg": "", "timings": {}}
     timings = result["timings"]
     t_start = time.perf_counter()
-    work_dir = os.path.dirname(os.path.abspath(path))
 
     # PHASE 0: build the systems (determinism firewall lives in the real-system
     # builder).
@@ -139,22 +170,32 @@ def analyze(path, timeout):
     pi_map = trace_analyzer.parse_system_string(sysmap["cliqueq"])
     tau_map = trace_analyzer.parse_system_string(sysmap["clique"])
 
+    # STEP 0: is the lasso a system word?  Exact, and it has to come before
+    # MSR/SR -- see the module docstring (vacuous sufficiency).
+    t0 = time.perf_counter()
+    ok, why = trace_check.check_lasso(path)
+    timings["trace_check"] = time.perf_counter() - t0
+    if not ok:
+        result["status"] = "INVALID_PI"
+        result["invalid_detail"] = why
+        return result
+
     if not os.path.exists(_exe()):
         result["error_msg"] = "AutoHyper executable not found."
         return result
 
-    # write each distinct system once
+    # A private directory for the systems, the formulas and AutoHyper's own
+    # aut1.hoa/autRes.hoa: nothing is shared with a concurrent run.
+    tmp = work_dir()
     sys_paths = {}
     for label, content in sysmap.items():
-        p = os.path.join(work_dir, f"temp_msr_{label}.txt")
+        p = os.path.join(tmp, f"msr_{label}.txt")
         with open(p, "w") as f:
             f.write(content)
         sys_paths[label] = p
-    p_hq = os.path.join(work_dir, "temp_msr.hq")
-    p_legacy_sys = os.path.join(work_dir, "temp_msr_legacy.txt")
-    p_legacy_hq = os.path.join(work_dir, "temp_msr_legacy.hq")
-    temp_files = list(sys_paths.values()) + [p_hq, p_legacy_sys, p_legacy_hq,
-                                             "aut1.hoa", "autRes.hoa"]
+    p_hq = os.path.join(tmp, "msr.hq")
+    p_legacy_sys = os.path.join(tmp, "msr_legacy.txt")
+    p_legacy_hq = os.path.join(tmp, "msr_legacy.hq")
 
     try:
         # STEP 1: MSR
@@ -162,7 +203,7 @@ def analyze(path, timeout):
             f.write(msr_formulas.generate_hq_variant(path, "MSR", "inputs"))
         order = [sys_paths[l] for l in msr_order]
         t0 = time.perf_counter()
-        out, err = _run(order, p_hq, timeout)
+        out, err = _run(order, p_hq, timeout, cwd=tmp)
         timings["MSR"] = time.perf_counter() - t0
         if _is_solver_error(out, err):
             result["status"] = "ERROR"
@@ -178,7 +219,7 @@ def analyze(path, timeout):
             f.write(msr_formulas.generate_hq_variant(path, "SR", "inputs"))
         order = [sys_paths[l] for l in sr_order]
         t0 = time.perf_counter()
-        out, err = _run(order, p_hq, timeout)
+        out, err = _run(order, p_hq, timeout, cwd=tmp)
         timings["SR"] = time.perf_counter() - t0
         if _is_solver_error(out, err):
             result["status"] = "ERROR"
@@ -196,7 +237,7 @@ def analyze(path, timeout):
         with open(p_legacy_hq, "w") as f:
             f.write(hyperLTL.generate_hq(path, mode="PI_VAL"))
         t0 = time.perf_counter()
-        out, err = _run([p_legacy_sys], p_legacy_hq, timeout)
+        out, err = _run([p_legacy_sys], p_legacy_hq, timeout, cwd=tmp)
         timings["PI_VAL"] = time.perf_counter() - t0
         if "SAT" in out and "UNSAT" not in out:
             result["status"] = "UNSAT_NO_CAUSE"
@@ -209,15 +250,12 @@ def analyze(path, timeout):
     except subprocess.TimeoutExpired:
         result["status"] = "ERROR"
         result["error_msg"] = f"AutoHyper TIMED OUT (> {timeout}s)."
+    except RuntimeError as e:
+        result["status"] = "ERROR"
+        result["error_msg"] = str(e)
     finally:
         timings["total"] = time.perf_counter() - t_start
-        for tf in temp_files:
-            p = tf if os.path.isabs(tf) else os.path.join(work_dir, tf)
-            if os.path.exists(p):
-                try:
-                    os.remove(p)
-                except OSError:
-                    pass
+        shutil.rmtree(tmp, ignore_errors=True)
     return result
 
 
@@ -234,6 +272,7 @@ MSR = Pipeline()
 
 
 if __name__ == "__main__":
+    proc_guard.install_termination_handlers()
     if len(sys.argv) < 2:
         print("Usage: python3 msr_analyzer.py <file.txt> [timeout]")
         sys.exit(1)

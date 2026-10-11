@@ -130,9 +130,19 @@ def print_cli_results(result_data, pi_override=None, show_pi=True, show_tau=Fals
         print(f"\n{'='*80}")
         print(" \033[91mSTATUS: INVALID TRACE (Pi is not a valid path or does not satisfy the effect!)\033[0m")
         print(f"{'='*80}")
-        print(f" {solver} proved that the trace provided in the [lasso] block is either:")
-        print("   - not a physically possible path within the system's HOA graph, or")
-        print("   - a valid path on which the [effect] formula does not actually occur.")
+        detail = result_data.get("invalid_detail")
+        if detail:
+            # From trace_check: exact, and before any solver ran.
+            print(" The trace in the [lasso] block is not a path of the system's HOA graph:")
+            for line in textwrap.wrap(detail, width=76, initial_indent="   ",
+                                      subsequent_indent="   "):
+                print(line)
+            print(" No cause is computed for it: on a trace the system cannot produce, a")
+            print(" reason can be \"sufficient\" only vacuously.")
+        else:
+            print(f" {solver} proved that the trace provided in the [lasso] block is either:")
+            print("   - not a physically possible path within the system's HOA graph, or")
+            print("   - a valid path on which the [effect] formula does not actually occur.")
         print(" -> Aborting causality check.")
         print(f"{'='*80}\n")
         return
@@ -330,6 +340,8 @@ def print_cli_results(result_data, pi_override=None, show_pi=True, show_tau=Fals
 
 
 def main():
+    import proc_guard
+    proc_guard.install_termination_handlers()
     if len(sys.argv) < 2:
         print("Usage: python3 cli_viewer.py <input.txt> [--with-tau]")
         sys.exit(1)

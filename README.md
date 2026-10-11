@@ -134,8 +134,11 @@ so rather than hiding it:
 | `sat`, witness fails certification | falls through, ends `UNKNOWN_BOUNDED` | — |
 | `unsat`, timeout, error | `UNKNOWN_BOUNDED` | **no** — only "nothing within `k`" |
 
-So `--hyperQB` never answers `UNSAT_NO_CAUSE` or `INVALID_PI`. When a *negative*
-answer has to mean something, drop the flag: the AutoHyper backend is exact.
+So `--hyperQB` never answers `UNSAT_NO_CAUSE`, and never takes `INVALID_PI` from
+the solver. It reports `INVALID_PI` only when the lasso fails the exact check
+both backends run first (it is not a word of the system — see
+[Result statuses](#result-statuses)). When any other *negative* answer has to
+mean something, drop the flag: the AutoHyper backend is exact.
 
 ### Why a HyperQB `sat` is checked and not believed
 
@@ -250,25 +253,23 @@ sequences:
 
 ```
 ==============================================================================
- CAUSE CHECK  (is [cause] the same language as the MTSR?)
+ CAUSE CHECK  (is [cause] the MTSR?)
 ==============================================================================
  [cause]: "i1" & (X X (((!"i1") & (!"i2")) U ("i1" & (!"i2"))))
- verdict: EQUIVALENT
- the given cause and the synthesized MTSR accept exactly the same input
- sequences.
+ verdict: MTSR
+ the given cause IS the MTSR: it accepts exactly the input sequences that
+ force the effect.
 ==============================================================================
 ```
 
 Both sides denote an ω-language over the inputs, so this is a language question
-and spot answers it exactly. When they differ, the verdict names the direction —
-the two ways of being wrong are not the same failure:
+and spot answers it exactly. The question is whether the given cause *is* the
+MTSR, so the answer is yes or no:
 
 | verdict | what it means |
 |---|---|
-| `EQUIVALENT` | the given cause *is* the MTSR |
-| `CAUSE_SUBSET_OF_MTSR` | too **strong**: everything it admits does force Φ, but it excludes inputs that also force Φ. Sufficient, not weakest |
-| `MTSR_SUBSET_OF_CAUSE` | too **weak**: it admits inputs that do *not* force Φ, so it is not a sufficient reason at all |
-| `INCOMPARABLE` | both at once |
+| `MTSR` | the given cause *is* the MTSR |
+| `NOT_MTSR` | it is not: the two languages differ |
 | `ERROR` | unparseable, mentions non-input APs, or is a CATS *sketch* (`?{…}` holes) rather than a concrete formula |
 
 `--check` implies analysis 4 — asking it while running only analyses 1–3 adds
@@ -287,10 +288,10 @@ L( [cause] )  ∩  L_in(system)   ==   L( MTSR )
 
 `L_in(system)` is the system automaton projected onto the inputs — the same
 projection MTSR does, minus the effect. Without it, CATS's own
-`atva2022_arbiter_simple` cause `X "r1"` is reported as *too weak* on a system
+`atva2022_arbiter_simple` cause `X "r1"` is reported as *not the MTSR* on a system
 whose first step is forced to `!r0 & !r1`: as raw languages `X "r1"` also
 "admits" `r0 & X r1`, which is not a trace of that system at all, so nothing is
-claimed about it either way. Restricted, it comes out `EQUIVALENT` — the true
+claimed about it either way. Restricted, it comes out `MTSR` — the true
 answer. When the restriction is what changed the verdict, the result says so,
 and names what the raw answer would have been.
 
@@ -316,25 +317,24 @@ silently mistranslated.
 ### On CATS's own examples
 
 Run against the eleven instances in the CATS artifact
-(`research-artifact/TSR/CATS_examples`), every one of their certified causes
-comes out **sufficient** — which is the sanity check that matters, since CATS
-proved them causes. Seven are exactly our MTSR; four are strictly stronger than
-it, which is expected: CATS returns *an* actual cause for the trace it was
-given, MTSR is the weakest sufficient temporal reason for the system.
+(`research-artifact/TSR/CATS_examples`), seven of their certified causes are
+exactly our MTSR and four are not, which is expected: CATS returns *an* actual
+cause for the trace it was given, MTSR is the weakest sufficient temporal
+reason for the system.
 
 | instance | `[cause]` | verdict |
 |---|---|---|
-| `atva2022_arbiter` | `E _q . !_q & G (X _q <-> !_q) & F (_q & "r1")` | `CAUSE_SUBSET_OF_MTSR` |
-| `atva2022_arbiter_simple` | `X "r1"` | `EQUIVALENT` |
-| `atva2022_arbiter_spurious` | `F "r1"` | `CAUSE_SUBSET_OF_MTSR` |
-| `atva2022_tp_left` | `! "a"` | `EQUIVALENT` |
-| `atva2022_tp_right` | `! "a"` | `EQUIVALENT` |
-| `example_1` | `"i1" & X X ((!"i2") U ("i1" & !"i2"))` | `EQUIVALENT` |
-| `example_1_mod` | `"i1" & X X ((!"i2") U ("i1" & !"i2"))` | `EQUIVALENT` |
-| `example_6_globally` | `G "r0"` | `CAUSE_SUBSET_OF_MTSR` |
-| `example_6_odd` | `E _q . _q & G (X _q <-> !_q) & G (_q -> "r0")` | `CAUSE_SUBSET_OF_MTSR` |
-| `example_8` | `"a" \| X "a"` | `EQUIVALENT` |
-| `example_8_mod` | `"a" \| X "a"` | `EQUIVALENT` |
+| `atva2022_arbiter` | `E _q . !_q & G (X _q <-> !_q) & F (_q & "r1")` | `NOT_MTSR` |
+| `atva2022_arbiter_simple` | `X "r1"` | `MTSR` |
+| `atva2022_arbiter_spurious` | `F "r1"` | `NOT_MTSR` |
+| `atva2022_tp_left` | `! "a"` | `MTSR` |
+| `atva2022_tp_right` | `! "a"` | `MTSR` |
+| `example_1` | `"i1" & X X ((!"i2") U ("i1" & !"i2"))` | `MTSR` |
+| `example_1_mod` | `"i1" & X X ((!"i2") U ("i1" & !"i2"))` | `MTSR` |
+| `example_6_globally` | `G "r0"` | `NOT_MTSR` |
+| `example_6_odd` | `E _q . _q & G (X _q <-> !_q) & G (_q -> "r0")` | `NOT_MTSR` |
+| `example_8` | `"a" \| X "a"` | `MTSR` |
+| `example_8_mod` | `"a" \| X "a"` | `MTSR` |
 
 ## Verifying the results
 
@@ -403,7 +403,7 @@ validated before any query runs and violations are reported as
 | `SAT_MSR` | a Minimal Sufficient Reason was found (green table, pins highlighted) |
 | `SAT_SR` | a Sufficient Reason exists but no *minimal* one (e.g. `G F x` liveness effects: any cause can be shrunk forever) |
 | `UNSAT_NO_CAUSE` | π is a valid trace but no sufficient cause exists |
-| `INVALID_PI` | the given lasso is not a real system trace, or Φ does not hold on it |
+| `INVALID_PI` | the given lasso is not a real system trace, or Φ does not hold on it. The first is checked exactly, before any solver runs, and the result names the step where the lasso leaves the system |
 | `NON_DETERMINISTIC` | the system failed the input-determinism firewall |
 | `UNKNOWN_BOUNDED` | `--hyperQB` only: nothing was found within the bound `k`. **Not** a proof that no cause exists |
 
@@ -432,7 +432,15 @@ smaller cause is sufficient. AutoHyper resolves the *i*-th quantifier on the
 * **Real** (π₂, π₃): the HOA unrolled to an explicit transition system over
   all APs — the only place the effect is evaluated.
 
-The waterfall runs MSR → SR → PI_VAL: if no MSR exists it still reports a
+Before any query, `trace_check.py` decides exactly — plain Python, no
+solver — whether the lasso is a word of the system at all. It has to come
+first: the MSR/SR queries only see π's *inputs*, so on a lasso the system
+cannot produce, a cause may pin an input to a value no system trace takes there
+and be "sufficient" vacuously — an MSR would be reported for a trace that does
+not exist. When the lasso is a system trace, π agrees with itself on every pin,
+so sufficiency is never vacuous.
+
+The waterfall then runs MSR → SR → PI_VAL: if no MSR exists it still reports a
 sufficient reason when there is one, and otherwise distinguishes "valid trace,
 no cause" from "invalid trace".
 
@@ -460,13 +468,12 @@ docker run --rm -v "$PWD/out:/data" msr-finder \
 ```
 
 The working directory inside the image is `scripts/`, so the commands in this
-README work unchanged. Analyses 2–4 write next to the input file, so mount a
-directory (`-v`) when you want to keep what they produce — a rendered
-`<base>_mtsr.png`, say.
+README work unchanged. Analysis 4 writes its `<base>_mtsr.png` next to the
+input file, so mount a directory (`-v`) when you want to keep it.
 
 **The build is its own test.** It ends with `docker/smoke.sh`, which runs
 analysis 1, the MTSR and `--check` and compares the answers with the ones in
-this README (the 5-pin reason for `example_1`, the 4-state MTSR, `EQUIVALENT`).
+this README (the 5-pin reason for `example_1`, the 4-state MTSR, `MTSR`).
 An image that finished building is one whose solver, spot bindings and graphviz
 all work. You can re-run it at any time:
 
@@ -530,6 +537,7 @@ Without Docker. Runs on Linux / WSL. Requirements:
 scripts/
   tracemsr.py         the entry point (interactive checklist / --run)
   msr_analyzer.py     MSR → SR → PI_VAL waterfall, per-quantifier systems
+  trace_check.py      is the [lasso] a word of the [system]? (exact, run first)
   msr_systems.py      CliqueQ builder (π carrier)
   msr_formulas.py     the MSR / SR HyperLTL formulas
   system_builder.py   Real (unrolled HOA) + Clique (cause space) builders
@@ -557,9 +565,17 @@ Dockerfile.bench      + the baselines, for re-running the benchmark
 ```
 
 The only persistent artifact is the rendered `<base>_mtsr.png` (written next
-to the input file). Solver temporaries and the synthesized trace files of
-analyses 2/3 are deleted automatically when the run finishes (and are
-git-ignored as a safety net).
+to the input file). Solver temporaries — the generated systems and formulas,
+AutoHyper's `aut1.hoa`/`autRes.hoa`, HyperQB's `commands.txt`, and the
+synthesized trace files of analyses 2/3 — live in a private temporary
+directory per run, which is also the solver's working directory, and are
+deleted when the run finishes. So runs can be started side by side, from the
+same directory or on files in the same folder, without reading each other's
+files.
+
+Stopping a run cleans up after it however it is stopped: Ctrl-C, `kill`,
+`timeout`, or closing the terminal all shut down the solver in flight
+(AutoHyper, HyperQB, or the `autfilt` behind analysis 4) before the tool exits.
 
 ## Credits
 

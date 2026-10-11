@@ -36,6 +36,7 @@ is ignored.
 import argparse
 import os
 import re
+import shutil
 import sys
 import time
 import subprocess
@@ -51,7 +52,7 @@ import trace_analyzer       # noqa: E402  (parse_txt_effect, parse_system_string
 import cli_viewer           # noqa: E402  (print_cli_results)
 import system_builder       # noqa: E402  (build_real_system)
 import msr_analyzer         # noqa: E402  (the MSR pipeline)
-import proc_guard           # noqa: E402  (subprocess.run that kills the group)
+import proc_guard           # noqa: E402  (SIGTERM/SIGHUP -> clean unwind)
 
 
 # --------------------------------------------------------------------------- #
@@ -88,22 +89,18 @@ def find_trace(path, negate, timeout):
     effect = trace_analyzer.parse_txt_effect(path)
     hq = synthesis_formula(effect, negate)
 
-    work = os.path.dirname(os.path.abspath(path))
-    p_sys = os.path.join(work, "temp_find_real.txt")
-    p_hq = os.path.join(work, "temp_find.hq")
+    # Private directory, also AutoHyper's CWD: see msr_analyzer's docstring.
+    work = msr_analyzer.work_dir()
+    p_sys = os.path.join(work, "find_real.txt")
+    p_hq = os.path.join(work, "find.hq")
     try:
         with open(p_sys, "w") as f:
             f.write(real)
         with open(p_hq, "w") as f:
             f.write(hq)
         t0 = time.perf_counter()
-        # proc_guard.run, not subprocess.run: killing AutoHyper on timeout leaves
-        # its Spot children (autfilt/ltl2tgba) orphaned and still burning CPU.
-        res = proc_guard.run(
-            [msr_analyzer._exe(), "--explicit", p_sys, p_hq, "--witness"],
-            timeout=timeout)
+        out, err = msr_analyzer._run([p_sys], p_hq, timeout, cwd=work)
         secs = time.perf_counter() - t0
-        out, err = res.stdout, res.stderr
         if msr_analyzer._is_solver_error(out, err):
             raise RuntimeError(f"AutoHyper solver error:\n{(out or err)[:300]}")
         if "SAT" not in out:
@@ -115,13 +112,7 @@ def find_trace(path, negate, timeout):
                 "prefix_steps": prefix_steps, "loop_steps": loop_steps,
                 "pi_string": format_lasso(prefix_steps, loop_steps)}
     finally:
-        for tf in (p_sys, p_hq, os.path.join(work, "aut1.hoa"),
-                   os.path.join(work, "autRes.hoa"), "aut1.hoa", "autRes.hoa"):
-            if os.path.exists(tf):
-                try:
-                    os.remove(tf)
-                except OSError:
-                    pass
+        shutil.rmtree(work, ignore_errors=True)
 
 
 # --------------------------------------------------------------------------- #
@@ -193,15 +184,17 @@ def run_find(path, timeout, show_tau=False, pipeline=None):
         print("  There is nothing to explain: the effect never happens on this system.")
         print("  (Equivalently: the system MODELS !Phi — this is a model-checking result.)")
         return None
-    # A temporary .txt with the found PI as its [lasso]; removed after the run.
-    synth = synthesize_txt(path, base + "_found_pi.txt", found["aps"],
-                           found["prefix_steps"], found["loop_steps"])
+    # A temporary .txt with the found PI as its [lasso], in a private
+    # directory: written next to the input it overwrote, then deleted, any
+    # file of the user's that happened to have the same name.
+    tmp = msr_analyzer.work_dir()
+    synth = synthesize_txt(path, os.path.join(tmp, os.path.basename(base) + "_found_pi.txt"),
+                           found["aps"], found["prefix_steps"], found["loop_steps"])
     try:
         return _explain(synth, timeout, pi_override=found["pi_string"],
                         show_tau=show_tau, pipeline=pipeline)
     finally:
-        if os.path.exists(synth):
-            os.remove(synth)
+        shutil.rmtree(tmp, ignore_errors=True)
 
 
 def run_check(path, timeout, show_tau=False, pipeline=None):
@@ -217,18 +210,18 @@ def run_check(path, timeout, show_tau=False, pipeline=None):
     print(f"\n{_R}FAILED ({found['seconds']:.1f}s) — counterexample found "
           f"(looking for minimal sufficient reason):{_0}")
 
-    # A temporary .txt: the counterexample as [lasso], effect := !Phi; removed
-    # after the run.
+    # A temporary .txt: the counterexample as [lasso], effect := !Phi; in a
+    # private directory, removed after the run (see run_find).
     neg_effect = f"!({found['effect']})"
-    synth = synthesize_txt(path, base + "_counterexample.txt", found["aps"],
-                           found["prefix_steps"], found["loop_steps"],
+    tmp = msr_analyzer.work_dir()
+    synth = synthesize_txt(path, os.path.join(tmp, os.path.basename(base) + "_counterexample.txt"),
+                           found["aps"], found["prefix_steps"], found["loop_steps"],
                            effect_override=neg_effect)
     try:
         return _explain(synth, timeout, pi_override=found["pi_string"],
                         show_tau=show_tau, pipeline=pipeline)
     finally:
-        if os.path.exists(synth):
-            os.remove(synth)
+        shutil.rmtree(tmp, ignore_errors=True)
 
 
 def main():
@@ -263,4 +256,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    proc_guard.install_termination_handlers()
+    try:
+        main()
+    except KeyboardInterrupt:
+        raise SystemExit(130)

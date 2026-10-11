@@ -34,8 +34,7 @@ Two switches change what the analyses do:
   --check     turn analysis 4 (MTSR) from a synthesizer into a CHECKER, the way
               CATS is one: synthesize the MTSR as usual, then ask spot whether
               it accepts the same input sequences as the instance's [cause]
-              block.  Answers EQUIVALENT, or names which side is the bigger
-              language.
+              block.  Answers MTSR (it is the MTSR) or NOT_MTSR.
 
 """
 import argparse
@@ -148,10 +147,42 @@ def run_mtsr(path, timeout, opts):               # draws an automaton: no table
     if opts.check:
         cmd.append("--check")
     sys.stdout.flush()          # keep parent/child output ordered when piped
+    # Not subprocess.run(timeout=...): that SIGKILLs the child, and the child
+    # is a solver DRIVER -- its autfilt runs in a process group of its own, so
+    # nothing reaches it and `autfilt --sat-minimize` kept running, unbounded,
+    # after "TIMED OUT" was printed.  The child is stopped with SIGTERM, which
+    # it turns into a clean unwind that kills its autfilt first.
+    proc = subprocess.Popen(cmd, env=env)
     try:
-        subprocess.run(cmd, timeout=timeout, env=env, check=False)
+        proc.wait(timeout=timeout)
     except subprocess.TimeoutExpired:
+        _stop_driver(proc, already_signalled=False)
         print(f"{_R}[!] MTSR TIMED OUT (> {timeout}s).{_0}")
+    except KeyboardInterrupt:
+        # Ctrl-C / a closed terminal reach the child too (same process group)
+        # and it is already unwinding; a `kill` of this process alone does not.
+        _stop_driver(proc, already_signalled=True)
+        raise
+
+
+def _stop_driver(proc, already_signalled, grace=10):
+    """Stop a child that drives solvers, letting it clean up after itself.
+
+    If the child got the signal too, give it a moment to exit on its own first:
+    a second signal landing inside its cleanup could cut that cleanup short.
+    Otherwise SIGTERM it, and SIGKILL only if it ignores that."""
+    if already_signalled:
+        try:
+            proc.wait(timeout=3)
+            return
+        except subprocess.TimeoutExpired:
+            pass
+    proc.terminate()
+    try:
+        proc.wait(timeout=grace)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        proc.wait()
 
 
 # --------------------------------------------------------------------------- #
@@ -367,7 +398,10 @@ if __name__ == "__main__":
     # Ctrl-C unwinds through proc_guard's `finally`, so the solver for the
     # analysis in flight is already dead by the time we get here. This catches
     # the rest: anything that escaped into its own process group, and the case
-    # where the interrupt lands between two analyses.
+    # where the interrupt lands between two analyses. SIGTERM and SIGHUP
+    # (`timeout`, `kill`, a closed terminal) are routed down the same path;
+    # by default they ended the interpreter without unwinding at all.
+    proc_guard.install_termination_handlers()
     try:
         main()
     except KeyboardInterrupt:
