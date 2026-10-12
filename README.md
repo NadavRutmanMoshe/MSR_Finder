@@ -42,17 +42,14 @@ Select analyses for example_1.txt
    [ ] 3. Model checking of Phi (counterexample + why)
    [ ] 4. MTSR — Minimal Temporal Sufficient Reason
        ▶ Start
-     table  [t]: Pi only, positions pinned by R in green
-     solver [h]: AutoHyper — exact
-     mtsr   [c]: (no [cause] block in this file)
- ENTER/SPACE toggle · ↑/↓ move · a all · t/h/c switches · ENTER on Start runs · q quit
+ENTER/SPACE select · ↑/↓ move · a all · ENTER on Start runs · q quit
 ```
 
 ENTER (or SPACE) toggles the highlighted analysis; move down to **▶ Start**
-and press ENTER to run the selection in order. The three keys at the bottom
-switch how the run behaves — `t` the result table, `h` the solver
-(`--hyperQB`), `c` the MTSR mode (`--check`). For scripts / CI, skip the menu
-with `--run`:
+and press ENTER to run the selection in order. The menu only picks analyses;
+the extras are flags given on the command line: `--with-tau` (the result
+table), `--hyperQB` (the solver) and `--check` (the MTSR mode). For scripts /
+CI, skip the menu with `--run`:
 
 ```sh
 python3 tracemsr.py ../examples/example_1.txt --run all
@@ -92,7 +89,7 @@ second column of a *trace* invited reading a green `r1=T` under τ as "r1 is
 true here" even where π has `r1=F` at that pinned position. R itself is
 printed as an explicit set of pairs, which is the thing worth reading.
 
-Add `--with-tau` (or press `t` in the menu) to get the old two-column layout
+Add `--with-tau` to get the old two-column layout
 back — the `found reason representation Tau` block plus the τ column:
 
 ```sh

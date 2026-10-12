@@ -19,8 +19,8 @@ its wall-clock time.  `--run 1,3` (or `--run all`) skips the menu -- useful
 for scripting and non-TTY runs.
 
 Options 1-3 print the compact result table: one trace column (the actual trace
-Pi) with the positions pinned by the reason R in green.  `--with-tau`, or the
-`t` key in the menu, adds the Tau witness back (extra column + Tau block).
+Pi) with the positions pinned by the reason R in green.  `--with-tau` adds the
+Tau witness back (extra column + Tau block).
 
 Two switches change what the analyses do:
 
@@ -53,6 +53,7 @@ for p in (_HERE, _SCRIPTS):
 import cli_viewer           # noqa: E402
 import hyperqb_analyzer     # noqa: E402  (the same pipeline on HyperQB)
 import msr_analyzer         # noqa: E402  (the MSR pipeline)
+import msr_formulas         # noqa: E402  (the [lasso] parser, for the full PI)
 import pi_finder            # noqa: E402  (find / model-check flows)
 import proc_guard           # noqa: E402  (group kill + orphan reaper)
 
@@ -105,10 +106,24 @@ def _pipeline(opts):
     return p
 
 
+def _lasso_string(path):
+    """The user's [lasso] over ALL its APs, as  {a,b}{} ({c})^w.  The PI the MSR
+    pipeline reports back lives on the inputs-only system, so printing it would
+    drop the outputs; analyses 2 and 3 print the full trace, and so does 1."""
+    _, _, aps, prefix, loop = msr_formulas._parse_lasso_and_inputs(path)
+    names = lambda steps: [{aps[i] for i in s if i < len(aps)} for s in steps]
+    return pi_finder.format_lasso(names(prefix), names(loop))
+
+
 def run_msr_given_pi(path, timeout, opts):
     pipeline = _pipeline(opts)
     pipeline.TIMEOUT_SECONDS = timeout
-    cli_viewer.print_cli_results(pipeline.analyze_trace(path),
+    result = pipeline.analyze_trace(path)
+    try:
+        full_pi = _lasso_string(path)
+    except Exception:
+        full_pi = None                      # fall back to the pipeline's own PI
+    cli_viewer.print_cli_results(result, pi_override=full_pi, pi_label="PI",
                                  show_tau=opts.show_tau)
 
 
@@ -201,20 +216,18 @@ def _menu_options(path):
 
 def checklist(path, options, opts):
     """Arrow-key multi-select. ENTER (or SPACE) toggles the highlighted option;
-    a Start row at the bottom launches the run. Three switches ride along:
-    `t` (result table: Pi only vs Tau next to Pi), `h` (solver: AutoHyper or
-    HyperQB) and `c` (MTSR: synthesize, or also check the [cause] block).
-    Returns the selected indices; `opts` is mutated in place."""
+    a Start row at the bottom launches the run. The menu only picks analyses:
+    the extras (--with-tau, --hyperQB, --check) are chosen up front with flags,
+    so nothing on screen needs explaining. Returns the selected indices."""
     import termios
     import tty
 
-    cause_ok = has_cause(path)
     enabled = [i for i, (_l, ok, _f) in enumerate(options) if ok]
     START = len(options)                    # index of the Start row
     rows = enabled + [START]                # navigable rows
     cur = enabled[0]
     sel = {enabled[0]}                      # preselect the recommended first choice
-    n_lines = len(options) + 6
+    n_lines = len(options) + 3              # title, options, Start, help
 
     def draw(first=False):
         out = [] if first else [f"\x1b[{n_lines}A"]
@@ -229,24 +242,10 @@ def checklist(path, options, opts):
         cursor = f"{_C}>{_0}" if cur == START else " "
         start = f"{_G}{_B}▶ Start{_0}" if sel else f"{_D}▶ Start (select at least one){_0}"
         out.append(f" {cursor}     {start}\x1b[K\r\n")
-        mode = ("Pi + Tau (the witness R was read off)" if opts.show_tau
-                else "Pi only, positions pinned by R in green")
-        out.append(f"{_D}     table  [t]: {_0}{_C}{mode}{_0}\x1b[K\r\n")
-        solver = ("HyperQB — bounded, fast; 'not found' means only "
-                  "'not within k'" if opts.hyperqb
-                  else "AutoHyper — exact")
-        out.append(f"{_D}     solver [h]: {_0}{_C}{solver}{_0}\x1b[K\r\n")
-        if not cause_ok:
-            chk = f"{_D}(no [cause] block in this file){_0}"
-        elif opts.check:
-            chk = f"{_C}verify [cause] against the MTSR{_0}"
-        else:
-            chk = f"{_C}synthesize the MTSR only{_0}"
-        out.append(f"{_D}     mtsr   [c]: {_0}{chk}\x1b[K\r\n")
         # Kept under ~80 columns on purpose: the menu redraws in place with a
         # fixed cursor-up count, and a line that wraps desynchronises it.
-        out.append(f"{_D}ENTER/SPACE toggle · ↑/↓ move · a all · t/h/c switches"
-                   f" · ENTER on Start runs · q quit{_0}\x1b[K\r\n")
+        out.append(f"{_D}ENTER/SPACE select · ↑/↓ move · a all · ENTER on Start"
+                   f" runs · q quit{_0}\x1b[K\r\n")
         sys.stdout.write("".join(out))
         sys.stdout.flush()
 
@@ -278,13 +277,6 @@ def checklist(path, options, opts):
                     sel.symmetric_difference_update({cur})
             elif ch in (b"a", b"A"):
                 sel = set() if sel == set(enabled) else set(enabled)
-            elif ch in (b"t", b"T"):
-                opts.show_tau = not opts.show_tau
-            elif ch in (b"h", b"H"):
-                opts.hyperqb = not opts.hyperqb
-            elif ch in (b"c", b"C"):
-                if cause_ok:
-                    opts.check = not opts.check
             elif ch in (b"1", b"2", b"3", b"4"):
                 i = int(ch) - 1
                 if i in enabled:

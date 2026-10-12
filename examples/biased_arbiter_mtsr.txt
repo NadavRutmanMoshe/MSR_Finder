@@ -1,0 +1,28 @@
+[info]
+Biased arbiter of ATVA'26 (Fig. 1). Effect: user1 is granted infinitely often (Example 4: the MTSR is GF r1).
+
+[inputs]
+"r1" "r2"
+
+[effect]
+G F "g1"
+
+[lasso]
+AP: "r1" "r2" "g1" "g2"
+Prefix:
+Loop: {0 2}
+
+[system]
+HOA: v1
+Start: 0
+AP: 4 "r1" "r2" "g1" "g2"
+Acceptance: 0 t
+--BODY--
+State: 0
+[(!0&!1&!2&!3)] 0
+[(!0&1&!2&3)] 0
+[(0&2&!3)] 1
+State: 1
+[(!0&!2&!3)] 1
+[(0&2&!3)] 1
+--END--
