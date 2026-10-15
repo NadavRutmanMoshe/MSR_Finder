@@ -280,6 +280,10 @@ def synthesize(content, timings=None):
     # timeout still pays 120s and 6 GB to learn what the state count
     # already told us.
     n_states = spot.automaton(projected).num_states()
+    # size before minimization, for a caller that wants to report it when the
+    # minimization below fails (benchmark: the 6 GB cap on CORP's Full 4)
+    timings["premin_states"] = n_states
+    timings["premin_acceptance"] = spot.automaton(projected).acc().name()
     if n_states > SAT_MINIMIZE_MAX_STATES:
         raise RuntimeError(
             f"{n_states} states exceeds SAT_MINIMIZE_MAX_STATES "

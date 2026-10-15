@@ -231,7 +231,7 @@ def checklist(path, options, opts):
 
     def draw(first=False):
         out = [] if first else [f"\x1b[{n_lines}A"]
-        out.append(f"\r{_B}Select analyses for {os.path.basename(path)}{_0}\x1b[K\r\n")
+        out.append(f"\r{_B}Select operations for {os.path.basename(path)}{_0}\x1b[K\r\n")
         for i, (label, ok, _f) in enumerate(options):
             cursor = f"{_C}>{_0}" if i == cur else " "
             if not ok:
@@ -309,7 +309,7 @@ def parse_run_arg(run_arg, options):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="TraceMSR — select which analyses to run.")
+    ap = argparse.ArgumentParser(description="TraceMSR — select which operations to run.")
     ap.add_argument("file", help="input .txt")
     ap.add_argument("--timeout", type=int, default=600, help="seconds per solver call")
     ap.add_argument("--run", help="skip the menu: comma-separated option numbers, or 'all'")
@@ -317,7 +317,7 @@ def main():
                     help="show the Tau witness too (extra table column + Tau "
                          "block); default is the compact Pi-only table")
     ap.add_argument("--hyperQB", dest="hyperqb", action="store_true",
-                    help="solve analysis 1 with HyperQB 2.0 (bounded) instead "
+                    help="solve the MSR of operations 1-3 with HyperQB 2.0 (bounded) instead "
                          "of AutoHyper (exact). A reason it finds is a proof; "
                          "finding none only means 'none within the bound'.")
     ap.add_argument("--k", type=int, default=None,
@@ -328,7 +328,7 @@ def main():
                     help="--hyperQB bounded semantics (default pes: a sat is "
                          "sound)")
     ap.add_argument("--check", action="store_true",
-                    help="analysis 4 verifies the instance's [cause] block "
+                    help="operation 4 verifies the instance's [cause] block "
                          "against the synthesized MTSR (language equivalence) "
                          "instead of only synthesizing it")
     args = ap.parse_args()

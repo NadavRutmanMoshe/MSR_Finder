@@ -36,7 +36,7 @@ docker run --rm -it msr-finder
 This opens an interactive checklist:
 
 ```
-Select analyses for example_1.txt
+Select operations for example_1.txt
  > [x] 1. MSR with the given PI
    [ ] 2. MSR for Phi — find a PI automatically
    [ ] 3. Model checking of Phi (counterexample + why)

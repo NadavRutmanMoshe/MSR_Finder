@@ -85,6 +85,17 @@ def parse_instance(path):
     return inputs, m_eff.group(1).strip(), m_hoa.group(1)
 
 
+def _premin(tm):
+    """Intermediate result (Hadar, 2026-10-14): the size of the deterministic
+    automaton the tool hands to the SAT minimization. main() prints it to
+    stderr, and it is appended to the error when the minimization fails, so a
+    table can still report the size before minimization."""
+    if "premin_states" not in tm:
+        return ""
+    return (f" ({tm['premin_states']} states before minimization, "
+            f"acceptance {tm['premin_acceptance']})")
+
+
 def run(path, cause=None, report_dba=False):
     """The tool's MTSR for one instance, plus the tool's check of `cause`.
 
@@ -92,10 +103,11 @@ def run(path, cause=None, report_dba=False):
     autfilt timeout, the 6 GB cap), as the drivers expect."""
     with open(path, 'r', errors='replace') as f:
         content = f.read()
+    tm = {}
     try:
-        res = TOOL.synthesize(content)
+        res = TOOL.synthesize(content, tm)
     except subprocess.TimeoutExpired:
-        raise RuntimeError(f"autfilt timed out after {SAT_TIMEOUT}s")
+        raise RuntimeError(f"autfilt timed out after {SAT_TIMEOUT}s{_premin(tm)}")
     except subprocess.CalledProcessError as e:
         stderr = (e.stderr or "").strip()
         # picosat, the SAT backend autfilt uses, reports the RLIMIT_AS hit as
@@ -103,13 +115,17 @@ def run(path, cause=None, report_dba=False):
         if ("bad_alloc" in stderr or "Cannot allocate memory" in stderr
                 or "out of memory" in stderr):
             raise RuntimeError(f"autfilt --sat-minimize exhausted its "
-                               f"{SAT_MEM // 1024**3} GB address-space cap")
-        raise RuntimeError(stderr[:200])
+                               f"{SAT_MEM // 1024**3} GB address-space cap"
+                               f"{_premin(tm)}")
+        raise RuntimeError(stderr[:200] + _premin(tm))
+    except RuntimeError as e:          # the tool's own state-count guard
+        raise RuntimeError(str(e) + _premin(tm))
     if not res["language_preserved"]:
         raise RuntimeError("minimized witness is NOT language-equivalent")
 
     witness = spot.automaton(res["final_hoa"])
     out = {
+        'premin_states': tm.get("premin_states"),
         'effect': res["effect"],
         'product_states': res["product_states"],
         'projected_deterministic': res["projected_deterministic"],
@@ -153,6 +169,8 @@ def main():
     args = ap.parse_args()
 
     res = run(args.instance, args.cause, args.report_dba)
+    print(f"[mtsr] before minimization: {res['premin_states']} states",
+          file=sys.stderr)
     if args.save_hoa:
         with open(args.save_hoa, 'w') as f:
             f.write(res['hoa'])
