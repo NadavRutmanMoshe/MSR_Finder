@@ -364,9 +364,9 @@ def self_test(corpus, timeout, workdir, src):
 def main():
     ap = argparse.ArgumentParser(
         description="Re-check the recorded MSR answers. Never timed as tool work.")
-    ap.add_argument("--csv", default=os.path.join(RESULTS, "MSR",
+    ap.add_argument("--csv", default=os.path.join(RESULTS, "ip3", "MSR",
                                                   "msr_hyperqb.csv"))
-    ap.add_argument("--out", default=os.path.join(RESULTS, "MSR",
+    ap.add_argument("--out", default=os.path.join(os.path.dirname(RESULTS), "rerun",
                                                   "verify_hyperqb.csv"))
     ap.add_argument("--corpus", default=SYNTCOMP)
     ap.add_argument("--timeout", type=int, default=180)

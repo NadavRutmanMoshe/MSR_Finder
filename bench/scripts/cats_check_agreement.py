@@ -34,7 +34,7 @@ FIELDS = ["instance", "cats_status", "cats_s", "mtsr_s", "is_mtsr", "agree",
 
 
 def main():
-    d = os.path.join(RESULTS, "MTSR_CATS_check")
+    d = os.path.join(RESULTS, "ip3", "MTSR_CATS_check")
     mt = {r["instance"]: r for r in
           csv.DictReader(open(os.path.join(d, "mtsr.csv"), newline=""))}
     rows = [r for r in csv.DictReader(open(os.path.join(d, "cats_check.csv"),

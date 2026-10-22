@@ -22,3 +22,11 @@ autRes.hoa
 *_found_pi.txt
 *_counterexample.txt
 final_result.png
+
+# made by install.sh on the host; the image makes its own
+.env
+.build
+env.sh
+install.log
+bench/rerun
+bench/paper/out

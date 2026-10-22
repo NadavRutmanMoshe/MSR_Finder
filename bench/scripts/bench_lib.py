@@ -53,7 +53,12 @@ import proc_guard  # noqa: E402  (group kill + orphan reaper)
 BENCH = os.path.abspath(os.path.join(_HERE, ".."))
 TOOLS = os.path.join(BENCH, "tools")
 RESULTS = os.path.join(BENCH, "results")
-SYNTCOMP = os.path.join(BENCH, "SYNTCOMP")
+#: The paper's corpora: CATS's systems with CATS's effects, gated. Every driver
+#: defaults to the |IP| <= 3 one (the name SYNTCOMP is historical: the systems
+#: are CATS's SYNTCOMP strategies); scripts/rerun.py runs both.
+CORPUS_IP3 = os.path.join(BENCH, "CATS_RL_ip3")
+CORPUS_IP4 = os.path.join(BENCH, "CATS_RL_ip4")
+SYNTCOMP = CORPUS_IP3
 NEXTS = os.path.join(BENCH, "nexts")
 
 #: Interpreters. Each tool has its own environment and they are not

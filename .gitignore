@@ -22,3 +22,9 @@ external_tools/HyperQB/
 # re-runs and regenerated tables (bench/scripts/rerun.py, bench/paper/make_tables.py)
 bench/rerun/
 bench/paper/out/
+
+# made by install.sh
+.env/
+.build/
+env.sh
+install.log
