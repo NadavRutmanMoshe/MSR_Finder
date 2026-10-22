@@ -1,0 +1,39 @@
+[info]
+CATS SYNTCOMP: Shades2Min_63831f8c (spec=./sc-1/Shades2Min_63831f8c.json, states=2, inputs=3, aps=5) effect #3 source=randltl
+
+[inputs]
+"p0p0bright0outside29brightness" "p0b0room29screen29lowered" "p0b0room29shades29closed"
+
+[effect]
+(! (((! "u0room29shades29ctrl0room29shades29ctrl") U (X (! ("u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b" & "u0room29shades29ctrl0room29shades29ctrl")))) -> (G ("u0room29shades29ctrl0room29shades29ctrl" -> (! (true U "u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"))))))
+
+[lasso]
+AP: "u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b" "u0room29shades29ctrl0room29shades29ctrl" "p0b0room29screen29lowered" "p0p0bright0outside29brightness" "p0b0room29shades29closed"
+Prefix: {1 3 4}
+Loop: {0 2 3} {0 3 4}
+
+[system]
+HOA: v1
+Start: 0
+AP: 5 "u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b" "u0room29shades29ctrl0room29shades29ctrl" "p0b0room29screen29lowered" "p0p0bright0outside29brightness" "p0b0room29shades29closed"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&1&!2&!3&!4] 1
+[!0&1&!2&!3&4] 1
+[!0&1&2&!3&!4] 1
+[!0&1&2&!3&4] 1
+[!0&1&!2&3&!4] 1
+[!0&1&!2&3&4] 1
+[0&!1&2&3&!4] 1
+[!0&1&2&3&4] 1
+State: 1
+[0&!1&!2&!3&!4] 1
+[0&!1&!2&!3&4] 1
+[0&!1&2&!3&!4] 1
+[0&!1&2&!3&4] 1
+[0&!1&!2&3&!4] 1
+[0&!1&!2&3&4] 1
+[0&!1&2&3&!4] 1
+[0&!1&2&3&4] 1
+--END--

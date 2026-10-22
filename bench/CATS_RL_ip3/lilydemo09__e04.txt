@@ -1,0 +1,30 @@
+[info]
+CATS SYNTCOMP: lilydemo09 (spec=./sc-1/lilydemo09.json, states=3, inputs=1, aps=2) effect #4 source=randltl
+
+[inputs]
+"req"
+
+[effect]
+((((X ((G (X "grant")) -> (X false))) W false) -> (X false)) U (G "grant"))
+
+[lasso]
+AP: "grant" "req"
+Prefix: {1}
+Loop: {0 1} {0 1}
+
+[system]
+HOA: v1
+Start: 0
+AP: 2 "grant" "req"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1] 1
+[!0&1] 2
+State: 1
+[!0&!1] 1
+[0&1] 2
+State: 2
+[0&!1] 2
+[0&1] 2
+--END--

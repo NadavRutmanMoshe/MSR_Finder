@@ -1,0 +1,20 @@
+\begin{table}[!t]
+\centering
+\begin{tabular}{@{}r@{\hspace{10pt}}r@{\hspace{14pt}}r@{\hspace{8pt}}r@{\hspace{8pt}}r@{\hspace{14pt}}r@{\hspace{8pt}}r@{}}
+\toprule
+& & \multicolumn{3}{c}{solved} & \multicolumn{2}{c}{avg.\ $t$ (s), solved by both} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-7}
+$|\ip|$ & instances & \textsc{AutoHyper} & \textsc{HyperQB} & both & \textsc{AutoHyper} & \textsc{HyperQB} \\
+\midrule
+1 & 176 & 171 & 117 & 116 & 1.64 & 0.49 \\
+2 & 348 & 280 & 160 & 154 & 4.39 & 7.86 \\
+3 & 299 & 209 & 80 & 78 & 10.69 & 23.43 \\
+4$^{*}$ & 164 & 43 & 24 & 19 & 106.37 & 75.37 \\
+\midrule
+all$^{*}$ & 987 & 703 & 381 & 367 & 10.14 & 12.34 \\
+\bottomrule
+\end{tabular}
+\vspace{6pt}
+\caption{Computing $\MSR$s with \textsc{AutoHyper} vs. \textsc{HyperQB} over the instances of \Cref{tab:main}: number of instances that each model checker solves, and average running time on the instances that both solve. $^{*}$For $|\ip| = 4$, timeout is 300\,s, and 120\,s otherwise).}\vspace{-5mm}
+\label{tab:msr-backends}
+\end{table}

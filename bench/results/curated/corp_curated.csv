@@ -1,0 +1,16 @@
+instance,family,n,sys_states,inputs,effect,effect_tex,corp_status,corp_states,corp_det,corp_s,mtsr_status,mtsr_states,mtsr_det,mtsr_s,mtsr_ltl,mtsr_ltl_tex,mtsr_premin,mtsr_err,equiv,msr_status,msr_size,msr_s,msr_ltl,corp_phi_c,phi_c_equiv
+spurious_1,Spurious,1,1,1,"F ""g0""",$\LTLeventually g_0$,OK,1,True,0.138,OK,1,1,0.281,1,$\mathit{true}$,2,,=,,,,,true,1
+spurious_2,Spurious,2,2,2,"F ""g0""",$\LTLeventually g_0$,OK,1,True,0.154,OK,1,1,0.313,1,$\mathit{true}$,3,,=,,,,,true,1
+spurious_3,Spurious,3,3,3,"F ""g0""",$\LTLeventually g_0$,OK,1,True,0.114,OK,1,1,0.305,1,$\mathit{true}$,4,,=,,,,,true,1
+spurious_4,Spurious,4,4,4,"F ""g0""",$\LTLeventually g_0$,OK,1,True,0.13,OK,1,1,0.296,1,$\mathit{true}$,5,,=,,,,,true,1
+unfair_2,Unfair,2,2,2,"G !""g0""",$\LTLglobally \neg g_0$,OK,1,True,0.138,OK,2,1,0.327,(!r_0 & !r_m) W G r_m,$(\neg r_0 \wedge \neg r_m) \LTLw \LTLglobally r_m$,2,,$\subsetneq$,,,,,G r_m,0
+unfair_3,Unfair,3,4,3,"G !""g0""",$\LTLglobally \neg g_0$,OK,1,True,0.128,OK,1,1,0.28,G r_m,$\LTLglobally r_m$,3,,=,,,,,G r_m,1
+unfair_4,Unfair,4,6,4,"G !""g0""",$\LTLglobally \neg g_0$,OK,1,True,0.121,OK,1,1,0.275,G r_m,$\LTLglobally r_m$,3,,=,,,,,G r_m,1
+full_1_F,Full,1,1,1,"F ""g0""",$\LTLeventually g_0$,OK,2,True,0.136,OK,2,1,0.297,F r_0,$\LTLeventually r_0$,2,,=,,,,,F r_0,1
+full_1_GF,Full,1,1,1,"G F ""g0""",$\LTLglobally\LTLeventually g_0$,OK,2,True,0.123,OK,2,1,0.337,G F r_0,$\LTLglobally\LTLeventually r_0$,1,,=,,,,,G F r_0,1
+full_2_F,Full,2,4,2,"F ""g0""",$\LTLeventually g_0$,OK,2,True,0.131,OK,2,1,0.303,F r_0,$\LTLeventually r_0$,5,,=,,,,,F r_0,1
+full_2_GF,Full,2,4,2,"G F ""g0""",$\LTLglobally\LTLeventually g_0$,OK,4,True,0.141,OK,2,1,0.289,G F r_0,$\LTLglobally\LTLeventually r_0$,4,,=,,,,,G F r_0,1
+full_3_F,Full,3,11,3,"F ""g0""",$\LTLeventually g_0$,OK,2,True,0.114,OK,2,1,0.286,F r_0,$\LTLeventually r_0$,22,,=,,,,,F r_0,1
+full_3_GF,Full,3,11,3,"G F ""g0""",$\LTLglobally\LTLeventually g_0$,OK,24,True,0.156,OK,2,1,0.567,G F r_0,$\LTLglobally\LTLeventually r_0$,11,,=,,,,,G F r_0,1
+full_4_F,Full,4,46,4,"F ""g0""",$\LTLeventually g_0$,OK,2,True,0.147,OK,2,1,0.297,F r_0,$\LTLeventually r_0$,84,,=,,,,,F r_0,1
+full_4_GF,Full,4,46,4,"G F ""g0""",$\LTLglobally\LTLeventually g_0$,OK,284,True,11.02,ERROR,,,68.498,,--,46,"RuntimeError: autfilt --sat-minimize exhausted its 6 GB address-space cap (46 states before minimization, acceptance Büchi)",,,,,,,

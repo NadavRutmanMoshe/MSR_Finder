@@ -55,7 +55,6 @@ import csv
 import glob
 import json
 import os
-import hashlib
 import random
 import re
 import subprocess
@@ -89,7 +88,7 @@ import cats_util  # noqa: E402
 
 SPOT_PY = os.environ.get("SPOT_ENV_PY",
     os.path.expanduser("~/micromamba/envs/spot/bin/python3"))
-RANDLTL = os.path.expanduser("~/micromamba/envs/spot/bin/randltl")
+RANDLTL = os.path.join(os.path.dirname(SPOT_PY), "randltl")
 MTSR_MIN = os.path.join(_HERE, "mtsr_min.py")
 
 FIELDS = [
@@ -103,17 +102,6 @@ FIELDS = [
 
 
 # --------------------------------------------------------------------------- #
-def stable_hash(name):
-    """A per-instance seed offset that survives a new process.
-
-    `hash(str)` is salted by PYTHONHASHSEED, so it returns a different value in
-    every interpreter -- which meant the candidate cause drawn for an instance
-    changed on every run, and the recorded row could not be reproduced. The
-    rows in results/ were measured before this was noticed; re-running now
-    draws the same candidate every time, but not the one they got."""
-    return int(hashlib.sha1(name.encode()).hexdigest()[:4], 16)
-
-
 def random_cause(inputs, seed):
     """CATS's own cause generator, same flags (PrepareSyntcompInstance.fs).
 
@@ -199,9 +187,11 @@ def survivors():
     return out
 
 
-def run_mtsr(path, timeout):
+def run_mtsr(path, timeout, cause):
+    """The tool's MTSR and the tool's check of CATS's candidate (is it THE
+    MTSR?), in one process, so `mtsr_s` is what the user of --check waits."""
     p, dt, killed = _sub_graceful([SPOT_PY, MTSR_MIN, os.path.abspath(path),
-                                   "--json"], timeout)
+                                   "--json", "--cause", cause], timeout)
     if killed:
         return {"mtsr_status": "TIMEOUT", "mtsr_s": round(dt, 3)}
     if p is None or p.returncode != 0:
@@ -217,6 +207,7 @@ def run_mtsr(path, timeout):
     return {"mtsr_status": "OK", "mtsr_states": r.get("states"),
             "mtsr_aps": r.get("aps"), "mtsr_det": r.get("deterministic"),
             "mtsr_dba_exists": r.get("dba_exists"), "mtsr_mode": r.get("mode"),
+            "mtsr_verdict": r.get("cause_verdict", ""),
             "mtsr_s": round(dt, 3)}
 
 
@@ -236,13 +227,25 @@ def collect(paths):
 
 MTSR_FIELDS = ["instance", "inputs", "aps", "sys_states", "effect",
                "mtsr_status", "mtsr_states", "mtsr_aps", "mtsr_det",
-               "mtsr_dba_exists", "mtsr_mode", "mtsr_s", "mtsr_err"]
+               "mtsr_dba_exists", "mtsr_mode", "mtsr_verdict", "mtsr_s",
+               "mtsr_err"]
 CATS_FIELDS = ["instance", "inputs", "aps", "sys_states", "effect",
                "cats_cause", "cats_status", "cats_failed", "cats_stages",
                "cats_s"]
 
 
+def _pin_hash_seed():
+    """The recorded candidates were drawn with `hash(name)` under
+    PYTHONHASHSEED=0 (run_interleaved.sh set it). `hash(str)` is salted per
+    process otherwise, so re-exec with the same seed: a re-run then draws
+    exactly the candidate each recorded row used (`cats_cause`)."""
+    if os.environ.get("PYTHONHASHSEED") != "0":
+        os.environ["PYTHONHASHSEED"] = "0"
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+
+
 def main():
+    _pin_hash_seed()
     ap = argparse.ArgumentParser(
         description="MTSR synthesis vs CATS cause CHECKING, on SYNTCOMP. "
                     "Writes two CSVs.")
@@ -255,7 +258,16 @@ def main():
     ap.add_argument('--workdir', default=None,
                     help="keep the exact files handed to CATS here")
     ap.add_argument('--no-gate', action='store_true')
+    ap.add_argument('--candidates', metavar='CSV',
+                    help="take each instance's candidate from the cats_cause "
+                         "column of an earlier cats_check.csv instead of "
+                         "drawing it (the draw itself is reproducible too: "
+                         "see _pin_hash_seed)")
     args = ap.parse_args()
+    given = {}
+    if args.candidates:
+        with open(args.candidates, newline="") as f:
+            given = {r["instance"]: r["cats_cause"] for r in csv.DictReader(f)}
     BL.install_sigint()
 
     files = sorted(collect(args.paths))
@@ -292,7 +304,7 @@ def main():
         # CATS on a random candidate cause -- their own Figure-2 protocol, with
         # their generator's flags (see random_cause). CATS is a CHECKER: it is
         # handed a candidate, it does not search for one.
-        cause = random_cause(ins, args.seed + stable_hash(name))
+        cause = given.get(name) or random_cause(ins, args.seed + (hash(name) & 0xffff))
         f_cats = os.path.join(workdir, name[:-4] + "__cats.txt")
         cats_util.write_instance(f_cats, name, ins, cause,
                                  data['effect'], data['lasso'], data['system'])
@@ -301,13 +313,13 @@ def main():
                     "cats_failed": r.get("failed", ""),
                     "cats_stages": r.get("stages", ""),
                     "cats_s": r["wall_s"]})
-        row.update(run_mtsr(path, args.timeout))
+        row.update(run_mtsr(path, args.timeout, cause))
         rows.write(row)
         BL.progress(i, len(todo), name,
                     f"cats={row['cats_status']:<9}{row['cats_s']:>7}s "
                     f"(failed {row['cats_failed'] or '-'}) | "
                     f"mtsr={row['mtsr_status']:<8}{row.get('mtsr_states')}st "
-                    f"{row.get('mtsr_s')}s")
+                    f"{row.get('mtsr_verdict', '')} {row.get('mtsr_s')}s")
         BL.tick()
     rows.close()
     left = survivors()

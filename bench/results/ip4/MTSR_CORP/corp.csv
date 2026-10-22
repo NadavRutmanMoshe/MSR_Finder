@@ -1,0 +1,165 @@
+instance,inputs,aps,sys_states,effect,corp_status,corp_states,corp_edges,corp_det,corp_s,corp_err,equiv,equiv_note
+Door_2d1010f8__e00.txt,4,7,9,"((G (""u02door29door0f1d2door29lock1b"" U (! ""u02door29door0f1d2door29unlock1b""))) U ((X ((X ""u02door29door02door29door"") R ""u02door29door0f1d2door29lock1b"")) W (X (F (X ((G ""u02door29door0f1d2door29unlock1b"") -> ""u02door29door0f1d2door29lock1b""))))))",OK,25,85,True,0.1,,no,CORP_SUBSET_OF_MTSR
+Door_2d1010f8__e01.txt,4,7,9,"(G ((false R ""u02door29door0f1d2door29unlock1b"") <-> ((""u02door29door02door29door"" & (X ""u02door29door02door29door"") & (! (X ""u02door29door0f1d2door29unlock1b""))) R (F ""u02door29door02door29door""))))",OK,229,1416,True,0.185,,,
+Door_2d1010f8__e04.txt,4,7,9,"((! (""u02door29door0f1d2door29unlock1b"" W (X ((G ""u02door29door0f1d2door29unlock1b"") R (X (true U (F ""u02door29door02door29door""))))))) <-> (""u02door29door0f1d2door29lock1b"" W ""u02door29door02door29door""))",OK,1,1,True,2.223,,no,CORP_SUBSET_OF_MTSR
+Door_2d1010f8__e08.txt,4,7,9,"(F ((X ""u02door29door0f1d2door29lock1b"") <-> ((""u02door29door02door29door"" R ""u02door29door0f1d2door29unlock1b"") U ((! (((""u02door29door0f1d2door29unlock1b"" & (X ""u02door29door02door29door"")) U ""u02door29door0f1d2door29unlock1b"") R (X ""u02door29door02door29door""))) W ""u02door29door0f1d2door29unlock1b""))))",OK,22,78,True,0.113,,no,CORP_SUBSET_OF_MTSR
+Door_2d1010f8__e09.txt,4,7,9,"(! (""u02door29door0f1d2door29lock1b"" & (X ((F (""u02door29door02door29door"" R ""u02door29door0f1d2door29unlock1b"")) W false))))",OK,23,139,True,0.105,,,
+EscalatorSmart__e02.txt,4,7,7,"(! (F (X (""u0steps0f1dmove2up1b"" & ((G ""u0steps0f1dmove2down1b"") U ""u0steps0f1dmove2up1b"")))))",OK,7,14,True,0.134,,no,CORP_SUBSET_OF_MTSR
+EscalatorSmart__e05.txt,4,7,7,"(((F ""u0steps0f1dmove2up1b"") <-> ((X (! ""u0steps0steps"")) W ""u0steps0f1dmove2down1b"")) U (F (""u0steps0f1dmove2down1b"" | (! ((! ""u0steps0steps"") U ""u0steps0f1dmove2up1b"")))))",OK,7,10,True,0.1,,no,CORP_SUBSET_OF_MTSR
+EscalatorSmart__e07.txt,4,7,7,"(! (G ((! (X (X (! (X false))))) <-> (F (X ((! ""u0steps0f1dmove2up1b"") W (G ""u0steps0steps"")))))))",OK,12,43,False,0.097,,no,CORP_SUBSET_OF_MTSR
+EscalatorSmart__e08.txt,4,7,7,"((false R (F ""u0steps0f1dmove2down1b"")) W false)",OK,1,1,True,0.117,,no,CORP_SUBSET_OF_MTSR
+EscalatorSmart__e09.txt,4,7,7,"(X (! (true U ""u0steps0f1dmove2up1b"")))",OK,1,1,True,0.094,,no,CORP_SUBSET_OF_MTSR
+Gamemodule__e02.txt,4,8,1,"(! ((X ""u0outpoint0radarboardpoint"") | ((G ""u0outpoint0scoreboardpoint"") -> (""u0outpoint0radarboardpoint"" W false))))",OK,1,1,True,0.11,,no,CORP_SUBSET_OF_MTSR
+Gamemodule__e04.txt,4,8,1,"((X ""u0outpoint0cockpitboardpoint"") R (! (F ((X ""u0outpoint0cockpitboardpoint"") & (""u0outpoint0outpoint"" U (""u0outpoint0cockpitboardpoint"" -> ""u0outpoint0radarboardpoint""))))))",OK,3,3,True,0.11,,no,CORP_SUBSET_OF_MTSR
+Gamemodule__e06.txt,4,8,1,"((X (! (""u0outpoint0outpoint"" R (! (X (""u0outpoint0radarboardpoint"" W ""u0outpoint0cockpitboardpoint"")))))) U (""u0outpoint0radarboardpoint"" U ""u0outpoint0scoreboardpoint""))",OK,4,6,True,0.116,,no,CORP_SUBSET_OF_MTSR
+Gamemodule__e07.txt,4,8,1,"(! ((! ""u0outpoint0radarboardpoint"") & (""u0outpoint0radarboardpoint"" W (! ""u0outpoint0scoreboardpoint""))))",OK,2,2,True,0.115,,no,CORP_SUBSET_OF_MTSR
+Gamemodule__e08.txt,4,8,1,"(F ((F (! (""u0outpoint0outpoint"" R (""u0outpoint0outpoint"" U (F ""u0outpoint0cockpitboardpoint""))))) -> (""u0outpoint0cockpitboardpoint"" W ((G ""u0outpoint0cockpitboardpoint"") W (F ""u0outpoint0scoreboardpoint"")))))",OK,7,17,True,0.122,,no,CORP_SUBSET_OF_MTSR
+Heating_974f4a68__e01.txt,4,7,12,"(((G ""u02heating29ctrl02heating29ctrl"") W (X (""u02heating29ctrl0f1d2heating29turn2on1b"" & (""u02heating29ctrl02heating29ctrl"" <-> (F ""u02heating29ctrl02heating29ctrl""))))) & (F ""u02heating29ctrl0f1d2heating29turn2on1b""))",OK,3,3,True,0.126,,no,CORP_SUBSET_OF_MTSR
+Heating_974f4a68__e02.txt,4,7,12,"(((G (X (X ""u02heating29ctrl0f1d2heating29turn2on1b""))) <-> ((! ""u02heating29ctrl0f1d2heating29turn2off1b"") -> (X ""u02heating29ctrl02heating29ctrl""))) | (""u02heating29ctrl0f1d2heating29turn2on1b"" <-> (F ""u02heating29ctrl0f1d2heating29turn2off1b"")))",OK,6,13,True,0.111,,no,CORP_SUBSET_OF_MTSR
+Heating_974f4a68__e03.txt,4,7,12,"(G (F (X ((""u02heating29ctrl0f1d2heating29turn2off1b"" U (F (! (G ""u02heating29ctrl02heating29ctrl"")))) U ((G ""u02heating29ctrl0f1d2heating29turn2off1b"") <-> (X ((F ""u02heating29ctrl0f1d2heating29turn2off1b"") R (X false))))))))",OK,92,423,True,0.145,,,
+Heating_974f4a68__e06.txt,4,7,12,"((! (G ""u02heating29ctrl0f1d2heating29turn2on1b"")) | (G (X ((X ""u02heating29ctrl0f1d2heating29turn2off1b"") W (F (false R ""u02heating29ctrl02heating29ctrl""))))))",OK,12,20,True,0.182,,no,CORP_SUBSET_OF_MTSR
+Heating_974f4a68__e07.txt,4,7,12,"(X (G ((((F ""u02heating29ctrl02heating29ctrl"") <-> (""u02heating29ctrl02heating29ctrl"" U (G ""u02heating29ctrl0f1d2heating29turn2on1b""))) | (""u02heating29ctrl02heating29ctrl"" <-> (! (X false)))) U (F ((F ""u02heating29ctrl0f1d2heating29turn2off1b"") U (""u02heating29ctrl02heating29ctrl"" U (F ""u02heating29ctrl0f1d2heating29turn2on1b"")))))))",OK,110,736,True,0.173,,,
+Heating_974f4a68__e09.txt,4,7,12,"(F (((X ""u02heating29ctrl0f1d2heating29turn2off1b"") & (G (! (X ""u02heating29ctrl0f1d2heating29turn2off1b"")))) R (G (F ""u02heating29ctrl0f1d2heating29turn2off1b""))))",OK,136,968,True,0.256,,,
+PlugController_fa4d4ce3__e00.txt,4,7,18,"(F ((! ""u02plug29ctrl0f1d2plug29coff1b"") R (X ((! ""u02plug29ctrl0f1d2plug29coff1b"") | ((F ""u02plug29ctrl0f1d2plug29con1b"") & (false R (F ""u02plug29ctrl0f1d2plug29coff1b"")))))))",OK,6,7,True,0.111,,no,CORP_SUBSET_OF_MTSR
+PlugController_fa4d4ce3__e04.txt,4,7,18,"(! (true U (! (true U (X ""u02plug29ctrl0f1d2plug29coff1b"")))))",OK,8,13,True,0.152,,no,CORP_SUBSET_OF_MTSR
+PlugController_fa4d4ce3__e05.txt,4,7,18,"(X ((! ""u02plug29ctrl02plug29ctrl"") & ((G (""u02plug29ctrl0f1d2plug29con1b"" R ((""u02plug29ctrl0f1d2plug29con1b"" U ""u02plug29ctrl02plug29ctrl"") W (! ""u02plug29ctrl0f1d2plug29coff1b"")))) -> ""u02plug29ctrl0f1d2plug29coff1b"")))",OK,4,7,True,0.101,,no,CORP_SUBSET_OF_MTSR
+SPIReadSdi__e00.txt,4,7,1,"(X (! ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b""))",OK,3,3,True,0.117,,no,CORP_SUBSET_OF_MTSR
+SPIReadSdi__e02.txt,4,7,1,"(G (X (F (X ""u0sdi0f1dhigh1b""))))",OK,5,8,True,0.114,,no,CORP_SUBSET_OF_MTSR
+SPIReadSdi__e04.txt,4,7,1,"(X (! (F ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"")))",OK,2,2,True,0.106,,no,CORP_SUBSET_OF_MTSR
+SPIReadSdi__e05.txt,4,7,1,"(true U (((! ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"") | ""u0sdi0f1dhigh1b"") U (F (! ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b""))))",OK,4,7,True,0.103,,no,CORP_SUBSET_OF_MTSR
+SPIReadSdi__e06.txt,4,7,1,"(F (! ((""u0sdi0f1dhigh1b"" W (! ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"")) -> (X (""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"" & (""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"" | (G ""u0sdi0f1dhigh1b"") | ((X ""u0sdi0f1dhigh1b"") -> (! (F ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"")))))))))",OK,8,15,True,0.119,,no,CORP_SUBSET_OF_MTSR
+SPIReadSdi__e07.txt,4,7,1,"(((G ""u0sdi0sdi"") | ((G (X false)) R (G ""u0sdi0f1dhigh1b""))) -> (X (F (G ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b""))))",OK,2,2,True,0.1,,no,CORP_SUBSET_OF_MTSR
+SPIReadSdi__e09.txt,4,7,1,"(X (""u0sdi0sdi"" <-> (G ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"")))",OK,5,8,True,0.103,,no,CORP_SUBSET_OF_MTSR
+Shades2_235467da__e01.txt,4,7,6,"(X (! (false R ((""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" <-> ""u0room29shades29ctrl0room29shades29ctrl"") | ((F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"") W false)))))",OK,28,93,False,0.12,,no,CORP_SUBSET_OF_MTSR
+Shades2_235467da__e03.txt,4,7,6,"(G (F (""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"" W (true U (! (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b""))))))",OK,39,165,False,0.123,,no,CORP_SUBSET_OF_MTSR
+Shades2_235467da__e04.txt,4,7,6,"(G (F ""u0room29shades29ctrl0room29shades29ctrl""))",OK,142,881,True,0.14,,,
+Shades2_235467da__e05.txt,4,7,6,"(true U (""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" W ((! (""u0room29shades29ctrl0room29shades29ctrl"" R ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")) R ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))",OK,5,7,True,0.113,,no,CORP_SUBSET_OF_MTSR
+Shades2_235467da__e07.txt,4,7,6,"(! ((X ""u0room29shades29ctrl0room29shades29ctrl"") & (""u0room29shades29ctrl0room29shades29ctrl"" | (""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"" W (! (false R (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))))))",OK,4,5,True,0.114,,,
+Shades2_235467da__e09.txt,4,7,6,"(((G ""u0room29shades29ctrl0room29shades29ctrl"") W (true U ((F ((X (! ""u0room29shades29ctrl0room29shades29ctrl"")) <-> (G (F ""u0room29shades29ctrl0room29shades29ctrl"")))) W (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))) R (((""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"" | ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"") -> (F (X false))) W (X ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"")))",OK,4,6,True,0.126,,no,CORP_SUBSET_OF_MTSR
+Shades2_70523fbe__e00.txt,4,7,6,"(""u02shades29ctrl02shades29ctrl"" <-> (""u02shades29ctrl02shades29ctrl"" R (((! ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"") U ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"") -> ((X ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b"") U ((G ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b"") W (false R ""u02shades29ctrl02shades29ctrl""))))))",OK,23,51,True,0.113,,no,CORP_SUBSET_OF_MTSR
+Shades2_70523fbe__e02.txt,4,7,6,"(G (F ((G (X (! ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b""))) -> ((X ((F ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"") U (G ""u02shades29ctrl02shades29ctrl""))) R ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b""))))",OK,49,112,True,0.121,,no,CORP_SUBSET_OF_MTSR
+Shades2_70523fbe__e03.txt,4,7,6,"(X (((X (""u02shades29ctrl02shades29ctrl"" U (F ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b""))) R (""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b"" <-> (F ""u02shades29ctrl02shades29ctrl""))) W (! ((F ((X (G ""u02shades29ctrl02shades29ctrl"")) W (G ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b""))) W (X (X (G (! ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b""))))))))",OK,4,4,True,0.119,,no,CORP_SUBSET_OF_MTSR
+Shades2_70523fbe__e04.txt,4,7,6,"((X ((X ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b"") <-> (""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"" U ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b""))) & (F (! ""u02shades29ctrl02shades29ctrl"")))",OK,11,18,True,0.094,,no,CORP_SUBSET_OF_MTSR
+Shades2_70523fbe__e08.txt,4,7,6,"(""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b"" <-> (X (""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"" -> (F (X ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"")))))",OK,13,21,True,0.108,,no,CORP_SUBSET_OF_MTSR
+Shades2_a5f99bc6__e01.txt,4,7,6,"(! ((""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" -> ""u0room29shades29ctrl0room29shades29ctrl"") & (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))",OK,2,2,True,0.114,,no,CORP_SUBSET_OF_MTSR
+Shades2_a5f99bc6__e02.txt,4,7,6,"(true U (! (G (""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" -> (! (""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" R (X ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"")))))))",OK,5,6,True,0.1,,no,CORP_SUBSET_OF_MTSR
+Shades2_a5f99bc6__e05.txt,4,7,6,"(! (X ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b""))",OK,2,2,True,0.11,,no,CORP_SUBSET_OF_MTSR
+Shades2_a5f99bc6__e08.txt,4,7,6,"(X ((G (X ((G ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"") R (""u0room29shades29ctrl0room29shades29ctrl"" -> ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))) -> (G (X (""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"" <-> (X (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))))))",OK,15,36,True,0.11,,no,CORP_SUBSET_OF_MTSR
+TorcsSteeringSimple__e01.txt,4,7,1,"(""u0steer0f1dsteer2left1b"" U ((F ((G ""u0steer0f1dsteer2left1b"") -> ""u0steer0f1dsteer2right1b"")) U (G (F (! ""u0steer0f1dsteer2left1b"")))))",OK,4,5,True,0.113,,no,CORP_SUBSET_OF_MTSR
+TorcsSteeringSimple__e02.txt,4,7,1,"(X (((""u0steer0f1dsteer2left1b"" W ""u0steer0f1dsteer2right1b"") U (false R (F ""u0steer0steer""))) -> ((""u0steer0f1dsteer2right1b"" | (X false)) -> (X (""u0steer0f1dsteer2right1b"" | ""u0steer0steer"")))))",OK,8,10,False,0.103,,no,CORP_SUBSET_OF_MTSR
+TorcsSteeringSimple__e03.txt,4,7,1,"((""u0steer0f1dsteer2right1b"" <-> (G (""u0steer0f1dsteer2left1b"" & ""u0steer0f1dsteer2right1b""))) <-> ((F ""u0steer0f1dsteer2left1b"") <-> (F (G ""u0steer0f1dsteer2right1b""))))",OK,8,10,True,0.128,,no,CORP_SUBSET_OF_MTSR
+TorcsSteeringSimple__e06.txt,4,7,1,"(! ((((F ""u0steer0f1dsteer2right1b"") W (! ""u0steer0steer"")) R (G (X ""u0steer0steer""))) R ""u0steer0f1dsteer2right1b""))",OK,9,15,True,0.126,,no,CORP_SUBSET_OF_MTSR
+TorcsSteeringSimple__e07.txt,4,7,1,"(((""u0steer0f1dsteer2left1b"" U (! ""u0steer0f1dsteer2right1b"")) R ((true U ""u0steer0f1dsteer2right1b"") & (X (! ""u0steer0f1dsteer2left1b"")))) U (""u0steer0f1dsteer2left1b"" <-> (G ""u0steer0f1dsteer2right1b"")))",OK,7,12,True,0.106,,no,CORP_SUBSET_OF_MTSR
+WindowMin_a5f99bc6__e00.txt,4,9,8,"(F ((""u0room29heating29ctrl0room29heating29ctrl"" <-> ((""u0music29ctrl0f1dplay0f1doverture1b1b"" W false) <-> (""u0music29ctrl0music29ctrl"" & (X ""u0music29ctrl0music29ctrl"")))) R (! (""u0room29heating29ctrl0room29heating29ctrl"" -> ""u0room29heating29ctrl0f1dturn2on1b""))))",OK,78,348,False,0.226,,no,CORP_SUBSET_OF_MTSR
+WindowMin_a5f99bc6__e03.txt,4,9,8,"(((! ""u0music29ctrl0music29ctrl"") R (X (! ""u0room29heating29ctrl0f1dturn2off1b""))) W ((! (G ((X ""u0music29ctrl0f1dplay0f1doverture1b1b"") R ((! ""u0room29heating29ctrl0f1dturn2on1b"") -> ""u0music29ctrl0f1dplay0f1doverture1b1b"")))) R ""u0room29heating29ctrl0f1dturn2on1b""))",OK,1,1,True,0.129,,no,CORP_SUBSET_OF_MTSR
+WindowMin_a5f99bc6__e04.txt,4,9,8,"((G (X ""u0room29heating29ctrl0f1dturn2on1b"")) | ((X ""u0room29heating29ctrl0f1dturn2off1b"") W ""u0room29heating29ctrl0f1dturn2on1b"") | ((G ((X (F ""u0room29heating29ctrl0f1dturn2off1b"")) W ""u0room29heating29ctrl0f1dturn2off1b"")) -> ((! ""u0room29heating29ctrl0f1dturn2on1b"") <-> (G (F ""u0music29ctrl0music29ctrl"")))))",OK,52,214,False,0.16,,no,CORP_SUBSET_OF_MTSR
+WindowMin_a5f99bc6__e05.txt,4,9,8,"((X (! ""u0room29heating29ctrl0f1dturn2on1b"")) | (X ((! ""u0room29heating29ctrl0f1dturn2on1b"") R (X (X (G (! (X (! (""u0room29heating29ctrl0f1dturn2off1b"" U ""u0music29ctrl0music29ctrl""))))))))))",OK,3,3,True,0.11,,yes,EQUIVALENT
+amba_decomposed_arbiter3__e00.txt,4,9,21,"((""busreq"" -> (""busreq"" <-> (F ""hgrant_0""))) W (((""hgrant_0"" -> (X ""decide"")) & ((! (X ""busreq"")) | (""hgrant_2"" R ""decide""))) -> (! (""busreq"" U (! ""hgrant_0"")))))",OK,22501,285530,True,96.487,,,
+amba_decomposed_arbiter3__e01.txt,4,9,21,"(F ((! (X ((""busreq"" | ""hgrant_2"") -> ((G ""hgrant_1"") R ((X ""hgrant_1"") <-> (""hgrant_2"" R (X ""hgrant_1""))))))) | (! (G (X ""busreq"")))))",OK,109,760,True,0.293,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_arbiter3__e04.txt,4,9,21,"(F (X (""hgrant_1"" & (G (F (! (F (! ""hgrant_1""))))))))",OK,4,4,True,184.553,,,
+amba_decomposed_arbiter3__e05.txt,4,9,21,"((! ""decide"") -> ((X ""decide"") | (((""busreq"" & ""hgrant_0"") W (F ""hgrant_2"")) -> (((""busreq"" U (! (""decide"" & ""hgrant_2""))) R ""hgrant_2"") W (F (X (G ""busreq"")))))))",TIMEOUT,,,,304.854,,,
+amba_decomposed_arbiter3__e06.txt,4,9,21,"(X (G (((G (! ""hgrant_1"")) | (F (! (true U (X (F ""hgrant_1"")))))) R (""decide"" | ""hgrant_2"" | (X ""hgrant_1"")))))",OK,20,56,True,0.215,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_arbiter3__e07.txt,4,9,21,"((""busreq"" & (F ""decide"")) <-> (""busreq"" & (F (X ((X ""hgrant_0"") & (""hgrant_2"" <-> (! ((F ""hgrant_0"") U (G ""busreq"")))))))))",TIMEOUT,,,,305.146,,,
+amba_decomposed_arbiter3__e09.txt,4,9,21,"(G ((X (! ((G ""hgrant_0"") W (! ""busreq"")))) U ((""decide"" & ""hgrant_2"") <-> (G ""decide""))))",OK,12,25,True,128.206,,,
+amba_decomposed_encode3__e03.txt,4,6,3,"(X ((X false) | (F (! ""hmaster_0"")) | (F ((F (X ""hmaster_1"")) <-> (G (""hmaster_0"" W false))))))",OK,4,7,True,0.13,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_encode3__e04.txt,4,6,3,"((F ""hmaster_1"") <-> (true U ((""hmaster_1"" -> (X (""hmaster_1"" | (F (""hmaster_1"" -> (G ""hmaster_0"")))))) W false)))",OK,5,6,True,0.122,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_encode3__e06.txt,4,6,3,"(F (X (! ""hmaster_0"")))",OK,3,4,True,0.099,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_encode3__e07.txt,4,6,3,"((! ((F ""hmaster_1"") U ""hmaster_0"")) <-> (G ((! (X false)) -> (! (G ""hmaster_1"")))))",OK,13,33,True,0.122,,,
+amba_decomposed_encode3__e09.txt,4,6,3,"(F ((G ((((! ""hmaster_0"") <-> (F ""hmaster_0"")) <-> ((G ""hmaster_0"") | (""hmaster_0"" R ""hmaster_1""))) -> (X ((""hmaster_0"" R (! ""hmaster_1"")) U ""hmaster_1"")))) W ""hmaster_1""))",OK,3,3,True,0.121,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_tburst4__e00.txt,4,5,10,"(true U (false R (G ""ready2"")))",OK,36,86,False,0.117,,,
+amba_decomposed_tburst4__e05.txt,4,5,10,"(true U (true U ((F (! ""ready2"")) U (X ""ready2""))))",OK,17,39,True,0.106,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_tburst4__e06.txt,4,5,10,"(X ""ready2"")",OK,3,3,True,0.122,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_tburst4__e07.txt,4,5,10,"(F (G (((true U ""ready2"") -> (G (! (X false)))) R ""ready2"")))",OK,31,72,False,0.114,,,
+amba_decomposed_tburst4__e08.txt,4,5,10,"(F (X (X (G (F ""ready2"")))))",OK,16,30,True,0.117,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_tburst4__e09.txt,4,5,10,"(false R (F ((X false) <-> (X (X (! (F ""ready2"")))))))",OK,19,31,True,0.119,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_tsingle__e00.txt,4,5,7,"(G ((! ""ready3"") | (F (X ""ready3""))))",OK,10,15,True,0.112,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_tsingle__e03.txt,4,5,7,"(F ((F (G ((G ((F (G (false R ""ready3""))) W ""ready3"")) W false))) | (false R (G ""ready3""))))",OK,7,13,False,0.101,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_tsingle__e04.txt,4,5,7,"(G ((G (X ""ready3"")) | (X (X (X false)))))",OK,2,2,True,0.102,,no,CORP_SUBSET_OF_MTSR
+amba_decomposed_tsingle__e06.txt,4,5,7,"(X ((! ""ready3"") | (G (X ""ready3""))))",OK,3,4,True,0.101,,no,CORP_SUBSET_OF_MTSR
+arbiter4__e01.txt,4,8,26,"(G ((X (F ""g_0"")) U (""g_1"" -> ((F ""g_0"") <-> (((F ""g_0"") & (G ""g_0"")) U (X (""g_1"" -> ""g_0"")))))))",OK,3,4,True,32.345,,,
+arbiter4__e06.txt,4,8,26,"((! (F ((""g_1"" & (! ""g_1"") & ""g_3"") W (! (true U ""g_3""))))) & ((! ""g_1"") U (! ""g_0"")))",OK,8923,92708,True,32.201,,no,CORP_SUBSET_OF_MTSR
+arbiter4__e07.txt,4,8,26,"((! ""g_1"") <-> (F ""g_3""))",OK,4,6,True,0.113,,no,CORP_SUBSET_OF_MTSR
+arbiter4__e09.txt,4,8,26,"((F ((F (""g_2"" & ""g_3"")) U (""g_2"" U (F ""g_1"")))) | (X (""g_2"" R (""g_0"" <-> ""g_2""))))",OK,6,8,True,0.134,,no,CORP_SUBSET_OF_MTSR
+arbiter_with_buffer2__e01.txt,4,8,5,"(F (((F ""ack_0"") <-> (X ""g_0"")) -> ((G (X false)) W ((""ack_0"" W ""g_1"") -> ""ack_1""))))",OK,4,6,True,0.099,,no,CORP_SUBSET_OF_MTSR
+arbiter_with_buffer2__e06.txt,4,8,5,"(G ((! (true U (G (""g_1"" W ""ack_1"")))) U (""ack_1"" <-> (F (X (true U (! (""ack_1"" -> ""ack_0""))))))))",OK,12,24,True,0.106,,no,CORP_SUBSET_OF_MTSR
+arbiter_with_buffer2__e08.txt,4,8,5,"((! ((! (((G ""g_0"") -> ""g_0"") W (F (X ""ack_0"")))) R ""ack_1"")) <-> (""g_0"" | (! (F (! (X (""g_1"" -> (""ack_1"" | (! ""g_1"")))))))))",OK,2,2,True,0.118,,no,CORP_SUBSET_OF_MTSR
+arbiter_with_buffer2__e09.txt,4,8,5,"((! ""ack_1"") U (((X ""g_1"") -> (F ""ack_1"")) R (X ((G (! (""ack_0"" W ""g_1""))) <-> ((F ""ack_1"") U ""g_0"")))))",OK,96,272,False,0.175,,,
+arbiter_with_cancel2__e00.txt,4,6,6,"((F (""g_1"" U (""g_0"" W ""g_1""))) <-> (G ((G ""g_0"") | (G ""g_1""))))",OK,5,6,True,0.106,,no,CORP_SUBSET_OF_MTSR
+arbiter_with_cancel2__e04.txt,4,6,6,"(! ((X (X (true U (F (! ""g_1""))))) U ""g_0""))",OK,4,4,True,0.096,,no,CORP_SUBSET_OF_MTSR
+arbiter_with_cancel2__e06.txt,4,6,6,"(((F ""g_0"") R ((F ""g_0"") <-> ((""g_0"" & ""g_1"") R ""g_1""))) -> ((F (""g_1"" W ""g_0"")) R (F ""g_1"")))",OK,6,9,True,0.097,,no,CORP_SUBSET_OF_MTSR
+arbiter_with_cancel2__e08.txt,4,6,6,"((F ((X ""g_1"") R (! (F (""g_1"" <-> (F ""g_0"")))))) U ""g_1"")",OK,23,42,False,10.577,,,
+detector4__e01.txt,4,5,4,"(true U ((F ""g"") U (X ""g"")))",OK,14,34,True,0.108,,no,CORP_SUBSET_OF_MTSR
+detector4__e02.txt,4,5,4,"(G (X (! ""g"")))",OK,3,5,True,0.116,,no,CORP_SUBSET_OF_MTSR
+detector4__e03.txt,4,5,4,"(G (! (X ""g"")))",OK,1,1,True,0.106,,no,CORP_SUBSET_OF_MTSR
+detector4__e05.txt,4,5,4,"(F ""g"")",OK,14,30,True,0.131,,no,CORP_SUBSET_OF_MTSR
+detector4__e08.txt,4,5,4,"(F ((! (G ""g"")) W false))",OK,17,61,True,0.101,,no,CORP_SUBSET_OF_MTSR
+full_arbiter4__e02.txt,4,8,30,"((""g_2"" -> (F ""g_0"")) U ((X ((G (""g_0"" R (! ""g_0""))) R (G ""g_3""))) U (true U ""g_2"")))",OK,3,4,True,0.15,,no,CORP_SUBSET_OF_MTSR
+full_arbiter4__e03.txt,4,8,30,"((F (""g_2"" & (G ""g_3"") & (X ""g_3""))) <-> (((""g_2"" | ""g_3"") <-> (X (F (""g_2"" U (F ""g_2""))))) W ""g_2""))",OK,3,4,True,0.107,,no,CORP_SUBSET_OF_MTSR
+full_arbiter4__e08.txt,4,8,30,"((G (""g_2"" R (X (G (F ""g_2""))))) W false)",OK,2225,30620,True,77.262,,,
+lilydemo21__e00.txt,4,8,4,"((X (! ""g1"")) W ((F (G ""g2"")) R (G (F (G (""g1"" R (! (""g3"" W false))))))))",OK,11,21,True,0.116,,no,CORP_SUBSET_OF_MTSR
+lilydemo21__e01.txt,4,8,4,"(F (G ((F (G ""g4"")) W (G (""g2"" <-> ""g3"")))))",OK,4,9,False,0.118,,no,CORP_SUBSET_OF_MTSR
+lilydemo21__e03.txt,4,8,4,"((X (! (""g2"" & (""g1"" W (""g1"" R ""g2""))))) R ((! ""g4"") R (F ""g1"")))",OK,6,9,True,0.096,,no,CORP_SUBSET_OF_MTSR
+lilydemo21__e04.txt,4,8,4,"((""g4"" R (""g2"" | (! ""g4""))) W ""g2"")",OK,5,8,True,0.101,,no,CORP_SUBSET_OF_MTSR
+lilydemo21__e06.txt,4,8,4,"(X ""g1"")",OK,3,3,True,0.09,,no,CORP_SUBSET_OF_MTSR
+load_balancer3__e00.txt,4,7,10,"(((G ""grant_1"") -> ((F ""grant_1"") <-> ((""grant_1"" W ""grant_0"") -> (X false)))) <-> ((G ""grant_2"") U ""grant_2""))",OK,2,2,True,0.108,,yes,EQUIVALENT
+load_balancer3__e01.txt,4,7,10,"(F ((! (""grant_2"" <-> (""grant_0"" <-> ""grant_1""))) <-> (G (""grant_2"" | (G (X ""grant_1""))))))",OK,4,7,True,0.098,,no,CORP_SUBSET_OF_MTSR
+load_balancer3__e05.txt,4,7,10,"(X ((! ""grant_0"") | (X (F ""grant_1"")) | (! (""grant_1"" | (F (true U ""grant_2""))))))",OK,22,75,True,0.114,,no,CORP_SUBSET_OF_MTSR
+load_balancer3__e08.txt,4,7,10,"(X (! (F ""grant_0"")))",OK,2,2,True,0.097,,yes,EQUIVALENT
+ltl2dba05__e00.txt,4,5,5,"(X (F ""acc""))",OK,5,5,True,0.097,,no,CORP_SUBSET_OF_MTSR
+ltl2dba05__e01.txt,4,5,5,"(! ((X false) U (false R (F ""acc""))))",OK,4,11,True,0.095,,yes,EQUIVALENT
+ltl2dba05__e02.txt,4,5,5,"(! (X (X ((G ""acc"") | ((X ((F ""acc"") <-> (G ""acc""))) -> (X false))))))",OK,9,21,True,0.104,,no,CORP_SUBSET_OF_MTSR
+ltl2dba05__e03.txt,4,5,5,"((! (X (F ""acc""))) W (X ((""acc"" & (! ""acc"")) W false)))",OK,5,8,True,0.114,,no,CORP_SUBSET_OF_MTSR
+ltl2dba05__e08.txt,4,5,5,"(F ((! ((! (X (F (""acc"" | (! ""acc""))))) R (! (true U (X false))))) U (F ""acc"")))",OK,8,15,True,0.094,,no,CORP_SUBSET_OF_MTSR
+ltl2dba06__e05.txt,4,5,5,"(X (G (! (G (F ((X ""acc"") R (! ""acc"")))))))",OK,13,19,True,0.105,,no,CORP_SUBSET_OF_MTSR
+ltl2dba06__e08.txt,4,5,5,"(""acc"" R (! ""acc""))",OK,5,6,True,0.102,,no,CORP_SUBSET_OF_MTSR
+ltl2dba20__e02.txt,4,5,5,"(true U (((X false) <-> (! (X ""acc""))) R (""acc"" | (X ""acc""))))",OK,9,15,True,0.108,,no,CORP_SUBSET_OF_MTSR
+ltl2dba20__e04.txt,4,5,5,"(F ((X ""acc"") U (! ((G (""acc"" R (F (""acc"" & (! ""acc""))))) W ((F ""acc"") W false)))))",OK,10,35,False,0.116,,no,CORP_SUBSET_OF_MTSR
+ltl2dba20__e06.txt,4,5,5,"(F ""acc"")",OK,5,15,True,0.097,,yes,EQUIVALENT
+ltl2dba20__e07.txt,4,5,5,"(""acc"" W false)",OK,3,3,True,0.104,,no,CORP_SUBSET_OF_MTSR
+ltl2dba20__e09.txt,4,5,5,"(F ((! ""acc"") U (F (""acc"" W false))))",OK,8,11,False,0.093,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_C24__e00.txt,4,5,4,"((G ((X false) R (((X ""acc"") U ""acc"") W ((F ""acc"") & (! (X ""acc"")))))) | (G (X (""acc"" <-> (G ""acc"")))))",OK,3,5,True,0.119,,,
+ltl2dba_C24__e04.txt,4,5,4,"((F (""acc"" U ((G ""acc"") U ""acc""))) | (! (G (! ""acc""))))",OK,9,14,True,0.108,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_C24__e06.txt,4,5,4,"(! (X (G ""acc"")))",OK,8,16,True,0.113,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_C24__e08.txt,4,5,4,"(! (F (X (false R (X ""acc"")))))",OK,11,30,True,0.1,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_E4__e03.txt,4,5,16,"(X ((X false) R (G ((F (! (X ((G (! (X false))) R (X false))))) U ""acc""))))",OK,8,19,True,0.115,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_E4__e04.txt,4,5,16,"((X ""acc"") -> (X (X false)))",OK,2,2,True,0.101,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_E4__e05.txt,4,5,16,"((X ""acc"") | ((G (X false)) & (F (""acc"" & (F (X (X false)))))))",OK,2,2,True,0.118,,yes,EQUIVALENT
+ltl2dba_E4__e07.txt,4,5,16,"(! (F ((! (X false)) U (""acc"" R (! (""acc"" & (! (""acc"" <-> (! ""acc"")))))))))",OK,53,152,True,0.106,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_E4__e08.txt,4,5,16,"(X ((false R (((! ""acc"") U ""acc"") <-> (G (true U ""acc"")))) -> (! ""acc"")))",OK,2,2,True,0.086,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_E4__e09.txt,4,5,16,"(! ((X (F (X false))) <-> (""acc"" <-> (X (F (! ""acc""))))))",OK,2,2,True,0.115,,yes,EQUIVALENT
+ltl2dba_Q4__e00.txt,4,5,30,"(((X false) | (! (X ""acc""))) -> (G ""acc""))",OK,3,3,True,0.158,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_Q4__e02.txt,4,5,30,"(G (true U (true U (true U (! ""acc"")))))",OK,3,4,True,0.146,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_Q4__e04.txt,4,5,30,"(false R ((F (X ""acc"")) | (! (G ((F ""acc"") R (! ""acc""))))))",OK,45,131,True,0.19,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_Q4__e05.txt,4,5,30,"(((! ""acc"") R (F ""acc"")) W false)",OK,22,44,True,0.157,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_Q4__e07.txt,4,5,30,"(! (F (! ((""acc"" <-> (X false)) <-> (G (! ((! ""acc"") -> ""acc"")))))))",OK,2,2,True,0.15,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_Q4__e08.txt,4,5,30,"(X ((F (((X false) -> ""acc"") -> (G ""acc""))) R (! ""acc"")))",OK,21,40,True,0.287,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_U14__e00.txt,4,5,9,"(F ((""acc"" <-> ((F ""acc"") -> (G ""acc""))) R ""acc""))",OK,2,2,True,0.095,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_U14__e02.txt,4,5,9,"(F (X (G (F (X ""acc"")))))",OK,6,12,True,0.101,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_U14__e03.txt,4,5,9,"(X ((X (""acc"" U ((X ""acc"") & (false R ""acc"")))) U ""acc""))",OK,3,3,True,0.1,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_U14__e05.txt,4,5,9,"(F (G ""acc""))",OK,16,54,True,0.11,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_U14__e06.txt,4,5,9,"(! (G ((G ""acc"") R (X (F (! ""acc""))))))",OK,11,31,True,0.095,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_U14__e07.txt,4,5,9,"(F (X (""acc"" & (true U (true U ""acc"")))))",OK,2,2,True,0.096,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_U14__e08.txt,4,5,9,"(((! (true U ""acc"")) U (F ""acc"")) R (G (F ((F ""acc"") W false))))",OK,5,8,True,0.09,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_U14__e09.txt,4,5,9,"(F (! ((G ""acc"") R (F ""acc""))))",OK,4,7,True,0.1,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_beta2__e00.txt,4,5,9,"((X false) <-> (X ""acc""))",OK,2,2,True,0.109,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_beta2__e01.txt,4,5,9,"((X false) U (F ""acc""))",OK,16,41,True,0.107,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_beta2__e03.txt,4,5,9,"(true U (! (X (X ""acc""))))",OK,3,3,True,0.114,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_beta2__e06.txt,4,5,9,"((! (X false)) U (X ""acc""))",OK,9,22,True,0.096,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_beta2__e07.txt,4,5,9,"((X ""acc"") U (F (X (G ((""acc"" & (""acc"" <-> (X ""acc""))) W ((! (""acc"" R (true U ""acc""))) U (false R (X ""acc""))))))))",OK,23,62,True,0.11,,no,CORP_SUBSET_OF_MTSR
+ltl2dba_beta2__e09.txt,4,5,9,"((F ((G ""acc"") & ((F ""acc"") W false))) & (F (X ""acc"")))",OK,6,13,True,0.104,,no,CORP_SUBSET_OF_MTSR
+prioritized_arbiter3__e06.txt,4,8,26,"(! (G (X (false R (""g_m"" W false)))))",OK,3,5,True,0.091,,no,CORP_SUBSET_OF_MTSR
+prioritized_arbiter3__e07.txt,4,8,26,"((false R ((G (true U (""g_1"" <-> (G (F ""g_m""))))) U (true U (! (G ""g_0""))))) | ((F ""g_m"") U ""g_2""))",OK,180,828,True,1.692,,,
+prioritized_arbiter3__e08.txt,4,8,26,"(! (((G ""g_m"") <-> (! ((X (! (X ((X ""g_1"") U ""g_1"")))) W (X (""g_1"" -> ""g_0""))))) R (F ""g_0"")))",OK,4,4,True,0.24,,no,CORP_SUBSET_OF_MTSR
+prioritized_arbiter3__e09.txt,4,8,26,"(""g_m"" | (G (! (G ""g_1""))))",OK,79,526,True,2.355,,no,CORP_SUBSET_OF_MTSR
+round_robin_arbiter4__e00.txt,4,8,37,"(X (((F (! ((! ""g_2"") <-> (G ""g_3"")))) U ""g_3"") & (F ((F (G (false R (F ""g_1"")))) | (""g_2"" <-> (! (F ""g_0"")))))))",OK,371,2527,False,27.7,,,
+round_robin_arbiter4__e03.txt,4,8,37,"(((""g_2"" <-> (""g_1"" <-> ((G ""g_1"") W false))) <-> (F (""g_0"" | ""g_3"" | (F ""g_3"")))) <-> (""g_1"" & (X ""g_3"") & (X (X false))))",OK,2,2,True,0.123,,no,CORP_SUBSET_OF_MTSR
+round_robin_arbiter4__e04.txt,4,8,37,"((F ((! ""g_0"") W (G (X (X (X ""g_3"")))))) <-> (""g_2"" | ((F ""g_0"") U ""g_0"")))",TIMEOUT,,,,325.19,,,
+round_robin_arbiter4__e05.txt,4,8,37,"(! (((! (""g_0"" U ""g_2"")) R (F ((G (F ""g_1"")) W (X (G ""g_0""))))) & ((G ""g_1"") | (X false))))",OK,4,7,True,0.113,,no,CORP_SUBSET_OF_MTSR
+round_robin_arbiter4__e06.txt,4,8,37,"(((G ""g_1"") | (G (X (X false)))) <-> ((""g_1"" R (true U (X ""g_0""))) & (! (""g_3"" -> (""g_1"" W (""g_0"" -> ""g_1""))))))",OK,2,3,True,0.095,,no,CORP_SUBSET_OF_MTSR
+round_robin_arbiter4__e08.txt,4,8,37,"((X (""g_0"" R ""g_3"")) R (""g_1"" | (F ""g_3"")))",OK,6465,70822,True,59.442,,,
+simple_arbiter4__e01.txt,4,8,29,"(F ((""g_2"" R (! (G ""g_0""))) U ((! ""g_1"") R ((G ""g_3"") W ""g_3""))))",OK,2,2,True,0.114,,no,CORP_SUBSET_OF_MTSR
+simple_arbiter4__e02.txt,4,8,29,"(""g_0"" | (G (((G ""g_3"") <-> (X ""g_2"")) -> (! (F (X ((""g_0"" | ""g_2"" | (G ""g_3"")) U (X (F (! ""g_1""))))))))))",OK,2,2,True,0.232,,no,CORP_SUBSET_OF_MTSR
+simple_arbiter4__e03.txt,4,8,29,"((X (X (X ((F ""g_0"") U ""g_3"")))) | (X (((! ""g_1"") & (X ""g_2"")) -> ""g_1"")))",OK,59,259,True,8.565,,no,CORP_SUBSET_OF_MTSR
+simple_arbiter4__e05.txt,4,8,29,"(! ((! ""g_2"") <-> (""g_1"" | ((X ""g_3"") & (G (F (((G ""g_1"") W ""g_3"") W ((! ""g_0"") U (""g_1"" | ""g_3"")))))))))",TIMEOUT,,,,324.305,,,
+simple_arbiter4__e07.txt,4,8,29,"((X (""g_0"" -> (X ((""g_3"" -> (""g_0"" & (X false))) & (X ""g_1""))))) <-> (""g_1"" | ((! ""g_3"") & (true U ""g_2""))))",OK,2,2,True,0.148,,no,CORP_SUBSET_OF_MTSR
+test2_f2774e0b__e04.txt,4,20,1,"(""u0e0f1dfun0p1db0in31b1b"" R (((X ""u0e0e"") & (! (F ""u0d0d""))) R ((X (""u0c0f1dc31b"" U (""u0b0b"" | ""u0e0f1dfun0p1db0in31b1b""))) -> (""u0c0f1dc31b"" & ""u0f0f1dc61b""))))",OK,3,3,True,0.121,,no,CORP_SUBSET_OF_MTSR

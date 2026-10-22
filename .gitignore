@@ -18,3 +18,7 @@ final_result.png
 # (see the README, Setup). Drop or symlink the binary here.
 external_tools/HyperQB/
 
+
+# re-runs and regenerated tables (bench/scripts/rerun.py, bench/paper/make_tables.py)
+bench/rerun/
+bench/paper/out/

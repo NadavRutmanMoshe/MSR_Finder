@@ -1,0 +1,24 @@
+[info]
+CATS SYNTCOMP: Increment (spec=./sc-1/Increment.json, states=1, inputs=1, aps=3) effect #4 source=randltl
+
+[inputs]
+"p0p0event0click"
+
+[effect]
+(F (false R ("u0count0f1dincrement0count1b" -> "u0count0count")))
+
+[lasso]
+AP: "u0count0count" "u0count0f1dincrement0count1b" "p0p0event0click"
+Prefix: 
+Loop: {0}
+
+[system]
+HOA: v1
+Start: 0
+AP: 3 "u0count0count" "u0count0f1dincrement0count1b" "p0p0event0click"
+Acceptance: 0 t
+--BODY--
+State: 0
+[0&!1&!2] 0
+[!0&1&2] 0
+--END--

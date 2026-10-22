@@ -1,0 +1,39 @@
+[info]
+CATS SYNTCOMP: collector_v33 (spec=./sc-1/collector_v33.json, states=2, inputs=3, aps=4) effect #3 source=randltl
+
+[inputs]
+"finished_0" "finished_1" "finished_2"
+
+[effect]
+((X (("all_finished" U (F "all_finished")) W (X false))) | (X (G "all_finished")))
+
+[lasso]
+AP: "finished_0" "finished_1" "finished_2" "all_finished"
+Prefix: {1} {0}
+Loop: {0 2}
+
+[system]
+HOA: v1
+Start: 0
+AP: 4 "finished_0" "finished_1" "finished_2" "all_finished"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&!2&!3] 1
+[!0&!1&2&!3] 1
+[!0&1&!2&!3] 1
+[!0&1&2&!3] 1
+[0&!1&!2&!3] 1
+[0&!1&2&!3] 1
+[0&1&!2&!3] 1
+[0&1&2&!3] 0
+State: 1
+[!0&!1&!2&!3] 1
+[!0&!1&2&!3] 1
+[!0&1&!2&!3] 1
+[!0&1&2&!3] 1
+[0&!1&!2&!3] 1
+[0&!1&2&!3] 1
+[0&1&!2&!3] 1
+[0&1&2&3] 0
+--END--

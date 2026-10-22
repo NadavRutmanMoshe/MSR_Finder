@@ -1,0 +1,32 @@
+[info]
+Unfair 2-arbiter, CORP (CAV'24) Table 1 -- the system of CORP's artifact (unfair2), phi_C = G r_m
+
+[inputs]
+"r_0" "r_m"
+
+[effect]
+G ! "g_0"
+
+[lasso]
+AP: "r_0" "g_0" "r_m" "g_m"
+Prefix: 
+Loop: {0 2 3}
+
+[system]
+HOA: v1
+States: 2
+Start: 0
+AP: 4 "r_0" "g_0" "r_m" "g_m"
+acc-name: all
+Acceptance: 0 t
+properties: trans-labels explicit-labels state-acc deterministic weak
+controllable-AP: 1 3
+--BODY--
+State: 0
+[!0&!1&!2&!3] 0
+[0&1&!2&!3] 0
+[!1&2&3] 1
+State: 1
+[1&!2&!3] 0
+[!1&2&3] 1
+--END--

@@ -1,0 +1,36 @@
+[info]
+CATS SYNTCOMP: arbiter2 (spec=./sc-1/arbiter2.json, states=3, inputs=2, aps=4) effect #8 source=randltl
+
+[inputs]
+"r_0" "r_1"
+
+[effect]
+(X ((X (X false)) | (X "g_0")))
+
+[lasso]
+AP: "g_0" "r_0" "g_1" "r_1"
+Prefix: {} {3}
+Loop: {1 2} {0 3}
+
+[system]
+HOA: v1
+Start: 0
+AP: 4 "g_0" "r_0" "g_1" "r_1"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&!2&!3] 0
+[!0&!1&!2&3] 1
+[!0&1&!2&!3] 2
+[!0&1&2&3] 2
+State: 1
+[!0&!1&2&!3] 0
+[!0&!1&2&3] 0
+[!0&1&2&!3] 2
+[!0&1&2&3] 2
+State: 2
+[0&!1&!2&!3] 0
+[0&!1&!2&3] 1
+[0&1&!2&!3] 0
+[0&1&!2&3] 1
+--END--

@@ -1,0 +1,26 @@
+[info]
+CATS SYNTCOMP: EscalatorNonCounting (spec=./sc-1/EscalatorNonCounting.json, states=1, inputs=2, aps=5) effect #8 source=randltl
+
+[inputs]
+"p0p0exit2event0top" "p0p0enter2event0bottom"
+
+[effect]
+(! (F (! (G "u0steps0f1dstop1b"))))
+
+[lasso]
+AP: "u0steps0f1dmove1b" "u0steps0f1dstop1b" "u0steps0steps" "p0p0enter2event0bottom" "p0p0exit2event0top"
+Prefix: {2} {1 4} {2}
+Loop: {1 4} {0 3} {1 4}
+
+[system]
+HOA: v1
+Start: 0
+AP: 5 "u0steps0f1dmove1b" "u0steps0f1dstop1b" "u0steps0steps" "p0p0enter2event0bottom" "p0p0exit2event0top"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&2&!3&!4] 0
+[0&!1&!2&3&!4] 0
+[!0&1&!2&!3&4] 0
+[!0&!1&2&3&4] 0
+--END--

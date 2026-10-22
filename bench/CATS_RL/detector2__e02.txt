@@ -1,0 +1,31 @@
+[info]
+CATS SYNTCOMP: detector2 (spec=./sc-1/detector2.json, states=2, inputs=2, aps=3) effect #2 source=randltl
+
+[inputs]
+"r_0" "r_1"
+
+[effect]
+(((F (X "g")) U "g") W false)
+
+[lasso]
+AP: "g" "r_0" "r_1"
+Prefix: {2} {0 1 2} {2}
+Loop: {} {}
+
+[system]
+HOA: v1
+Start: 1
+AP: 3 "g" "r_0" "r_1"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&!2] 0
+[0&!1&2] 1
+[!0&1&!2] 0
+[0&1&2] 1
+State: 1
+[!0&!1&!2] 1
+[!0&!1&2] 1
+[!0&1&!2] 0
+[0&1&2] 1
+--END--

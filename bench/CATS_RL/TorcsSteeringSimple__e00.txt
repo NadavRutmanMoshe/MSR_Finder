@@ -1,0 +1,38 @@
+[info]
+CATS SYNTCOMP: TorcsSteeringSimple (spec=./sc-1/TorcsSteeringSimple.json, states=1, inputs=4, aps=7) effect #0 source=randltl
+
+[inputs]
+"p0p0turning2right0angle" "p0p0turning2left0angle" "p0p0right2of2center0track2pos" "p0p0left2of2center0track2pos"
+
+[effect]
+(G ((! "u0steer0f1dsteer2left1b") & (G (false R (X (F (! "u0steer0f1dsteer2right1b")))))))
+
+[lasso]
+AP: "u0steer0f1dsteer2right1b" "u0steer0steer" "u0steer0f1dsteer2left1b" "p0p0turning2left0angle" "p0p0turning2right0angle" "p0p0left2of2center0track2pos" "p0p0right2of2center0track2pos"
+Prefix: 
+Loop: {2 5 6} {2 4 6}
+
+[system]
+HOA: v1
+Start: 0
+AP: 7 "u0steer0f1dsteer2right1b" "u0steer0steer" "u0steer0f1dsteer2left1b" "p0p0turning2left0angle" "p0p0turning2right0angle" "p0p0left2of2center0track2pos" "p0p0right2of2center0track2pos"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&1&!2&!3&!4&!5&!6] 0
+[0&!1&!2&!3&!4&5&!6] 0
+[!0&!1&2&!3&!4&!5&6] 0
+[!0&!1&2&!3&!4&5&6] 0
+[!0&!1&2&3&!4&!5&!6] 0
+[0&!1&!2&3&!4&5&!6] 0
+[!0&!1&2&3&!4&!5&6] 0
+[!0&!1&2&3&!4&5&6] 0
+[0&!1&!2&!3&4&!5&!6] 0
+[0&!1&!2&!3&4&5&!6] 0
+[!0&!1&2&!3&4&!5&6] 0
+[!0&!1&2&!3&4&5&6] 0
+[!0&!1&2&3&4&!5&!6] 0
+[!0&!1&2&3&4&5&!6] 0
+[!0&!1&2&3&4&!5&6] 0
+[!0&!1&2&3&4&5&6] 0
+--END--

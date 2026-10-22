@@ -1,0 +1,24 @@
+[info]
+CATS SYNTCOMP: SensorRegister (spec=./sc-1/SensorRegister.json, states=1, inputs=1, aps=3) effect #6 source=randltl
+
+[inputs]
+"p0p0reg2cmp0f1dmy2type1b0reg2type"
+
+[effect]
+"u0reg2val0reg2val"
+
+[lasso]
+AP: "u0reg2val0reg2data" "u0reg2val0reg2val" "p0p0reg2cmp0f1dmy2type1b0reg2type"
+Prefix: {0 2}
+Loop: {0 2} {0 2} {0 2}
+
+[system]
+HOA: v1
+Start: 0
+AP: 3 "u0reg2val0reg2data" "u0reg2val0reg2val" "p0p0reg2cmp0f1dmy2type1b0reg2type"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&1&!2] 0
+[0&!1&2] 0
+--END--

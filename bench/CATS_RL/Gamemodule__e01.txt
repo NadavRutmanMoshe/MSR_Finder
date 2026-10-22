@@ -1,0 +1,38 @@
+[info]
+CATS SYNTCOMP: Gamemodule (spec=./sc-1/Gamemodule.json, states=1, inputs=4, aps=8) effect #1 source=randltl
+
+[inputs]
+"p0p0on0gameover" "p0p0isscoremode0gamemode" "p0p0isradarmode0gamemode" "p0p0iscockpitmode0gamemode"
+
+[effect]
+((G ("u0outpoint0outpoint" W "u0outpoint0cockpitboardpoint")) W ((! "u0outpoint0outpoint") & (true U "u0outpoint0cockpitboardpoint")))
+
+[lasso]
+AP: "u0outpoint0cockpitboardpoint" "u0outpoint0radarboardpoint" "u0outpoint0outpoint" "u0outpoint0scoreboardpoint" "p0p0isscoremode0gamemode" "p0p0isradarmode0gamemode" "p0p0iscockpitmode0gamemode" "p0p0on0gameover"
+Prefix: {3 5 7} {3 4 5 6} {1 5}
+Loop: {3 5 6} {3 4 5 7}
+
+[system]
+HOA: v1
+Start: 0
+AP: 8 "u0outpoint0cockpitboardpoint" "u0outpoint0radarboardpoint" "u0outpoint0outpoint" "u0outpoint0scoreboardpoint" "p0p0isscoremode0gamemode" "p0p0isradarmode0gamemode" "p0p0iscockpitmode0gamemode" "p0p0on0gameover"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&!2&3&!4&!5&!6&!7] 0
+[0&!1&!2&!3&!4&!5&6&!7] 0
+[!0&1&!2&!3&!4&5&!6&!7] 0
+[!0&!1&!2&3&!4&5&6&!7] 0
+[!0&!1&!2&3&4&!5&!6&!7] 0
+[!0&!1&!2&3&4&!5&6&!7] 0
+[!0&!1&!2&3&4&5&!6&!7] 0
+[!0&!1&!2&3&4&5&6&!7] 0
+[!0&!1&!2&3&!4&!5&!6&7] 0
+[!0&!1&!2&3&!4&!5&6&7] 0
+[!0&!1&!2&3&!4&5&!6&7] 0
+[!0&!1&!2&3&!4&5&6&7] 0
+[!0&!1&!2&3&4&!5&!6&7] 0
+[!0&!1&!2&3&4&!5&6&7] 0
+[!0&!1&!2&3&4&5&!6&7] 0
+[!0&!1&!2&3&4&5&6&7] 0
+--END--

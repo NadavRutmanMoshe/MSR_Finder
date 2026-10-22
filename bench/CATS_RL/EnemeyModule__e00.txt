@@ -1,0 +1,26 @@
+[info]
+CATS SYNTCOMP: EnemeyModule (spec=./sc-1/EnemeyModule.json, states=1, inputs=2, aps=9) effect #0 source=randltl
+
+[inputs]
+"p0p0on0reset" "p0p0on0clock"
+
+[effect]
+(! (X (true U (((true U ("u0radius0f1dstartradius1b" W "u0angle0resetangle")) W (X "u0radius0f1ddec0radius1b")) | ("u0angle0resetangle" & ((X "u0color0color") | (F (G (F (X "u0color0color"))))))))))
+
+[lasso]
+AP: "u0color0color" "u0color0incolor" "u0radius0f1dstartradius1b" "u0radius0f1ddec0radius1b" "u0radius0radius" "p0p0on0reset" "p0p0on0clock" "u0angle0angle" "u0angle0resetangle"
+Prefix: {1 2 5 8}
+Loop: {1 2 5 8} {1 4 7}
+
+[system]
+HOA: v1
+Start: 0
+AP: 9 "u0color0color" "u0color0incolor" "u0radius0f1dstartradius1b" "u0radius0f1ddec0radius1b" "u0radius0radius" "p0p0on0reset" "p0p0on0clock" "u0angle0angle" "u0angle0resetangle"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&1&!2&!3&4&!5&!6&7&!8] 0
+[!0&1&!2&3&!4&!5&6&7&!8] 0
+[!0&1&2&!3&!4&5&!6&!7&8] 0
+[!0&1&2&!3&!4&5&6&!7&8] 0
+--END--

@@ -1,0 +1,48 @@
+[info]
+CATS SYNTCOMP: amba_decomposed_arbiter2 (spec=./sc-1/amba_decomposed_arbiter2.json, states=3, inputs=3, aps=7) effect #8 source=randltl
+
+[inputs]
+"allready" "hbusreq_0" "hbusreq_1"
+
+[effect]
+(("hgrant_0" R (("hgrant_1" R (G "busreq")) U ((! "decide") U "hgrant_0"))) | ("busreq" & (("busreq" & "hgrant_0") | (! ("hgrant_0" W false)))))
+
+[lasso]
+AP: "hgrant_0" "busreq" "hbusreq_0" "hgrant_1" "hbusreq_1" "decide" "allready"
+Prefix: {2} {1 3 4 5 6} {0 6}
+Loop: {0 4 5 6} {3 5 6}
+
+[system]
+HOA: v1
+Start: 0
+AP: 7 "hgrant_0" "busreq" "hbusreq_0" "hgrant_1" "hbusreq_1" "decide" "allready"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&!2&!3&!4&!5&!6] 2
+[!0&!1&!2&!3&4&!5&!6] 2
+[!0&!1&2&!3&!4&!5&!6] 2
+[!0&!1&2&!3&4&!5&!6] 2
+[0&!1&!2&!3&!4&!5&6] 1
+[0&!1&!2&!3&4&!5&6] 1
+[0&1&2&!3&!4&!5&6] 1
+[0&1&2&!3&4&!5&6] 1
+State: 1
+[0&!1&!2&!3&!4&!5&!6] 1
+[0&!1&!2&!3&4&!5&!6] 1
+[0&1&2&!3&!4&!5&!6] 1
+[0&1&2&!3&4&!5&!6] 1
+[0&!1&!2&!3&!4&!5&6] 1
+[0&!1&!2&!3&4&5&6] 2
+[0&1&2&!3&!4&!5&6] 1
+[0&1&2&!3&4&5&6] 2
+State: 2
+[!0&!1&!2&3&!4&!5&!6] 2
+[!0&1&!2&3&4&!5&!6] 2
+[!0&!1&2&3&!4&!5&!6] 2
+[!0&1&2&3&4&!5&!6] 2
+[!0&!1&!2&3&!4&5&6] 1
+[!0&1&!2&3&4&5&6] 1
+[!0&!1&2&3&!4&5&6] 1
+[!0&1&2&3&4&5&6] 1
+--END--

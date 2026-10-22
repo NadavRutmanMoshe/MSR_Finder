@@ -1,0 +1,66 @@
+[info]
+CATS SYNTCOMP: Shades_a02758ea (spec=./sc-1/Shades_a02758ea.json, states=5, inputs=3, aps=6) effect #8 source=randltl
+
+[inputs]
+"p0p0bright0outside29brightness" "p0b0room29shades29closed" "p0b0room29shades29open"
+
+[effect]
+(("u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b" R ("u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b" & "u0room29shades29ctrl0room29shades29ctrl")) | (((! (G (("u0room29shades29ctrl0room29shades29ctrl" U "u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b") R ((G "u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b") | ("u0room29shades29ctrl0room29shades29ctrl" U "u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"))))) & (X (! "u0room29shades29ctrl0room29shades29ctrl"))) W (X "u0room29shades29ctrl0room29shades29ctrl")))
+
+[lasso]
+AP: "u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b" "u0room29shades29ctrl0room29shades29ctrl" "u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b" "p0b0room29shades29open" "p0b0room29shades29closed" "p0p0bright0outside29brightness"
+Prefix: {2 3 4}
+Loop: {2 5}
+
+[system]
+HOA: v1
+Start: 0
+AP: 6 "u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b" "u0room29shades29ctrl0room29shades29ctrl" "u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b" "p0b0room29shades29open" "p0b0room29shades29closed" "p0p0bright0outside29brightness"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&2&!3&!4&!5] 1
+[!0&!1&2&3&!4&!5] 1
+[!0&!1&2&!3&4&!5] 1
+[!0&!1&2&3&4&!5] 2
+[!0&!1&2&!3&!4&5] 2
+[!0&!1&2&3&!4&5] 2
+[!0&!1&2&!3&4&5] 1
+[!0&!1&2&3&4&5] 2
+State: 1
+[!0&!1&2&!3&!4&!5] 1
+[!0&!1&2&3&!4&!5] 1
+[!0&!1&2&!3&4&!5] 1
+[!0&!1&2&3&4&!5] 2
+[0&!1&!2&!3&!4&5] 4
+[0&!1&!2&3&!4&5] 3
+[!0&!1&2&!3&4&5] 1
+[!0&!1&2&3&4&5] 2
+State: 2
+[!0&!1&2&!3&!4&!5] 2
+[0&!1&!2&3&!4&!5] 3
+[!0&!1&2&!3&4&!5] 2
+[0&!1&!2&3&4&!5] 2
+[!0&!1&2&!3&!4&5] 2
+[0&!1&!2&3&!4&5] 3
+[!0&!1&2&!3&4&5] 2
+[0&!1&!2&3&4&5] 2
+State: 3
+[!0&1&!2&!3&!4&!5] 3
+[!0&1&!2&3&!4&!5] 3
+[!0&!1&2&!3&4&!5] 1
+[!0&!1&2&3&4&!5] 2
+[!0&1&!2&!3&!4&5] 3
+[!0&1&!2&3&!4&5] 3
+[!0&!1&2&!3&4&5] 1
+[!0&!1&2&3&4&5] 2
+State: 4
+[!0&!1&2&!3&!4&!5] 4
+[!0&!1&2&3&!4&!5] 4
+[!0&!1&2&!3&4&!5] 1
+[!0&!1&2&3&4&!5] 2
+[!0&!1&2&!3&!4&5] 4
+[!0&!1&2&3&!4&5] 4
+[!0&!1&2&!3&4&5] 1
+[!0&!1&2&3&4&5] 2
+--END--

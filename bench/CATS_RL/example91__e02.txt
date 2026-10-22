@@ -1,0 +1,30 @@
+[info]
+CATS SYNTCOMP: example91 (spec=./sc-1/example91.json, states=3, inputs=1, aps=2) effect #2 source=randltl
+
+[inputs]
+"r"
+
+[effect]
+((X false) U ((false R (true U "g")) U "g"))
+
+[lasso]
+AP: "g" "r"
+Prefix: {1} {}
+Loop: {} {1} {0}
+
+[system]
+HOA: v1
+Start: 0
+AP: 2 "g" "r"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1] 1
+[!0&1] 1
+State: 1
+[!0&!1] 1
+[!0&1] 2
+State: 2
+[0&!1] 1
+[0&1] 2
+--END--

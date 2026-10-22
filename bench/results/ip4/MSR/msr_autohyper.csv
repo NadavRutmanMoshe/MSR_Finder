@@ -1,0 +1,269 @@
+instance,model,effect,sys_states,inputs,outputs,P,L,status,size,loop_size,reason,reason_complete,k,semantics,build_s,certify_s,wall_s,err
+Door_2d1010f8__e00,autohyper,"((G (""u02door29door0f1d2door29lock1b"" U (! ""u02door29door0f1d2door29unlock1b""))) U ((X ((X ""u02door29door02door29door"") R ""u02door29door0f1d2door29lock1b"")) W (X (F (X ((G ""u02door29door0f1d2door29unlock1b"") -> ""u02door29door0f1d2door29lock1b""))))))",9,4,3,4,2,ERROR,,,,True,,,0.06,0,300.19,AutoHyper TIMED OUT (> 300s).
+Door_2d1010f8__e01,autohyper,"(G ((false R ""u02door29door0f1d2door29unlock1b"") <-> ((""u02door29door02door29door"" & (X ""u02door29door02door29door"") & (! (X ""u02door29door0f1d2door29unlock1b""))) R (F ""u02door29door02door29door""))))",9,4,3,3,3,ERROR,,,,True,,,0.059,0,300.242,AutoHyper TIMED OUT (> 300s).
+Door_2d1010f8__e04,autohyper,"((! (""u02door29door0f1d2door29unlock1b"" W (X ((G ""u02door29door0f1d2door29unlock1b"") R (X (true U (F ""u02door29door02door29door""))))))) <-> (""u02door29door0f1d2door29lock1b"" W ""u02door29door02door29door""))",9,4,3,1,1,ERROR,,,,True,,,0.086,0,300.256,AutoHyper TIMED OUT (> 300s).
+Door_2d1010f8__e08,autohyper,"(F ((X ""u02door29door0f1d2door29lock1b"") <-> ((""u02door29door02door29door"" R ""u02door29door0f1d2door29unlock1b"") U ((! (((""u02door29door0f1d2door29unlock1b"" & (X ""u02door29door02door29door"")) U ""u02door29door0f1d2door29unlock1b"") R (X ""u02door29door02door29door""))) W ""u02door29door0f1d2door29unlock1b""))))",9,4,3,1,2,ERROR,,,,True,,,0.074,0,300.228,AutoHyper TIMED OUT (> 300s).
+Door_2d1010f8__e09,autohyper,"(! (""u02door29door0f1d2door29lock1b"" & (X ((F (""u02door29door02door29door"" R ""u02door29door0f1d2door29unlock1b"")) W false))))",9,4,3,1,2,ERROR,,,,True,,,0.082,0,300.386,AutoHyper TIMED OUT (> 300s).
+EscalatorSmart__e02,autohyper,"(! (F (X (""u0steps0f1dmove2up1b"" & ((G ""u0steps0f1dmove2down1b"") U ""u0steps0f1dmove2up1b"")))))",7,4,3,2,2,SAT_MSR,9,7,"p0p0enter2event0top@0,p0p0exit2event0top@1,p0p0enter2event0bottom@2,p0p0enter2event0top@3,p0p0exit2event0bottom@3,p0p0exit2event0bottom@4,p0p0exit2event0bottom@5,p0p0exit2event0top@6,p0p0exit2event0top@7,p0p0exit2event0top@8*,p0p0enter2event0top@9*,p0p0exit2event0bottom@9*,p0p0exit2event0bottom@10*,p0p0exit2event0bottom@11*,p0p0exit2event0top@12*,p0p0exit2event0top@13*",True,,,0.083,0,170.907,
+EscalatorSmart__e05,autohyper,"(((F ""u0steps0f1dmove2up1b"") <-> ((X (! ""u0steps0steps"")) W ""u0steps0f1dmove2down1b"")) U (F (""u0steps0f1dmove2down1b"" | (! ((! ""u0steps0steps"") U ""u0steps0f1dmove2up1b"")))))",7,4,3,5,3,ERROR,,,,True,,,0.081,0,208.578,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+EscalatorSmart__e07,autohyper,"(! (G ((! (X (X (! (X false))))) <-> (F (X ((! ""u0steps0f1dmove2up1b"") W (G ""u0steps0steps"")))))))",7,4,3,4,1,ERROR,,,,True,,,0.058,0,300.425,AutoHyper TIMED OUT (> 300s).
+EscalatorSmart__e08,autohyper,"((false R (F ""u0steps0f1dmove2down1b"")) W false)",7,4,3,1,2,SAT_MSR,1,2,"p0p0enter2event0bottom@0,p0p0enter2event0bottom@1*,p0p0enter2event0bottom@2*",True,,,0.061,0,75.594,
+EscalatorSmart__e09,autohyper,"(X (! (true U ""u0steps0f1dmove2up1b"")))",7,4,3,1,1,SAT_MSR,1,1,"p0p0enter2event0bottom@0,p0p0enter2event0bottom@1*",True,,,0.085,0,41.206,
+Gamemodule__e02,autohyper,"(! ((X ""u0outpoint0radarboardpoint"") | ((G ""u0outpoint0scoreboardpoint"") -> (""u0outpoint0radarboardpoint"" W false))))",1,4,4,1,1,SAT_MSR,5,4,"p0p0iscockpitmode0gamemode@0,p0p0isradarmode0gamemode@0,p0p0iscockpitmode0gamemode@1,p0p0isradarmode0gamemode@1,p0p0isscoremode0gamemode@2,p0p0on0gameover@3*,p0p0iscockpitmode0gamemode@4*,p0p0isradarmode0gamemode@4*,p0p0isscoremode0gamemode@5*",True,,,0.044,0,35.694,
+Gamemodule__e04,autohyper,"((X ""u0outpoint0cockpitboardpoint"") R (! (F ((X ""u0outpoint0cockpitboardpoint"") & (""u0outpoint0outpoint"" U (""u0outpoint0cockpitboardpoint"" -> ""u0outpoint0radarboardpoint""))))))",1,4,4,1,2,SAT_MSR,2,2,"p0p0iscockpitmode0gamemode@1,p0p0on0gameover@2,p0p0isradarmode0gamemode@3*,p0p0on0gameover@4*",True,,,0.04,0,63.504,
+Gamemodule__e06,autohyper,"((X (! (""u0outpoint0outpoint"" R (! (X (""u0outpoint0radarboardpoint"" W ""u0outpoint0cockpitboardpoint"")))))) U (""u0outpoint0radarboardpoint"" U ""u0outpoint0scoreboardpoint""))",1,4,4,0,3,ERROR,,,,True,,,0.029,0,300.191,AutoHyper TIMED OUT (> 300s).
+Gamemodule__e07,autohyper,"(! ((! ""u0outpoint0radarboardpoint"") & (""u0outpoint0radarboardpoint"" W (! ""u0outpoint0scoreboardpoint""))))",1,4,4,0,1,SAT_MSR,1,0,p0p0isradarmode0gamemode@0,True,,,0.042,0,13.593,
+Gamemodule__e08,autohyper,"(F ((F (! (""u0outpoint0outpoint"" R (""u0outpoint0outpoint"" U (F ""u0outpoint0cockpitboardpoint""))))) -> (""u0outpoint0cockpitboardpoint"" W ((G ""u0outpoint0cockpitboardpoint"") W (F ""u0outpoint0scoreboardpoint"")))))",1,4,4,2,2,SAT_MSR,2,0,"p0p0iscockpitmode0gamemode@4,p0p0isradarmode0gamemode@4",True,,,0.036,0,175.327,
+Heating_974f4a68__e01,autohyper,"(((G ""u02heating29ctrl02heating29ctrl"") W (X (""u02heating29ctrl0f1d2heating29turn2on1b"" & (""u02heating29ctrl02heating29ctrl"" <-> (F ""u02heating29ctrl02heating29ctrl""))))) & (F ""u02heating29ctrl0f1d2heating29turn2on1b""))",12,4,3,2,3,ERROR,,,,True,,,0.16,0,240.823,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+Heating_974f4a68__e02,autohyper,"(((G (X (X ""u02heating29ctrl0f1d2heating29turn2on1b""))) <-> ((! ""u02heating29ctrl0f1d2heating29turn2off1b"") -> (X ""u02heating29ctrl02heating29ctrl""))) | (""u02heating29ctrl0f1d2heating29turn2on1b"" <-> (F ""u02heating29ctrl0f1d2heating29turn2off1b"")))",12,4,3,1,2,ERROR,,,,True,,,0.107,0,231.697,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+Heating_974f4a68__e03,autohyper,"(G (F (X ((""u02heating29ctrl0f1d2heating29turn2off1b"" U (F (! (G ""u02heating29ctrl02heating29ctrl"")))) U ((G ""u02heating29ctrl0f1d2heating29turn2off1b"") <-> (X ((F ""u02heating29ctrl0f1d2heating29turn2off1b"") R (X false))))))))",12,4,3,3,3,ERROR,,,,True,,,0.112,0,300.466,AutoHyper TIMED OUT (> 300s).
+Heating_974f4a68__e06,autohyper,"((! (G ""u02heating29ctrl0f1d2heating29turn2on1b"")) | (G (X ((X ""u02heating29ctrl0f1d2heating29turn2off1b"") W (F (false R ""u02heating29ctrl02heating29ctrl""))))))",12,4,3,5,3,ERROR,,,,True,,,0.103,0,300.477,AutoHyper TIMED OUT (> 300s).
+Heating_974f4a68__e07,autohyper,"(X (G ((((F ""u02heating29ctrl02heating29ctrl"") <-> (""u02heating29ctrl02heating29ctrl"" U (G ""u02heating29ctrl0f1d2heating29turn2on1b""))) | (""u02heating29ctrl02heating29ctrl"" <-> (! (X false)))) U (F ((F ""u02heating29ctrl0f1d2heating29turn2off1b"") U (""u02heating29ctrl02heating29ctrl"" U (F ""u02heating29ctrl0f1d2heating29turn2on1b"")))))))",12,4,3,1,4,ERROR,,,,True,,,0.219,0,300.4,AutoHyper TIMED OUT (> 300s).
+Heating_974f4a68__e09,autohyper,"(F (((X ""u02heating29ctrl0f1d2heating29turn2off1b"") & (G (! (X ""u02heating29ctrl0f1d2heating29turn2off1b"")))) R (G (F ""u02heating29ctrl0f1d2heating29turn2off1b""))))",12,4,3,1,2,ERROR,,,,True,,,0.121,0,300.46,AutoHyper TIMED OUT (> 300s).
+PlugController_fa4d4ce3__e00,autohyper,"(F ((! ""u02plug29ctrl0f1d2plug29coff1b"") R (X ((! ""u02plug29ctrl0f1d2plug29coff1b"") | ((F ""u02plug29ctrl0f1d2plug29con1b"") & (false R (F ""u02plug29ctrl0f1d2plug29coff1b"")))))))",18,4,3,5,1,ERROR,,,,True,,,0.142,0,300.304,AutoHyper TIMED OUT (> 300s).
+PlugController_fa4d4ce3__e04,autohyper,"(! (true U (! (true U (X ""u02plug29ctrl0f1d2plug29coff1b"")))))",18,4,3,1,2,ERROR,,,,True,,,0.116,0,300.524,AutoHyper TIMED OUT (> 300s).
+PlugController_fa4d4ce3__e05,autohyper,"(X ((! ""u02plug29ctrl02plug29ctrl"") & ((G (""u02plug29ctrl0f1d2plug29con1b"" R ((""u02plug29ctrl0f1d2plug29con1b"" U ""u02plug29ctrl02plug29ctrl"") W (! ""u02plug29ctrl0f1d2plug29coff1b"")))) -> ""u02plug29ctrl0f1d2plug29coff1b"")))",18,4,3,1,1,SAT_MSR,2,0,"p0b02plug29intent29on@3,p0b02plug29intent29on@4",True,,,0.134,0,138.615,
+SPIReadSdi__e00,autohyper,"(X (! ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b""))",1,4,3,2,1,SAT_MSR,1,0,p0p0eq0counter0f1dtwo1b@1,True,,,0.03,0,29.245,
+SPIReadSdi__e02,autohyper,"(G (X (F (X ""u0sdi0f1dhigh1b""))))",1,4,3,3,3,ERROR,,,,True,,,0.04,0,300.579,AutoHyper TIMED OUT (> 300s).
+SPIReadSdi__e04,autohyper,"(X (! (F ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"")))",1,4,3,1,1,SAT_MSR,0,1,p0p0eq0counter0f1dthree1b@1*,True,,,0.032,0,22.3,
+SPIReadSdi__e05,autohyper,"(true U (((! ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"") | ""u0sdi0f1dhigh1b"") U (F (! ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b""))))",1,4,3,0,3,SAT_MSR,1,0,p0p0eq0counter0f1dthree1b@4,True,,,0.045,0,74.685,
+SPIReadSdi__e06,autohyper,"(F (! ((""u0sdi0f1dhigh1b"" W (! ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"")) -> (X (""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"" & (""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"" | (G ""u0sdi0f1dhigh1b"") | ((X ""u0sdi0f1dhigh1b"") -> (! (F ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"")))))))))",1,4,3,1,3,SAT_MSR,2,0,"p0p0eq0counter0f1dthree1b@4,p0p0gte0counter0f1dfour1b@5",True,,,0.04,0,182.088,
+SPIReadSdi__e07,autohyper,"(((G ""u0sdi0sdi"") | ((G (X false)) R (G ""u0sdi0f1dhigh1b""))) -> (X (F (G ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b""))))",1,4,3,2,1,SAT_MSR,4,0,"p0p0eq0counter0f1dthree1b@0,p0p0eq0counter0f1dtwo1b@0,p0p0gte0counter0f1dfour1b@0,p0p0lte0counter0f1dseventeen1b@0",True,,,0.033,0,23.474,
+SPIReadSdi__e09,autohyper,"(X (""u0sdi0sdi"" <-> (G ""u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"")))",1,4,3,3,2,SAT_MSR,1,0,p0p0eq0counter0f1dthree1b@4,True,,,0.041,0,71.136,
+Shades2_235467da__e01,autohyper,"(X (! (false R ((""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" <-> ""u0room29shades29ctrl0room29shades29ctrl"") | ((F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"") W false)))))",6,4,3,4,1,ERROR,,,,True,,,0.118,0,300.449,AutoHyper TIMED OUT (> 300s).
+Shades2_235467da__e03,autohyper,"(G (F (""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"" W (true U (! (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b""))))))",6,4,3,3,1,ERROR,,,,True,,,0.141,0,300.312,AutoHyper TIMED OUT (> 300s).
+Shades2_235467da__e04,autohyper,"(G (F ""u0room29shades29ctrl0room29shades29ctrl""))",6,4,3,3,2,ERROR,,,,True,,,0.138,0,300.593,AutoHyper TIMED OUT (> 300s).
+Shades2_235467da__e05,autohyper,"(true U (""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" W ((! (""u0room29shades29ctrl0room29shades29ctrl"" R ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")) R ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))",6,4,3,1,3,ERROR,,,,True,,,0.114,0,300.469,AutoHyper TIMED OUT (> 300s).
+Shades2_235467da__e07,autohyper,"(! ((X ""u0room29shades29ctrl0room29shades29ctrl"") & (""u0room29shades29ctrl0room29shades29ctrl"" | (""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"" W (! (false R (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))))))",6,4,3,3,2,ERROR,,,,True,,,0.116,0,300.297,AutoHyper TIMED OUT (> 300s).
+Shades2_235467da__e09,autohyper,"(((G ""u0room29shades29ctrl0room29shades29ctrl"") W (true U ((F ((X (! ""u0room29shades29ctrl0room29shades29ctrl"")) <-> (G (F ""u0room29shades29ctrl0room29shades29ctrl"")))) W (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))) R (((""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"" | ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"") -> (F (X false))) W (X ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"")))",6,4,3,1,2,ERROR,,,,True,,,0.142,0,300.35,AutoHyper TIMED OUT (> 300s).
+Shades2_70523fbe__e00,autohyper,"(""u02shades29ctrl02shades29ctrl"" <-> (""u02shades29ctrl02shades29ctrl"" R (((! ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"") U ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"") -> ((X ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b"") U ((G ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b"") W (false R ""u02shades29ctrl02shades29ctrl""))))))",6,4,3,4,3,ERROR,,,,True,,,0.08,0,300.414,AutoHyper TIMED OUT (> 300s).
+Shades2_70523fbe__e02,autohyper,"(G (F ((G (X (! ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b""))) -> ((X ((F ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"") U (G ""u02shades29ctrl02shades29ctrl""))) R ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b""))))",6,4,3,1,6,ERROR,,,,True,,,0.081,0,300.296,AutoHyper TIMED OUT (> 300s).
+Shades2_70523fbe__e03,autohyper,"(X (((X (""u02shades29ctrl02shades29ctrl"" U (F ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b""))) R (""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b"" <-> (F ""u02shades29ctrl02shades29ctrl""))) W (! ((F ((X (G ""u02shades29ctrl02shades29ctrl"")) W (G ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b""))) W (X (X (G (! ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b""))))))))",6,4,3,3,2,ERROR,,,,True,,,0.109,0,300.254,AutoHyper TIMED OUT (> 300s).
+Shades2_70523fbe__e04,autohyper,"((X ((X ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b"") <-> (""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"" U ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b""))) & (F (! ""u02shades29ctrl02shades29ctrl"")))",6,4,3,4,2,ERROR,,,,True,,,0.086,0,300.423,AutoHyper TIMED OUT (> 300s).
+Shades2_70523fbe__e08,autohyper,"(""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent2423231b1b"" <-> (X (""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"" -> (F (X ""u02shades29ctrl0f1d2shades29move2to0f1d2shades29percent231b1b"")))))",6,4,3,1,6,ERROR,,,,True,,,0.081,0,300.472,AutoHyper TIMED OUT (> 300s).
+Shades2_a5f99bc6__e01,autohyper,"(! ((""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" -> ""u0room29shades29ctrl0room29shades29ctrl"") & (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))",6,4,3,2,6,ERROR,,,,True,,,0.114,0,254.374,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+Shades2_a5f99bc6__e02,autohyper,"(true U (! (G (""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" -> (! (""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"" R (X ""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"")))))))",6,4,3,3,3,SAT_MSR,5,0,"p0b0room29shades29closed@0,p0b0room29shades29open@0,p0b0room29shades29closed@1,p0b0room29shades29closed@2,p0b0room29shades29open@2",True,,,0.134,0,249.005,
+Shades2_a5f99bc6__e05,autohyper,"(! (X ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b""))",6,4,3,1,6,ERROR,,,,True,,,0.143,0,276.776,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+Shades2_a5f99bc6__e08,autohyper,"(X ((G (X ((G ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"") R (""u0room29shades29ctrl0room29shades29ctrl"" -> ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))) -> (G (X (""u0room29shades29ctrl0f1dmove2to0f1dpercent231b1b"" <-> (X (F ""u0room29shades29ctrl0f1dmove2to0f1dpercent2423231b1b"")))))))",6,4,3,3,4,ERROR,,,,True,,,0.112,0,300.328,AutoHyper TIMED OUT (> 300s).
+TorcsSteeringSimple__e01,autohyper,"(""u0steer0f1dsteer2left1b"" U ((F ((G ""u0steer0f1dsteer2left1b"") -> ""u0steer0f1dsteer2right1b"")) U (G (F (! ""u0steer0f1dsteer2left1b"")))))",1,4,3,1,3,ERROR,,,,True,,,0.029,0,300.473,AutoHyper TIMED OUT (> 300s).
+TorcsSteeringSimple__e02,autohyper,"(X (((""u0steer0f1dsteer2left1b"" W ""u0steer0f1dsteer2right1b"") U (false R (F ""u0steer0steer""))) -> ((""u0steer0f1dsteer2right1b"" | (X false)) -> (X (""u0steer0f1dsteer2right1b"" | ""u0steer0steer"")))))",1,4,3,3,2,ERROR,,,,True,,,0.039,0,191.746,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+TorcsSteeringSimple__e03,autohyper,"((""u0steer0f1dsteer2right1b"" <-> (G (""u0steer0f1dsteer2left1b"" & ""u0steer0f1dsteer2right1b""))) <-> ((F ""u0steer0f1dsteer2left1b"") <-> (F (G ""u0steer0f1dsteer2right1b""))))",1,4,3,1,3,ERROR,,,,True,,,0.031,0,300.263,AutoHyper TIMED OUT (> 300s).
+TorcsSteeringSimple__e06,autohyper,"(! ((((F ""u0steer0f1dsteer2right1b"") W (! ""u0steer0steer"")) R (G (X ""u0steer0steer""))) R ""u0steer0f1dsteer2right1b""))",1,4,3,2,3,SAT_MSR,1,0,p0p0right2of2center0track2pos@3,True,,,0.031,0,187.669,
+TorcsSteeringSimple__e07,autohyper,"(((""u0steer0f1dsteer2left1b"" U (! ""u0steer0f1dsteer2right1b"")) R ((true U ""u0steer0f1dsteer2right1b"") & (X (! ""u0steer0f1dsteer2left1b"")))) U (""u0steer0f1dsteer2left1b"" <-> (G ""u0steer0f1dsteer2right1b"")))",1,4,3,3,3,SAT_MSR,3,0,"p0p0right2of2center0track2pos@0,p0p0turning2left0angle@0,p0p0right2of2center0track2pos@6",True,,,0.035,0,282.166,
+WindowMin_a5f99bc6__e00,autohyper,"(F ((""u0room29heating29ctrl0room29heating29ctrl"" <-> ((""u0music29ctrl0f1dplay0f1doverture1b1b"" W false) <-> (""u0music29ctrl0music29ctrl"" & (X ""u0music29ctrl0music29ctrl"")))) R (! (""u0room29heating29ctrl0room29heating29ctrl"" -> ""u0room29heating29ctrl0f1dturn2on1b""))))",8,4,5,2,1,ERROR,,,,True,,,0.139,0,300.383,AutoHyper TIMED OUT (> 300s).
+WindowMin_a5f99bc6__e03,autohyper,"(((! ""u0music29ctrl0music29ctrl"") R (X (! ""u0room29heating29ctrl0f1dturn2off1b""))) W ((! (G ((X ""u0music29ctrl0f1dplay0f1doverture1b1b"") R ((! ""u0room29heating29ctrl0f1dturn2on1b"") -> ""u0music29ctrl0f1dplay0f1doverture1b1b"")))) R ""u0room29heating29ctrl0f1dturn2on1b""))",8,4,5,2,3,ERROR,,,,True,,,0.184,0,300.448,AutoHyper TIMED OUT (> 300s).
+WindowMin_a5f99bc6__e04,autohyper,"((G (X ""u0room29heating29ctrl0f1dturn2on1b"")) | ((X ""u0room29heating29ctrl0f1dturn2off1b"") W ""u0room29heating29ctrl0f1dturn2on1b"") | ((G ((X (F ""u0room29heating29ctrl0f1dturn2off1b"")) W ""u0room29heating29ctrl0f1dturn2off1b"")) -> ((! ""u0room29heating29ctrl0f1dturn2on1b"") <-> (G (F ""u0music29ctrl0music29ctrl"")))))",8,4,5,4,1,ERROR,,,,True,,,0.175,0,300.372,AutoHyper TIMED OUT (> 300s).
+WindowMin_a5f99bc6__e05,autohyper,"((X (! ""u0room29heating29ctrl0f1dturn2on1b"")) | (X ((! ""u0room29heating29ctrl0f1dturn2on1b"") R (X (X (G (! (X (! (""u0room29heating29ctrl0f1dturn2off1b"" U ""u0music29ctrl0music29ctrl""))))))))))",8,4,5,3,3,SAT_MSR,1,0,p0b0room29heating29off@1,True,,,0.139,0,198.088,
+amba_decomposed_arbiter3__e00,autohyper,"((""busreq"" -> (""busreq"" <-> (F ""hgrant_0""))) W (((""hgrant_0"" -> (X ""decide"")) & ((! (X ""busreq"")) | (""hgrant_2"" R ""decide""))) -> (! (""busreq"" U (! ""hgrant_0"")))))",21,4,5,5,4,ERROR,,,,True,,,0.157,0,14.882,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Unexpected exit code by spot
+=============================
+"
+amba_decomposed_arbiter3__e01,autohyper,"(F ((! (X ((""busreq"" | ""hgrant_2"") -> ((G ""hgrant_1"") R ((X ""hgrant_1"") <-> (""hgrant_2"" R (X ""hgrant_1""))))))) | (! (G (X ""busreq"")))))",21,4,5,3,2,ERROR,,,,True,,,0.174,0,300.36,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_arbiter3__e04,autohyper,"(F (X (""hgrant_1"" & (G (F (! (F (! ""hgrant_1""))))))))",21,4,5,2,2,SAT_MSR,3,3,"allready@0,hbusreq_0@1,allready@2,hbusreq_0@3*,hbusreq_2@3*,allready@4*",True,,,0.183,0,170.7,
+amba_decomposed_arbiter3__e05,autohyper,"((! ""decide"") -> ((X ""decide"") | (((""busreq"" & ""hgrant_0"") W (F ""hgrant_2"")) -> (((""busreq"" U (! (""decide"" & ""hgrant_2""))) R ""hgrant_2"") W (F (X (G ""busreq"")))))))",21,4,5,3,2,ERROR,,,,True,,,0.2,0,300.378,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_arbiter3__e06,autohyper,"(X (G (((G (! ""hgrant_1"")) | (F (! (true U (X (F ""hgrant_1"")))))) R (""decide"" | ""hgrant_2"" | (X ""hgrant_1"")))))",21,4,5,4,1,ERROR,,,,True,,,0.219,0,300.42,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_arbiter3__e07,autohyper,"((""busreq"" & (F ""decide"")) <-> (""busreq"" & (F (X ((X ""hgrant_0"") & (""hgrant_2"" <-> (! ((F ""hgrant_0"") U (G ""busreq"")))))))))",21,4,5,7,3,ERROR,,,,True,,,0.155,0,37.219,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Unexpected exit code by spot
+=============================
+"
+amba_decomposed_arbiter3__e09,autohyper,"(G ((X (! ((G ""hgrant_0"") W (! ""busreq"")))) U ((""decide"" & ""hgrant_2"") <-> (G ""decide""))))",21,4,5,5,1,ERROR,,,,True,,,0.156,0,300.543,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_encode3__e03,autohyper,"(X ((X false) | (F (! ""hmaster_0"")) | (F ((F (X ""hmaster_1"")) <-> (G (""hmaster_0"" W false))))))",3,4,2,1,2,SAT_MSR,2,0,"hgrant_0@3,hgrant_1@3",True,,,0.055,0,139.018,
+amba_decomposed_encode3__e04,autohyper,"((F ""hmaster_1"") <-> (true U ((""hmaster_1"" -> (X (""hmaster_1"" | (F (""hmaster_1"" -> (G ""hmaster_0"")))))) W false)))",3,4,2,3,3,SAT_MSR,6,0,"hgrant_0@1,hgrant_1@1,hgrant_2@1,hgrant_0@2,hgrant_1@2,hgrant_2@2",True,,,0.062,0,142.865,
+amba_decomposed_encode3__e06,autohyper,"(F (X (! ""hmaster_0"")))",3,4,2,3,2,SAT_MSR,2,0,"hgrant_0@1,hgrant_2@1",True,,,0.048,0,93.548,
+amba_decomposed_encode3__e07,autohyper,"((! ((F ""hmaster_1"") U ""hmaster_0"")) <-> (G ((! (X false)) -> (! (G ""hmaster_1"")))))",3,4,2,2,3,ERROR,,,,True,,,0.046,0,300.196,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_encode3__e09,autohyper,"(F ((G ((((! ""hmaster_0"") <-> (F ""hmaster_0"")) <-> ((G ""hmaster_0"") | (""hmaster_0"" R ""hmaster_1""))) -> (X ((""hmaster_0"" R (! ""hmaster_1"")) U ""hmaster_1"")))) W ""hmaster_1""))",3,4,2,2,2,ERROR,,,,True,,,0.062,0,300.251,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_tburst4__e00,autohyper,"(true U (false R (G ""ready2"")))",10,4,1,3,2,ERROR,,,,True,,,0.145,0,300.249,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_tburst4__e05,autohyper,"(true U (true U ((F (! ""ready2"")) U (X ""ready2""))))",10,4,1,3,3,ERROR,,,,True,,,0.12,0,300.778,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_tburst4__e06,autohyper,"(X ""ready2"")",10,4,1,4,2,SAT_MSR,1,0,decide@1,True,,,0.131,0,186.029,
+amba_decomposed_tburst4__e07,autohyper,"(F (G (((true U ""ready2"") -> (G (! (X false)))) R ""ready2"")))",10,4,1,3,1,ERROR,,,,True,,,0.161,0,300.324,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_tburst4__e08,autohyper,"(F (X (X (G (F ""ready2"")))))",10,4,1,1,3,ERROR,,,,True,,,0.169,0,300.478,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_tburst4__e09,autohyper,"(false R (F ((X false) <-> (X (X (! (F ""ready2"")))))))",10,4,1,3,2,ERROR,,,,True,,,0.116,0,300.565,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_tsingle__e00,autohyper,"(G ((! ""ready3"") | (F (X ""ready3""))))",7,4,1,2,3,ERROR,,,,True,,,0.124,0,300.57,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_tsingle__e03,autohyper,"(F ((F (G ((G ((F (G (false R ""ready3""))) W ""ready3"")) W false))) | (false R (G ""ready3""))))",7,4,1,1,1,ERROR,,,,True,,,0.081,0,300.448,AutoHyper TIMED OUT (> 300s).
+amba_decomposed_tsingle__e04,autohyper,"(G ((G (X ""ready3"")) | (X (X (X false)))))",7,4,1,3,2,SAT_MSR,1,0,decide@0,True,,,0.085,0,211.288,
+amba_decomposed_tsingle__e06,autohyper,"(X ((! ""ready3"") | (G (X ""ready3""))))",7,4,1,1,2,SAT_MSR,1,0,decide@1,True,,,0.111,0,165.041,
+arbiter4__e01,autohyper,"(G ((X (F ""g_0"")) U (""g_1"" -> ((F ""g_0"") <-> (((F ""g_0"") & (G ""g_0"")) U (X (""g_1"" -> ""g_0"")))))))",26,4,4,3,2,ERROR,,,,True,,,0.401,0,300.733,AutoHyper TIMED OUT (> 300s).
+arbiter4__e06,autohyper,"((! (F ((""g_1"" & (! ""g_1"") & ""g_3"") W (! (true U ""g_3""))))) & ((! ""g_1"") U (! ""g_0"")))",26,4,4,2,6,ERROR,,,,True,,,0.323,0,300.464,AutoHyper TIMED OUT (> 300s).
+arbiter4__e07,autohyper,"((! ""g_1"") <-> (F ""g_3""))",26,4,4,5,4,ERROR,,,,True,,,0.334,0,300.692,AutoHyper TIMED OUT (> 300s).
+arbiter4__e09,autohyper,"((F ((F (""g_2"" & ""g_3"")) U (""g_2"" U (F ""g_1"")))) | (X (""g_2"" R (""g_0"" <-> ""g_2""))))",26,4,4,3,15,ERROR,,,,True,,,0.336,0,40.417,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Unexpected exit code by spot
+=============================
+"
+arbiter_with_buffer2__e01,autohyper,"(F (((F ""ack_0"") <-> (X ""g_0"")) -> ((G (X false)) W ((""ack_0"" W ""g_1"") -> ""ack_1""))))",5,4,4,0,3,SAT_MSR,1,0,r_1@3,True,,,0.105,0,266.987,
+arbiter_with_buffer2__e06,autohyper,"(G ((! (true U (G (""g_1"" W ""ack_1"")))) U (""ack_1"" <-> (F (X (true U (! (""ack_1"" -> ""ack_0""))))))))",5,4,4,3,2,ERROR,,,,True,,,0.123,0,300.356,AutoHyper TIMED OUT (> 300s).
+arbiter_with_buffer2__e08,autohyper,"((! ((! (((G ""g_0"") -> ""g_0"") W (F (X ""ack_0"")))) R ""ack_1"")) <-> (""g_0"" | (! (F (! (X (""g_1"" -> (""ack_1"" | (! ""g_1"")))))))))",5,4,4,3,2,SAT_MSR,1,0,r_0@0,True,,,0.134,0,218.398,
+arbiter_with_buffer2__e09,autohyper,"((! ""ack_1"") U (((X ""g_1"") -> (F ""ack_1"")) R (X ((G (! (""ack_0"" W ""g_1""))) <-> ((F ""ack_1"") U ""g_0"")))))",5,4,4,2,3,ERROR,,,,True,,,0.141,0,56.888,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Unexpected exit code by spot
+=============================
+"
+arbiter_with_cancel2__e00,autohyper,"((F (""g_1"" U (""g_0"" W ""g_1""))) <-> (G ((G ""g_0"") | (G ""g_1""))))",6,4,2,3,1,SAT_MSR,2,1,"c_1@1,c_1@2,r_1@3*",True,,,0.065,0,186.679,
+arbiter_with_cancel2__e04,autohyper,"(! ((X (X (true U (F (! ""g_1""))))) U ""g_0""))",6,4,2,3,3,ERROR,,,,True,,,0.066,0,300.688,AutoHyper TIMED OUT (> 300s).
+arbiter_with_cancel2__e06,autohyper,"(((F ""g_0"") R ((F ""g_0"") <-> ((""g_0"" & ""g_1"") R ""g_1""))) -> ((F (""g_1"" W ""g_0"")) R (F ""g_1"")))",6,4,2,3,2,ERROR,,,,True,,,0.056,0,300.242,AutoHyper TIMED OUT (> 300s).
+arbiter_with_cancel2__e08,autohyper,"((F ((X ""g_1"") R (! (F (""g_1"" <-> (F ""g_0"")))))) U ""g_1"")",6,4,2,4,3,ERROR,,,,True,,,0.06,0,300.311,AutoHyper TIMED OUT (> 300s).
+detector4__e01,autohyper,"(true U ((F ""g"") U (X ""g"")))",4,4,1,4,3,ERROR,,,,True,,,0.072,0,300.353,AutoHyper TIMED OUT (> 300s).
+detector4__e02,autohyper,"(G (X (! ""g"")))",4,4,1,1,1,SAT_MSR,0,1,r_3@1*,True,,,0.07,0,86.378,
+detector4__e03,autohyper,"(G (! (X ""g"")))",4,4,1,3,3,SAT_MSR,4,3,"r_2@0,r_2@1,r_2@2,r_2@3,r_2@4*,r_2@5*,r_2@6*",True,,,0.064,0,198.891,
+detector4__e05,autohyper,"(F ""g"")",4,4,1,3,3,ERROR,,,,True,,,0.058,0,300.423,AutoHyper TIMED OUT (> 300s).
+detector4__e08,autohyper,"(F ((! (G ""g"")) W false))",4,4,1,2,2,ERROR,,,,True,,,0.053,0,300.44,AutoHyper TIMED OUT (> 300s).
+full_arbiter4__e02,autohyper,"((""g_2"" -> (F ""g_0"")) U ((X ((G (""g_0"" R (! ""g_0""))) R (G ""g_3""))) U (true U ""g_2"")))",30,4,4,9,6,ERROR,,,,True,,,0.555,0,301.037,AutoHyper TIMED OUT (> 300s).
+full_arbiter4__e03,autohyper,"((F (""g_2"" & (G ""g_3"") & (X ""g_3""))) <-> (((""g_2"" | ""g_3"") <-> (X (F (""g_2"" U (F ""g_2""))))) W ""g_2""))",30,4,4,3,4,ERROR,,,,True,,,0.43,0,301.114,AutoHyper TIMED OUT (> 300s).
+full_arbiter4__e08,autohyper,"((G (""g_2"" R (X (G (F ""g_2""))))) W false)",30,4,4,4,3,ERROR,,,,True,,,0.372,0,300.658,AutoHyper TIMED OUT (> 300s).
+lilydemo21__e00,autohyper,"((X (! ""g1"")) W ((F (G ""g2"")) R (G (F (G (""g1"" R (! (""g3"" W false))))))))",4,4,4,2,3,ERROR,,,,True,,,0.061,0,300.464,AutoHyper TIMED OUT (> 300s).
+lilydemo21__e01,autohyper,"(F (G ((F (G ""g4"")) W (G (""g2"" <-> ""g3"")))))",4,4,4,0,1,ERROR,,,,True,,,0.053,0,300.483,AutoHyper TIMED OUT (> 300s).
+lilydemo21__e03,autohyper,"((X (! (""g2"" & (""g1"" W (""g1"" R ""g2""))))) R ((! ""g4"") R (F ""g1"")))",4,4,4,4,2,ERROR,,,,True,,,0.08,0,300.271,AutoHyper TIMED OUT (> 300s).
+lilydemo21__e04,autohyper,"((""g4"" R (""g2"" | (! ""g4""))) W ""g2"")",4,4,4,2,1,SAT_MSR,6,5,"r1@1,r3@1,r2@3,r3@3,r2@4,r3@5,r4@6*,r2@8*,r3@8*,r2@9*,r3@10*",True,,,0.053,0,129.509,
+lilydemo21__e06,autohyper,"(X ""g1"")",4,4,4,0,1,SAT_MSR,4,0,"r1@0,r2@1,r3@1,r4@1",True,,,0.061,0,39.763,
+load_balancer3__e00,autohyper,"(((G ""grant_1"") -> ((F ""grant_1"") <-> ((""grant_1"" W ""grant_0"") -> (X false)))) <-> ((G ""grant_2"") U ""grant_2""))",10,4,3,3,2,SAT_MSR,1,0,request_0@0,True,,,0.146,0,115.258,
+load_balancer3__e01,autohyper,"(F ((! (""grant_2"" <-> (""grant_0"" <-> ""grant_1""))) <-> (G (""grant_2"" | (G (X ""grant_1""))))))",10,4,3,3,1,ERROR,,,,True,,,0.128,0,300.519,AutoHyper TIMED OUT (> 300s).
+load_balancer3__e05,autohyper,"(X ((! ""grant_0"") | (X (F ""grant_1"")) | (! (""grant_1"" | (F (true U ""grant_2""))))))",10,4,3,1,2,ERROR,,,,True,,,0.142,0,300.291,AutoHyper TIMED OUT (> 300s).
+load_balancer3__e08,autohyper,"(X (! (F ""grant_0"")))",10,4,3,2,3,SAT_MSR,2,3,"request_0@1,request_0@2,request_0@3*,request_0@4*,request_0@5*",True,,,0.142,0,197.401,
+ltl2dba05__e00,autohyper,"(X (F ""acc""))",5,4,1,4,2,SAT_MSR,4,0,"p@0,q@1,r@2,s@3",True,,,0.063,0,231.411,
+ltl2dba05__e01,autohyper,"(! ((X false) U (false R (F ""acc""))))",5,4,1,1,1,ERROR,,,,True,,,0.069,0,300.493,AutoHyper TIMED OUT (> 300s).
+ltl2dba05__e02,autohyper,"(! (X (X ((G ""acc"") | ((X ((F ""acc"") <-> (G ""acc""))) -> (X false))))))",5,4,1,3,1,ERROR,,,,True,,,0.075,0,300.44,AutoHyper TIMED OUT (> 300s).
+ltl2dba05__e03,autohyper,"((! (X (F ""acc""))) W (X ((""acc"" & (! ""acc"")) W false)))",5,4,1,3,3,ERROR,,,,True,,,0.085,0,260.585,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+ltl2dba05__e08,autohyper,"(F ((! ((! (X (F (""acc"" | (! ""acc""))))) R (! (true U (X false))))) U (F ""acc"")))",5,4,1,3,3,ERROR,,,,True,,,0.087,0,300.416,AutoHyper TIMED OUT (> 300s).
+ltl2dba06__e05,autohyper,"(X (G (! (G (F ((X ""acc"") R (! ""acc"")))))))",5,4,1,9,3,ERROR,,,,True,,,0.083,0,300.526,AutoHyper TIMED OUT (> 300s).
+ltl2dba06__e08,autohyper,"(""acc"" R (! ""acc""))",5,4,1,4,1,ERROR,,,,True,,,0.081,0,294.26,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+ltl2dba20__e02,autohyper,"(true U (((X false) <-> (! (X ""acc""))) R (""acc"" | (X ""acc""))))",5,4,1,3,3,ERROR,,,,True,,,0.061,0,273.499,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+ltl2dba20__e04,autohyper,"(F ((X ""acc"") U (! ((G (""acc"" R (F (""acc"" & (! ""acc""))))) W ((F ""acc"") W false)))))",5,4,1,2,1,ERROR,,,,True,,,0.061,0,300.404,AutoHyper TIMED OUT (> 300s).
+ltl2dba20__e06,autohyper,"(F ""acc"")",5,4,1,0,1,SAT_MSR,4,0,"q@2,p@3,p@4,s@4",True,,,0.049,0,96.558,
+ltl2dba20__e07,autohyper,"(""acc"" W false)",5,4,1,0,3,SAT_MSR,6,6,"p@0,s@0,p@1,s@1,p@2,r@2,p@3*,s@3*,p@4*,s@4*,p@5*,r@5*",True,,,0.07,0,87.48,
+ltl2dba20__e09,autohyper,"(F ((! ""acc"") U (F (""acc"" W false))))",5,4,1,0,3,ERROR,,,,True,,,0.061,0,300.327,AutoHyper TIMED OUT (> 300s).
+ltl2dba_C24__e00,autohyper,"((G ((X false) R (((X ""acc"") U ""acc"") W ((F ""acc"") & (! (X ""acc"")))))) | (G (X (""acc"" <-> (G ""acc"")))))",4,4,1,1,2,ERROR,,,,True,,,0.05,0,300.224,AutoHyper TIMED OUT (> 300s).
+ltl2dba_C24__e04,autohyper,"((F (""acc"" U ((G ""acc"") U ""acc""))) | (! (G (! ""acc""))))",4,4,1,5,2,ERROR,,,,True,,,0.064,0,300.535,AutoHyper TIMED OUT (> 300s).
+ltl2dba_C24__e06,autohyper,"(! (X (G ""acc"")))",4,4,1,0,3,ERROR,,,,True,,,0.048,0,217.842,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+ltl2dba_C24__e08,autohyper,"(! (F (X (false R (X ""acc"")))))",4,4,1,3,2,ERROR,,,,True,,,0.064,0,300.451,AutoHyper TIMED OUT (> 300s).
+ltl2dba_E4__e03,autohyper,"(X ((X false) R (G ((F (! (X ((G (! (X false))) R (X false))))) U ""acc""))))",16,4,1,2,1,ERROR,,,,True,,,0.142,0,300.485,AutoHyper TIMED OUT (> 300s).
+ltl2dba_E4__e04,autohyper,"((X ""acc"") -> (X (X false)))",16,4,1,4,1,ERROR,,,,True,,,0.119,0,209.554,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+ltl2dba_E4__e05,autohyper,"((X ""acc"") | ((G (X false)) & (F (""acc"" & (F (X (X false)))))))",16,4,1,2,2,SAT_MSR,4,0,"p_0@0,p_1@0,p_2@0,p_3@0",True,,,0.137,0,178.56,
+ltl2dba_E4__e07,autohyper,"(! (F ((! (X false)) U (""acc"" R (! (""acc"" & (! (""acc"" <-> (! ""acc"")))))))))",16,4,1,3,3,ERROR,,,,True,,,0.115,0,26.628,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Unexpected exit code by spot
+=============================
+"
+ltl2dba_E4__e08,autohyper,"(X ((false R (((! ""acc"") U ""acc"") <-> (G (true U ""acc"")))) -> (! ""acc"")))",16,4,1,4,1,ERROR,,,,True,,,0.112,0,208.213,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+ltl2dba_E4__e09,autohyper,"(! ((X (F (X false))) <-> (""acc"" <-> (X (F (! ""acc""))))))",16,4,1,1,3,ERROR,,,,True,,,0.142,0,223.527,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+ltl2dba_Q4__e00,autohyper,"(((X false) | (! (X ""acc""))) -> (G ""acc""))",30,4,1,1,1,ERROR,,,,True,,,0.216,0,300.625,AutoHyper TIMED OUT (> 300s).
+ltl2dba_Q4__e02,autohyper,"(G (true U (true U (true U (! ""acc"")))))",30,4,1,3,2,ERROR,,,,True,,,0.211,0,300.511,AutoHyper TIMED OUT (> 300s).
+ltl2dba_Q4__e04,autohyper,"(false R ((F (X ""acc"")) | (! (G ((F ""acc"") R (! ""acc""))))))",30,4,1,2,3,ERROR,,,,True,,,0.199,0,32.421,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Unexpected exit code by spot
+=============================
+"
+ltl2dba_Q4__e05,autohyper,"(((! ""acc"") R (F ""acc"")) W false)",30,4,1,4,3,ERROR,,,,True,,,0.21,0,56.404,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Unexpected exit code by spot
+=============================
+"
+ltl2dba_Q4__e07,autohyper,"(! (F (! ((""acc"" <-> (X false)) <-> (G (! ((! ""acc"") -> ""acc"")))))))",30,4,1,2,2,ERROR,,,,True,,,0.161,0,300.803,AutoHyper TIMED OUT (> 300s).
+ltl2dba_Q4__e08,autohyper,"(X ((F (((X false) -> ""acc"") -> (G ""acc""))) R (! ""acc"")))",30,4,1,2,2,ERROR,,,,True,,,0.228,0,300.416,AutoHyper TIMED OUT (> 300s).
+ltl2dba_U14__e00,autohyper,"(F ((""acc"" <-> ((F ""acc"") -> (G ""acc""))) R ""acc""))",9,4,1,3,3,ERROR,,,,True,,,0.098,0,244.351,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+ltl2dba_U14__e02,autohyper,"(F (X (G (F (X ""acc"")))))",9,4,1,1,2,ERROR,,,,True,,,0.101,0,300.406,AutoHyper TIMED OUT (> 300s).
+ltl2dba_U14__e03,autohyper,"(X ((X (""acc"" U ((X ""acc"") & (false R ""acc"")))) U ""acc""))",9,4,1,2,2,SAT_MSR,3,0,"p_1@0,p_2@1,p_3@1",True,,,0.078,0,160.975,
+ltl2dba_U14__e05,autohyper,"(F (G ""acc""))",9,4,1,3,1,ERROR,,,,True,,,0.077,0,300.47,AutoHyper TIMED OUT (> 300s).
+ltl2dba_U14__e06,autohyper,"(! (G ((G ""acc"") R (X (F (! ""acc""))))))",9,4,1,1,2,ERROR,,,,True,,,0.105,0,300.508,AutoHyper TIMED OUT (> 300s).
+ltl2dba_U14__e07,autohyper,"(F (X (""acc"" & (true U (true U ""acc"")))))",9,4,1,3,3,SAT_MSR,1,0,p_3@0,True,,,0.083,0,226.304,
+ltl2dba_U14__e08,autohyper,"(((! (true U ""acc"")) U (F ""acc"")) R (G (F ((F ""acc"") W false))))",9,4,1,3,3,ERROR,,,,True,,,0.089,0,300.517,AutoHyper TIMED OUT (> 300s).
+ltl2dba_U14__e09,autohyper,"(F (! ((G ""acc"") R (F ""acc""))))",9,4,1,2,2,ERROR,,,,True,,,0.077,0,242.465,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+ltl2dba_beta2__e00,autohyper,"((X false) <-> (X ""acc""))",9,4,1,3,2,SAT_MSR,1,0,q_1@0,True,,,0.101,0,192.48,
+ltl2dba_beta2__e01,autohyper,"((X false) U (F ""acc""))",9,4,1,5,3,ERROR,,,,True,,,0.121,0,300.771,AutoHyper TIMED OUT (> 300s).
+ltl2dba_beta2__e03,autohyper,"(true U (! (X (X ""acc""))))",9,4,1,4,3,SAT_MSR,2,0,"q_1@0,q_1@1",True,,,0.121,0,239.223,
+ltl2dba_beta2__e06,autohyper,"((! (X false)) U (X ""acc""))",9,4,1,3,1,ERROR,,,,True,,,0.122,0,300.47,AutoHyper TIMED OUT (> 300s).
+ltl2dba_beta2__e07,autohyper,"((X ""acc"") U (F (X (G ((""acc"" & (""acc"" <-> (X ""acc""))) W ((! (""acc"" R (true U ""acc""))) U (false R (X ""acc""))))))))",9,4,1,1,3,ERROR,,,,True,,,0.105,0,300.895,AutoHyper TIMED OUT (> 300s).
+ltl2dba_beta2__e09,autohyper,"((F ((G ""acc"") & ((F ""acc"") W false))) & (F (X ""acc"")))",9,4,1,2,3,ERROR,,,,True,,,0.102,0,300.514,AutoHyper TIMED OUT (> 300s).
+prioritized_arbiter3__e06,autohyper,"(! (G (X (false R (""g_m"" W false)))))",26,4,4,4,2,ERROR,,,,True,,,0.352,0,301.025,AutoHyper TIMED OUT (> 300s).
+prioritized_arbiter3__e07,autohyper,"((false R ((G (true U (""g_1"" <-> (G (F ""g_m""))))) U (true U (! (G ""g_0""))))) | ((F ""g_m"") U ""g_2""))",26,4,4,1,1,ERROR,,,,True,,,0.451,0,300.648,AutoHyper TIMED OUT (> 300s).
+prioritized_arbiter3__e08,autohyper,"(! (((G ""g_m"") <-> (! ((X (! (X ((X ""g_1"") U ""g_1"")))) W (X (""g_1"" -> ""g_0""))))) R (F ""g_0"")))",26,4,4,4,1,ERROR,,,,True,,,0.44,0,15.119,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Unexpected exit code by spot
+=============================
+"
+prioritized_arbiter3__e09,autohyper,"(""g_m"" | (G (! (G ""g_1""))))",26,4,4,2,1,ERROR,,,,True,,,0.365,0,300.655,AutoHyper TIMED OUT (> 300s).
+round_robin_arbiter4__e00,autohyper,"(X (((F (! ((! ""g_2"") <-> (G ""g_3"")))) U ""g_3"") & (F ((F (G (false R (F ""g_1"")))) | (""g_2"" <-> (! (F ""g_0"")))))))",37,4,4,2,2,ERROR,,,,True,,,0.214,0,300.605,AutoHyper TIMED OUT (> 300s).
+round_robin_arbiter4__e03,autohyper,"(((""g_2"" <-> (""g_1"" <-> ((G ""g_1"") W false))) <-> (F (""g_0"" | ""g_3"" | (F ""g_3"")))) <-> (""g_1"" & (X ""g_3"") & (X (X false))))",37,4,4,3,2,ERROR,,,,True,,,0.19,0,300.4,AutoHyper TIMED OUT (> 300s).
+round_robin_arbiter4__e04,autohyper,"((F ((! ""g_0"") W (G (X (X (X ""g_3"")))))) <-> (""g_2"" | ((F ""g_0"") U ""g_0"")))",37,4,4,4,2,ERROR,,,,True,,,0.157,0,300.371,AutoHyper TIMED OUT (> 300s).
+round_robin_arbiter4__e05,autohyper,"(! (((! (""g_0"" U ""g_2"")) R (F ((G (F ""g_1"")) W (X (G ""g_0""))))) & ((G ""g_1"") | (X false))))",37,4,4,3,1,ERROR,,,,True,,,0.136,0,224.396,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Exception of type 'System.OutOfMemoryException' was thrown.
+=============================
+"
+round_robin_arbiter4__e06,autohyper,"(((G ""g_1"") | (G (X (X false)))) <-> ((""g_1"" R (true U (X ""g_0""))) & (! (""g_3"" -> (""g_1"" W (""g_0"" -> ""g_1""))))))",37,4,4,2,2,SAT_MSR,1,0,r_2@3,True,,,0.183,0,220.045,
+round_robin_arbiter4__e08,autohyper,"((X (""g_0"" R ""g_3"")) R (""g_1"" | (F ""g_3"")))",37,4,4,4,2,ERROR,,,,True,,,0.162,0,300.389,AutoHyper TIMED OUT (> 300s).
+simple_arbiter4__e01,autohyper,"(F ((""g_2"" R (! (G ""g_0""))) U ((! ""g_1"") R ((G ""g_3"") W ""g_3""))))",29,4,4,4,3,ERROR,,,,True,,,0.499,0,300.903,AutoHyper TIMED OUT (> 300s).
+simple_arbiter4__e02,autohyper,"(""g_0"" | (G (((G ""g_3"") <-> (X ""g_2"")) -> (! (F (X ((""g_0"" | ""g_2"" | (G ""g_3"")) U (X (F (! ""g_1""))))))))))",29,4,4,4,3,ERROR,,,,True,,,0.485,0,300.544,AutoHyper TIMED OUT (> 300s).
+simple_arbiter4__e03,autohyper,"((X (X (X ((F ""g_0"") U ""g_3"")))) | (X (((! ""g_1"") & (X ""g_2"")) -> ""g_1"")))",29,4,4,1,3,ERROR,,,,True,,,0.456,0,300.802,AutoHyper TIMED OUT (> 300s).
+simple_arbiter4__e05,autohyper,"(! ((! ""g_2"") <-> (""g_1"" | ((X ""g_3"") & (G (F (((G ""g_1"") W ""g_3"") W ((! ""g_0"") U (""g_1"" | ""g_3"")))))))))",29,4,4,7,2,ERROR,,,,True,,,0.456,0,58.2,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Unexpected exit code by spot
+=============================
+"
+simple_arbiter4__e07,autohyper,"((X (""g_0"" -> (X ((""g_3"" -> (""g_0"" & (X false))) & (X ""g_1""))))) <-> (""g_1"" | ((! ""g_3"") & (true U ""g_2""))))",29,4,4,6,15,ERROR,,,,True,,,0.451,0,63.545,"AutoHyper solver error at MSR.
+=========== ERROR ===========
+Unexpected exit code by spot
+=============================
+"
+test2_f2774e0b__e04,autohyper,"(""u0e0f1dfun0p1db0in31b1b"" R (((X ""u0e0e"") & (! (F ""u0d0d""))) R ((X (""u0c0f1dc31b"" U (""u0b0b"" | ""u0e0f1dfun0p1db0in31b1b""))) -> (""u0c0f1dc31b"" & ""u0f0f1dc61b""))))",1,4,16,1,2,ERROR,,,,True,,,0.076,0,300.313,AutoHyper TIMED OUT (> 300s).

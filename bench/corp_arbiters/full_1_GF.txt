@@ -1,0 +1,27 @@
+[info]
+Full 1-arbiter, CORP (CAV'24) Table 1 -- the system of CORP's artifact (full1GF), phi_C = G F r_0
+
+[inputs]
+"r_0"
+
+[effect]
+G F "g_0"
+
+[lasso]
+AP: "r_0" "g_0"
+Prefix: 
+Loop: {0 1}
+
+[system]
+HOA: v1
+States: 1
+Start: 0
+AP: 2 "r_0" "g_0"
+acc-name: all
+Acceptance: 0 t
+properties: trans-labels explicit-labels state-acc deterministic
+controllable-AP: 1
+--BODY--
+State: 0
+[!0&!1 | 0&1] 0
+--END--

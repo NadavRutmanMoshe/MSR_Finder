@@ -1,0 +1,36 @@
+[info]
+CATS SYNTCOMP: ltl2dpa02 (spec=./sc-1/ltl2dpa02.json, states=3, inputs=2, aps=4) effect #4 source=randltl
+
+[inputs]
+"b" "a"
+
+[effect]
+((F "p0") | (F ("p1" U "p0")))
+
+[lasso]
+AP: "p0" "p1" "a" "b"
+Prefix: {1 2 3} {1} {1 2} {0 3}
+Loop: {0 2} {0 3}
+
+[system]
+HOA: v1
+Start: 0
+AP: 4 "p0" "p1" "a" "b"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&1&!2&!3] 1
+[!0&1&2&!3] 2
+[!0&1&!2&3] 2
+[!0&1&2&3] 2
+State: 1
+[!0&1&!2&!3] 1
+[!0&1&2&!3] 1
+[0&!1&!2&3] 2
+[0&!1&2&3] 2
+State: 2
+[!0&1&!2&!3] 1
+[0&!1&2&!3] 2
+[0&!1&!2&3] 2
+[0&!1&2&3] 2
+--END--

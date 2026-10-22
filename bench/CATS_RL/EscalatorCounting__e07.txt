@@ -1,0 +1,39 @@
+[info]
+CATS SYNTCOMP: EscalatorCounting (spec=./sc-1/EscalatorCounting.json, states=2, inputs=3, aps=9) effect #7 source=randltl
+
+[inputs]
+"p0p0zero0users" "p0p0exit2event0top" "p0p0enter2event0bottom"
+
+[effect]
+(F ((true U "u0steps0f1dmove1b") W false))
+
+[lasso]
+AP: "u0users0f1ddec0users1b" "u0users0f1dinc0users1b" "u0users0users" "p0p0enter2event0bottom" "p0p0exit2event0top" "u0steps0f1dstop1b" "u0steps0steps" "u0steps0f1dmove1b" "p0p0zero0users"
+Prefix: {1 3 6} {1 3 6}
+Loop: {2 3 4 6} {1 3 6}
+
+[system]
+HOA: v1
+Start: 0
+AP: 9 "u0users0f1ddec0users1b" "u0users0f1dinc0users1b" "u0users0users" "p0p0enter2event0bottom" "p0p0exit2event0top" "u0steps0f1dstop1b" "u0steps0steps" "u0steps0f1dmove1b" "p0p0zero0users"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&2&!3&!4&!5&6&!7&!8] 1
+[!0&1&!2&3&!4&!5&6&!7&!8] 1
+[0&!1&!2&!3&4&!5&6&!7&!8] 1
+[!0&!1&2&3&4&!5&6&!7&!8] 1
+[!0&!1&2&!3&!4&!5&6&!7&8] 0
+[!0&1&!2&3&!4&!5&!6&7&8] 0
+[0&!1&!2&!3&4&!5&6&!7&8] 0
+[!0&!1&2&3&4&!5&!6&7&8] 0
+State: 1
+[!0&!1&2&!3&!4&!5&6&!7&!8] 1
+[!0&1&!2&3&!4&!5&6&!7&!8] 1
+[0&!1&!2&!3&4&!5&6&!7&!8] 1
+[!0&!1&2&3&4&!5&6&!7&!8] 1
+[!0&!1&2&!3&!4&5&!6&!7&8] 0
+[!0&1&!2&3&!4&!5&!6&7&8] 0
+[0&!1&!2&!3&4&5&!6&!7&8] 0
+[!0&!1&2&3&4&!5&!6&7&8] 0
+--END--

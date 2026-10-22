@@ -1,0 +1,12 @@
+label,cats_file,ours_file,cause,paper_res,paper_s,cats_status,cats_failed,cats_stages,cats_s,mtsr_status,mtsr_states,mtsr_s,verdict,is_mtsr,msr_status,msr_size,msr_s
+Spurious Arbiter,atva22_arbiter_spurious,atva2022_arbiter_spurious,"F ""r1""",no,0.6,NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.928,OK,1,0.315,NOT_MTSR,0,,,
+Arbiter simple,atva22_arbiter_simple,atva2022_arbiter_simple,"X ""r1""",yes,1.2,IS_CAUSE,,PC1=holds;PC4=holds;PC2=holds;PC3.2=holds;PC3.1=holds,1.812,OK,3,0.3,MTSR,1,,,
+Arbiter,atva22_arbiter,atva2022_arbiter,"E _q . !_q & G (X _q <-> !_q) & F ( _q & ""r1"")",yes,9.7,IS_CAUSE,,PC1=holds;PC4=holds;PC2=holds;PC3.2=holds;PC3.1=holds,3.412,OK,3,0.327,NOT_MTSR,0,,,
+Example 1,example_1,example_1,"""i1"" & X X ((! ""i2"") U (""i1"" & !""i2""))",yes,0.9,IS_CAUSE,,PC1=holds;PC4=holds;PC2=holds;PC3.2=holds;PC3.1=holds,1.734,OK,4,0.299,MTSR,1,,,
+"Example 1, mod",example_1_mod,example_1_mod,"""i1"" & X X ((! ""i2"") U (""i1"" & !""i2""))",no,1.0,NO_CAUSE,PC3.1,PC1=holds;PC4=holds;PC2=holds;PC3.2=holds;PC3.1=does not hold,1.637,OK,4,0.313,MTSR,1,,,
+"Example 6, odd",example_3_odd,example_6_odd,"E _q . _q & G (X _q <-> !_q) & G ( _q -> ""r0"")",yes,1.4,IS_CAUSE,,PC1=holds;PC4=holds;PC2=holds;PC3.2=holds;PC3.1=holds,2.741,OK,2,0.306,NOT_MTSR,0,,,
+"Example 6, globally",example_3_globally,example_6_globally,"G ""r0""",no,0.7,NO_CAUSE,PC2,PC1=holds;PC4=holds;PC2=does not hold,1.187,OK,2,0.305,NOT_MTSR,0,,,
+Example 8,example_5,example_8,"""a"" | X ""a""",yes,1.1,IS_CAUSE,,PC1=holds;PC4=holds;PC2=holds;PC3.2=holds;PC3.1=holds,1.678,OK,3,0.381,MTSR,1,,,
+"Example 8, mod",example_5_mod,example_8_mod,"""a"" | X ""a""",no,1.2,NO_CAUSE,PC3.1,PC1=holds;PC4=holds;PC2=holds;PC3.2=holds;PC3.1=does not hold,1.555,OK,3,0.345,MTSR,1,,,
+TP Left,tp_left,atva2022_tp_left,"! ""a""",no,0.3,NO_CAUSE,PC4,PC1=holds;PC4=does not hold,0.861,OK,1,0.312,MTSR,1,,,
+TP Right,tp_right,atva2022_tp_right,"! ""a""",yes,1.1,IS_CAUSE,,PC1=holds;PC4=holds;PC2=holds;PC3.2=holds;PC3.1=holds,1.609,OK,2,0.311,MTSR,1,,,

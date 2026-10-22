@@ -1,0 +1,914 @@
+key,k,states,det_states,monoid,counter_free,non_ltl_witness,empty,universal,ltl,ltl_size,search_bound
+syntcomp/Alarm_2d1010f8__e02,3,5,6,14,True,,False,False,,,8
+syntcomp/Alarm_2d1010f8__e04,3,5,6,14,True,,False,False,,,8
+syntcomp/Alarm_2d1010f8__e06,3,5,6,23,True,,False,False,,,8
+syntcomp/Alarm_2d1010f8__e08,3,6,6,48,False,,False,False,,,8
+syntcomp/Button__e00,1,4,4,7,False,,False,False,"(""i0"" | (G (F (! ""i0""))))",6,9
+syntcomp/Button__e01,1,3,4,7,True,,False,False,"(X (! ""i0""))",3,9
+syntcomp/Button__e02,1,2,3,3,True,,False,False,"(! ""i0"")",2,9
+syntcomp/Button__e03,1,3,3,4,True,,False,False,"(F (X ""i0""))",3,9
+syntcomp/Button__e06,1,6,5,12,False,,False,False,,,9
+syntcomp/Button__e07,1,4,4,7,True,,False,False,"(F (X (X (! ""i0""))))",5,9
+syntcomp/Button__e09,1,3,2,4,False,,False,False,"(F (G (! ""i0"")))",4,9
+syntcomp/Door_2d1010f8__e00,4,11,11,73,True,,False,False,,,7
+syntcomp/Door_2d1010f8__e04,4,5,6,40,True,,False,False,,,7
+syntcomp/Door_2d1010f8__e08,4,8,8,49,True,,False,False,,,7
+syntcomp/EnemeyModule__e01,2,3,4,4,True,,False,False,,,9
+syntcomp/EnemeyModule__e02,2,4,3,5,False,,False,False,"(F (""i1"" | (G (! ""i0""))))",6,9
+syntcomp/EnemeyModule__e03,2,4,3,10,False,,False,False,"(G (F (! (""i1"" U (""i0"" & (! ""i1""))))))",9,9
+syntcomp/EnemeyModule__e06,2,5,6,7,True,,False,False,,,9
+syntcomp/EnemeyModule__e07,2,4,3,5,True,,False,False,"(G (F (""i1"" & (X (! ""i1"")))))",7,9
+syntcomp/EnemeyModule__e08,2,8,8,21,False,,False,False,,,9
+syntcomp/EnemeyModule__e09,2,3,3,3,True,,False,False,"((G ""i0"") | (F ""i1""))",5,9
+syntcomp/EscalatorCountingInit__e00,3,7,7,84,False,,False,False,,,8
+syntcomp/EscalatorCountingInit__e01,3,2,2,4,False,,False,False,"(G (F (""i1"" & (! ""i0""))))",6,8
+syntcomp/EscalatorCountingInit__e06,3,10,7,35,False,,False,False,,,8
+syntcomp/EscalatorCountingInit__e07,3,14,15,64,True,,False,False,,,8
+syntcomp/EscalatorCountingInit__e08,3,6,7,28,True,,False,False,,,8
+syntcomp/EscalatorCountingInit__e09,3,3,3,4,True,,False,False,,,8
+syntcomp/EscalatorCounting__e00,3,2,2,2,True,,False,False,"(F (""i1"" | (! ""i0"")))",5,8
+syntcomp/EscalatorCounting__e03,3,14,15,193,True,,False,False,,,8
+syntcomp/EscalatorCounting__e04,3,12,13,20,True,,False,False,,,8
+syntcomp/EscalatorCounting__e06,3,3,3,4,True,,False,False,"(F ((X ""i1"") | (! (""i0"" & ""i2""))))",8,8
+syntcomp/EscalatorCounting__e09,3,3,3,4,True,,False,False,"(F (! (""i0"" & (""i2"" & (X ""i1"")))))",8,8
+syntcomp/EscalatorNonCounting__e01,2,6,7,10,True,,False,False,,,9
+syntcomp/EscalatorNonCounting__e04,2,7,7,28,False,,False,False,,,9
+syntcomp/EscalatorNonCounting__e06,2,9,10,80,True,,False,False,,,9
+syntcomp/EscalatorNonCounting__e07,2,3,4,5,True,,False,False,,,9
+syntcomp/EscalatorNonCounting__e09,2,3,4,7,True,,False,False,"(X (""i1"" | (! ""i0"")))",5,9
+syntcomp/EscalatorSmart__e02,4,6,7,34,True,,False,False,,,7
+syntcomp/EscalatorSmart__e05,4,3,3,4,True,,False,False,,,7
+syntcomp/EscalatorSmart__e07,4,8,7,33,True,,False,False,,,7
+syntcomp/EscalatorSmart__e08,4,5,5,16,True,,False,False,,,7
+syntcomp/EscalatorSmart__e09,4,6,7,34,True,,False,False,,,7
+syntcomp/Gamemodule__e02,4,1,2,2,True,,False,False,,,7
+syntcomp/Gamemodule__e04,4,2,3,5,True,,False,False,,,7
+syntcomp/Gamemodule__e06,4,6,5,12,False,,False,False,,,7
+syntcomp/Gamemodule__e07,4,2,3,3,True,,False,False,,,7
+syntcomp/Gamemodule__e08,4,3,2,2,True,,False,False,,,7
+syntcomp/HeatingMin_d6c5ac79__e00,2,3,4,5,True,,False,False,"(""i0"" | (! (""i1"" & (F ""i0""))))",7,9
+syntcomp/HeatingMin_d6c5ac79__e01,2,3,4,5,True,,False,False,"(""i1"" & ((! ""i0"") & (F ""i0"")))",7,9
+syntcomp/HeatingMin_d6c5ac79__e03,2,3,4,5,True,,False,False,"(""i0"" | (! (""i1"" & (X ""i0""))))",7,9
+syntcomp/HeatingMin_d6c5ac79__e04,2,3,4,5,True,,False,False,"(""i0"" | (! (""i1"" & (F ""i0""))))",7,9
+syntcomp/HeatingMin_d6c5ac79__e07,2,3,4,5,True,,False,False,"(""i0"" | (! (""i1"" & (F ""i0""))))",7,9
+syntcomp/HeatingMin_d6c5ac79__e08,2,3,4,5,True,,False,False,"(""i0"" | (! (""i1"" & (F ""i0""))))",7,9
+syntcomp/HeatingMin_d6c5ac79__e09,2,3,4,5,True,,False,False,"(""i0"" | (! (""i1"" & (F ""i0""))))",7,9
+syntcomp/Heating_235467da__e01,3,5,6,14,True,,False,False,,,8
+syntcomp/Heating_235467da__e03,3,4,4,56,False,,False,False,,,8
+syntcomp/Heating_235467da__e05,3,5,5,10,True,,False,False,,,8
+syntcomp/Heating_235467da__e06,3,10,10,329,False,,False,False,,,8
+syntcomp/Heating_235467da__e07,3,5,5,71,False,,False,False,,,8
+syntcomp/Heating_974f4a68__e01,4,5,6,18,True,,False,False,,,7
+syntcomp/Heating_974f4a68__e02,4,5,5,17,True,,False,False,,,7
+syntcomp/Heating_974f4a68__e06,4,5,5,17,True,,False,False,,,7
+syntcomp/Heating_b02056d6__e03,3,10,10,74,True,,False,False,,,8
+syntcomp/Heating_b02056d6__e07,3,4,5,16,True,,False,False,,,8
+syntcomp/Heating_b209ff21__e00,3,5,5,16,True,,False,False,,,8
+syntcomp/Heating_b209ff21__e04,3,5,5,16,True,,False,False,,,8
+syntcomp/Heating_b209ff21__e07,3,5,6,14,True,,False,False,,,8
+syntcomp/Heating_b209ff21__e08,3,5,4,34,False,,False,False,,,8
+syntcomp/Increment__e00,1,4,5,10,True,,False,False,"(X (! (""i0"" & (X ""i0""))))",6,9
+syntcomp/Increment__e01,1,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/Increment__e02,1,3,2,4,False,,False,False,"(F (G ""i0""))",3,9
+syntcomp/Increment__e03,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/Increment__e04,1,3,2,4,False,,False,False,"(F (G (! ""i0"")))",4,9
+syntcomp/Increment__e06,1,8,7,79,False,,False,False,"(X (X (X ((! ""i0"") | (F (G ""i0""))))))",9,9
+syntcomp/Increment__e07,1,2,1,1,True,,False,False,"(G (F (! ""i0"")))",4,9
+syntcomp/KitchenTimerV0__e00,2,4,4,6,True,,False,False,,,9
+syntcomp/KitchenTimerV0__e03,2,9,10,21,True,,False,False,,,9
+syntcomp/KitchenTimerV0__e06,2,2,2,2,True,,False,False,"(F (""i0"" & ""i1""))",4,9
+syntcomp/LightsMin_6bea956e__e01,3,5,6,14,True,,False,False,,,8
+syntcomp/LightsMin_6bea956e__e02,3,8,7,45,False,,False,False,,,8
+syntcomp/LightsMin_6bea956e__e03,3,7,8,42,True,,False,False,,,8
+syntcomp/LightsMin_6bea956e__e05,3,3,3,4,True,,False,False,,,8
+syntcomp/LightsMin_6bea956e__e07,3,3,3,4,True,,False,False,,,8
+syntcomp/LightsMin_6bea956e__e08,3,3,3,4,True,,False,False,,,8
+syntcomp/LightsMin_6bea956e__e09,3,3,4,5,True,,False,False,,,8
+syntcomp/PlugController_fa4d4ce3__e00,4,10,10,50,True,,False,False,,,7
+syntcomp/PlugController_fa4d4ce3__e04,4,7,7,46,False,,False,False,,,7
+syntcomp/PlugController_fa4d4ce3__e05,4,4,4,8,True,,False,False,,,7
+syntcomp/SPIReadClk__e01,3,1,2,2,True,,False,False,"(G (""i0"" | (""i1"" | (! ""i2""))))",7,8
+syntcomp/SPIReadClk__e02,3,2,3,3,True,,False,False,"(""i0"" | (""i1"" | (! ""i2"")))",6,8
+syntcomp/SPIReadClk__e06,3,2,2,2,True,,False,False,"(F (""i0"" | (""i1"" | (! ""i2""))))",7,8
+syntcomp/SPIReadClk__e07,3,3,3,4,True,,False,False,"(F (X (""i0"" | (""i1"" | (! ""i2"")))))",8,8
+syntcomp/SPIReadSdi__e00,4,3,4,7,True,,False,False,,,7
+syntcomp/SPIReadSdi__e02,4,2,1,1,True,,False,False,,,7
+syntcomp/SPIReadSdi__e04,4,2,3,4,True,,False,False,,,7
+syntcomp/SPIReadSdi__e05,4,2,2,2,True,,False,False,,,7
+syntcomp/SPIReadSdi__e06,4,3,3,6,True,,False,False,,,7
+syntcomp/SPIReadSdi__e07,4,2,2,2,True,,False,False,,,7
+syntcomp/SPIReadSdi__e09,4,3,3,4,True,,False,False,,,7
+syntcomp/SensorRegister__e01,1,4,4,4,True,,False,False,"((F ""i0"") & (F (! ""i0"")))",6,9
+syntcomp/SensorRegister__e05,1,2,3,5,True,,False,False,"(G (""i0"" | (X (! ""i0""))))",6,9
+syntcomp/SensorRegister__e09,1,3,3,4,True,,False,False,"(F (X (! ""i0"")))",4,9
+syntcomp/Shades2Min_63831f8c__e03,3,2,3,3,True,,False,False,"(""i1"" | (! (""i0"" & ""i2"")))",6,8
+syntcomp/Shades2Min_63831f8c__e05,3,2,3,3,True,,False,False,"(""i0"" & (""i2"" & (! ""i1"")))",6,8
+syntcomp/Shades2Min_63831f8c__e06,3,2,3,3,True,,False,False,"(""i1"" | (! (""i0"" & ""i2"")))",6,8
+syntcomp/Shades2Min_63831f8c__e08,3,2,3,3,True,,False,False,"(""i1"" | (! (""i0"" & ""i2"")))",6,8
+syntcomp/Shades2Min_63831f8c__e09,3,2,3,3,True,,False,False,"(""i0"" & (""i2"" & (! ""i1"")))",6,8
+syntcomp/Shades2_235467da__e01,4,9,6,41,False,"((), (6,), (2, 9))",False,False,,,7
+syntcomp/Shades2_235467da__e03,4,9,6,42,False,"((), (6,), (2, 9))",False,False,,,7
+syntcomp/Shades2_235467da__e05,4,3,3,4,True,,False,False,,,7
+syntcomp/Shades2_235467da__e09,4,6,7,47,True,,False,False,,,7
+syntcomp/Shades2_70523fbe__e00,4,6,6,26,True,,False,False,,,7
+syntcomp/Shades2_70523fbe__e02,4,7,6,55,False,"((), (3,), (2,))",False,False,,,7
+syntcomp/Shades2_70523fbe__e03,4,9,9,82,False,"((), (3,), (2,))",False,False,,,7
+syntcomp/Shades2_70523fbe__e04,4,10,11,57,True,,False,False,,,7
+syntcomp/Shades2_70523fbe__e08,4,8,8,40,True,,False,False,,,7
+syntcomp/Shades2_a5f99bc6__e01,4,3,4,5,True,,False,False,,,7
+syntcomp/Shades2_a5f99bc6__e02,4,9,9,300,False,"((0,), (0, 6), (4,))",False,False,,,7
+syntcomp/Shades2_a5f99bc6__e05,4,3,4,5,True,,False,False,"(! (""i1"" & (""i2"" & (X ""i1""))))",7,7
+syntcomp/Shades2_a5f99bc6__e08,4,10,10,71,False,"((), (6,), (2, 9))",False,False,,,7
+syntcomp/ShadesMin_aeb1d897__e00,2,2,3,3,True,,False,False,"(""i0"" | (! ""i1""))",4,9
+syntcomp/ShadesMin_aeb1d897__e02,2,2,3,3,True,,False,False,"(""i0"" | (! ""i1""))",4,9
+syntcomp/ShadesMin_aeb1d897__e04,2,2,3,3,True,,False,False,"(""i0"" | (! ""i1""))",4,9
+syntcomp/ShadesMin_aeb1d897__e06,2,2,3,3,True,,False,False,"(""i1"" & (! ""i0""))",4,9
+syntcomp/ShadesMin_aeb1d897__e07,2,2,3,3,True,,False,False,"(""i1"" & (! ""i0""))",4,9
+syntcomp/ShadesMin_aeb1d897__e08,2,2,3,3,True,,False,False,"(""i0"" | (! ""i1""))",4,9
+syntcomp/ShadesMin_aeb1d897__e09,2,2,3,3,True,,False,False,"(""i1"" & (! ""i0""))",4,9
+syntcomp/Shades_6479ef9a__e01,3,4,4,8,True,,False,False,,,8
+syntcomp/Shades_6479ef9a__e02,3,5,5,17,True,,False,False,,,8
+syntcomp/Shades_6479ef9a__e04,3,4,4,8,True,,False,False,,,8
+syntcomp/Shades_6479ef9a__e05,3,4,4,8,True,,False,False,,,8
+syntcomp/Shades_6479ef9a__e07,3,6,7,33,True,,False,False,,,8
+syntcomp/Shades_6479ef9a__e09,3,8,8,72,True,,False,False,,,8
+syntcomp/Shades_9cac58d3__e01,3,7,7,33,True,,False,False,,,8
+syntcomp/Shades_9cac58d3__e02,3,2,2,4,False,,False,False,"(G (F (! (""i0"" & ""i1""))))",6,8
+syntcomp/Shades_9cac58d3__e04,3,6,6,60,True,,False,False,,,8
+syntcomp/Shades_9cac58d3__e09,3,4,4,8,True,,False,False,,,8
+syntcomp/Shades_a02758ea__e01,3,12,11,123,True,,False,False,,,8
+syntcomp/Shades_a02758ea__e05,3,10,9,82,True,,False,False,,,8
+syntcomp/SliderDefault__e00,2,9,10,41,True,,False,False,,,9
+syntcomp/SliderDefault__e01,2,3,3,4,True,,False,False,"((! ""i1"") | (F (""i0"" | (X ""i1""))))",8,9
+syntcomp/SliderDefault__e02,2,3,4,5,True,,False,False,,,9
+syntcomp/SliderDefault__e03,2,8,8,42,True,,False,False,,,9
+syntcomp/SliderDefault__e04,2,4,5,13,True,,False,False,,,9
+syntcomp/SliderDefault__e08,2,8,8,42,True,,False,False,,,9
+syntcomp/SliderDefault__e09,2,5,6,11,True,,False,False,,,9
+syntcomp/Timer_a50cadd7__e03,1,3,2,4,False,,False,False,"(F (G ""i0""))",3,9
+syntcomp/Timer_a50cadd7__e04,1,3,2,4,False,,False,False,"(F (G (! ""i0"")))",4,9
+syntcomp/Timer_a50cadd7__e08,1,3,3,4,True,,False,False,"(F (X (! ""i0"")))",4,9
+syntcomp/TorcsAccelerating__e03,2,2,3,3,True,,False,False,"(! (""i0"" | ""i1""))",4,9
+syntcomp/TorcsAccelerating__e07,2,2,3,3,True,,False,False,"(""i0"" | ""i1"")",3,9
+syntcomp/TorcsAccelerating__e09,2,2,3,4,True,,False,False,"(G (X (""i0"" | ""i1"")))",5,9
+syntcomp/TorcsGearing__e01,1,5,4,5,True,,False,False,,,9
+syntcomp/TorcsGearing__e02,1,1,2,2,True,,False,False,"(G (! ""i0""))",3,9
+syntcomp/TorcsGearing__e03,1,6,7,10,True,,False,False,,,9
+syntcomp/TorcsGearing__e04,1,2,2,2,True,,False,False,"(F (! ""i0""))",3,9
+syntcomp/TorcsGearing__e05,1,3,3,6,True,,False,False,"(F (""i0"" & (X ""i0"")))",5,9
+syntcomp/TorcsGearing__e06,1,3,3,6,True,,False,False,"(F (""i0"" & (X ""i0"")))",5,9
+syntcomp/TorcsGearing__e07,1,3,3,5,True,,False,False,"(F ((! ""i0"") & (X ""i0"")))",6,9
+syntcomp/TorcsGearing__e09,1,3,4,5,True,,False,False,"(! (""i0"" & (X ""i0"")))",5,9
+syntcomp/TorcsSteeringSimple__e01,4,2,1,1,True,,False,False,,,7
+syntcomp/TorcsSteeringSimple__e02,4,7,6,16,True,,False,False,,,7
+syntcomp/TorcsSteeringSimple__e03,4,11,11,46,False,,False,False,,,7
+syntcomp/TorcsSteeringSimple__e06,4,4,4,5,True,,False,False,,,7
+syntcomp/TorcsSteeringSimple__e07,4,5,6,10,True,,False,False,,,7
+syntcomp/WindowMin_a5f99bc6__e00,4,7,5,15,True,,False,False,,,7
+syntcomp/WindowMin_a5f99bc6__e03,4,6,7,49,True,,False,False,,,7
+syntcomp/WindowMin_a5f99bc6__e04,4,7,4,12,True,,False,False,,,7
+syntcomp/WindowMin_a5f99bc6__e05,4,3,4,7,True,,False,False,"(X (! ""i0""))",3,7
+syntcomp/abcg_arbiter1__e00,1,3,3,4,True,,False,False,"(F (X ""i0""))",3,9
+syntcomp/abcg_arbiter1__e01,1,2,3,3,True,,False,False,"(! ""i0"")",2,9
+syntcomp/abcg_arbiter1__e02,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/abcg_arbiter1__e03,1,3,3,4,True,,False,False,"(F (X ""i0""))",3,9
+syntcomp/abcg_arbiter1__e04,1,2,3,4,True,,False,False,"(G (X (! ""i0"")))",4,9
+syntcomp/abcg_arbiter1__e07,1,2,3,4,True,,False,False,"(G (X (! ""i0"")))",4,9
+syntcomp/abcg_arbiter1__e08,1,3,3,4,True,,False,False,"(F (X ""i0""))",3,9
+syntcomp/abcg_arbiter2__e01,2,3,3,4,True,,False,False,"(F (X ""i0""))",3,9
+syntcomp/abcg_arbiter2__e02,2,2,2,4,False,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/abcg_arbiter2__e04,2,12,13,>20000,False,,False,False,,,9
+syntcomp/abcg_arbiter2__e08,2,3,3,4,True,,False,False,"(F ((X ""i1"") | (""i0"" & ""i1"")))",7,9
+syntcomp/abcg_arbiter2__e09,2,3,2,4,False,,False,False,"(F (G (! ""i1"")))",4,9
+syntcomp/abcg_arbiter3__e00,3,10,11,679,False,"((6,), (4,), (1, 6))",False,False,,,8
+syntcomp/abcg_arbiter3__e01,3,6,7,29,True,,False,False,,,8
+syntcomp/abcg_arbiter3__e05,3,3,3,4,True,,False,False,,,8
+syntcomp/abcg_arbiter3__e08,3,3,3,5,False,,False,False,"(F (""i0"" | (G (F ""i2""))))",6,8
+syntcomp/amba_decomposed_arbiter2__e00,3,3,3,5,True,,False,False,,,8
+syntcomp/amba_decomposed_arbiter2__e02,3,6,6,19,True,,False,False,,,8
+syntcomp/amba_decomposed_arbiter2__e03,3,5,5,175,False,,False,False,,,8
+syntcomp/amba_decomposed_arbiter2__e04,3,3,4,7,True,,False,False,"(""i0"" & (X (! (""i0"" & ""i2""))))",7,8
+syntcomp/amba_decomposed_arbiter2__e05,3,3,3,5,True,,False,False,"((! ""i0"") | (F (X (""i0"" & ""i2""))))",8,8
+syntcomp/amba_decomposed_arbiter2__e06,3,4,3,5,True,,False,False,,,8
+syntcomp/amba_decomposed_arbiter2__e07,3,4,5,17,True,,False,False,,,8
+syntcomp/amba_decomposed_arbiter2__e09,3,4,4,49,False,,False,False,,,8
+syntcomp/amba_decomposed_arbiter3__e01,4,20,20,3333,False,"((), (11,), (2,))",False,False,,,7
+syntcomp/amba_decomposed_arbiter3__e06,4,20,21,>20000,False,,False,False,,,7
+syntcomp/amba_decomposed_decode__e01,2,4,5,5,True,,False,False,,,9
+syntcomp/amba_decomposed_decode__e04,2,6,5,9,True,,False,False,"((F (G (""i0"" & (! ""i1"")))) U (! ""i0""))",9,9
+syntcomp/amba_decomposed_decode__e05,2,5,5,13,True,,False,False,,,9
+syntcomp/amba_decomposed_decode__e07,2,2,1,1,True,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/amba_decomposed_decode__e08,2,3,3,5,True,,False,False,,,9
+syntcomp/amba_decomposed_decode__e09,2,2,1,1,True,,False,False,"(G (F (""i0"" & (! ""i1""))))",6,9
+syntcomp/amba_decomposed_encode2__e02,3,3,2,3,True,,False,False,,,8
+syntcomp/amba_decomposed_encode2__e04,3,3,3,5,True,,False,False,,,8
+syntcomp/amba_decomposed_encode2__e05,3,5,3,13,False,,False,False,,,8
+syntcomp/amba_decomposed_encode2__e06,3,8,8,33,False,,False,False,,,8
+syntcomp/amba_decomposed_encode2__e07,3,3,3,5,True,,False,False,,,8
+syntcomp/amba_decomposed_encode2__e08,3,5,3,13,False,,False,False,,,8
+syntcomp/amba_decomposed_encode3__e03,4,3,3,4,True,,False,False,,,7
+syntcomp/amba_decomposed_encode3__e04,4,3,3,5,True,,False,False,,,7
+syntcomp/amba_decomposed_encode3__e06,4,3,3,4,True,,False,False,,,7
+syntcomp/amba_decomposed_encode3__e09,4,5,4,7,True,,False,False,,,7
+syntcomp/amba_decomposed_shift__e00,2,2,3,3,True,,False,False,"(! (""i0"" & ""i1""))",4,9
+syntcomp/amba_decomposed_shift__e01,2,2,3,4,True,,False,False,"(""i0"" & (G (""i1"" | (! ""i0""))))",7,9
+syntcomp/amba_decomposed_shift__e02,2,4,4,6,True,,False,False,,,9
+syntcomp/amba_decomposed_shift__e04,2,3,2,3,True,,False,False,"((F (X ""i0"")) U (G (! (""i0"" & ""i1""))))",9,9
+syntcomp/amba_decomposed_shift__e07,2,1,2,2,True,,False,False,"(G (! (""i0"" & ""i1"")))",5,9
+syntcomp/amba_decomposed_shift__e09,2,4,4,8,True,,False,False,,,9
+syntcomp/amba_decomposed_tburst4__e05,4,9,9,41,True,,False,False,,,7
+syntcomp/amba_decomposed_tburst4__e06,4,3,4,5,True,,False,False,"(""i1"" | (X (! ""i1"")))",5,7
+syntcomp/amba_decomposed_tburst4__e08,4,10,10,805,False,"((0,), (2,), (0,))",False,False,,,7
+syntcomp/amba_decomposed_tburst4__e09,4,10,10,805,False,"((0,), (2,), (0,))",False,False,,,7
+syntcomp/amba_decomposed_tsingle__e00,4,8,8,217,False,,False,False,,,7
+syntcomp/amba_decomposed_tsingle__e03,4,10,8,210,False,"((0,), (1, 2, 12), (0,))",False,False,,,7
+syntcomp/amba_decomposed_tsingle__e04,4,3,4,4,True,,False,False,"(""i0"" | (G (! ""i0"")))",5,7
+syntcomp/amba_decomposed_tsingle__e06,4,4,5,6,True,,False,False,,,7
+syntcomp/arbiter1__e00,1,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/arbiter1__e02,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/arbiter1__e07,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/arbiter2__e00,2,2,2,2,True,,False,False,"(F (""i0"" | ""i1""))",4,9
+syntcomp/arbiter2__e09,2,4,4,29,False,"((), (3,), (1, 2))",False,False,,,9
+syntcomp/arbiter3__e02,3,2,2,2,True,,False,False,"(F ""i2"")",2,8
+syntcomp/arbiter3__e03,3,3,3,4,True,,False,False,,,8
+syntcomp/arbiter3__e04,3,2,3,4,True,,False,False,,,8
+syntcomp/arbiter3__e08,3,2,2,2,True,,False,False,"(F ""i0"")",2,8
+syntcomp/arbiter4__e06,4,2,2,4,False,,False,False,"(G (F ""i3""))",3,7
+syntcomp/arbiter4__e07,4,4,5,5,True,,False,False,,,7
+syntcomp/arbiter4__e09,4,3,3,3,True,,False,False,,,7
+syntcomp/arbiter_with_buffer1__e00,2,2,3,3,True,,False,False,"(! ""i0"")",2,9
+syntcomp/arbiter_with_buffer1__e02,2,2,1,1,True,,False,False,"(G (F ""i0""))",3,9
+syntcomp/arbiter_with_buffer2__e01,4,2,2,2,True,,False,False,"(F (""i0"" | (! ""i1"")))",5,7
+syntcomp/arbiter_with_buffer2__e06,4,5,4,29,False,"((), (3,), (10,))",False,False,,,7
+syntcomp/arbiter_with_buffer2__e08,4,5,6,36,False,"((0,), (11,), (1, 10))",False,False,,,7
+syntcomp/arbiter_with_cancel1__e00,2,3,3,6,True,,False,False,"(F (""i1"" & (! (""i0"" | (X ""i0"")))))",8,9
+syntcomp/arbiter_with_cancel1__e02,2,2,3,6,True,,False,False,"(G (""i0"" | ((X ""i0"") | (! ""i1""))))",8,9
+syntcomp/arbiter_with_cancel1__e03,2,2,3,6,True,,False,False,"(G (""i0"" | ((X ""i0"") | (! ""i1""))))",8,9
+syntcomp/arbiter_with_cancel1__e05,2,3,3,6,True,,False,False,"(F (""i1"" & (! (""i0"" | (X ""i0"")))))",8,9
+syntcomp/arbiter_with_cancel1__e07,2,3,4,5,True,,False,False,"(""i0"" | ((X ""i0"") | (! ""i1"")))",7,9
+syntcomp/arbiter_with_cancel1__e08,2,3,4,5,True,,False,False,"(""i0"" | ((X ""i0"") | (! ""i1"")))",7,9
+syntcomp/arbiter_with_cancel1__e09,2,3,4,5,True,,False,False,"(""i1"" & (! (""i0"" | (X ""i0""))))",7,9
+syntcomp/arbiter_with_cancel2__e00,4,2,3,6,True,,False,False,,,7
+syntcomp/arbiter_with_cancel2__e04,4,6,7,103,False,,False,False,,,7
+syntcomp/arbiter_with_cancel2__e06,4,9,8,136,False,,False,False,,,7
+syntcomp/collector_v13__e02,3,2,2,4,False,,False,False,"(G (F (! (""i0"" & (""i1"" & ""i2"")))))",8,8
+syntcomp/collector_v13__e05,3,4,4,15,False,,False,False,,,8
+syntcomp/collector_v13__e06,3,5,6,14,True,,False,False,,,8
+syntcomp/collector_v23__e02,3,10,11,88,True,,False,False,,,8
+syntcomp/collector_v23__e03,3,7,4,70,False,,False,False,,,8
+syntcomp/collector_v23__e05,3,7,4,70,False,,False,False,,,8
+syntcomp/collector_v23__e07,3,9,9,28,True,,False,False,,,8
+syntcomp/collector_v23__e08,3,7,4,47,False,,False,False,,,8
+syntcomp/collector_v33__e01,3,4,3,5,True,,False,False,,,8
+syntcomp/collector_v33__e07,3,3,4,5,True,,False,False,,,8
+syntcomp/detector1__e00,1,3,2,4,False,,False,False,"(F (G ""i0""))",3,9
+syntcomp/detector1__e05,1,2,1,1,True,,False,False,"(G (F ""i0""))",3,9
+syntcomp/detector1__e06,1,5,6,8,True,,False,False,"(G ((G (! ""i0"")) | (""i0"" U (X ""i0""))))",9,9
+syntcomp/detector1__e07,1,4,5,7,True,,False,False,,,9
+syntcomp/detector1__e09,1,3,4,5,True,,False,False,"(""i0"" | (X ""i0""))",4,9
+syntcomp/detector2__e03,2,5,3,9,False,,False,False,"(F (G (! (""i0"" & (F ""i1"")))))",7,9
+syntcomp/detector2__e08,2,4,4,8,True,,False,False,,,9
+syntcomp/detector3__e00,3,7,7,39,True,,False,False,,,8
+syntcomp/detector3__e02,3,10,11,48,True,,False,False,,,8
+syntcomp/detector3__e04,3,5,6,16,True,,False,False,,,8
+syntcomp/detector3__e06,3,7,4,83,False,,False,False,,,8
+syntcomp/detector3__e08,3,3,4,14,True,,False,False,,,8
+syntcomp/detector3__e09,3,2,2,2,True,,False,False,"(F (! (""i0"" & (""i1"" & ""i2""))))",7,8
+syntcomp/detector4__e01,4,6,6,47,True,,False,False,,,7
+syntcomp/detector4__e02,4,5,6,47,True,,False,False,,,7
+syntcomp/detector4__e03,4,5,6,47,True,,False,False,,,7
+syntcomp/detector4__e05,4,5,5,42,True,,False,False,,,7
+syntcomp/detector4__e08,4,2,2,4,False,,False,False,,,7
+syntcomp/example101__e02,1,3,3,4,True,,False,False,"(F (X ""i0""))",3,9
+syntcomp/example101__e03,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example101__e07,1,4,4,4,True,,False,False,"(! ((F (G (! ""i0""))) U ""i0""))",7,9
+syntcomp/example102__e00,1,5,6,31,True,,False,False,"(X (X (X (! ""i0""))))",5,9
+syntcomp/example102__e01,1,6,6,31,True,,False,False,"(X (X (X (""i0"" & (G (F ""i0""))))))",8,9
+syntcomp/example102__e02,1,5,6,31,True,,False,False,"(X (X (X ""i0"")))",4,9
+syntcomp/example102__e03,1,6,7,39,True,,False,False,"(X (X (X ((! ""i0"") | (G ""i0"")))))",8,9
+syntcomp/example102__e04,1,5,6,31,True,,False,False,"(X (X (X (! ""i0""))))",5,9
+syntcomp/example102__e05,1,6,6,31,True,,False,False,"(X (X (X (""i0"" & (G (F ""i0""))))))",8,9
+syntcomp/example102__e06,1,7,7,47,True,,False,False,"(X (X (X (""i0"" & (F (G ""i0""))))))",8,9
+syntcomp/example102__e07,1,7,7,47,True,,False,False,"(X (X (X (""i0"" & (F (G ""i0""))))))",8,9
+syntcomp/example103__e00,1,7,8,62,True,,False,False,"(X (X (X (! (""i0"" & (X (X ""i0"")))))))",9,9
+syntcomp/example103__e05,1,8,9,80,True,,False,False,,,9
+syntcomp/example10a1__e01,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/example10a1__e02,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example10a1__e04,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/example10a1__e05,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example10a1__e06,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example10a1__e07,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/example10a1__e09,1,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/example10a2__e00,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example10a2__e03,1,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/example10a2__e05,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example10a2__e08,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example10a3__e01,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example10a3__e03,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example10a3__e06,1,7,8,62,True,,False,False,"(X (X (X (""i0"" & (X (X ""i0""))))))",8,9
+syntcomp/example10a3__e07,1,1,2,2,True,,False,False,"(G (! ""i0""))",3,9
+syntcomp/example10a3__e08,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example10a3__e09,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example71__e00,1,4,4,7,True,,False,False,"(F (X (X ""i0"")))",4,9
+syntcomp/example71__e01,1,2,1,1,True,,False,False,"(G (F (! ""i0"")))",4,9
+syntcomp/example71__e02,1,3,2,4,False,,False,False,"(F (G ""i0""))",3,9
+syntcomp/example71__e03,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example71__e05,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/example71__e08,1,2,3,4,True,,False,False,"(G (X ""i0""))",3,9
+syntcomp/example71__e09,1,3,4,5,True,,False,False,"((! ""i0"") | (X ""i0""))",5,9
+syntcomp/example72__e00,2,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/example72__e02,2,6,4,13,False,,False,False,"(F (""i0"" | (G (""i1"" | (X (! ""i1""))))))",9,9
+syntcomp/example72__e03,2,6,5,9,True,,False,False,,,9
+syntcomp/example72__e04,2,5,5,16,False,,False,False,,,9
+syntcomp/example72__e05,2,10,10,11,True,,False,False,,,9
+syntcomp/example72__e06,2,2,2,4,False,,False,False,"(G (F (""i0"" | (! ""i1""))))",6,9
+syntcomp/example72__e07,2,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example72__e09,2,6,7,73,False,,False,False,,,9
+syntcomp/example73__e01,3,4,5,10,True,,False,False,,,8
+syntcomp/example73__e02,3,6,7,10,True,,False,False,,,8
+syntcomp/example73__e03,3,3,3,4,True,,False,False,,,8
+syntcomp/example73__e06,3,2,3,4,True,,False,False,,,8
+syntcomp/example73__e07,3,2,2,4,False,,False,False,"(G (F ""i1""))",3,8
+syntcomp/example73__e09,3,8,8,19,True,,False,False,,,8
+syntcomp/example7a1__e00,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/example7a1__e01,1,4,3,3,True,,False,False,"((! ""i0"") | (G (F ""i0"")))",6,9
+syntcomp/example7a1__e03,1,3,4,7,True,,False,False,"(X (! ""i0""))",3,9
+syntcomp/example7a1__e04,1,2,2,4,False,,False,False,"(G (F (! ""i0"")))",4,9
+syntcomp/example7a1__e06,1,3,3,4,True,,False,False,"(F (X ""i0""))",3,9
+syntcomp/example7a1__e08,1,5,4,7,False,,False,False,"(G (X ((! ""i0"") | (F (G ""i0"")))))",8,9
+syntcomp/example7a1__e09,1,5,3,5,True,,False,False,"(F (G (""i0"" | (X (! ""i0"")))))",7,9
+syntcomp/example7a2__e02,2,3,2,4,False,,False,False,"(F (G (! ""i1"")))",4,9
+syntcomp/example7a2__e03,2,3,4,4,True,,False,False,"(""i0"" | (""i1"" & (F (""i0"" | (! ""i1"")))))",9,9
+syntcomp/example7a2__e05,2,3,4,7,True,,False,False,"((X ""i0"") & (! (""i0"" & ""i1"")))",7,9
+syntcomp/example7a2__e06,2,5,4,11,False,,False,False,"(""i0"" | (F (G (! ""i1""))))",6,9
+syntcomp/example7a3__e00,3,7,8,25,True,,False,False,,,8
+syntcomp/example7a3__e02,3,3,2,4,False,,False,False,"(F (G (! ""i0"")))",4,8
+syntcomp/example7a3__e05,3,6,6,45,False,,False,False,,,8
+syntcomp/example7a3__e06,3,5,5,10,False,,False,False,,,8
+syntcomp/example7a3__e09,3,3,2,2,True,,False,False,,,8
+syntcomp/example81__e00,1,5,3,5,True,,False,False,"(F (G (""i0"" | (X (! ""i0"")))))",7,9
+syntcomp/example81__e04,1,2,1,1,True,,False,False,"(G (F ""i0""))",3,9
+syntcomp/example81__e05,1,3,2,4,False,,False,False,"(F (G (! ""i0"")))",4,9
+syntcomp/example81__e06,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/example81__e07,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/example81__e08,1,3,2,4,False,,False,False,"(F (G ""i0""))",3,9
+syntcomp/example81__e09,1,6,6,8,True,,False,False,,,9
+syntcomp/example82__e02,2,4,4,7,True,,False,False,,,9
+syntcomp/example82__e03,2,4,3,8,False,,False,False,,,9
+syntcomp/example82__e06,2,2,2,2,True,,False,False,"(F (! ""i1""))",3,9
+syntcomp/example82__e07,2,4,5,10,True,,False,False,"((X (! ""i1"")) & (""i1"" | (X ""i0"")))",8,9
+syntcomp/example82__e08,2,1,2,2,True,,False,False,"(G ""i1"")",2,9
+syntcomp/example83__e01,3,7,7,25,True,,False,False,,,8
+syntcomp/example83__e06,3,6,6,15,True,,False,False,,,8
+syntcomp/example83__e07,3,1,2,2,True,,False,False,"(G (""i1"" | (! ""i0"")))",5,8
+syntcomp/example83__e09,3,3,4,7,True,,False,False,"(X (! ""i1""))",3,8
+syntcomp/example91__e02,1,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/example91__e04,1,3,4,7,True,,False,False,"(X (! ""i0""))",3,9
+syntcomp/example91__e05,1,3,3,4,True,,False,False,"(F (X ""i0""))",3,9
+syntcomp/example91__e06,1,2,3,4,True,,False,False,"(G (X (! ""i0"")))",4,9
+syntcomp/example91__e08,1,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/example92__e01,1,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/example92__e02,1,6,5,15,False,,False,False,"(X (""i0"" | (F (G ""i0""))))",6,9
+syntcomp/example92__e03,1,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/example92__e04,1,2,2,4,False,,False,False,"(G (F (! ""i0"")))",4,9
+syntcomp/example92__e06,1,5,3,8,True,,False,False,"(F (G (""i0"" | (X (! ""i0"")))))",7,9
+syntcomp/example93__e00,1,3,4,7,True,,False,False,"(X (! ""i0""))",3,9
+syntcomp/example93__e02,1,5,5,19,False,,False,False,"(X (""i0"" | (G (F ""i0""))))",6,9
+syntcomp/example93__e05,1,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/example93__e06,1,5,6,13,True,,False,False,"(X (""i0"" | (X (""i0"" | (X ""i0"")))))",8,9
+syntcomp/example93__e08,1,3,2,4,False,,False,False,"(F (G (! ""i0"")))",4,9
+syntcomp/example93__e09,1,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/full_arbiter2__e01,2,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/full_arbiter2__e02,2,2,2,2,True,,False,False,"(F ""i1"")",2,9
+syntcomp/full_arbiter2__e04,2,2,2,4,False,,False,False,"(G (F ""i0""))",3,9
+syntcomp/full_arbiter2__e09,2,2,2,2,True,,False,False,"(F ""i1"")",2,9
+syntcomp/full_arbiter3__e00,3,4,3,3,True,,False,False,"((! ""i2"") | (G (F ""i2"")))",6,8
+syntcomp/full_arbiter3__e04,3,2,2,2,True,,False,False,"(F ""i1"")",2,8
+syntcomp/full_arbiter3__e07,3,10,10,201,False,,False,False,,,8
+syntcomp/full_arbiter3__e08,3,2,2,2,True,,False,False,"(F ""i1"")",2,8
+syntcomp/full_arbiter4__e02,4,2,2,2,True,,False,False,"(F ""i2"")",2,7
+syntcomp/full_arbiter4__e03,4,2,2,2,True,,False,False,"(F (""i2"" | ""i3""))",4,7
+syntcomp/lift2__e02,2,7,8,106,True,,False,False,,,9
+syntcomp/lift2__e04,2,9,10,922,False,,False,False,,,9
+syntcomp/lift2__e07,2,10,11,286,True,,False,False,,,9
+syntcomp/lift2__e09,2,10,11,286,True,,False,False,,,9
+syntcomp/lift_unary_enc2__e01,2,2,2,2,True,,False,False,"(F (! (""i0"" | ""i1"")))",5,9
+syntcomp/lift_unary_enc2__e04,2,9,9,275,True,,False,False,,,9
+syntcomp/lift_unary_enc2__e06,2,8,8,66,True,,False,False,,,9
+syntcomp/lift_unary_enc2__e07,2,3,4,5,True,,False,False,"((""i0"" | ""i1"") & (X (""i0"" | ""i1"")))",8,9
+syntcomp/lift_unary_enc2__e09,2,8,9,31,True,,False,False,,,9
+syntcomp/lift_unary_enc3__e00,3,55,56,>20000,False,,False,False,,,8
+syntcomp/lift_unary_enc3__e01,3,22,22,3037,False,"((0,), (1,), (1, 0))",False,False,,,8
+syntcomp/lift_unary_enc3__e09,3,24,25,224,True,,False,False,,,8
+syntcomp/lilydemo03__e00,3,11,12,147,False,"((0,), (4,), (0, 5))",False,False,,,8
+syntcomp/lilydemo03__e01,3,5,6,79,False,"((), (4,), (0, 5))",False,False,,,8
+syntcomp/lilydemo03__e02,3,5,6,79,False,"((), (4,), (0, 5))",False,False,,,8
+syntcomp/lilydemo03__e03,3,6,6,79,False,"((), (4,), (0, 5))",False,False,,,8
+syntcomp/lilydemo03__e05,3,6,6,79,False,,False,False,,,8
+syntcomp/lilydemo03__e09,3,6,6,79,False,,False,False,,,8
+syntcomp/lilydemo04__e01,3,7,8,240,False,,False,False,,,8
+syntcomp/lilydemo04__e06,3,4,4,13,True,,False,False,,,8
+syntcomp/lilydemo05__e00,3,4,4,13,True,,False,False,,,8
+syntcomp/lilydemo05__e01,3,7,7,48,True,,False,False,,,8
+syntcomp/lilydemo05__e04,3,4,5,10,True,,False,False,,,8
+syntcomp/lilydemo05__e06,3,8,8,55,False,,False,False,,,8
+syntcomp/lilydemo05__e07,3,4,5,10,True,,False,False,,,8
+syntcomp/lilydemo05__e08,3,3,4,13,True,,False,False,,,8
+syntcomp/lilydemo06__e01,3,9,9,100,True,,False,False,,,8
+syntcomp/lilydemo06__e03,3,4,5,10,True,,False,False,,,8
+syntcomp/lilydemo06__e08,3,4,5,10,True,,False,False,,,8
+syntcomp/lilydemo06__e09,3,4,5,23,True,,False,False,,,8
+syntcomp/lilydemo07__e00,3,3,4,13,True,,False,False,,,8
+syntcomp/lilydemo07__e03,3,6,6,35,True,,False,False,,,8
+syntcomp/lilydemo07__e05,3,6,6,35,True,,False,False,,,8
+syntcomp/lilydemo07__e07,3,4,5,11,True,,False,False,,,8
+syntcomp/lilydemo09__e02,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/lilydemo09__e03,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/lilydemo09__e04,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/lilydemo09__e05,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/lilydemo12__e00,2,2,3,3,True,,False,False,"""i1""",1,9
+syntcomp/lilydemo12__e01,2,2,1,1,True,,False,False,"(G (F (! ""i1"")))",4,9
+syntcomp/lilydemo12__e03,2,5,4,5,True,,False,False,"((! ""i1"") | (F (G ""i1"")))",6,9
+syntcomp/lilydemo12__e05,2,2,3,3,True,,False,False,"(! ""i1"")",2,9
+syntcomp/lilydemo12__e06,2,2,3,3,True,,False,False,"""i1""",1,9
+syntcomp/lilydemo12__e08,2,2,3,3,True,,False,False,"""i1""",1,9
+syntcomp/lilydemo12__e09,2,2,1,1,True,,False,False,"(G (F ""i1""))",3,9
+syntcomp/lilydemo13__e01,1,4,4,7,True,,False,False,"(F (X (X (! ""i0""))))",5,9
+syntcomp/lilydemo13__e02,1,2,3,3,True,,False,False,"(! ""i0"")",2,9
+syntcomp/lilydemo13__e05,1,3,4,7,True,,False,False,"(X (! ""i0""))",3,9
+syntcomp/lilydemo13__e06,1,2,1,1,True,,False,False,"(G (F ""i0""))",3,9
+syntcomp/lilydemo13__e07,1,3,3,4,True,,False,False,"(F (X ""i0""))",3,9
+syntcomp/lilydemo13__e08,1,2,2,2,True,,False,False,"(F (! ""i0""))",3,9
+syntcomp/lilydemo19__e03,2,10,10,31,True,,False,False,,,9
+syntcomp/lilydemo19__e04,2,2,3,5,True,,False,False,"(G (! ((X ""i1"") & (""i0"" | (! ""i1"")))))",9,9
+syntcomp/lilydemo19__e07,2,5,5,11,True,,False,False,,,9
+syntcomp/lilydemo19__e09,2,4,3,8,False,,False,False,"(G (F (""i1"" & (X (""i0"" | (! ""i1""))))))",9,9
+syntcomp/lilydemo20__e00,2,2,3,4,True,,False,False,"(G (X ""i1""))",3,9
+syntcomp/lilydemo20__e01,2,3,3,4,True,,False,False,"(F (X (! ""i1"")))",4,9
+syntcomp/lilydemo20__e02,2,5,5,10,True,,False,False,,,9
+syntcomp/lilydemo20__e03,2,5,5,19,False,,False,False,,,9
+syntcomp/lilydemo20__e05,2,3,4,7,True,,False,False,"(X ""i1"")",2,9
+syntcomp/lilydemo20__e07,2,5,5,19,False,,False,False,,,9
+syntcomp/lilydemo20__e08,2,5,3,8,True,,False,False,"(F (G (""i1"" | (X (! ""i1"")))))",7,9
+syntcomp/lilydemo21__e00,4,3,3,12,False,,False,False,,,7
+syntcomp/lilydemo21__e01,4,5,3,12,False,,False,False,,,7
+syntcomp/lilydemo21__e03,4,4,4,4,True,,False,False,,,7
+syntcomp/lilydemo21__e04,4,2,3,6,True,,False,False,,,7
+syntcomp/lilydemo21__e06,4,3,4,7,True,,False,False,,,7
+syntcomp/lilydemo22__e00,3,7,8,47,True,,False,False,,,8
+syntcomp/lilydemo22__e04,3,12,13,41,True,,False,False,,,8
+syntcomp/lilydemo22__e06,3,4,5,9,True,,False,False,,,8
+syntcomp/lilydemo23__e00,1,4,4,8,True,,False,False,"(F (X (""i0"" & (X (! ""i0"")))))",7,9
+syntcomp/lilydemo23__e02,1,4,4,8,True,,False,False,"(F (X (""i0"" & (X (! ""i0"")))))",7,9
+syntcomp/lilydemo23__e03,1,3,4,8,True,,False,False,"(G (X ((! ""i0"") | (X ""i0""))))",7,9
+syntcomp/lilydemo23__e04,1,4,3,4,True,,False,False,"(G (X ((! ""i0"") | (F (X ""i0"")))))",8,9
+syntcomp/lilydemo23__e06,1,4,4,8,True,,False,False,"(F (X (""i0"" & (X (! ""i0"")))))",7,9
+syntcomp/lilydemo23__e09,1,6,6,14,True,,False,False,,,9
+syntcomp/lilydemo24__e01,3,2,3,3,True,,False,False,"(! ""i0"")",2,8
+syntcomp/lilydemo24__e02,3,2,2,2,True,,False,False,"(F ""i0"")",2,8
+syntcomp/lilydemo24__e03,3,2,2,2,True,,False,False,"(F ""i0"")",2,8
+syntcomp/lilydemo24__e04,3,2,2,2,True,,False,False,"(F ""i0"")",2,8
+syntcomp/lilydemo24__e05,3,2,2,2,True,,False,False,"(F ""i0"")",2,8
+syntcomp/lilydemo24__e06,3,2,2,2,True,,False,False,"(F ""i0"")",2,8
+syntcomp/lilydemo24__e07,3,3,4,5,True,,False,False,"(""i0"" | (X ""i0""))",4,8
+syntcomp/lilydemo24__e09,3,2,2,2,True,,False,False,"(F ""i0"")",2,8
+syntcomp/load_balancer2__e01,3,4,4,8,False,,False,False,,,8
+syntcomp/load_balancer3__e00,4,2,3,3,True,,False,False,"""i1""",1,7
+syntcomp/load_balancer3__e01,4,9,9,56,True,,False,False,,,7
+syntcomp/load_balancer3__e05,4,17,17,1717,False,,False,False,,,7
+syntcomp/load_balancer3__e08,4,2,3,4,True,,False,False,"(G (X (! ""i1"")))",4,7
+syntcomp/load_balancer_unreal22__e00,3,6,7,17,True,,False,False,,,8
+syntcomp/load_balancer_unreal22__e03,3,2,3,3,True,,False,False,"(! ""i1"")",2,8
+syntcomp/load_balancer_unreal22__e04,3,6,7,13,True,,False,False,,,8
+syntcomp/load_balancer_unreal22__e06,3,8,7,18,True,,False,False,,,8
+syntcomp/load_balancer_unreal22__e08,3,3,4,4,True,,False,False,,,8
+syntcomp/load_balancer_unreal22__e09,3,3,4,5,True,,False,False,"(! (""i1"" & (X ""i1"")))",5,8
+syntcomp/ltl2dba01__e00,3,2,3,6,True,,False,False,"(G (! (""i1"" & (X (""i0"" U ""i2"")))))",8,8
+syntcomp/ltl2dba01__e01,3,3,3,6,True,,False,False,"(F (""i1"" & (X (""i0"" U ""i2""))))",7,8
+syntcomp/ltl2dba01__e02,3,3,3,6,True,,False,False,"(F (""i1"" & (X (""i0"" U ""i2""))))",7,8
+syntcomp/ltl2dba01__e03,3,3,3,6,True,,False,False,"(F (""i1"" & (X (""i0"" U ""i2""))))",7,8
+syntcomp/ltl2dba01__e04,3,3,3,6,True,,False,False,"(F (""i1"" & (X (""i0"" U ""i2""))))",7,8
+syntcomp/ltl2dba01__e05,3,3,3,6,True,,False,False,"(F (""i1"" & (X (""i0"" U ""i2""))))",7,8
+syntcomp/ltl2dba01__e07,3,3,3,6,True,,False,False,"(F (""i1"" & (X (""i0"" U ""i2""))))",7,8
+syntcomp/ltl2dba02__e01,3,11,12,33,True,,False,False,,,8
+syntcomp/ltl2dba02__e06,3,11,12,33,True,,False,False,,,8
+syntcomp/ltl2dba02__e07,3,8,9,21,True,,False,False,,,8
+syntcomp/ltl2dba03__e02,3,4,4,15,True,,False,False,,,8
+syntcomp/ltl2dba03__e03,3,3,4,15,True,,False,False,,,8
+syntcomp/ltl2dba03__e04,3,7,8,45,True,,False,False,,,8
+syntcomp/ltl2dba03__e06,3,4,4,15,True,,False,False,,,8
+syntcomp/ltl2dba03__e07,3,4,4,15,True,,False,False,,,8
+syntcomp/ltl2dba04__e00,3,1,2,2,True,,False,False,"(G (""i2"" | (! ""i0"")))",5,8
+syntcomp/ltl2dba04__e03,3,4,4,6,True,,False,False,,,8
+syntcomp/ltl2dba04__e05,3,6,5,11,True,,False,False,,,8
+syntcomp/ltl2dba04__e07,3,6,7,26,True,,False,False,,,8
+syntcomp/ltl2dba04__e09,3,3,4,6,True,,False,False,,,8
+syntcomp/ltl2dba05__e00,4,4,5,14,True,,False,False,,,7
+syntcomp/ltl2dba05__e01,4,4,5,14,True,,False,False,,,7
+syntcomp/ltl2dba05__e02,4,10,11,50,True,,False,False,,,7
+syntcomp/ltl2dba05__e03,4,4,5,14,True,,False,False,,,7
+syntcomp/ltl2dba05__e08,4,4,5,14,True,,False,False,,,7
+syntcomp/ltl2dba06__e05,4,5,5,42,True,,False,False,,,7
+syntcomp/ltl2dba06__e08,4,4,5,42,True,,False,False,,,7
+syntcomp/ltl2dba09__e00,3,3,2,4,False,,False,False,"(F (G (""i0"" | (""i1"" | ""i2""))))",7,8
+syntcomp/ltl2dba09__e01,3,2,1,1,True,,False,False,"(G (F (""i0"" | (""i1"" | ""i2""))))",7,8
+syntcomp/ltl2dba09__e03,3,2,1,1,True,,False,False,"(G (F (""i0"" | (""i1"" | ""i2""))))",7,8
+syntcomp/ltl2dba09__e08,3,2,1,1,True,,False,False,"(G (F (""i0"" | (""i1"" | ""i2""))))",7,8
+syntcomp/ltl2dba09__e09,3,4,4,7,True,,False,False,,,8
+syntcomp/ltl2dba10__e00,2,2,2,3,True,,False,False,"(! ((F ""i1"") U (G (""i1"" | (! ""i0"")))))",9,9
+syntcomp/ltl2dba10__e02,2,2,2,3,True,,False,False,"(G ((! ""i0"") | (F ""i1"")))",6,9
+syntcomp/ltl2dba10__e03,2,4,4,6,True,,False,False,"(! ((X ""i1"") U (G (""i1"" | (! ""i0"")))))",9,9
+syntcomp/ltl2dba10__e04,2,2,3,3,True,,False,False,"(""i1"" | (! ""i0""))",4,9
+syntcomp/ltl2dba10__e05,2,5,4,6,True,,False,False,,,9
+syntcomp/ltl2dba10__e06,2,2,2,3,True,,False,False,"(G ((! ""i0"") | (F ""i1"")))",6,9
+syntcomp/ltl2dba10__e07,2,2,2,3,True,,False,False,"(G ((! ""i0"") | (F ""i1"")))",6,9
+syntcomp/ltl2dba10__e08,2,1,2,2,True,,False,False,"(G (""i1"" | (! ""i0"")))",5,9
+syntcomp/ltl2dba11__e00,2,3,4,7,True,,False,False,"(X (! ""i1""))",3,9
+syntcomp/ltl2dba11__e01,2,2,1,1,True,,False,False,"(G (F ""i1""))",3,9
+syntcomp/ltl2dba11__e05,2,3,3,8,False,,False,False,"(G (""i1"" | (F (X (! ""i1"")))))",7,9
+syntcomp/ltl2dba11__e06,2,8,8,24,True,,False,False,,,9
+syntcomp/ltl2dba11__e09,2,4,5,9,True,,False,False,"(X (""i1"" | (G (! ""i1""))))",6,9
+syntcomp/ltl2dba12__e00,2,2,3,3,True,,False,False,"((""i0"" & ""i1"") | (! (""i0"" | ""i1"")))",8,9
+syntcomp/ltl2dba12__e01,2,3,4,4,True,,False,False,,,9
+syntcomp/ltl2dba12__e02,2,4,5,5,True,,False,False,,,9
+syntcomp/ltl2dba12__e05,2,4,4,4,True,,False,False,,,9
+syntcomp/ltl2dba12__e07,2,4,5,8,True,,False,False,,,9
+syntcomp/ltl2dba13__e00,3,2,3,3,True,,False,False,"(""i0"" | (""i1"" | ""i2""))",5,8
+syntcomp/ltl2dba13__e06,3,2,3,3,True,,False,False,"(""i0"" | (""i1"" | ""i2""))",5,8
+syntcomp/ltl2dba13__e09,3,3,4,5,True,,False,False,,,8
+syntcomp/ltl2dba14__e00,3,3,3,4,True,,False,False,,,8
+syntcomp/ltl2dba14__e03,3,3,3,4,True,,False,False,,,8
+syntcomp/ltl2dba14__e06,3,4,4,6,True,,False,False,,,8
+syntcomp/ltl2dba14__e07,3,3,4,6,True,,False,False,,,8
+syntcomp/ltl2dba14__e08,3,4,4,6,True,,False,False,,,8
+syntcomp/ltl2dba15__e01,2,1,2,2,True,,False,False,"(G (""i1"" | (! ""i0"")))",5,9
+syntcomp/ltl2dba15__e03,2,4,3,3,True,,False,False,,,9
+syntcomp/ltl2dba15__e05,2,2,1,1,True,,False,False,"(G (F (""i0"" & (! ""i1""))))",6,9
+syntcomp/ltl2dba15__e07,2,3,4,4,True,,False,False,,,9
+syntcomp/ltl2dba15__e08,2,2,3,5,True,,False,False,,,9
+syntcomp/ltl2dba15__e09,2,3,2,4,False,,False,False,"(F (G (""i1"" | (! ""i0""))))",6,9
+syntcomp/ltl2dba16__e01,2,4,4,8,True,,False,False,,,9
+syntcomp/ltl2dba16__e03,2,4,4,8,True,,False,False,,,9
+syntcomp/ltl2dba16__e06,2,5,5,15,True,,False,False,,,9
+syntcomp/ltl2dba16__e08,2,3,3,6,True,,False,False,,,9
+syntcomp/ltl2dba16__e09,2,2,3,3,True,,False,False,"((""i0"" & ""i1"") | (! (""i0"" | ""i1"")))",8,9
+syntcomp/ltl2dba17__e04,2,6,6,250,False,,False,False,,,9
+syntcomp/ltl2dba17__e06,2,5,5,22,True,,False,False,,,9
+syntcomp/ltl2dba18__e00,3,13,11,149,False,,False,False,,,8
+syntcomp/ltl2dba18__e01,3,10,10,63,True,,False,False,,,8
+syntcomp/ltl2dba18__e02,3,2,2,2,True,,False,False,,,8
+syntcomp/ltl2dba18__e03,3,5,4,7,True,,False,False,,,8
+syntcomp/ltl2dba18__e05,3,2,2,2,True,,False,False,,,8
+syntcomp/ltl2dba19__e00,2,8,9,86,True,,False,False,"(G ((! ""i0"") | (X (X (X ""i1"")))))",8,9
+syntcomp/ltl2dba19__e01,2,8,9,86,True,,False,False,"(G ((! ""i0"") | (X (X (X ""i1"")))))",8,9
+syntcomp/ltl2dba19__e04,2,9,9,86,True,,False,False,"(F (""i0"" & (X (X (X (! ""i1""))))))",8,9
+syntcomp/ltl2dba19__e06,2,8,9,86,True,,False,False,"(G ((! ""i0"") | (X (X (X ""i1"")))))",8,9
+syntcomp/ltl2dba19__e07,2,8,9,86,True,,False,False,"(G ((! ""i0"") | (X (X (X ""i1"")))))",8,9
+syntcomp/ltl2dba19__e09,2,8,9,86,True,,False,False,"(G ((! ""i0"") | (X (X (X ""i1"")))))",8,9
+syntcomp/ltl2dba20__e02,4,6,6,34,True,,False,False,,,7
+syntcomp/ltl2dba20__e04,4,10,8,51,True,,False,False,,,7
+syntcomp/ltl2dba20__e06,4,5,5,16,True,,False,False,,,7
+syntcomp/ltl2dba20__e07,4,1,2,2,True,,False,False,,,7
+syntcomp/ltl2dba20__e09,4,5,4,9,True,,False,False,,,7
+syntcomp/ltl2dba21__e03,2,10,10,86,True,,False,False,,,9
+syntcomp/ltl2dba21__e04,2,11,12,86,True,,False,False,,,9
+syntcomp/ltl2dba21__e06,2,3,4,7,True,,False,False,"(X (! ""i1""))",3,9
+syntcomp/ltl2dba22__e01,1,2,3,3,True,,False,False,"(! ""i0"")",2,9
+syntcomp/ltl2dba22__e02,1,2,2,2,True,,False,False,"(F (! ""i0""))",3,9
+syntcomp/ltl2dba22__e05,1,2,2,2,True,,False,False,"(F (! ""i0""))",3,9
+syntcomp/ltl2dba22__e06,1,2,2,2,True,,False,False,"(F (! ""i0""))",3,9
+syntcomp/ltl2dba23__e01,2,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/ltl2dba23__e03,2,3,3,5,True,,False,False,"(F (""i0"" & (F (! ""i1""))))",6,9
+syntcomp/ltl2dba23__e08,2,3,3,5,True,,False,False,"(F (""i0"" & (F (! ""i1""))))",6,9
+syntcomp/ltl2dba24__e00,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba24__e02,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba24__e03,1,2,3,3,True,,False,False,"(! ""i0"")",2,9
+syntcomp/ltl2dba24__e04,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba24__e06,1,1,2,2,True,,False,False,"(G (! ""i0""))",3,9
+syntcomp/ltl2dba24__e08,1,4,5,6,True,,False,False,"(""i0"" | (X (""i0"" | (G (! ""i0"")))))",8,9
+syntcomp/ltl2dba25__e00,3,7,8,21,True,,False,False,,,8
+syntcomp/ltl2dba25__e01,3,4,3,6,True,,False,False,,,8
+syntcomp/ltl2dba25__e04,3,5,6,11,True,,False,False,,,8
+syntcomp/ltl2dba25__e07,3,7,8,13,True,,False,False,,,8
+syntcomp/ltl2dba25__e08,3,4,4,6,True,,False,False,,,8
+syntcomp/ltl2dba25__e09,3,4,3,6,True,,False,False,,,8
+syntcomp/ltl2dba26__e01,3,2,3,3,True,,False,False,"""i0""",1,8
+syntcomp/ltl2dba26__e02,3,2,3,3,True,,False,False,"""i0""",1,8
+syntcomp/ltl2dba26__e04,3,4,4,9,True,,False,False,,,8
+syntcomp/ltl2dba26__e06,3,4,4,9,True,,False,False,,,8
+syntcomp/ltl2dba26__e09,3,4,5,11,True,,False,False,,,8
+syntcomp/ltl2dba_C21__e02,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba_C21__e06,1,2,1,1,True,,False,False,"(G (F ""i0""))",3,9
+syntcomp/ltl2dba_C21__e07,1,2,3,6,True,,False,False,"(G (""i0"" | (X ""i0"")))",5,9
+syntcomp/ltl2dba_C21__e09,1,6,5,13,True,,False,False,"(X ((! ""i0"") | (F (G ""i0""))))",7,9
+syntcomp/ltl2dba_C22__e03,2,2,3,3,True,,False,False,"(""i0"" & ""i1"")",3,9
+syntcomp/ltl2dba_C22__e06,2,6,5,38,False,,False,False,,,9
+syntcomp/ltl2dba_C23__e04,3,5,5,9,True,,False,False,,,8
+syntcomp/ltl2dba_C23__e09,3,3,4,14,True,,False,False,,,8
+syntcomp/ltl2dba_C24__e04,4,5,5,42,True,,False,False,,,7
+syntcomp/ltl2dba_C24__e06,4,6,6,13,True,,False,False,,,7
+syntcomp/ltl2dba_C24__e08,4,2,2,4,False,,False,False,,,7
+syntcomp/ltl2dba_E1__e00,1,3,4,5,True,,False,False,"(! (""i0"" | (X ""i0"")))",5,9
+syntcomp/ltl2dba_E1__e05,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba_E1__e06,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/ltl2dba_E1__e07,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba_E1__e09,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/ltl2dba_E2__e03,2,4,4,4,True,,False,False,"((F ""i0"") & (F ""i1""))",5,9
+syntcomp/ltl2dba_E2__e05,2,4,4,4,True,,False,False,"((F ""i0"") & (F ""i1""))",5,9
+syntcomp/ltl2dba_E2__e06,2,3,4,4,True,,False,False,"(! ((F ""i0"") & (F ""i1"")))",6,9
+syntcomp/ltl2dba_E2__e07,2,3,4,4,True,,False,False,"(! ((F ""i0"") & (F ""i1"")))",6,9
+syntcomp/ltl2dba_E2__e09,2,4,4,4,True,,False,False,"((F ""i0"") & (F ""i1""))",5,9
+syntcomp/ltl2dba_E3__e01,3,9,10,23,True,,False,False,,,8
+syntcomp/ltl2dba_E3__e02,3,8,8,8,True,,False,False,"((F ""i0"") & ((F ""i1"") & (F ""i2"")))",8,8
+syntcomp/ltl2dba_E3__e09,3,2,3,3,True,,False,False,"(! (""i0"" & (""i1"" & ""i2"")))",6,8
+syntcomp/ltl2dba_E4__e03,4,16,16,16,True,,False,False,,,7
+syntcomp/ltl2dba_E4__e04,4,2,3,3,True,,False,False,,,7
+syntcomp/ltl2dba_E4__e05,4,2,3,3,True,,False,False,"(""i0"" & (""i1"" & (""i2"" & ""i3"")))",7,7
+syntcomp/ltl2dba_E4__e07,4,16,16,16,True,,False,False,,,7
+syntcomp/ltl2dba_E4__e08,4,2,3,3,True,,False,False,,,7
+syntcomp/ltl2dba_E4__e09,4,2,3,3,True,,False,False,"(""i0"" & (""i1"" & (""i2"" & ""i3"")))",7,7
+syntcomp/ltl2dba_Q1__e00,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/ltl2dba_Q1__e01,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba_Q1__e02,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba_Q1__e03,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba_Q1__e06,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba_Q1__e08,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/ltl2dba_Q1__e09,1,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dba_Q2__e01,2,6,6,8,True,,False,False,,,9
+syntcomp/ltl2dba_Q2__e04,2,6,6,8,True,,False,False,,,9
+syntcomp/ltl2dba_Q2__e05,2,3,4,6,True,,False,False,,,9
+syntcomp/ltl2dba_Q2__e09,2,6,6,8,True,,False,False,,,9
+syntcomp/ltl2dba_Q3__e01,3,13,13,13,True,,False,False,,,8
+syntcomp/ltl2dba_Q3__e02,3,13,13,19,True,,False,False,,,8
+syntcomp/ltl2dba_Q3__e03,3,13,13,19,True,,False,False,,,8
+syntcomp/ltl2dba_Q3__e06,3,12,13,13,True,,False,False,,,8
+syntcomp/ltl2dba_Q3__e07,3,13,13,13,True,,False,False,,,8
+syntcomp/ltl2dba_Q3__e09,3,13,13,13,True,,False,False,,,8
+syntcomp/ltl2dba_Q4__e00,4,6,7,15,True,,False,False,,,7
+syntcomp/ltl2dba_Q4__e02,4,29,30,30,True,,False,False,,,7
+syntcomp/ltl2dba_Q4__e04,4,30,30,30,True,,False,False,,,7
+syntcomp/ltl2dba_Q4__e05,4,30,30,30,True,,False,False,,,7
+syntcomp/ltl2dba_Q4__e07,4,29,30,88,True,,False,False,,,7
+syntcomp/ltl2dba_Q4__e08,4,24,25,108,True,,False,False,,,7
+syntcomp/ltl2dba_R1__e05,1,3,4,5,True,,False,False,"(""i0"" | (G (X ""i0"")))",5,9
+syntcomp/ltl2dba_R1__e08,1,3,2,4,False,,False,False,"(F (G (! ""i0"")))",4,9
+syntcomp/ltl2dba_R1__e09,1,2,2,2,True,,False,False,"(F (! ""i0""))",3,9
+syntcomp/ltl2dba_U11__e05,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/ltl2dba_U11__e06,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/ltl2dba_U11__e08,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/ltl2dba_U11__e09,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/ltl2dba_U12__e00,2,2,3,3,True,,False,False,"(""i0"" U ""i1"")",3,9
+syntcomp/ltl2dba_U12__e01,2,2,3,3,True,,False,False,"(""i0"" U ""i1"")",3,9
+syntcomp/ltl2dba_U12__e04,2,2,3,3,True,,False,False,"(""i0"" U ""i1"")",3,9
+syntcomp/ltl2dba_U12__e05,2,2,3,3,True,,False,False,"""i1""",1,9
+syntcomp/ltl2dba_U13__e00,3,4,5,7,True,,False,False,,,8
+syntcomp/ltl2dba_U13__e02,3,4,5,11,True,,False,False,"(! ((""i0"" U ""i1"") U ""i2""))",6,8
+syntcomp/ltl2dba_U13__e05,3,4,5,11,True,,False,False,"((""i0"" U ""i1"") U ""i2"")",5,8
+syntcomp/ltl2dba_U13__e06,3,4,5,11,True,,False,False,"((""i0"" U ""i1"") U ""i2"")",5,8
+syntcomp/ltl2dba_U13__e08,3,4,5,11,True,,False,False,"((""i0"" U ""i1"") U ""i2"")",5,8
+syntcomp/ltl2dba_U14__e00,4,8,9,48,True,,False,False,"(((""i0"" U ""i1"") U ""i2"") U ""i3"")",7,7
+syntcomp/ltl2dba_U14__e02,4,8,9,48,True,,False,False,"(((""i0"" U ""i1"") U ""i2"") U ""i3"")",7,7
+syntcomp/ltl2dba_U14__e03,4,5,6,9,True,,False,False,,,7
+syntcomp/ltl2dba_U14__e05,4,8,9,48,True,,False,False,"(((""i0"" U ""i1"") U ""i2"") U ""i3"")",7,7
+syntcomp/ltl2dba_U14__e06,4,8,9,48,True,,False,False,"(((""i0"" U ""i1"") U ""i2"") U ""i3"")",7,7
+syntcomp/ltl2dba_U14__e07,4,8,9,48,True,,False,False,"(((""i0"" U ""i1"") U ""i2"") U ""i3"")",7,7
+syntcomp/ltl2dba_U14__e08,4,8,9,48,True,,False,False,"(((""i0"" U ""i1"") U ""i2"") U ""i3"")",7,7
+syntcomp/ltl2dba_U14__e09,4,8,9,48,True,,False,False,,,7
+syntcomp/ltl2dba_alpha10__e00,2,11,12,132,True,,False,False,,,9
+syntcomp/ltl2dba_alpha10__e01,2,11,12,132,True,,False,False,,,9
+syntcomp/ltl2dba_alpha10__e03,2,12,12,132,True,,False,False,,,9
+syntcomp/ltl2dba_alpha10__e06,2,11,12,132,True,,False,False,,,9
+syntcomp/ltl2dba_alpha10__e07,2,12,12,132,True,,False,False,,,9
+syntcomp/ltl2dba_alpha10__e08,2,11,12,132,True,,False,False,,,9
+syntcomp/ltl2dba_alpha10__e09,2,11,12,132,True,,False,False,,,9
+syntcomp/ltl2dba_alpha12__e00,2,13,14,182,True,,False,False,,,9
+syntcomp/ltl2dba_alpha12__e01,2,13,14,182,True,,False,False,,,9
+syntcomp/ltl2dba_alpha12__e04,2,13,14,182,True,,False,False,,,9
+syntcomp/ltl2dba_alpha12__e06,2,13,14,182,True,,False,False,,,9
+syntcomp/ltl2dba_alpha14__e00,2,15,16,240,True,,False,False,,,9
+syntcomp/ltl2dba_alpha14__e02,2,15,16,240,True,,False,False,,,9
+syntcomp/ltl2dba_alpha14__e04,2,16,16,240,True,,False,False,,,9
+syntcomp/ltl2dba_alpha14__e07,2,16,16,240,True,,False,False,,,9
+syntcomp/ltl2dba_alpha16__e00,2,17,18,306,True,,False,False,,,9
+syntcomp/ltl2dba_alpha16__e01,2,17,18,306,True,,False,False,,,9
+syntcomp/ltl2dba_alpha16__e02,2,18,18,306,True,,False,False,,,9
+syntcomp/ltl2dba_alpha16__e04,2,17,18,306,True,,False,False,,,9
+syntcomp/ltl2dba_alpha16__e05,2,17,18,306,True,,False,False,,,9
+syntcomp/ltl2dba_alpha16__e08,2,17,18,306,True,,False,False,,,9
+syntcomp/ltl2dba_alpha1__e01,2,2,3,6,True,,False,False,,,9
+syntcomp/ltl2dba_alpha1__e02,2,3,3,6,True,,False,False,"(F (""i0"" & (""i1"" & (X (""i0"" & ""i1"")))))",9,9
+syntcomp/ltl2dba_alpha1__e03,2,2,3,6,True,,False,False,,,9
+syntcomp/ltl2dba_alpha1__e05,2,3,3,6,True,,False,False,"(F (""i0"" & (""i1"" & (X (""i0"" & ""i1"")))))",9,9
+syntcomp/ltl2dba_alpha1__e06,2,3,4,5,True,,False,False,"(! (""i0"" & (""i1"" & (X (""i0"" & ""i1"")))))",9,9
+syntcomp/ltl2dba_alpha1__e08,2,3,3,6,True,,False,False,"(F (""i0"" & (""i1"" & (X (""i0"" & ""i1"")))))",9,9
+syntcomp/ltl2dba_alpha25__e00,2,26,27,702,True,,False,False,,,9
+syntcomp/ltl2dba_alpha25__e07,2,27,27,702,True,,False,False,,,9
+syntcomp/ltl2dba_alpha2__e00,2,3,4,12,True,,False,False,,,9
+syntcomp/ltl2dba_alpha2__e01,2,3,4,12,True,,False,False,,,9
+syntcomp/ltl2dba_alpha2__e03,2,3,4,12,True,,False,False,,,9
+syntcomp/ltl2dba_alpha2__e05,2,3,4,12,True,,False,False,,,9
+syntcomp/ltl2dba_alpha2__e07,2,4,4,12,True,,False,False,,,9
+syntcomp/ltl2dba_alpha3__e05,2,4,5,20,True,,False,False,,,9
+syntcomp/ltl2dba_alpha3__e06,2,4,5,20,True,,False,False,,,9
+syntcomp/ltl2dba_alpha4__e02,2,5,6,30,True,,False,False,,,9
+syntcomp/ltl2dba_alpha4__e05,2,5,6,30,True,,False,False,,,9
+syntcomp/ltl2dba_alpha50__e00,2,51,52,2652,True,,False,False,,,9
+syntcomp/ltl2dba_alpha50__e02,2,51,52,2652,True,,False,False,,,9
+syntcomp/ltl2dba_alpha50__e04,2,51,52,2652,True,,False,False,,,9
+syntcomp/ltl2dba_alpha50__e06,2,51,52,2652,True,,False,False,,,9
+syntcomp/ltl2dba_alpha50__e07,2,51,52,2652,True,,False,False,,,9
+syntcomp/ltl2dba_alpha50__e08,2,51,52,2652,True,,False,False,,,9
+syntcomp/ltl2dba_alpha5__e03,2,6,7,42,True,,False,False,,,9
+syntcomp/ltl2dba_alpha5__e04,2,6,7,42,True,,False,False,,,9
+syntcomp/ltl2dba_alpha5__e06,2,6,7,42,True,,False,False,,,9
+syntcomp/ltl2dba_alpha5__e09,2,6,7,42,True,,False,False,,,9
+syntcomp/ltl2dba_alpha6__e00,2,7,8,56,True,,False,False,,,9
+syntcomp/ltl2dba_alpha6__e02,2,7,8,56,True,,False,False,,,9
+syntcomp/ltl2dba_alpha6__e08,2,7,8,56,True,,False,False,,,9
+syntcomp/ltl2dba_alpha6__e09,2,7,8,56,True,,False,False,,,9
+syntcomp/ltl2dba_alpha7__e02,2,8,9,72,True,,False,False,,,9
+syntcomp/ltl2dba_alpha7__e03,2,9,9,72,True,,False,False,,,9
+syntcomp/ltl2dba_alpha7__e04,2,8,9,72,True,,False,False,,,9
+syntcomp/ltl2dba_alpha7__e07,2,8,9,72,True,,False,False,,,9
+syntcomp/ltl2dba_alpha8__e03,2,9,10,90,True,,False,False,,,9
+syntcomp/ltl2dba_alpha8__e09,2,9,10,90,True,,False,False,,,9
+syntcomp/ltl2dba_beta1__e01,2,4,4,4,True,,False,False,"((F ""i0"") & (F ""i1""))",5,9
+syntcomp/ltl2dba_beta1__e02,2,4,4,4,True,,False,False,"((F ""i0"") & (F ""i1""))",5,9
+syntcomp/ltl2dba_beta1__e03,2,4,4,4,True,,False,False,"((F ""i0"") & (F ""i1""))",5,9
+syntcomp/ltl2dba_beta1__e04,2,3,4,4,True,,False,False,"(! ((F ""i0"") & (F ""i1"")))",6,9
+syntcomp/ltl2dba_beta1__e05,2,4,4,4,True,,False,False,"((F ""i0"") & (F ""i1""))",5,9
+syntcomp/ltl2dba_beta1__e06,2,8,9,23,True,,False,False,,,9
+syntcomp/ltl2dba_beta2__e00,4,2,3,3,True,,False,False,,,7
+syntcomp/ltl2dba_beta2__e01,4,9,9,25,True,,False,False,,,7
+syntcomp/ltl2dba_beta2__e03,4,10,11,33,True,,False,False,,,7
+syntcomp/ltl2dba_beta2__e06,4,9,9,25,True,,False,False,,,7
+syntcomp/ltl2dba_beta2__e07,4,9,9,25,True,,False,False,,,7
+syntcomp/ltl2dba_beta2__e09,4,9,9,25,True,,False,False,,,7
+syntcomp/ltl2dpa01__e05,1,5,6,8,True,,False,False,,,9
+syntcomp/ltl2dpa02__e01,2,2,2,3,True,,False,False,"(! ((F ""i1"") U (G (""i0"" | ""i1""))))",8,9
+syntcomp/ltl2dpa02__e04,2,4,4,8,True,,False,False,,,9
+syntcomp/ltl2dpa02__e05,2,7,8,20,True,,False,False,,,9
+syntcomp/ltl2dpa02__e06,2,3,4,8,True,,False,False,,,9
+syntcomp/ltl2dpa02__e08,2,5,3,6,True,,False,False,"(F (G (""i0"" | (""i1"" | (G (! ""i1""))))))",9,9
+syntcomp/ltl2dpa02__e09,2,4,4,6,True,,False,False,"(! ((X ""i1"") U (G (""i0"" | ""i1""))))",8,9
+syntcomp/ltl2dpa03__e00,3,5,6,11,True,,False,False,,,8
+syntcomp/ltl2dpa03__e02,3,9,9,37,True,,False,False,,,8
+syntcomp/ltl2dpa03__e03,3,3,3,5,True,,False,False,"(""i0"" | (F (""i2"" | (X (! ""i1"")))))",8,8
+syntcomp/ltl2dpa03__e04,3,3,3,5,True,,False,False,"(""i0"" | (F (""i2"" | (X (! ""i1"")))))",8,8
+syntcomp/ltl2dpa04__e03,2,2,2,2,True,,False,False,"(F (""i0"" & ""i1""))",4,9
+syntcomp/ltl2dpa04__e07,2,2,3,3,True,,False,False,"(! (""i0"" & ""i1""))",4,9
+syntcomp/ltl2dpa04__e08,2,1,2,2,True,,False,False,"(G (! (""i0"" & ""i1"")))",5,9
+syntcomp/ltl2dpa04__e09,2,1,2,2,True,,False,False,"(G (! (""i0"" & ""i1"")))",5,9
+syntcomp/ltl2dpa05__e00,2,2,2,4,False,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa05__e01,2,2,2,4,False,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa05__e02,2,3,3,4,True,,False,False,"(F (X (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa05__e03,2,2,2,4,False,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa05__e08,2,2,2,4,False,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa06__e01,3,4,5,7,True,,False,False,,,8
+syntcomp/ltl2dpa06__e03,3,4,5,7,True,,False,False,,,8
+syntcomp/ltl2dpa06__e04,3,4,5,7,True,,False,False,,,8
+syntcomp/ltl2dpa06__e08,3,3,4,5,True,,False,False,,,8
+syntcomp/ltl2dpa06__e09,3,3,4,5,True,,False,False,,,8
+syntcomp/ltl2dpa07__e00,3,2,2,3,True,,False,False,"(G (""i0"" | (F (""i1"" | ""i2""))))",7,8
+syntcomp/ltl2dpa07__e01,3,8,8,52,True,,False,False,,,8
+syntcomp/ltl2dpa07__e02,3,3,2,3,True,,False,False,"(G (""i0"" | (F (""i1"" | ""i2""))))",7,8
+syntcomp/ltl2dpa07__e05,3,3,2,3,True,,False,False,,,8
+syntcomp/ltl2dpa07__e06,3,3,4,5,True,,False,False,,,8
+syntcomp/ltl2dpa07__e08,3,2,2,3,True,,False,False,"(G (""i0"" | (F (""i1"" | ""i2""))))",7,8
+syntcomp/ltl2dpa08__e00,2,4,5,8,True,,False,False,"(""i0"" | ((X ""i0"") | (""i1"" & (X ""i1""))))",9,9
+syntcomp/ltl2dpa08__e02,2,6,7,10,True,,False,False,,,9
+syntcomp/ltl2dpa08__e03,2,3,4,6,True,,False,False,"(""i0"" | (""i1"" & (X (""i1"" & (! ""i0"")))))",9,9
+syntcomp/ltl2dpa08__e04,2,5,6,7,True,,False,False,,,9
+syntcomp/ltl2dpa08__e05,2,4,4,6,True,,False,False,"((F ""i0"") | (""i1"" & (X ""i1"")))",7,9
+syntcomp/ltl2dpa08__e06,2,5,6,11,True,,False,False,,,9
+syntcomp/ltl2dpa08__e07,2,3,3,3,True,,False,False,"((F ""i0"") | (G ""i1""))",5,9
+syntcomp/ltl2dpa08__e08,2,4,4,6,True,,False,False,"((F ""i0"") | (""i1"" & (X ""i1"")))",7,9
+syntcomp/ltl2dpa09__e00,3,3,2,3,True,,False,False,"(F (! (""i0"" | (F (""i1"" & ""i2"")))))",8,8
+syntcomp/ltl2dpa09__e04,3,3,3,4,True,,False,False,"(""i0"" | (F (""i1"" & ""i2"")))",6,8
+syntcomp/ltl2dpa09__e05,3,5,5,10,True,,False,False,,,8
+syntcomp/ltl2dpa09__e06,3,2,2,3,True,,False,False,,,8
+syntcomp/ltl2dpa09__e07,3,2,3,4,True,,False,False,"(! (""i0"" | (F (""i1"" & ""i2""))))",7,8
+syntcomp/ltl2dpa09__e08,3,5,6,16,True,,False,False,,,8
+syntcomp/ltl2dpa09__e09,3,3,2,3,True,,False,False,"(F (! (""i0"" | (F (""i1"" & ""i2"")))))",8,8
+syntcomp/ltl2dpa10__e00,2,3,3,4,True,,False,False,"(""i0"" | (F (""i1"" | (X (! ""i0"")))))",8,9
+syntcomp/ltl2dpa11__e00,3,2,3,8,True,,False,False,,,8
+syntcomp/ltl2dpa11__e02,3,3,3,8,True,,False,False,,,8
+syntcomp/ltl2dpa11__e03,3,3,4,12,True,,False,False,,,8
+syntcomp/ltl2dpa11__e04,3,3,2,4,False,,False,False,,,8
+syntcomp/ltl2dpa11__e06,3,2,3,8,True,,False,False,,,8
+syntcomp/ltl2dpa11__e07,3,3,3,16,False,,False,False,"(G (F (""i1"" | (""i0"" & (F ""i2"")))))",8,8
+syntcomp/ltl2dpa12__e00,2,5,5,13,True,,False,False,,,9
+syntcomp/ltl2dpa12__e06,2,4,4,7,True,,False,False,,,9
+syntcomp/ltl2dpa12__e09,2,17,18,986,False,"((), (0,), (1,))",False,False,,,9
+syntcomp/ltl2dpa13__e01,2,5,4,6,True,,False,False,"(""i0"" | (F (! (""i1"" & (F ""i0"")))))",8,9
+syntcomp/ltl2dpa13__e03,2,7,8,19,True,,False,False,,,9
+syntcomp/ltl2dpa14__e00,1,2,3,3,True,,False,False,"""i0""",1,9
+syntcomp/ltl2dpa14__e02,1,2,3,3,True,,False,False,"(! ""i0"")",2,9
+syntcomp/ltl2dpa14__e03,1,4,5,6,True,,False,False,"(""i0"" & (X ((! ""i0"") | (G ""i0""))))",8,9
+syntcomp/ltl2dpa14__e04,1,5,4,6,True,,False,False,"(G ((F (X (! ""i0""))) U ""i0""))",7,9
+syntcomp/ltl2dpa14__e09,1,2,2,2,True,,False,False,"(F (! ""i0""))",3,9
+syntcomp/ltl2dpa15__e00,2,3,4,4,True,,False,False,"(""i0"" | (G (! ""i0"")))",5,9
+syntcomp/ltl2dpa15__e01,2,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/ltl2dpa15__e02,2,5,5,15,True,,False,False,,,9
+syntcomp/ltl2dpa15__e03,2,3,3,9,False,,False,False,"(G (F (""i0"" & (F ""i1""))))",6,9
+syntcomp/ltl2dpa16__e01,2,5,6,11,True,,False,False,"((""i0"" | (X ""i0"")) & (""i1"" | (X ""i1"")))",9,9
+syntcomp/ltl2dpa16__e02,2,3,4,4,True,,False,False,"(! ((F ""i0"") & (F ""i1"")))",6,9
+syntcomp/ltl2dpa16__e03,2,4,4,4,True,,False,False,"((F ""i0"") & (F ""i1""))",5,9
+syntcomp/ltl2dpa16__e05,2,2,3,3,True,,False,False,"(""i0"" & ""i1"")",3,9
+syntcomp/ltl2dpa16__e06,2,4,4,4,True,,False,False,"((F ""i0"") & (F ""i1""))",5,9
+syntcomp/ltl2dpa16__e08,2,2,3,3,True,,False,False,"(! (""i0"" & ""i1""))",4,9
+syntcomp/ltl2dpa16__e09,2,4,4,4,True,,False,False,"((F ""i0"") & (F ""i1""))",5,9
+syntcomp/ltl2dpa17__e01,2,4,4,4,True,,False,False,"(! ((G ""i0"") | (G ""i1"")))",6,9
+syntcomp/ltl2dpa17__e02,2,4,4,4,True,,False,False,"(! ((G ""i0"") | (G ""i1"")))",6,9
+syntcomp/ltl2dpa17__e04,2,4,4,4,True,,False,False,"(! ((G ""i0"") | (G ""i1"")))",6,9
+syntcomp/ltl2dpa17__e05,2,3,4,4,True,,False,False,"((G ""i0"") | (G ""i1""))",5,9
+syntcomp/ltl2dpa17__e08,2,8,9,18,True,,False,False,,,9
+syntcomp/ltl2dpa17__e09,2,5,6,11,True,,False,False,,,9
+syntcomp/ltl2dpa18__e04,3,5,6,14,True,,False,False,,,8
+syntcomp/ltl2dpa18__e05,3,8,9,19,True,,False,False,,,8
+syntcomp/ltl2dpa18__e07,3,4,4,4,True,,False,False,"(! ((G ""i1"") | (G ""i2"")))",6,8
+syntcomp/ltl2dpa19__e00,3,8,9,22,True,,False,False,,,8
+syntcomp/ltl2dpa19__e03,3,6,6,10,True,,False,False,,,8
+syntcomp/ltl2dpa19__e05,3,4,4,4,True,,False,False,"((F ""i1"") & (F ""i2""))",5,8
+syntcomp/ltl2dpa19__e06,3,5,5,7,True,,False,False,,,8
+syntcomp/ltl2dpa19__e07,3,7,7,32,True,,False,False,,,8
+syntcomp/ltl2dpa19__e08,3,12,12,40,True,,False,False,,,8
+syntcomp/ltl2dpa19__e09,3,6,7,25,True,,False,False,,,8
+syntcomp/ltl2dpa20__e00,3,6,6,131,False,,False,False,,,8
+syntcomp/ltl2dpa20__e03,3,4,4,4,True,,False,False,"((F ""i1"") & (F ""i2""))",5,8
+syntcomp/ltl2dpa20__e09,3,5,5,10,True,,False,False,,,8
+syntcomp/ltl2dpa21__e00,2,5,5,8,True,,False,False,,,9
+syntcomp/ltl2dpa21__e03,2,7,7,17,True,,False,False,,,9
+syntcomp/ltl2dpa21__e04,2,9,9,23,True,,False,False,,,9
+syntcomp/ltl2dpa21__e05,2,5,6,11,True,,False,False,,,9
+syntcomp/ltl2dpa21__e07,2,5,5,9,True,,False,False,,,9
+syntcomp/ltl2dpa21__e08,2,5,5,14,True,,False,False,,,9
+syntcomp/ltl2dpa21__e09,2,3,4,5,True,,False,False,"(""i0"" | ((X ""i1"") | (! (""i1"" U ""i0""))))",9,9
+syntcomp/ltl2dpa23__e01,2,3,3,4,True,,False,False,"(F (X (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa23__e03,2,5,3,24,False,,False,False,,,9
+syntcomp/ltl2dpa23__e04,2,2,2,4,False,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa23__e05,2,3,2,4,False,,False,False,"(F (G (! (""i0"" | ""i1""))))",6,9
+syntcomp/ltl2dpa23__e07,2,2,2,4,False,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa23__e08,2,2,2,4,False,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa23__e09,2,2,2,4,False,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa24__e00,2,10,11,49,False,"((), (1,), (0, 1))",False,False,,,9
+syntcomp/ltl2dpa24__e01,2,3,4,15,False,"((), (1,), (0, 1))",False,False,,,9
+syntcomp/ltl2dpa24__e02,2,7,6,13,True,,False,False,,,9
+syntcomp/ltl2dpa24__e04,2,3,3,4,True,,False,False,"(F (X (""i0"" | ""i1"")))",5,9
+syntcomp/ltl2dpa24__e09,2,3,3,4,True,,False,False,"(F (X (""i0"" | ""i1"")))",5,9
+syntcomp/prioritized_arbiter1__e01,2,8,9,28,True,,False,False,,,9
+syntcomp/prioritized_arbiter1__e02,2,6,6,26,True,,False,False,,,9
+syntcomp/prioritized_arbiter1__e04,2,2,2,2,True,,False,False,"(F ""i1"")",2,9
+syntcomp/prioritized_arbiter1__e05,2,6,4,8,True,,False,False,,,9
+syntcomp/prioritized_arbiter1__e06,2,2,1,1,True,,False,False,"(G (F ""i1""))",3,9
+syntcomp/prioritized_arbiter1__e08,2,2,2,2,True,,False,False,"(F ""i1"")",2,9
+syntcomp/prioritized_arbiter2__e02,3,3,3,4,True,,False,False,,,8
+syntcomp/prioritized_arbiter3__e06,4,3,3,4,True,,False,False,,,7
+syntcomp/prioritized_arbiter3__e08,4,21,22,4413,False,,False,False,,,7
+syntcomp/prioritized_arbiter3__e09,4,2,2,4,False,,False,False,,,7
+syntcomp/round_robin_arbiter2__e00,2,4,4,22,False,"((), (3,), (2, 0))",False,False,,,9
+syntcomp/round_robin_arbiter2__e02,2,3,4,7,True,,False,False,"((""i0"" & ""i1"") | (X (""i1"" & (! ""i0""))))",9,9
+syntcomp/round_robin_arbiter2__e05,2,2,2,2,True,,False,False,"(F ""i0"")",2,9
+syntcomp/round_robin_arbiter2__e09,2,6,5,18,False,,False,False,,,9
+syntcomp/round_robin_arbiter3__e01,3,9,8,35,False,,False,False,,,8
+syntcomp/round_robin_arbiter3__e02,3,3,3,4,True,,False,False,,,8
+syntcomp/round_robin_arbiter3__e04,3,5,5,24,True,,False,False,,,8
+syntcomp/round_robin_arbiter3__e05,3,6,6,29,False,"((), (6,), (2,))",False,False,,,8
+syntcomp/round_robin_arbiter4__e03,4,5,6,6,True,,False,False,,,7
+syntcomp/round_robin_arbiter4__e05,4,2,2,2,True,,False,False,,,7
+syntcomp/round_robin_arbiter4__e06,4,2,2,2,True,,False,False,,,7
+syntcomp/simple_arbiter2__e05,2,2,3,3,True,,False,False,"(""i0"" | (! ""i1""))",4,9
+syntcomp/simple_arbiter2__e06,2,8,6,68,False,,False,False,,,9
+syntcomp/simple_arbiter2__e07,2,3,4,4,True,,False,False,"(! (""i0"" | (G (""i1"" & (! ""i0"")))))",8,9
+syntcomp/simple_arbiter2__e08,2,3,4,7,True,,False,False,,,9
+syntcomp/simple_arbiter2__e09,2,2,2,4,False,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/simple_arbiter3__e00,3,3,4,4,True,,False,False,"(! ((F ""i1"") & (""i0"" | (! ""i1""))))",8,8
+syntcomp/simple_arbiter3__e03,3,3,4,7,True,,False,False,,,8
+syntcomp/simple_arbiter3__e04,3,3,2,4,False,,False,False,"(F (G (! ""i0"")))",4,8
+syntcomp/simple_arbiter3__e05,3,6,7,10,True,,False,False,,,8
+syntcomp/simple_arbiter3__e09,3,2,3,3,True,,False,False,"""i0""",1,8
+syntcomp/simple_arbiter4__e01,4,2,2,2,True,,False,False,"(F ""i3"")",2,7
+syntcomp/simple_arbiter4__e02,4,14,15,72,True,,False,False,,,7
+syntcomp/simple_arbiter4__e03,4,21,21,>20000,False,,False,False,,,7
+syntcomp/simple_arbiter4__e07,4,18,19,62,True,,False,False,,,7
+syntcomp/test2_f2774e0b__e04,4,4,5,6,True,,False,False,,,7
+syntcomp/test5_6cbc6174__e01,1,4,5,10,True,,False,False,"(X (! (""i0"" | (X ""i0""))))",6,9
+syntcomp/test5_6cbc6174__e03,1,4,4,9,True,,False,False,"(X ((""i0"" | (X ""i0"")) U (G ""i0"")))",8,9
+syntcomp/test5_6cbc6174__e04,1,3,4,9,True,,False,False,"(G (X (""i0"" | (X ""i0""))))",6,9
+syntcomp/test5_6cbc6174__e05,1,4,4,9,True,,False,False,"(F (X (! (""i0"" | (X ""i0"")))))",7,9
+syntcomp/test5_6cbc6174__e06,1,4,5,10,True,,False,False,"(X (""i0"" | (X ""i0"")))",5,9
+syntcomp/test5_6cbc6174__e07,1,4,4,9,True,,False,False,"(X (! ((""i0"" | (X ""i0"")) U (G ""i0""))))",9,9
+syntcomp/test5_6cbc6174__e08,1,5,5,16,True,,False,False,,,9
+syntcomp/test6_0f5381e9__e00,1,2,3,3,True,,False,False,"(! ""i0"")",2,9
+syntcomp/test6_0f5381e9__e03,1,4,5,10,True,,False,False,"(X (! (""i0"" | (X ""i0""))))",6,9
+syntcomp/test6_0f5381e9__e07,1,4,5,10,True,,False,False,"(X (! (""i0"" | (X ""i0""))))",6,9
+syntcomp/test6_0f5381e9__e08,1,4,5,8,True,,False,False,"(""i0"" | (X (! (""i0"" | (G (X ""i0""))))))",9,9
+syntcomp/test7_2c5b09da__e02,2,8,8,42,True,,False,False,,,9
+syntcomp/test7_2c5b09da__e04,2,6,7,16,True,,False,False,,,9
+syntcomp/test7_2c5b09da__e05,2,6,7,18,True,,False,False,,,9
+syntcomp/test7_2c5b09da__e06,2,5,6,23,True,,False,False,,,9
+syntcomp/test7_2c5b09da__e07,2,3,4,7,True,,False,False,"((! ""i0"") | (X ""i1""))",5,9
+syntcomp/test7_2c5b09da__e08,2,5,6,23,True,,False,False,,,9
+syntcomp/test_f3987563__e03,2,2,1,1,True,,False,False,"(G (F (""i0"" | ""i1"")))",5,9
+syntcomp/test_f3987563__e05,2,4,4,9,False,,False,False,,,9
+syntcomp/test_f3987563__e07,2,3,3,5,True,,False,False,"(F (! ((X ""i0"") | (""i1"" & (! ""i0"")))))",9,9

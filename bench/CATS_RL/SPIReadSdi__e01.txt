@@ -1,0 +1,38 @@
+[info]
+CATS SYNTCOMP: SPIReadSdi (spec=./sc-1/SPIReadSdi.json, states=1, inputs=4, aps=7) effect #1 source=randltl
+
+[inputs]
+"p0p0lte0counter0f1dseventeen1b" "p0p0gte0counter0f1dfour1b" "p0p0eq0counter0f1dtwo1b" "p0p0eq0counter0f1dthree1b"
+
+[effect]
+(! (true U "u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b"))
+
+[lasso]
+AP: "u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b" "u0sdi0sdi" "u0sdi0f1dhigh1b" "p0p0eq0counter0f1dthree1b" "p0p0eq0counter0f1dtwo1b" "p0p0gte0counter0f1dfour1b" "p0p0lte0counter0f1dseventeen1b"
+Prefix: {2 3 4}
+Loop: {2 4} {0 5 6}
+
+[system]
+HOA: v1
+Start: 0
+AP: 7 "u0sdi0f1dget2bit0read2address0f1dsub0f1deight1b0f1ddiv0counter0f1dtwo1b1b1b1b" "u0sdi0sdi" "u0sdi0f1dhigh1b" "p0p0eq0counter0f1dthree1b" "p0p0eq0counter0f1dtwo1b" "p0p0gte0counter0f1dfour1b" "p0p0lte0counter0f1dseventeen1b"
+Acceptance: 0 t
+--BODY--
+State: 0
+[!0&!1&2&!3&!4&!5&!6] 0
+[!0&!1&2&3&!4&!5&!6] 0
+[!0&!1&2&!3&4&!5&!6] 0
+[!0&!1&2&3&4&!5&!6] 0
+[!0&!1&2&!3&!4&5&!6] 0
+[!0&!1&2&3&!4&5&!6] 0
+[!0&!1&2&!3&4&5&!6] 0
+[!0&!1&2&3&4&5&!6] 0
+[!0&!1&2&!3&!4&!5&6] 0
+[!0&!1&2&3&!4&!5&6] 0
+[!0&!1&2&!3&4&!5&6] 0
+[!0&!1&2&3&4&!5&6] 0
+[0&!1&!2&!3&!4&5&6] 0
+[!0&!1&2&3&!4&5&6] 0
+[!0&!1&2&!3&4&5&6] 0
+[!0&!1&2&3&4&5&6] 0
+--END--

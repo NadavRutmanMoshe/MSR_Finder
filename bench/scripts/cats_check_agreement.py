@@ -3,89 +3,63 @@
 cats_check_agreement -- do \\tool and CATS agree about CATS's own candidate?
 
     ~/micromamba/envs/spot/bin/python3 cats_check_agreement.py
-    -> results/MTSR_CATS_check/agreement.csv          (~40s for 817 instances)
+    -> results/MTSR_CATS_check/agreement.csv
 
-WHY THERE IS SOMETHING TO COMPARE AFTER ALL
--------------------------------------------
-mtsr_cats_check_bench.py says a runtime-only comparison is all that is available
-there, and for the two tools' OUTPUTS that is right: CATS verifies a candidate,
-we synthesize one, and the objects are not the same kind. But both tools can be
-asked about ONE shared object -- the candidate CATS was handed:
+WHAT IS COMPARED
+----------------
+mtsr_cats_check_bench.py hands each instance's candidate phi_C to both tools:
 
     CATS asks   is phi_C an ACTUAL cause of the effect on this lasso?
-    we ask      is phi_C SUFFICIENT, i.e. L(phi_C) subset-of L(MTSR)?
+    we ask      is phi_C THE MTSR?  -- the tool's own --check
+                (MSR_Finder/scripts/cause_check.py: L(phi_C), restricted to the
+                system's input words, equals L(MTSR)).  MTSR or NOT_MTSR,
+                nothing in between (Nadav, 2026-10-11).
 
-MTSR's language is exactly the input sequences that force the effect, so the
-second question is language inclusion and spot decides it. That makes a real
-agreement column, and a disagreement is a FINDING rather than a bug: actual
-causality is counterfactual (what would have had to be different), sufficiency
-is a guarantee (what may never be different), and neither implies the other.
+This script only joins the two answers the driver recorded (cats_check.csv and
+mtsr.csv's `mtsr_verdict`); it decides nothing itself.  Until 2026-10-11 it
+computed its own L(phi_C) subset-of L(MTSR) here, a sufficiency test that is not
+what the tool checks.
 
-Measured on the corpus: they agree on 631 of 817, and every disagreement is in
-one direction -- 186 candidates are sufficient without being actual causes,
-while nothing CATS calls a cause fails our sufficiency check.
+`agree` is True when both say yes (actual cause, and the MTSR) or both say no.
+The two notions differ, so a disagreement is a finding rather than a bug.
 """
-import collections
 import csv
 import os
-import sys
-import time
 
 import bench_lib as BL
-from bench_lib import RESULTS, SYNTCOMP
+from bench_lib import RESULTS
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import spot        # noqa: E402
-import mtsr_min    # noqa: E402
-
-FIELDS = ["instance", "cats_status", "cats_s", "mtsr_s", "sufficient", "agree",
+FIELDS = ["instance", "cats_status", "cats_s", "mtsr_s", "is_mtsr", "agree",
           "note"]
 
 
-def mtsr_automaton(path):
-    """L(A) = the input sequences that guarantee the effect."""
-    inputs, effect, hoa = mtsr_min.parse_instance(path)
-    prod = spot.product(spot.automaton(hoa),
-                        spot.translate(spot.formula(effect)))
-    proj, _ = mtsr_min.project_out_outputs(prod, inputs)
-    return proj
-
-
 def main():
-    BL.install_sigint()
-    src = os.path.join(RESULTS, "MTSR_CATS_check", "cats_check.csv")
+    d = os.path.join(RESULTS, "MTSR_CATS_check")
     mt = {r["instance"]: r for r in
-          csv.DictReader(open(os.path.join(RESULTS, "MTSR_CATS_check",
-                                           "mtsr.csv"), newline=""))}
-    rows = [r for r in csv.DictReader(open(src, newline=""))
+          csv.DictReader(open(os.path.join(d, "mtsr.csv"), newline=""))}
+    rows = [r for r in csv.DictReader(open(os.path.join(d, "cats_check.csv"),
+                                           newline=""))
             if r["cats_status"] in ("IS_CAUSE", "NO_CAUSE")]
-    out = BL.Rows(os.path.join(RESULTS, "MTSR_CATS_check", "agreement.csv"),
-                  FIELDS)
-    BL.banner(f"CATS candidate vs MTSR sufficiency ({len(rows)} instances)")
-    t0 = time.perf_counter()
-    for i, r in enumerate(rows, 1):
-        name = r["instance"]
-        rec = {"instance": name, "cats_status": r["cats_status"],
-               "cats_s": r["cats_s"],
-               "mtsr_s": (mt.get(name) or {}).get("mtsr_s", ""),
-               "sufficient": "", "agree": "", "note": ""}
-        path = os.path.join(SYNTCOMP,
-                            name if name.endswith(".txt") else name + ".txt")
-        try:
-            A = mtsr_automaton(path)
-            C = spot.translate(spot.formula(r["cats_cause"]))
-            suff = spot.product(C, spot.complement(A)).is_empty()
-            rec["sufficient"] = suff
-            rec["agree"] = (suff == (r["cats_status"] == "IS_CAUSE"))
-        except Exception as e:
-            rec["note"] = f"{type(e).__name__}: {e}"[:80]
-        out.write(rec)
-        BL.tick()
-        BL.progress(i, len(rows), name, rec["note"] or
-                    f"CATS={r['cats_status']} sufficient={rec['sufficient']}")
-    out.close()
-    print(f"\ndone in {time.perf_counter() - t0:.0f}s")
+    out_path = os.path.join(d, "agreement.csv")
+    with open(out_path, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=FIELDS)
+        w.writeheader()
+        for r in rows:
+            m = mt.get(r["instance"]) or {}
+            verdict = m.get("mtsr_verdict", "")
+            rec = {"instance": r["instance"], "cats_status": r["cats_status"],
+                   "cats_s": r["cats_s"], "mtsr_s": m.get("mtsr_s", ""),
+                   "is_mtsr": "", "agree": "", "note": ""}
+            if verdict in ("MTSR", "NOT_MTSR"):
+                rec["is_mtsr"] = verdict == "MTSR"
+                rec["agree"] = rec["is_mtsr"] == (r["cats_status"] == "IS_CAUSE")
+            else:
+                rec["note"] = (f"no verdict: mtsr {m.get('mtsr_status', 'missing')}"
+                               f" {verdict}").strip()
+            w.writerow(rec)
+    print(f"wrote {out_path} ({len(rows)} candidates CATS answered)")
 
 
 if __name__ == "__main__":
+    BL.install_sigint()
     main()
