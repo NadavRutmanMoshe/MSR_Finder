@@ -13,7 +13,7 @@
 # What goes where (all versions pinned; each step is skipped if already done):
 #   ~/micromamba/bin/micromamba          micromamba 2.3.2 (conda package manager)
 #   ~/micromamba/envs/spot               python 3.14 + spot 2.15.1 + graphviz + matplotlib
-#   ~/micromamba/envs/hyperqb            libz3 4.16.0 + libclang 22.1.8 (HyperQB's build)
+#   ~/micromamba/envs/hyperqb            libz3 4.16.0 + clang 22.1.8 (HyperQB's build)
 #   ~/micromamba/envs/explainhyper       python 3.11 + spot 2.11.6 + ExplainHyper's packages
 #   ~/.dotnet                            .NET 8 runtime (AutoHyper), .NET 7 SDK (CATS)
 #   ~/.rustup, ~/.cargo                  Rust 1.97.1 (HyperQB's build only)
@@ -54,7 +54,8 @@ done
 
 say()  { printf '\n\033[1m== %s\033[0m\n' "$*"; printf '\n== %s\n' "$*" >> "$LOG"; }
 ok()   { printf '   \033[92mok\033[0m  %s\n' "$*"; }
-die()  { printf '\033[91m%s\033[0m\nsee %s\n' "$*" "$LOG" >&2; exit 1; }
+die()  { printf '\033[91m%s\033[0m\n--- last lines of %s ---\n' "$*" "$LOG" >&2
+         tail -25 "$LOG" >&2; exit 1; }
 run()  { "$@" >> "$LOG" 2>&1 || die "failed: $*"; }
 
 case "$(uname -m)" in
@@ -133,7 +134,7 @@ if [ "$HYPERQB" = 1 ]; then
     HQ_BIN="$ROOT/external_tools/HyperQB/target/release/HyperRUSTY"
     if [ ! -x "$HQ_BIN" ]; then
         [ -f "$HQ_ENV/lib/libz3.so" ] || \
-            run "$MM" create -y -p "$HQ_ENV" -c conda-forge "libz3=4.16.0" "libclang=22.1.8"
+            run "$MM" create -y -p "$HQ_ENV" -c conda-forge "libz3=4.16.0" "libclang=22.1.8" "clang=22.1.8"
         if [ ! -x "$HOME/.cargo/bin/rustup" ]; then
             run curl -fsSL -o "$ROOT/.build/rustup-init.sh" https://sh.rustup.rs
             run sh "$ROOT/.build/rustup-init.sh" -y --no-modify-path --profile minimal \
@@ -147,8 +148,12 @@ if [ "$HYPERQB" = 1 ]; then
             run git -C "$src" fetch -q --depth 1 origin "$HYPERQB_REV"
             run git -C "$src" checkout -q FETCH_HEAD
         fi
+        # bindgen (z3-sys) runs conda's libclang, which does not find its own
+        # builtin headers (stdbool.h) unless told where they are
+        res="$(ls -d "$HQ_ENV"/lib/clang/*/include | head -1)"
         ( cd "$src" && Z3_SYS_Z3_HEADER="$HQ_ENV/include/z3.h" LIBRARY_PATH="$HQ_ENV/lib" \
               LD_LIBRARY_PATH="$HQ_ENV/lib" LIBCLANG_PATH="$HQ_ENV/lib" \
+              BINDGEN_EXTRA_CLANG_ARGS="-I$res" \
               "$HOME/.cargo/bin/cargo" "+$RUST_VERSION" build --release ) >> "$LOG" 2>&1 \
             || die "HyperQB build failed"
         mkdir -p "$(dirname "$HQ_BIN")"

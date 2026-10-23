@@ -1,590 +1,186 @@
-# MSR_Finder
+# TraceMSR — artifact
 
-**Finding Minimal Sufficient Reasons (MSR) for temporal effects in reactive
-systems.**
+Artifact of the TACAS 2027 tool paper
 
-Given a reactive system (an automaton whose atomic propositions are split into
-environment **inputs** and system **outputs**), an LTL **effect** formula Φ,
-and an infinite execution **trace** π (a lasso), MSR_Finder answers the
-causality question:
+> **TraceMSR: A Tool for Synthesizing Sufficient Reasons for Reactive Systems**
+> Nadav Rutman Moshe and Hadar Frenkel (EasyChair submission #5598)
 
-> *Which input values, at which time steps, are responsible for the effect?*
+The tool is called TraceMSR in the paper; this repository is named
+`MSR_Finder`. Both refer to the same code.
 
-A **Sufficient Reason (SR)** is a set of (input, time step) pairs of π such
-that *every* system trace that agrees with π on those pairs also satisfies Φ.
-A **Minimal Sufficient Reason (MSR)** is an SR from which no pair can be
-removed — the tightest explanation of why Φ happened on π.
+* **Artifact (permanent, DOI):** https://doi.org/10.5281/zenodo.XXXXXXX  <!-- TODO DOI -->
+* **Source repository:** https://github.com/NadavRutmanMoshe/MSR_Finder
+* **The paper as submitted:** [`paper/TACAS27_paper_5598.pdf`](paper/TACAS27_paper_5598.pdf)  <!-- TODO add the PDF -->
 
-The problem is encoded in **HyperLTL** (a logic that quantifies over multiple
-traces at once) and solved with the model checker
-[AutoHyper](https://github.com/AutoHyper/autohyper).
+## Badges
 
-## Quick start
+We apply for all three badges: **Available**, **Functional** and **Reusable**.
+
+## Contents
+
+| what | where |
+|---|---|
+| the tool (Python, runs AutoHyper / HyperQB / spot) | `scripts/`, entry point `scripts/tracemsr.py` |
+| example inputs, including the running example of the paper | `examples/` |
+| AutoHyper (binary, GPL-3.0, shipped unchanged) | `external_tools/AutoHyper/` |
+| the benchmark of Section 5: 987 instances + every recorded result | `bench/` ([`bench/README.md`](bench/README.md)) |
+| the scripts that produce every table and figure of Section 5 and Appendix D | `bench/paper/` |
+| installation, smoke test, container | `install.sh`, `smoke_test.sh`, `Dockerfile` |
+| tool documentation: input format, the four operations, flags, statuses | [`docs/TOOL.md`](docs/TOOL.md) |
+
+## Requirements and tested platforms
+
+* Linux, **amd64 or arm64**. No special hardware, no proprietary software.
+* About 6 GB of disk for the installation, 8 GB of RAM (16 GB to re-run the
+  full benchmark: a few instances reach the 6 GB memory cap of the MTSR
+  minimization).
+* Network access during installation only (all downloads are version-pinned).
+
+| platform | host | tested |
+|---|---|---|
+| Ubuntu 26.04 container (`Dockerfile`), amd64 | Windows 11 / Docker Desktop | install + smoke test |
+| Ubuntu 26.04 container (`Dockerfile`), arm64 | (emulated) | <!-- TODO --> |
+| Ubuntu 22.04 under WSL2, amd64 (Intel i7-8565U, 16 GB) | the machine the paper's numbers were measured on | everything |
+| TACAS 2027 VM, amd64 | a clean laptop | <!-- TODO --> |
+
+## 1. Setup (about 15 minutes on amd64, 45 on arm64)
+
+In the TACAS VM (or any Ubuntu with `build-essential`, `curl` and `git`), from
+the artifact directory:
+
+```sh
+bash install.sh
+source env.sh
+```
+
+`install.sh` installs everything under your home directory, without root and
+in pinned versions: spot 2.15.1 and Python 3.14 (via micromamba), the .NET 8
+runtime for AutoHyper, a Rust toolchain to build HyperQB 2.0, and the three
+tools the paper compares against (CATS, CORP, ExplainHyper) at the exact
+commits we used. On arm64 it builds spot from source, which is the slow part.
+Everything it does is logged to `install.log`. Run `source env.sh` in every new
+terminal.
+
+**Alternatively, with Docker** (any host with Docker, amd64 or arm64):
+
+```sh
+docker build -t tracemsr .            # runs install.sh and the smoke test inside
+docker run --rm -it tracemsr          # a shell in the container, ready to use
+```
+
+## 2. Smoke test (about 1 minute)
+
+```sh
+./smoke_test.sh
+```
+
+It checks three things and ends with `SMOKE TEST PASSED`:
+
+1. **the tool**: the MSR of `examples/example_1.txt` (AutoHyper), its MTSR
+   (spot, rendered to a PNG with graphviz), `--check`, and the HyperQB backend,
+   each against its known answer;
+2. **the paper's tables**: all 12 tables and figures of Section 5 and
+   Appendix D are regenerated from the recorded results and compared, number by
+   number, with the submitted paper (all must say `SAME`);
+3. **the baselines**: one benchmark instance through every tool (AutoHyper,
+   HyperQB, ExplainHyper, MTSR, CORP, CATS), each answer compared with the
+   recorded one.
+
+## 3. Replicating the results of the paper
+
+There are three levels. Each command below is run from the artifact directory
+after `source env.sh`.
+
+### 3a. Every table and figure from the recorded results (1 minute)
+
+```sh
+cd bench/paper && "$SPOT_ENV_PY" make_tables.py
+```
+
+This regenerates every table and figure of Section 5 and Appendix D into
+`bench/paper/out/` from the CSVs in `bench/results/`, and reports for each
+whether its numbers are those of the submitted paper (copies in
+`bench/paper/expected/`). The figures are compared through the numbers in their
+captions; their PDFs are next to the submitted ones to look at. The numbers that
+the text of Section 5 quotes are written to `out/work/stats/plan2_numbers.json`.
+
+| paper | file | command (`make_tables.py <name>`) | from |
+|---|---|---|---|
+| Table 1 | MSR and MTSR per number of inputs | `tab_main` | both corpora |
+| Table 2, Fig. 10 | AutoHyper vs. HyperQB | `tab_msr_backends` | both corpora |
+| Table 3 | MSR vs. ExplainHyper [11] | `tab_msreh` | both corpora |
+| Table 4 | CATS's hand-crafted instances | `tab_catshand` | `results/curated/` |
+| Fig. 7 | MTSR vs. CATS cause checking | `fig_data_cats_check_time` | \|IP\| ≤ 3 |
+| Table 5 | MTSR vs. CATS sketching | `tab_catssketch` | CATS's X^k family (`bench/nexts`) |
+| Table 6 | MTSR vs. CORP on CORP's arbiters | `tab_corpcurated` | `results/curated/` |
+| Table 7 | summary of the comparisons | `tab_data_resultsizes` | both corpora |
+| Fig. 6 | running time vs. system size | `fig_data_msr_mtsr_size_v1` | \|IP\| ≤ 3 |
+| Fig. 9 | MSR and ExplainHyper vs. system size | `fig_data_msr_size` | \|IP\| ≤ 3 |
+| Table 8 | LTL-expressibility of the MTSR | `tab_data_ltl` | `results/stats/` |
+| Figs. 4, 5 | the session of Section 4.5 | `cd scripts && python3 tracemsr.py ../examples/biased_arbiter.txt --run 1,4` | — |
+
+### 3b. Re-measure a representative subset (about 5 hours)
+
+```sh
+cd bench
+./run.sh --plan        # what will run, and how long it took on our machine
+./run.sh               # every 10th instance of each |IP| class: 83 + 17 instances
+```
+
+This runs every tool on each selected instance in turn, as the recorded results
+were measured, with the paper's timeouts (120 s, 300 s for |IP| = 4), followed
+by the CATS sketch comparison and the curated instances of Tables 4 and 6. On
+the machine of the paper it takes 4.5 hours; expect more in a VM. Ctrl-C is
+safe at any point: the same command continues where it stopped. Results go to
+`bench/rerun/`; the recorded results are never touched. Then:
+
+```sh
+python3 scripts/compare_runs.py                              # instance by instance
+"$SPOT_ENV_PY" paper/make_tables.py --src rerun --subset     # the tables, recorded vs. yours
+```
+
+`compare_runs.py` compares the *answers* (status, reason size, automaton size,
+verdicts) of every tool on every instance with the recorded ones, and reports
+each as `same`, `timeout` (one side timed out — a matter of machine speed) or
+`DIFFERENT`, together with how much faster or slower your machine is.
+`make_tables.py --subset` builds every table twice over the re-run instances —
+from our recorded rows and from yours — so they can be read side by side.
+Running times differ between machines; the counts and sizes should not, up to
+instances that finish close to the timeout.
+
+### 3c. The full benchmark (about 45 hours)
+
+```sh
+cd bench
+./run.sh --full
+"$SPOT_ENV_PY" paper/make_tables.py --src rerun
+```
+
+`./run.sh --corpus ip3`, `--only msr,mtsr-corp` or `--instances NAME ...` run a
+part of it (see `python3 scripts/rerun.py --help`). The two offline analyses
+behind Table 8 (the LTL search) and the benchmark generation itself are
+described in [`bench/README.md`](bench/README.md).
+
+## 4. Using the tool on your own inputs (Reusable)
 
 ```sh
 cd scripts
-python3 tracemsr.py ../examples/example_1.txt
+python3 tracemsr.py ../examples/example_1.txt              # interactive menu
+python3 tracemsr.py ../examples/example_1.txt --run all    # all four operations
+python3 tracemsr.py my_system.txt --run 1 --hyperQB        # MSR with HyperQB
 ```
 
-or, with nothing installed but Docker (see [Docker](#docker) below):
-
-```sh
-docker build -t msr-finder .
-docker run --rm -it msr-finder
-```
-
-This opens an interactive checklist:
-
-```
-Select operations for example_1.txt
- > [x] 1. MSR with the given PI
-   [ ] 2. MSR for Phi — find a PI automatically
-   [ ] 3. Model checking of Phi (counterexample + why)
-   [ ] 4. MTSR — Minimal Temporal Sufficient Reason
-       ▶ Start
-ENTER/SPACE select · ↑/↓ move · a all · ENTER on Start runs · q quit
-```
-
-ENTER (or SPACE) toggles the highlighted analysis; move down to **▶ Start**
-and press ENTER to run the selection in order. The menu only picks analyses;
-the extras are flags given on the command line: `--with-tau` (the result
-table), `--hyperQB` (the solver) and `--check` (the MTSR mode). For scripts /
-CI, skip the menu with `--run`:
-
-```sh
-python3 tracemsr.py ../examples/example_1.txt --run all
-python3 tracemsr.py ../examples/example_1.txt --run 2,3 --timeout 300
-python3 tracemsr.py ../examples/example_1.txt --run 1 --hyperQB
-python3 tracemsr.py ../examples/example_1_cause.txt --run 4 --check
-```
-
-## The result table
-
-Analyses 1–3 print the trace with the reason on it — one column, the actual
-trace π, with the (input, time) positions **pinned by R in green**:
-
-```
-Reason R:
-    { (i1,0), (i2,2), (i2,3), (i1,4), (i2,4) }
-
-=============================================
-TIME  | ACTUAL TRACE (Pi)   | REASON (R)
-=============================================
-0     | i1=T, i2=T          | <-- R pins i1
-1     | i1=T, i2=T          |
-2     | i1=T, i2=F          | <-- R pins i2
-3     | i1=T, i2=F          | <-- R pins i2
-4     | i1=T, i2=F          | <-- R pins i1, i2
------ + ------------------- + ---------------
-CYCLE | (Repeating Pattern) |
------ + ------------------- + ---------------
-5     | i1=T, i2=F          |
-=============================================
-```
-
-The witness τ is no longer shown by default. `"ip"_τ` is the *indicator* of
-membership in R — the query pins π with `{"ip"_τ} -> ({"ip"_π} <-> {"ip"_π2})`
-— so τ's `T`/`F` cells are exactly the green cells, and showing them as a
-second column of a *trace* invited reading a green `r1=T` under τ as "r1 is
-true here" even where π has `r1=F` at that pinned position. R itself is
-printed as an explicit set of pairs, which is the thing worth reading.
-
-Add `--with-tau` to get the old two-column layout
-back — the `found reason representation Tau` block plus the τ column:
-
-```sh
-python3 tracemsr.py ../examples/example_1.txt --run 1 --with-tau
-```
-
-## The four analyses
-
-| # | analysis | needs `[lasso]`? | what it does |
-|---|----------|------------------|--------------|
-| 1 | **MSR with the given PI** | yes (greyed out if absent) | The classic flow: the MSR for the trace written in the file. |
-| 2 | **MSR for Φ — find a PI** | no | Asks AutoHyper for *some* system trace satisfying Φ (`∃π.Φ`, with witness). The found lasso is displayed and its MSR is computed. UNSAT means *no* trace satisfies Φ at all. |
-| 3 | **Model checking of Φ** | no | Checks `∃π.¬Φ`. UNSAT ⇒ **PASSED**: every trace satisfies Φ (the empty cause is then trivially sufficient). SAT ⇒ **FAILED**: the counterexample is displayed and the same MSR machinery runs on it with effect `¬Φ` — explaining *why the violation happened*. |
-| 4 | **MTSR — Minimal Temporal Sufficient Reason** | no | The automaton of (system × effect) projected onto the inputs and SAT-minimized: the minimal temporal shape of input behaviour that forces Φ. The minimized HOA is displayed with the **accepting states in green** (entirely green when the acceptance is `t` — every state accepting) and rendered to `<base>_mtsr.png` (spot + autfilt + graphviz). With `--check` it also verifies the instance's `[cause]` block against what it built. |
-
-Each analysis reports its wall-clock time when it finishes.
-
-Analyses 2 and 3 only need `[inputs]`, `[effect]` and `[system]` — the user
-never has to construct a trace by hand.
-
-## `--hyperQB` — the bounded solver
-
-Analysis 1 can be solved by [HyperQB 2.0](https://github.com/HyperQB/HyperRUSTY)
-instead of AutoHyper:
-
-```sh
-python3 tracemsr.py ../examples/example_1.txt --run 1 --hyperQB
-python3 tracemsr.py ../examples/example_1.txt --run 1 --hyperQB --k 8
-```
-
-HyperQB is a **bounded** model checker: it unrolls the systems `k` steps and
-hands the result to Z3. That changes what a verdict is worth, and the tool says
-so rather than hiding it:
-
-| HyperQB says | the tool reports | is it a proof? |
-|---|---|---|
-| `sat`, witness certified sufficient **and** minimal | `SAT_MSR`, with the reason | **yes** — but the *certificate* is the proof, not the verdict |
-| `sat`, witness certified sufficient only | `SAT_SR`, with the reason | **yes**, for sufficiency |
-| `sat`, witness fails certification | falls through, ends `UNKNOWN_BOUNDED` | — |
-| `unsat`, timeout, error | `UNKNOWN_BOUNDED` | **no** — only "nothing within `k`" |
-
-So `--hyperQB` never answers `UNSAT_NO_CAUSE`, and never takes `INVALID_PI` from
-the solver. It reports `INVALID_PI` only when the lasso fails the exact check
-both backends run first (it is not a word of the system — see
-[Result statuses](#result-statuses)). When any other *negative* answer has to
-mean something, drop the flag: the AutoHyper backend is exact.
-
-### Why a HyperQB `sat` is checked and not believed
-
-A bounded `sat` used to be reported as a result on the strength of the verdict
-alone. That is wrong here, and measurably so. Both the SR and the MSR query
-carry a **universal** trace quantifier (`∀π₂`, `∀τ₂`), and HyperQB unrolls `G`
-and `F` with no semantics-dependent tail at all —
-`hltlunroller/src/lib.rs` builds `Globally` as a plain conjunction over
-`k..=bound` and `Eventually` as a plain disjunction; only `X`, `U` and `R` read
-the `pes`/`opt`/`hpes`/`hopt` flag. So `G ψ` reads as **true** whenever `ψ`
-survives to the bound, and a universally quantified sufficiency claim is
-accepted on the strength of a `k`-step prefix. One line reproduces it:
-
-```
-Forall pi . (G (~ acc[pi]))        on a 9-state model whose only `acc`
-                                   state is 8 steps in
-    k=6 -> sat    (WRONG)          identical under -s pes, opt, hpes, hopt
-    k=8 -> unsat  (right)
-```
-
-Left unchecked that yields an R that is not sufficient, or is sufficient but
-not minimal — 37 wrong rows in 818 on the SYNTCOMP benchmark, plus a further
-182 whose truncated R was not sufficient either.
-
-So HyperQB is the **search** engine and `msr_certify.py` is the **checker**:
-every `sat` witness is decided exactly — plain automaton emptiness with spot,
-no bound — before anything is reported.
-
-```
-sufficiency   L(system) ∩ L(pins(R, π)) ∩ L(¬Φ)  =  ∅
-minimality    Good ∩ { τ₂ : τ₂ ⊆ R, τ₂ ≠ R }     =  ∅
-              where Good = complement( proj_τ₂ ( L(system) ∩ L(agree(τ₂, π)) ∩ L(¬Φ) ) )
-```
-
-Checking an R costs nothing like finding it: on the benchmark the check is
-~10 ms per instance against solve times in seconds to minutes, and it is broken
-out as `certify_s` in the benchmark CSV so a solver-only comparison is still
-available. `python3 msr_certify.py <file> --self-test` checks the checker on any
-instance, with no solver in the loop.
-
-A witness that fails certification is not a result: the pipeline carries on to
-the next query, and where nothing survives the answer is `UNKNOWN_BOUNDED` with
-a note saying the witness was rejected — raise `--k`, or drop `--hyperQB`.
-
-Two more things worth knowing:
-
-* **The bound is small on purpose.** It defaults to `|prefix| + |loop| + 2` —
-  enough to walk the lasso and close its loop once. Solve time grows steeply in
-  `k` (measured on one arbiter: 0.17 s at k=3, 1.18 s at k=6, 20 s at k=8,
-  timeout at k=12), so a generous default turns quick instances into timeouts.
-  Raise it with `--k` when a run comes back `UNKNOWN_BOUNDED`.
-* **Raising `--k` is not a free win.** A larger bound gives the witness more
-  room, but the MSR query is the expensive one and degrades first: at `k=11`,
-  three of the shipped examples drop from `SAT_MSR` to `SAT_SR` and one to
-  `UNKNOWN_BOUNDED`, because the MSR query stops answering while the cheaper SR
-  query still does. Raise `k` to complete a truncated reason, then re-read the
-  status.
-* **`SAT_SR` means something weaker here.** On AutoHyper it is reached by
-  *proving* the MSR query unsat, so it says "no minimal reason exists" — the
-  liveness case. Under `--hyperQB` the reason **is** certified sufficient, but
-  minimality is open: either the MSR witness was certified non-minimal (and
-  could not be shrunk into a minimal one — usually the liveness case, where
-  dropping a single *occurrence* of a periodic pin still suffices, so no
-  minimal reason exists at all), or no MSR witness turned up inside the bound.
-* **A truncated witness is checked, not discarded.** τ decodes out of the
-  bounded model dump, which only covers `k` steps. When those steps repeat with
-  the lasso's own period, R is periodic and is shown in full. When they do not,
-  the decoded pins are read as a **finite** R — nothing pinned after the bound —
-  and that is certified like any other candidate. It often holds: the reason is
-  then complete (not truncated), printed on an unrolled π, and proved. When it
-  does not hold, the witness is rejected rather than shown with a warning.
-* **Analyses 2 and 3 are split, not skipped.** Each is two steps — find a trace
-  (or a counterexample), then explain it — and `--hyperQB` moves the second.
-  The first stays on AutoHyper because it has to *read a trace out of the
-  witness*, and HyperQB's model dump reports NuSMV `VAR`s only, so the system's
-  outputs (which are `DEFINE`s) never appear in it; analysis 3 additionally
-  reports PASSED from an UNSAT, which a bounded UNSAT cannot support. Once the
-  trace exists, explaining it is the ordinary MSR query and runs on whichever
-  backend was chosen. The tool prints which half went where. Analysis 4 uses no
-  solver at all.
-
-Under the hood the HyperQB path runs the *same* query on *symbolic* NuSMV
-systems (`smv_builder`) rather than explicit ones, and — this is the whole
-reason it works — it puts the trace π into a **module** instead of pinning it in
-the formula. The formula-side pin is a positively-asserted `G`, which under
-pessimistic bounded semantics is satisfied only if a loop turns up inside the
-bound; it never does, so that encoding returns `unsat` at every bound on every
-instance. See `hyperqb_analyzer.py` and `smv_builder.py`.
-
-The binary is looked for at
-`external_tools/HyperQB/target/release/HyperRUSTY`, then at
-`external_tools/HyperQB/HyperRUSTY`; `$HYPERQB_BIN` overrides both. Unlike
-AutoHyper it is not distributed with this tool — it is a Rust build linked
-against a local Z3, so it has to be built on the machine that runs it (see
-Setup). Without it, `--hyperQB` says exactly that and stops.
-
-## `--check` — MTSR as a cause *checker*
-
-CATS ("Checking and Sketching Causality in Reactive Systems") does not
-synthesize causes: you write a candidate cause into the instance and it decides
-whether that is one. `--check` gives MSR_Finder the same mode, using the
-synthesizer it already has:
-
-```sh
-python3 tracemsr.py ../examples/example_1_cause.txt --run 4 --check
-```
-
-The candidate goes in a `[cause]` block — the same block CATS uses, an LTL
-formula over the inputs (or a QPTL one; see below). Analysis 4 synthesizes the
-MTSR as usual, and then asks spot whether the two accept the same input
-sequences:
-
-```
-==============================================================================
- CAUSE CHECK  (is [cause] the MTSR?)
-==============================================================================
- [cause]: "i1" & (X X (((!"i1") & (!"i2")) U ("i1" & (!"i2"))))
- verdict: MTSR
- the given cause IS the MTSR: it accepts exactly the input sequences that
- force the effect.
-==============================================================================
-```
-
-Both sides denote an ω-language over the inputs, so this is a language question
-and spot answers it exactly. The question is whether the given cause *is* the
-MTSR, so the answer is yes or no:
-
-| verdict | what it means |
-|---|---|
-| `MTSR` | the given cause *is* the MTSR |
-| `NOT_MTSR` | it is not: the two languages differ |
-| `ERROR` | unparseable, mentions non-input APs, or is a CATS *sketch* (`?{…}` holes) rather than a concrete formula |
-
-`--check` implies analysis 4 — asking it while running only analyses 1–3 adds
-the MTSR to the run rather than refusing.
-
-### Compared inside what the system can produce
-
-The MTSR is `(system × effect)` projected, so it only ever contains input words
-the **system can actually produce**. A hand-written cause has no reason to be
-written that way, so the comparison is made inside the system's own input
-language:
-
-```
-L( [cause] )  ∩  L_in(system)   ==   L( MTSR )
-```
-
-`L_in(system)` is the system automaton projected onto the inputs — the same
-projection MTSR does, minus the effect. Without it, CATS's own
-`atva2022_arbiter_simple` cause `X "r1"` is reported as *not the MTSR* on a system
-whose first step is forced to `!r0 & !r1`: as raw languages `X "r1"` also
-"admits" `r0 & X r1`, which is not a trace of that system at all, so nothing is
-claimed about it either way. Restricted, it comes out `MTSR` — the true
-answer. When the restriction is what changed the verdict, the result says so,
-and names what the raw answer would have been.
-
-### QPTL causes: `E _q . …`
-
-CATS's examples use quantified propositional temporal logic for causes LTL
-cannot express — "at every *other* step", say:
-
-```
-[cause]
-E _q . !_q & G (X _q <-> !_q) & F (_q & "r1")
-```
-
-`_q` is a fresh proposition the formula may choose; the middle conjunct pins it
-to alternate, so the last one says *`r1` holds at some odd position*. An
-existential proposition quantifier is exactly an existential **projection** of
-the language onto the remaining atoms, and ω-automata are closed under it — the
-same operation MTSR already performs on the outputs. So the body is translated
-with `_q` as an ordinary atom and `_q` is projected away. Exact, not an
-approximation. A universal `A _q .` is reported as unsupported rather than
-silently mistranslated.
-
-### On CATS's own examples
-
-Run against the eleven instances in the CATS artifact
-(`research-artifact/TSR/CATS_examples`), seven of their certified causes are
-exactly our MTSR and four are not, which is expected: CATS returns *an* actual
-cause for the trace it was given, MTSR is the weakest sufficient temporal
-reason for the system.
-
-| instance | `[cause]` | verdict |
-|---|---|---|
-| `atva2022_arbiter` | `E _q . !_q & G (X _q <-> !_q) & F (_q & "r1")` | `NOT_MTSR` |
-| `atva2022_arbiter_simple` | `X "r1"` | `MTSR` |
-| `atva2022_arbiter_spurious` | `F "r1"` | `NOT_MTSR` |
-| `atva2022_tp_left` | `! "a"` | `MTSR` |
-| `atva2022_tp_right` | `! "a"` | `MTSR` |
-| `example_1` | `"i1" & X X ((!"i2") U ("i1" & !"i2"))` | `MTSR` |
-| `example_1_mod` | `"i1" & X X ((!"i2") U ("i1" & !"i2"))` | `MTSR` |
-| `example_6_globally` | `G "r0"` | `NOT_MTSR` |
-| `example_6_odd` | `E _q . _q & G (X _q <-> !_q) & G (_q -> "r0")` | `NOT_MTSR` |
-| `example_8` | `"a" \| X "a"` | `MTSR` |
-| `example_8_mod` | `"a" \| X "a"` | `MTSR` |
-
-## Verifying the results
-
-Reading a pipeline to decide whether to believe it is slow and not very
-conclusive. `smv_builder.py` — the 380 lines the `--hyperQB` path depends on —
-therefore has a checker that does not read it at all, and instead asks whether
-its output *denotes* the right thing.
-
-```sh
-~/micromamba/envs/spot/bin/python3 verify_smv.py ../examples/*.txt
-~/micromamba/envs/spot/bin/python3 verify_smv.py --self-test ../examples/atva2022_arbiter.txt
-```
-
-Each module denotes an ω-language, and each has a reference language that
-`smv_builder` did not produce:
-
-| module | reference |
-|---|---|
-| `REAL` | `{w : G valid}` == L(the `[system]` HOA, read by spot) |
-| `PIVAL` | `{w : G valid}` == L(`[lasso]`) ∩ L(HOA) |
-| `PI` | == L(`[lasso]` projected onto the inputs) |
-| `CAUSE` | == every input word (the 2^IP clique) |
-
-So the script does not read `smv_builder`: it *interprets* its output with a
-plain NuSMV evaluator (declarations, `case`, correct `!` > `&` > `|` > `->`
-precedence), enumerates the reachable states into an automaton, and asks spot
-whether that is the reference. A wrong transition table, a dropped output, a
-`valid` flag one letter too wide, an off-by-one in the t=0 convention — all show
-up as `NOT EQUIVALENT` with the inclusion direction named, whatever they look
-like on the page. Anything the evaluator does not understand raises rather than
-guessing. `--self-test` mutates the modules (negate an output, force `valid`
-true, redirect a δ edge, move the init state, shift the lasso loop, weaken an
-input) and confirms each mutant is caught.
-
-Analysis 4 also checks itself now: the minimized automaton is compared with the
-pre-minimization projected product on every run, and a mismatch is reported
-loudly instead of producing a quietly wrong MTSR (`--check` refuses to give a
-verdict in that case).
-
-## Input file format
-
-```
-[info]       free-text description
-[inputs]     quoted AP names that are environment inputs, e.g. "i1" "i2"
-[cause]      a candidate cause to verify (optional — only --check reads it):
-             an LTL formula over the inputs, e.g.
-             "i1" & (X X (((!"i1") & (!"i2")) U ("i1" & (!"i2"))))
-[effect]     the LTL effect formula, e.g. F "error"
-[lasso]      the actual trace (optional — needed only for analysis 1):
-             AP: "i1" "i2" "error"      the trace's AP order
-             Prefix: {0 1} {0 1} {0}    one {index set} per step
-             Loop: {0 2}                the infinitely repeated part
-[system]     the system as a HOA automaton (HOA: v1 ... --END--)
-```
-
-A step's `{…}` lists the indices (into the `AP:` line) of the propositions
-that are **true** at that step; `{}` means all false. The system must be
-**input-deterministic** (same state + same inputs ⇒ same successor); this is
-validated before any query runs and violations are reported as
-`NON_DETERMINISTIC`.
-
-## Result statuses
-
-| status | meaning |
-|--------|---------|
-| `SAT_MSR` | a Minimal Sufficient Reason was found (green table, pins highlighted) |
-| `SAT_SR` | a Sufficient Reason exists but no *minimal* one (e.g. `G F x` liveness effects: any cause can be shrunk forever) |
-| `UNSAT_NO_CAUSE` | π is a valid trace but no sufficient cause exists |
-| `INVALID_PI` | the given lasso is not a real system trace, or Φ does not hold on it. The first is checked exactly, before any solver runs, and the result names the step where the lasso leaves the system |
-| `NON_DETERMINISTIC` | the system failed the input-determinism firewall |
-| `UNKNOWN_BOUNDED` | `--hyperQB` only: nothing was found within the bound `k`. **Not** a proof that no cause exists |
-
-Section headers must sit alone on their own line — that is what tells a
-`[cause]` header apart from the word "[cause]" inside the `[info]` prose.
-
-## How it works
-
-The MSR query is the 5-quantifier HyperLTL formula
-
-```
-∃π. ∃τ. ∀π₂. ∀τ₂. ∃π₃.   fixation(π) ∧ sufficiency(τ,π,π₂) ∧ minimality(τ,τ₂,π,π₃)
-```
-
-where τ ranges over candidate causes (which (input, step) pairs are pinned to
-π's values), π₂ over all system traces (sufficiency: every π₂ that agrees
-with π on τ's pins satisfies Φ), and the τ₂/π₃ block asserts no strictly
-smaller cause is sufficient. AutoHyper resolves the *i*-th quantifier on the
-*i*-th input system, so each quantifier gets a small purpose-built system:
-
-* **CliqueQ** (π): a clique over the `2^IP` input valuations, duplicated by a
-  loop-marker variable `q` — π is fixated to the user's lasso in the formula,
-  over inputs only.
-* **Clique** (τ, τ₂): the plain `2^IP` input clique — the candidate-cause
-  space, one boolean per input per step.
-* **Real** (π₂, π₃): the HOA unrolled to an explicit transition system over
-  all APs — the only place the effect is evaluated.
-
-Before any query, `trace_check.py` decides exactly — plain Python, no
-solver — whether the lasso is a word of the system at all. It has to come
-first: the MSR/SR queries only see π's *inputs*, so on a lasso the system
-cannot produce, a cause may pin an input to a value no system trace takes there
-and be "sufficient" vacuously — an MSR would be reported for a trace that does
-not exist. When the lasso is a system trace, π agrees with itself on every pin,
-so sufficiency is never vacuous.
-
-The waterfall then runs MSR → SR → PI_VAL: if no MSR exists it still reports a
-sufficient reason when there is one, and otherwise distinguishes "valid trace,
-no cause" from "invalid trace".
-
-**Finding π automatically** (analysis 2) needs no scaffolding at all: `∃π.Φ`
-on the Real system, with AutoHyper's `--witness` returning a lasso that is by
-construction a valid system trace satisfying Φ. **Model checking** (analysis
-3) is the dual `∃π.¬Φ` — UNSAT proves `∀π.Φ`, and a SAT witness is the
-counterexample fed back into the causality analysis.
-
-## Docker
-
-Two images. The first is the tool; the second adds the baselines the paper
-compares against and is only needed to re-run the benchmark.
-
-```sh
-docker build -t msr-finder .                                # the tool
-docker build -t msr-finder-bench -f Dockerfile.bench .      # + CATS, CORP, ExplainHyper
-```
-
-```sh
-docker run --rm -it msr-finder                              # the menu, on example_1
-docker run --rm msr-finder python3 tracemsr.py ../examples/example_1.txt --run all
-docker run --rm -v "$PWD/out:/data" msr-finder \
-    python3 tracemsr.py /data/my_instance.txt --run 1       # your own instance
-```
-
-The working directory inside the image is `scripts/`, so the commands in this
-README work unchanged. Analysis 4 writes its `<base>_mtsr.png` next to the
-input file, so mount a directory (`-v`) when you want to keep it.
-
-**The build is its own test.** It ends with `docker/smoke.sh`, which runs
-analysis 1, the MTSR and `--check` and compares the answers with the ones in
-this README (the 5-pin reason for `example_1`, the 4-state MTSR, `MTSR`).
-An image that finished building is one whose solver, spot bindings and graphviz
-all work. You can re-run it at any time:
-
-```sh
-docker run --rm msr-finder /opt/msr_finder/docker/smoke.sh
-```
-
-| build arg | default | what it does |
-|---|---|---|
-| `WITH_HYPERQB` | `0` | `--build-arg WITH_HYPERQB=1` also builds HyperQB 2.0 (Rust, against conda-forge `libz3` 4.16, the build the measurements used) so `--hyperQB` works. ~4 extra minutes; AutoHyper answers everything without it. With it on, `smoke.sh` runs a bounded query too and certifies the witness |
-| `SPOT_VERSION` | `2.15.1` | the spot the recorded results were produced with |
-| `PY_VERSION` | `3.14` | the interpreter of the spot environment |
-| `DOTNET_CHANNEL` | `8.0` | the .NET runtime AutoHyper runs on |
-
-With `WITH_HYPERQB=1` the binary lands at
-`external_tools/HyperQB/target/release/HyperRUSTY` and the tool runs it with
-`$HYPERQB_LIB` on `LD_LIBRARY_PATH`. Running it *by hand* needs that too
-(`LD_LIBRARY_PATH=$HYPERQB_LIB HyperRUSTY …`): the variable is deliberately not
-set image-wide, because that directory also carries conda's `libstdc++` and
-`libgomp`, which would then shadow the system C++ runtime for spot and .NET.
-
-The benchmark image is documented in [`bench/README.md`](bench/README.md); it
-fetches CATS, CORP and ExplainHyper at pinned commits rather than vendoring
-them (`bench/tools/fetch.sh`).
-
-## Setup
-
-Without Docker. Runs on Linux / WSL. Requirements:
-
-1. **Python 3.8+** (standard library only for the pipelines).
-2. **.NET 8 runtime** — AutoHyper (shipped in `external_tools/AutoHyper/app/`)
-   is a .NET binary. Either install system-wide, or user-local:
-   `curl -sSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 8.0 --runtime dotnet`
-   (installs to `~/.dotnet`; the pipeline sets `DOTNET_ROOT` automatically if
-   it finds it there).
-3. **spot** (`ltl2tgba`, `autfilt`) — AutoHyper shells out to it. Easiest
-   without root, via [micromamba](https://mamba.readthedocs.io):
-   `micromamba create -n spot -c conda-forge spot graphviz`.
-   Then point `external_tools/AutoHyper/app/paths.json` at the env's
-   `autfilt` and `ltl2tgba` absolute paths.
-4. **For analysis 4 and `--check`**: spot's Python bindings + graphviz `dot`
-   (both in the micromamba env above). `tracemsr.py` runs them under
-   `~/micromamba/envs/spot/bin/python3` by default; override with the
-   `SPOT_ENV_PY` environment variable.
-5. **For `--hyperQB` only**: a HyperQB 2.0 build. It is a Rust binary linked
-   against Z3, and is not shipped here:
-
-   ```sh
-   git clone https://github.com/HyperQB/HyperRUSTY && cd HyperRUSTY
-   cargo build --release          # needs libz3 on the linker path
-   ```
-
-   Then put the resulting `target/release/HyperRUSTY` at
-   `external_tools/HyperQB/target/release/HyperRUSTY`, or set `$HYPERQB_BIN` to
-   wherever it lives. If the build does not carry an rpath to its libz3, set
-   `$HYPERQB_LIB` to that library directory.
-
-## Repository layout
-
-```
-scripts/
-  tracemsr.py         the entry point (interactive checklist / --run)
-  msr_analyzer.py     MSR → SR → PI_VAL waterfall, per-quantifier systems
-  trace_check.py      is the [lasso] a word of the [system]? (exact, run first)
-  msr_systems.py      CliqueQ builder (π carrier)
-  msr_formulas.py     the MSR / SR HyperLTL formulas
-  system_builder.py   Real (unrolled HOA) + Clique (cause space) builders
-  pi_finder.py        find-π-automatically + model-checking flows
-  converter.py        HOA parsing, determinism firewall, combined LTS
-  hyperLTL.py         legacy combined-system formulas (PI_VAL)
-  trace_analyzer.py   witness decoding helpers
-  cli_viewer.py       terminal tables; pinned inputs green, Tau via --with-tau
-  MTSR_one_example.py the MTSR pipeline: colored-HOA view + image (spot env)
-  cause_check.py      --check: [cause] vs the MTSR, as a language question
-  verify_smv.py       re-checks smv_builder's modules against their languages
-  mtsr_view.py        thin compatibility wrapper around MTSR_one_example
-  hyperqb_analyzer.py --hyperQB: the same waterfall on the bounded solver
-  hyperqb_backend.py  AutoHyper dialect -> HyperQB syntax, and the runner
-  msr_certify.py      the exact check every bounded witness has to pass
-  smv_builder.py      the symbolic NuSMV modules HyperQB runs on
-  smv_formulas.py     the MSR / SR / PI_VAL queries for that layout
-examples/             ready-to-run inputs (reachability, safety, ATVA'22 …)
-external_tools/AutoHyper/   the AutoHyper model checker (binary + license)
-bench/                the benchmark suite: corpora, drivers, recorded results,
-                      and the generators that built the corpora (bench/README.md)
-docker/smoke.sh       does this installation work? (run during `docker build`)
-Dockerfile            the tool image
-Dockerfile.bench      + the baselines, for re-running the benchmark
-```
-
-The only persistent artifact is the rendered `<base>_mtsr.png` (written next
-to the input file). Solver temporaries — the generated systems and formulas,
-AutoHyper's `aut1.hoa`/`autRes.hoa`, HyperQB's `commands.txt`, and the
-synthesized trace files of analyses 2/3 — live in a private temporary
-directory per run, which is also the solver's working directory, and are
-deleted when the run finishes. So runs can be started side by side, from the
-same directory or on files in the same folder, without reading each other's
-files.
-
-Stopping a run cleans up after it however it is stopped: Ctrl-C, `kill`,
-`timeout`, or closing the terminal all shut down the solver in flight
-(AutoHyper, HyperQB, or the `autfilt` behind analysis 4) before the tool exits.
-
-## Credits
-
-* [AutoHyper](https://github.com/AutoHyper/autohyper) — Beutner & Finkbeiner,
-  the HyperLTL model checker doing the heavy lifting (license in
-  `external_tools/AutoHyper/LICENSE`).
-* [spot](https://spot.lre.epita.fr/) — ω-automata manipulation, and the
-  language equivalence `--check` is built on.
-* [HyperQB 2.0](https://github.com/HyperQB/HyperRUSTY) — Hsu et al., the
-  bounded HyperLTL model checker behind `--hyperQB` (not shipped here; see
-  Setup).
-* [CATS](https://github.com/cats-tool/cats) — Beutner, Finkbeiner, Frenkel and
-  Metzger, "Checking and Sketching Causality in Reactive Systems". `--check`
-  answers their question (is this candidate a cause?) and borrows their
-  `[cause]` block for it.
+An input is one text file with the system (a HOA automaton), the inputs, the
+LTL effect and optionally a trace. [`docs/TOOL.md`](docs/TOOL.md) documents the
+format, the four operations, every flag, the result statuses and the code
+structure. To run the benchmark drivers on a new set of instances, put the
+files in a directory and pass it with `--corpus` / as a path; see
+[`bench/README.md`](bench/README.md).
+
+## License
+
+<!-- TODO: decide (MIT recommended) -->
+Our code is under the license in [`LICENSE`](LICENSE). AutoHyper
+(`external_tools/AutoHyper/`) is GPL-3.0, shipped unchanged with its license.
+CATS and CORP (GPL-3.0) and ExplainHyper (MIT) are downloaded by `install.sh`,
+not included.
