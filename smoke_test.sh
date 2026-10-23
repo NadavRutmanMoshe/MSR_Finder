@@ -8,6 +8,7 @@
 # 2. the paper       all 12 benchmark tables/figures of the paper regenerated from
 #                    the recorded results, compared number by number with the
 #                    submitted ones                           (bench/paper/make_tables.py)
+#                    and the 37 numbers its text quotes       (bench/paper/check_text.py)
 # 3. the baselines   one benchmark instance through every tool (AutoHyper, HyperQB,
 #                    ExplainHyper, MTSR, CORP, CATS), answers compared with the
 #                    recorded ones                            (bench/scripts/rerun.py)
@@ -33,6 +34,11 @@ if ( cd "$ROOT/bench/paper" && "$SPY" make_tables.py --out "$WORK/tables" ) > "$
     ok "every regenerated table and figure has the paper's numbers"
 else
     cat "$WORK/tables.txt"; bad "make_tables.py: some float differs or failed"
+fi
+if ( cd "$ROOT/bench/paper" && "$SPY" check_text.py ) > "$WORK/text.txt" 2>&1; then
+    ok "$(tail -1 "$WORK/text.txt")"
+else
+    cat "$WORK/text.txt"; bad "check_text.py: a number in the text does not follow from the data"
 fi
 
 step "[3/3] one benchmark instance through every tool"

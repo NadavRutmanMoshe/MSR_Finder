@@ -81,7 +81,8 @@ It checks three things and ends with `SMOKE TEST PASSED`:
    each against its known answer;
 2. **the paper's tables**: all 12 tables and figures of Section 5 and
    Appendix D are regenerated from the recorded results and compared, number by
-   number, with the submitted paper (all must say `SAME`);
+   number, with the submitted paper (all must say `SAME`), and so are the 37
+   numbers quoted in the text;
 3. **the baselines**: one benchmark instance through every tool (AutoHyper,
    HyperQB, ExplainHyper, MTSR, CORP, CATS), each answer compared with the
    recorded one.
@@ -101,8 +102,15 @@ This regenerates every table and figure of Section 5 and Appendix D into
 `bench/paper/out/` from the CSVs in `bench/results/`, and reports for each
 whether its numbers are those of the submitted paper (copies in
 `bench/paper/expected/`). The figures are compared through the numbers in their
-captions; their PDFs are next to the submitted ones to look at. The numbers that
-the text of Section 5 quotes are written to `out/work/stats/plan2_numbers.json`.
+captions; their PDFs are next to the submitted ones to look at.
+
+```sh
+"$SPOT_ENV_PY" check_text.py
+```
+
+does the same for the 37 numbers the text quotes (abstract, Section 5,
+Appendix D): each sentence, the number written in the paper, and the number the
+data gives.
 
 | paper | file | command (`make_tables.py <name>`) | from |
 |---|---|---|---|

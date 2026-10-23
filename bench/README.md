@@ -25,11 +25,11 @@ drawn as CATS draws them (`randltl --tree-size=22..30` over the outputs). An
 instance is kept only if the effect is not trivial in the system (neither
 impossible nor universal) and holds on the lasso (`results/gate.csv`, made by
 `scripts/pi_gate.py`). That leaves 987 instances over 197 systems.
-Reproducing the corpus (to be verified: byte-identical, minutes):
+Rebuilding the corpus from CATS's list of systems, and comparing it with the
+shipped one (about 2 minutes; it is byte-identical):
 
 ```sh
-"$SPOT_ENV_PY" gen/cats_randltl_gen.py -o CATS_RL            # needs tools/fetch.sh cats first
-"$SPOT_ENV_PY" scripts/pi_gate.py CATS_RL --csv gate.csv -o gate_ok.txt
+gen/make_corpus.sh            # needs CATS's eval/syntcomp_instances.json (install.sh fetches it)
 ```
 
 ## `results/`
@@ -86,7 +86,7 @@ python3 scripts/msr_bench.py --model autohyper --corpus my_dir --no-gate --out m
 ## The two offline analyses
 
 * **Table 8** (is the MTSR expressible as a small LTL formula?) comes from an
-  exhaustive search over formulas up to size 9 (4 cores; time to be measured):
+  exhaustive search over formulas up to size 9, on 4 cores:
   `"$SPOT_ENV_PY" paper/ltl_rerun_catsrl.py --max-size 9 --budget 240`
   (writes `paper/out/ltl_rerun/`; `results/stats/mtsr_ltl.csv` is the recorded one).
 * **The lasso sizes of Table 3** need the shape of the witness τ, which the
