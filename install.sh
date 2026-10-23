@@ -7,8 +7,11 @@
 #     bash install.sh                  the tool, HyperQB and the three baselines
 #     bash install.sh --tool-only      the tool and HyperQB (enough for the smoke test)
 #     bash install.sh --no-hyperqb     skip HyperQB (Rust build, ~5 min)
+#     bash install.sh --no-bashrc      do not add env.sh to ~/.bashrc
 #
-# Then, in every new terminal:   source env.sh
+# env.sh sets up a terminal for the tool. install.sh adds one marked line to
+# ~/.bashrc that loads it in every new terminal; in the terminal you installed
+# from, run  source env.sh  once (or open a new terminal).
 #
 # What goes where (all versions pinned; each step is skipped if already done):
 #   ~/micromamba/bin/micromamba          micromamba 2.3.2 (conda package manager)
@@ -42,11 +45,12 @@ HQ_ENV="$MAMBA_ROOT_PREFIX/envs/hyperqb"
 EH_ENV="$MAMBA_ROOT_PREFIX/envs/explainhyper"
 DOTNET="$HOME/.dotnet"
 
-TOOL_ONLY=0; HYPERQB=1
+TOOL_ONLY=0; HYPERQB=1; BASHRC=1
 for a in "$@"; do
     case "$a" in
         --tool-only) TOOL_ONLY=1 ;;
         --no-hyperqb) HYPERQB=0 ;;
+        --no-bashrc) BASHRC=0 ;;
         -h|--help) sed -n '2,30p' "$0"; exit 0 ;;
         *) echo "unknown option $a (see --help)"; exit 2 ;;
     esac
@@ -230,7 +234,7 @@ for b in autfilt ltl2tgba ltlfilt ltlsynt randltl randaut dot; do
     [ -e "$SPOT_ENV/bin/$b" ] && ln -sf "$SPOT_ENV/bin/$b" "$ROOT/.env/bin/$b"
 done
 cat > "$ROOT/env.sh" <<EOF
-# written by install.sh -- source it in every new terminal:  source env.sh
+# written by install.sh -- sets up a terminal for the tool:  source env.sh
 export MSR_FINDER="$ROOT"
 export DOTNET_ROOT="$DOTNET"
 export SPOT_ENV_PY="$SPOT_ENV/bin/python3"
@@ -242,5 +246,13 @@ case ":\$PATH:" in *":$ROOT/.env/bin:"*) ;; *) export PATH="$ROOT/.env/bin:$DOTN
 EOF
 ok "$ROOT/env.sh"
 
+if [ "$BASHRC" = 1 ]; then
+    say "~/.bashrc: load env.sh in every new terminal"
+    # one marked line; it does nothing once this directory is gone
+    line="[ -f \"$ROOT/env.sh\" ] && . \"$ROOT/env.sh\"   # MSR_Finder artifact, added by install.sh"
+    grep -qF "$ROOT/env.sh" "$HOME/.bashrc" 2>/dev/null || echo "$line" >> "$HOME/.bashrc"
+    ok "to undo: delete the line ending in 'added by install.sh' from ~/.bashrc"
+fi
+
 echo
-printf '\033[92mdone.\033[0m  Next:\n    source env.sh\n    ./smoke_test.sh\n'
+printf '\033[92mdone.\033[0m  Next (in this terminal; new terminals load env.sh by themselves):\n    source env.sh\n    ./smoke_test.sh\n'

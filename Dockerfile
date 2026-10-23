@@ -21,6 +21,5 @@ ARG INSTALL_ARGS=""
 RUN bash install.sh ${INSTALL_ARGS} && rm -rf .build
 RUN bash -c "source env.sh && ./smoke_test.sh"
 
-# every shell in the container starts with env.sh loaded
-RUN echo "source /opt/msr_finder/env.sh" >> /root/.bashrc
+# every shell in the container starts with env.sh loaded (install.sh added it to ~/.bashrc)
 CMD ["bash"]
