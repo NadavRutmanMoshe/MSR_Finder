@@ -68,6 +68,30 @@ echo "MSR_Finder install, $(date), $(uname -sm), $(. /etc/os-release 2>/dev/null
 for c in curl git make g++ tar bzip2 patch timeout; do
     command -v "$c" >/dev/null || die "missing '$c': sudo apt-get install -y build-essential curl git bzip2"
 done
+# Under QEMU (arm64 emulation in Docker Desktop) Ubuntu 26.04's tar cannot
+# extract: it uses openat2, which QEMU does not have. If so, a python stand-in
+# for 'tar -x[z]f FILE -C DIR' goes first on PATH (spot's and .NET's tarballs).
+mkdir -p "$ROOT/.build/tmp"
+if ! ( cd "$ROOT/.build/tmp" && rm -rf t && mkdir t && echo x > t/f && tar -czf t.tgz t && rm -r t \
+       && tar -xzf t.tgz && [ -f t/f ] ) >/dev/null 2>&1; then
+    mkdir -p "$ROOT/.build/shim"
+    cat > "$ROOT/.build/shim/tar" <<'EOF'
+#!/usr/bin/env python3
+import sys, tarfile
+a, f, d = sys.argv[1:], None, "."
+if not a or "x" not in a[0].lstrip("-"):
+    sys.exit("tar stand-in: only extraction (tar -x[z]f FILE [-C DIR]) is supported")
+i = 1
+while i < len(a):
+    if a[i] == "-C": d = a[i + 1]; i += 2
+    elif f is None and "f" in a[0]: f = a[i]; i += 1
+    else: sys.exit("tar stand-in: unsupported argument " + a[i])
+tarfile.open(f).extractall(d, filter="tar")
+EOF
+    chmod +x "$ROOT/.build/shim/tar"
+    export PATH="$ROOT/.build/shim:$PATH"
+    echo "   (tar cannot extract here, as under QEMU emulation; using a python stand-in)" | tee -a "$LOG"
+fi
 
 # --------------------------------------------------------------------------- #
 say "micromamba $MAMBA_VERSION"
