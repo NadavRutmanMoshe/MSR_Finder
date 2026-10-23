@@ -113,11 +113,14 @@ build_spot() {   # <version> <env>
     mkdir -p "$ROOT/.build"
     [ -d "$src" ] || { run curl -fsSL -o "$src.tar.gz" "https://www.lrde.epita.fr/dload/spot/spot-$v.tar.gz"
                        run tar -xzf "$src.tar.gz" -C "$ROOT/.build"; }
+    # spot 2.11.6's robin_hood.hh uses UINT64_C without including <cstdint>,
+    # which Ubuntu 26.04's g++ 15 rejects (fixed in later spot releases)
+    local rh="$src/spot/priv/robin_hood.hh"
+    [ ! -f "$rh" ] || grep -q 'include <cstdint>' "$rh" \
+        || sed -i '0,/#include/s//#include <cstdint>\n#include/' "$rh"
     echo "   building spot $v from source (this is the long step on arm64)"
-    # -include stdint.h: spot 2.11.6 uses UINT64_C before including it, which
-    # Ubuntu 26.04's g++ (15) no longer forgives
     ( cd "$src" && ./configure --prefix="$env" PYTHON="$env/bin/python3" --disable-devel \
-          CPPFLAGS="-include stdint.h -I$env/include" LDFLAGS="-L$env/lib -Wl,-rpath,$env/lib" \
+          CPPFLAGS="-I$env/include" LDFLAGS="-L$env/lib -Wl,-rpath,$env/lib" \
       && make -j"$(nproc)" && make install ) >> "$LOG" 2>&1 || die "spot $v build failed"
 }
 
