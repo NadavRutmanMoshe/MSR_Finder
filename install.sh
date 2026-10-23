@@ -114,8 +114,10 @@ build_spot() {   # <version> <env>
     [ -d "$src" ] || { run curl -fsSL -o "$src.tar.gz" "https://www.lrde.epita.fr/dload/spot/spot-$v.tar.gz"
                        run tar -xzf "$src.tar.gz" -C "$ROOT/.build"; }
     echo "   building spot $v from source (this is the long step on arm64)"
+    # -include stdint.h: spot 2.11.6 uses UINT64_C before including it, which
+    # Ubuntu 26.04's g++ (15) no longer forgives
     ( cd "$src" && ./configure --prefix="$env" PYTHON="$env/bin/python3" --disable-devel \
-          CPPFLAGS="-I$env/include" LDFLAGS="-L$env/lib -Wl,-rpath,$env/lib" \
+          CPPFLAGS="-include stdint.h -I$env/include" LDFLAGS="-L$env/lib -Wl,-rpath,$env/lib" \
       && make -j"$(nproc)" && make install ) >> "$LOG" 2>&1 || die "spot $v build failed"
 }
 
