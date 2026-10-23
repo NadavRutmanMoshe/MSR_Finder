@@ -255,8 +255,5 @@ if [ "$BASHRC" = 1 ]; then
 fi
 
 echo
-if [ "$BASHRC" = 1 ]; then
-    printf '\033[92mdone.\033[0m  Next: open a new terminal (it loads env.sh by itself), then\n    cd %s\n    ./smoke_test.sh\n' "$ROOT"
-else
-    printf '\033[92mdone.\033[0m  Next (and in every new terminal: source env.sh):\n    source env.sh\n    ./smoke_test.sh\n'
-fi
+printf '\033[92mdone.\033[0m  Next, in this terminal:\n    source env.sh\n    ./smoke_test.sh\n'
+if [ "$BASHRC" = 1 ]; then echo "(new terminals load env.sh by themselves)"; else echo "(run 'source env.sh' in every new terminal)"; fi
