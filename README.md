@@ -10,7 +10,7 @@ The tool is called TraceMSR in the paper; this repository is named
 
 * **Artifact (permanent, DOI):** https://doi.org/10.5281/zenodo.23589523
 * **Source repository:** https://github.com/NadavRutmanMoshe/MSR_Finder
-* **The paper as submitted:** [`paper/TACAS27_paper_5598.pdf`](paper/TACAS27_paper_5598.pdf)  <!-- TODO add the PDF -->
+* **The paper as submitted:** [`paper/TACAS27_paper_5598.pdf`](paper/TACAS27_paper_5598.pdf)
 
 ## Badges
 
