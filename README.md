@@ -8,7 +8,7 @@ Artifact of the TACAS 2027 tool paper
 The tool is called TraceMSR in the paper; this repository is named
 `MSR_Finder`. Both refer to the same code.
 
-* **Artifact (permanent, DOI):** https://doi.org/10.5281/zenodo.XXXXXXX  <!-- TODO DOI -->
+* **Artifact (permanent, DOI):** https://doi.org/10.5281/zenodo.23589523
 * **Source repository:** https://github.com/NadavRutmanMoshe/MSR_Finder
 * **The paper as submitted:** [`paper/TACAS27_paper_5598.pdf`](paper/TACAS27_paper_5598.pdf)  <!-- TODO add the PDF -->
 
@@ -31,7 +31,7 @@ We apply for all three badges: **Available**, **Functional** and **Reusable**.
 ## Requirements and tested platforms
 
 * Linux, **amd64 or arm64**. No special hardware, no proprietary software.
-* About 6 GB of disk for the installation, 8 GB of RAM (16 GB to re-run the
+* About 7 GB of disk for the installation, 8 GB of RAM (16 GB to re-run the
   full benchmark: a few instances reach the 6 GB memory cap of the MTSR
   minimization).
 * Network access during installation only (all downloads are version-pinned).
@@ -43,7 +43,7 @@ We apply for all three badges: **Available**, **Functional** and **Reusable**.
 | Ubuntu 22.04 under WSL2, amd64 (Intel i7-8565U, 16 GB) | the machine the paper's numbers were measured on | everything |
 | TACAS 2027 VM, amd64 | a clean laptop | <!-- TODO --> |
 
-## 1. Setup (about 15 minutes on amd64, 45 on arm64)
+## 1. Setup (about 10 minutes on amd64; longer on arm64)
 
 In the TACAS VM (or any Ubuntu with `build-essential`, `curl` and `git`), from
 the artifact directory:
@@ -179,8 +179,7 @@ files in a directory and pass it with `--corpus` / as a path; see
 
 ## License
 
-<!-- TODO: decide (MIT recommended) -->
-Our code is under the license in [`LICENSE`](LICENSE). AutoHyper
+Our code is under the MIT license ([`LICENSE`](LICENSE)). AutoHyper
 (`external_tools/AutoHyper/`) is GPL-3.0, shipped unchanged with its license.
 CATS and CORP (GPL-3.0) and ExplainHyper (MIT) are downloaded by `install.sh`,
 not included.
