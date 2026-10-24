@@ -25,9 +25,9 @@ SRC = os.environ.get("BENCH_SRC") or os.path.join(BENCH, "results")
 VIEW = os.environ.get("BENCH_RESULTS") or os.path.join(PAPER_DIR, "out", "work", "view_ip3")
 STATS = os.environ.get("BENCH_STATS") or os.path.join(PAPER_DIR, "out", "work", "stats")
 SHIPPED_STATS = os.path.join(BENCH, "results", "stats")
-CURATED = os.path.join(SRC, "curated")
-if not os.path.isdir(CURATED):          # a re-run without the curated tables
-    CURATED = os.path.join(BENCH, "results", "curated")
+HANDCRAFTED = os.path.join(SRC, "handcrafted")
+if not os.path.isdir(HANDCRAFTED):      # a re-run without the hand-crafted instances
+    HANDCRAFTED = os.path.join(BENCH, "results", "handcrafted")
 
 OUT = os.environ.get("PAPER_OUT") or os.path.join(PAPER_DIR, "out")
 TABLES = os.path.join(OUT, "tables")

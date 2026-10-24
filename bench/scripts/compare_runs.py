@@ -15,7 +15,7 @@ compares the ANSWER, never the time:
     CORP                       status, number of states, language equivalence with the MTSR
     CATS check                 the candidate (must be identical), CATS's verdict
     CATS sketch                status, the found cause's size, agreement with the MTSR
-    curated (Tables 4 and 6)   as above, per named instance
+    handcrafted (Tables 4, 6)  as above, per named instance
 
 Each comparison is one of
     same       the same answer
@@ -53,9 +53,9 @@ CHECKS = [
 FIXED = [
     ("MTSR_CATS_sketch/mtsr.csv", "name", ["mtsr_status", "mtsr_states"], "mtsr_s", "sketch: MTSR"),
     ("MTSR_CATS_sketch/cats_sketch.csv", "name", ["cats_status", "cats_size", "agree"], "cats_s", "sketch: CATS"),
-    ("curated/corp_curated.csv", "instance", ["corp_status", "corp_states", "mtsr_status", "mtsr_states", "equiv"],
+    ("handcrafted/corp_curated.csv", "instance", ["corp_status", "corp_states", "mtsr_status", "mtsr_states", "equiv"],
      "mtsr_s", "Table 6 (CORP arbiters)"),
-    ("curated/cats_handcrafted.csv", "label", ["cats_status", "mtsr_status", "mtsr_states", "verdict"],
+    ("handcrafted/cats_handcrafted.csv", "label", ["cats_status", "mtsr_status", "mtsr_states", "verdict"],
      "cats_s", "Table 4 (CATS hand-crafted)"),
 ]
 TIMEOUTISH = ("TIMEOUT", "MO", "MEMOUT", "UNKNOWN_BOUNDED")

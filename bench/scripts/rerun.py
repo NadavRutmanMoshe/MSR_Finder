@@ -294,7 +294,7 @@ def main():
         run("cats-sketch", [spy, S("mtsr_cats_sketch_bench.py"), BL.NEXTS, "--timeout", "120",
                        "-o", os.path.join(out, "MTSR_CATS_sketch")], HERE, log)
     if "handcrafted" in groups and not a.instances:
-        os.makedirs(os.path.join(out, "curated"), exist_ok=True)
+        os.makedirs(os.path.join(out, "handcrafted"), exist_ok=True)
         env = dict(os.environ, BENCH_SRC=out, PAPER_OUT=os.path.join(out, "paper_out"))
         pdir = os.path.join(BENCH, "paper")
         if "corp" not in why:

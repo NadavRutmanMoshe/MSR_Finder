@@ -315,7 +315,7 @@ def main():
         counts.append(f"{len(keep)} {part}")
         restrict(src, yours_src, part, keep, fill_from=rec, notes=notes)
         restrict(rec, rec_src, part, keep)
-    for d in ("MTSR_CATS_sketch", "curated"):
+    for d in ("MTSR_CATS_sketch", "handcrafted"):
         s = os.path.join(src, d) if os.path.isdir(os.path.join(src, d)) else os.path.join(rec, d)
         if s.startswith(rec):
             notes.append(d)

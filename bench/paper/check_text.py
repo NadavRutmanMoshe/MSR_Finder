@@ -107,7 +107,7 @@ def main():
     claim("5.3.2.1", "average runtime ... s (MTSR)", "0.62", f"{st.mean(num(ccm[n]['mtsr_s']) for n in both):.2f}")
     claim("5.3.2.1", "against ... s (CATS)", "1.00", f"{st.mean(num(cc[n]['cats_s']) for n in both):.2f}")
     claim("5.3.2.1", "the ... hand-crafted instances of Table 1 of CATS", 11,
-          len(rows(os.path.join(BENCH, "results", "curated", "cats_handcrafted.csv"), "label")))
+          len(rows(os.path.join(BENCH, "results", "handcrafted", "cats_handcrafted.csv"), "label")))
 
     # CATS sketch
     sk_dir = os.path.join(src, "MTSR_CATS_sketch")
@@ -127,7 +127,7 @@ def main():
     claim("5.3.3", "vs. ... s on average)", "0.86", f"{st.mean(num(mt[p][n]['mtsr_s']) for p, n in bc):.2f}")
     claim("5.3.3", "larger automata (... states", "19.8", f"{st.mean(num(co[p][n]['corp_states']) for p, n in bc):.1f}")
     claim("5.3.3", "against ... on average)", "4.9", f"{st.mean(num(mt[p][n]['mtsr_states']) for p, n in bc):.1f}")
-    cur = rows(os.path.join(BENCH, "results", "curated", "corp_curated.csv"))
+    cur = rows(os.path.join(BENCH, "results", "handcrafted", "corp_curated.csv"))
     f4 = cur["full_4_GF"]
     claim("5.3.3", "full 4 with GF g0: CORP's automaton has ... states", 284, f4["corp_states"])
     claim("5.3.3", "before minimization, our automaton has ... states", 46, f4["mtsr_premin"])

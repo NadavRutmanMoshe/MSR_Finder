@@ -97,7 +97,7 @@ CC.CORP_DIR = os.path.join(paths.TOOLS, "CORP")
 SPOT_PY = paths.SPOT_PY
 LTLSYNT = os.path.join(paths.SPOT_BIN, "ltlsynt")
 INST_DIR = paths.CORP_ARBITERS
-OUT_CSV = os.path.join(paths.CURATED, "corp_curated.csv")
+OUT_CSV = os.path.join(paths.HANDCRAFTED, "corp_curated.csv")
 TEX_OUT = os.path.join(paths.TABLES, "tab_corpcurated.tex")
 
 FIELDS = [

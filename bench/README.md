@@ -44,8 +44,8 @@ results/
     MTSR_CORP/{mtsr,corp}.csv         MTSR and CORP, same pass
     MTSR_CATS_check/{mtsr,cats_check}.csv   (ip3 only) MTSR --check and CATS --check
   MTSR_CATS_sketch/{mtsr,cats_sketch}.csv   Table 5
-  curated/corp_curated.csv          Table 6
-  curated/cats_handcrafted.csv      Table 4
+  handcrafted/corp_curated.csv         Table 6
+  handcrafted/cats_handcrafted.csv  Table 4
   stats/                            derived per-instance data: the LTL search
                                     (Table 8), the shape of the reasons the lasso
                                     sizes of Table 3 need, candidate kinds

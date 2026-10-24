@@ -49,7 +49,7 @@ SPOT_PY = paths.SPOT_PY
 CATS_EX = os.path.join(paths.TOOLS, "CATS", "examples")
 OURS_EX = os.path.join(paths.REPO, "examples")
 MTSR_MIN = os.path.join(BENCH_SCRIPTS, "mtsr_min.py")
-OUT_CSV = os.path.join(paths.CURATED, "cats_handcrafted.csv")
+OUT_CSV = os.path.join(paths.HANDCRAFTED, "cats_handcrafted.csv")
 TEX_OUT = os.path.join(paths.TABLES, "tab_catshand.tex")
 WORK = os.path.join(paths.OUT, "work", "cats_handcrafted")
 
