@@ -22,11 +22,11 @@ The tool is called TraceMSR in the paper; this repository is named
 
 ### Setup (about 10 minutes; about 45 minutes on arm64)
 
-Unzip the artifact, open a terminal, and go into its folder (the one that contains `install.sh`):
+Unzip the artifact (or extract it with the file manager), open a terminal, and go into its folder (the one that contains `install.sh`):
 
 ```
-unzip TraceMSR-artifact.zip
-cd TraceMSR-artifact
+unzip MSRfinder-artifact.zip
+cd MSRfinder-artifact
 ```
 
 Then run these two commands, one after the other:
