@@ -9,10 +9,13 @@
 # Build args:  INSTALL_ARGS="--tool-only"  to leave out the three baselines.
 FROM ubuntu:26.04@sha256:c098726dd9b9733f3e885f8de0ef375206a311b0a317eadc40d347b1115fb944
 
-# What the TACAS VM has preinstalled (build-essential, git, curl, python3),
-# plus the few things a minimal image lacks.
+# What the TACAS 2027 VM has preinstalled (minus mono, java and ruby), plus the
+# few things a minimal image lacks. The VM's own clang and Rust matter: they are
+# on PATH next to the pinned ones install.sh brings, so the build is tested
+# with them present.
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential ca-certificates curl git bzip2 patch python3 procps \
+        cmake clang python3-full python3-pip cargo rustc \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/msr_finder

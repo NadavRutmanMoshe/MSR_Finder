@@ -61,6 +61,10 @@ ok()   { printf '   \033[92mok\033[0m  %s\n' "$*"; }
 die()  { printf '\033[91m%s\033[0m\n--- last lines of %s ---\n' "$*" "$LOG" >&2
          tail -25 "$LOG" >&2; exit 1; }
 run()  { "$@" >> "$LOG" 2>&1 || die "failed: $*"; }
+# a download: up to 3 tries, so a stalled server does not end the installation
+net()  { local i; for i in 1 2 3; do "$@" >> "$LOG" 2>&1 && return 0
+             [ $i -lt 3 ] && { echo "   (download failed, retrying: $1 ...)"; sleep 15; }; done
+         die "failed 3 times: $*"; }
 
 case "$(uname -m)" in
     x86_64)        ARCH=amd64; MARCH=linux-64 ;;
@@ -101,7 +105,7 @@ fi
 say "micromamba $MAMBA_VERSION"
 if [ ! -x "$MM" ]; then
     mkdir -p "$(dirname "$MM")"
-    run curl -fsSL -o "$MM" \
+    net curl -fsSL -o "$MM" \
         "https://github.com/mamba-org/micromamba-releases/releases/download/$MAMBA_VERSION/micromamba-$MARCH"
     chmod +x "$MM"
 fi
@@ -111,7 +115,7 @@ ok "$("$MM" --version)"
 build_spot() {   # <version> <env>
     local v=$1 env=$2 src="$ROOT/.build/spot-$1"
     mkdir -p "$ROOT/.build"
-    [ -d "$src" ] || { run curl -fsSL -o "$src.tar.gz" "https://www.lrde.epita.fr/dload/spot/spot-$v.tar.gz"
+    [ -d "$src" ] || { net curl -fsSL -o "$src.tar.gz" "https://www.lrde.epita.fr/dload/spot/spot-$v.tar.gz"
                        run tar -xzf "$src.tar.gz" -C "$ROOT/.build"; }
     # spot 2.11.6's robin_hood.hh uses UINT64_C without including <cstdint>,
     # which Ubuntu 26.04's g++ 15 rejects (fixed in later spot releases)
@@ -127,10 +131,10 @@ build_spot() {   # <version> <env>
 say "spot environment (python 3.14, spot $SPOT_VERSION, graphviz, matplotlib)"
 if ! "$SPOT_ENV/bin/python3" -c "import spot, buddy, matplotlib" 2>/dev/null; then
     if [ "$ARCH" = amd64 ]; then
-        run "$MM" create -y -p "$SPOT_ENV" -c conda-forge \
+        net "$MM" create -y -p "$SPOT_ENV" -c conda-forge \
             "python=3.14" "spot=$SPOT_VERSION" "graphviz=14.1.2" "matplotlib=3.11.1"
     else
-        run "$MM" create -y -p "$SPOT_ENV" -c conda-forge \
+        net "$MM" create -y -p "$SPOT_ENV" -c conda-forge \
             "python=3.14" "graphviz=14.1.2" "matplotlib=3.11.1"
         build_spot "$SPOT_VERSION" "$SPOT_ENV"
     fi
@@ -141,7 +145,7 @@ ok "spot $("$SPOT_ENV/bin/python3" -c 'import spot; print(spot.version())')"
 ldconfig -p 2>/dev/null | grep -q libicuuc || export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 say ".NET 8 runtime (AutoHyper)"
 mkdir -p "$ROOT/.build"
-[ -f "$ROOT/.build/dotnet-install.sh" ] || run curl -fsSL -o "$ROOT/.build/dotnet-install.sh" https://dot.net/v1/dotnet-install.sh
+[ -f "$ROOT/.build/dotnet-install.sh" ] || net curl -fsSL -o "$ROOT/.build/dotnet-install.sh" https://dot.net/v1/dotnet-install.sh
 if ! ls "$DOTNET/shared/Microsoft.NETCore.App/" 2>/dev/null | grep -q '^8\.'; then
     run bash "$ROOT/.build/dotnet-install.sh" --channel 8.0 --runtime dotnet --install-dir "$DOTNET" --no-path
 fi
@@ -167,9 +171,9 @@ if [ "$HYPERQB" = 1 ]; then
     HQ_BIN="$ROOT/external_tools/HyperQB/target/release/HyperRUSTY"
     if [ ! -x "$HQ_BIN" ]; then
         [ -f "$HQ_ENV/lib/libz3.so" ] || \
-            run "$MM" create -y -p "$HQ_ENV" -c conda-forge "libz3=4.16.0" "libclang=22.1.8" "clang=22.1.8"
+            net "$MM" create -y -p "$HQ_ENV" -c conda-forge "libz3=4.16.0" "libclang=22.1.8" "clang=22.1.8"
         if [ ! -x "$HOME/.cargo/bin/rustup" ]; then
-            run curl -fsSL -o "$ROOT/.build/rustup-init.sh" https://sh.rustup.rs
+            net curl -fsSL -o "$ROOT/.build/rustup-init.sh" https://sh.rustup.rs
             run sh "$ROOT/.build/rustup-init.sh" -y --no-modify-path --profile minimal \
                 --default-toolchain "$RUST_VERSION"
         fi
@@ -178,15 +182,15 @@ if [ "$HYPERQB" = 1 ]; then
         if [ ! -d "$src" ]; then
             run git init -q "$src"
             run git -C "$src" remote add origin "$HYPERQB_URL"
-            run git -C "$src" fetch -q --depth 1 origin "$HYPERQB_REV"
+            net git -C "$src" fetch -q --depth 1 origin "$HYPERQB_REV"
             run git -C "$src" checkout -q FETCH_HEAD
         fi
-        # bindgen (z3-sys) runs conda's libclang, which does not find its own
-        # builtin headers (stdbool.h) unless told where they are
-        res="$(ls -d "$HQ_ENV"/lib/clang/*/include | head -1)"
+        # bindgen (z3-sys) parses z3.h with conda's libclang, and asks a clang
+        # executable for the header search path: conda's too (CLANG_PATH), not
+        # whatever clang is on PATH -- the TACAS VM has Ubuntu's, whose builtin
+        # headers shadow conda's and leave uint64_t undefined
         ( cd "$src" && Z3_SYS_Z3_HEADER="$HQ_ENV/include/z3.h" LIBRARY_PATH="$HQ_ENV/lib" \
-              LD_LIBRARY_PATH="$HQ_ENV/lib" LIBCLANG_PATH="$HQ_ENV/lib" \
-              BINDGEN_EXTRA_CLANG_ARGS="-I$res" \
+              LD_LIBRARY_PATH="$HQ_ENV/lib" LIBCLANG_PATH="$HQ_ENV/lib" CLANG_PATH="$HQ_ENV/bin/clang" \
               "$HOME/.cargo/bin/cargo" "+$RUST_VERSION" build --release ) >> "$LOG" 2>&1 \
             || die "HyperQB build failed"
         mkdir -p "$(dirname "$HQ_BIN")"
@@ -206,13 +210,13 @@ if [ "$TOOL_ONLY" = 0 ]; then
     say "baselines: ExplainHyper environment (python 3.11, spot $EH_SPOT_VERSION)"
     if ! "$EH_ENV/bin/python3" -c "import aiger, pysat, satispy, spot" 2>/dev/null; then
         if [ "$ARCH" = amd64 ]; then
-            run "$MM" create -y -p "$EH_ENV" -c conda-forge \
+            net "$MM" create -y -p "$EH_ENV" -c conda-forge \
                 "python=3.11" "spot=$EH_SPOT_VERSION" "pygraphviz=1.14" "graphviz=14.1.2" pip
         else
-            run "$MM" create -y -p "$EH_ENV" -c conda-forge "python=3.11" "pygraphviz=1.14" "graphviz=14.1.2" pip
+            net "$MM" create -y -p "$EH_ENV" -c conda-forge "python=3.11" "pygraphviz=1.14" "graphviz=14.1.2" pip
             build_spot "$EH_SPOT_VERSION" "$EH_ENV"
         fi
-        run "$EH_ENV/bin/python3" -m pip install --no-cache-dir \
+        net "$EH_ENV/bin/python3" -m pip install --no-cache-dir \
             "py-aiger==8.1.0" "python-sat==1.9.dev15" "satispy==1.4" "numpy==2.4.6"
     fi
     "$EH_ENV/bin/python3" -c "import aiger, pysat, satispy, spot" 2>>"$LOG" || die "ExplainHyper environment incomplete"
