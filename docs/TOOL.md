@@ -220,11 +220,10 @@ green (all green when every state is accepting), and saves it as
 | status | meaning |
 |--------|---------|
 | `SAT_MSR` | a minimal sufficient reason was found |
-| `SAT_SR` | a sufficient reason was found; with AutoHyper, no minimal one exists (for example for liveness effects such as `G F x`, where every reason can be made smaller) |
-| `INVALID_PI` | π is not a trace of the system, or π does not satisfy φ. The first is checked exactly before any solver runs, and the result names the step where the lasso leaves the system |
+| `SAT_SR` | a sufficient reason was found; with AutoHyper, no minimal one exists |
+| `INVALID_PI` | π is not a trace of the system, or π does not satisfy φ |
 | `NON_DETERMINISTIC` | the system is not input deterministic |
 | `UNKNOWN_BOUNDED` | `--hyperQB` only: nothing was found within the bound `k`; this does **not** prove that no reason exists |
-| `UNSAT_NO_CAUSE` | π is a trace of the system but has no sufficient reason. This cannot happen (the set of all events is always one); the tool still checks for it, as a test of the encoding |
 
 ## `--hyperQB` — the bounded solver
 
@@ -248,7 +247,7 @@ so rather than hiding it:
 | `sat`, witness fails certification | falls through, ends `UNKNOWN_BOUNDED` | — |
 | `unsat`, timeout, error | `UNKNOWN_BOUNDED` | **no** — only "nothing within `k`" |
 
-So `--hyperQB` never answers `UNSAT_NO_CAUSE`, and never takes `INVALID_PI` from
+So `--hyperQB` never claims that no reason exists, and never takes `INVALID_PI` from
 the solver. It reports `INVALID_PI` only when the lasso fails the exact check
 both backends run first (it is not a word of the system — see
 [Result statuses](#result-statuses)). When any other *negative* answer has to
