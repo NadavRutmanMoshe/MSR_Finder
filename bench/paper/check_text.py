@@ -22,6 +22,9 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BENCH = os.path.dirname(HERE)
+# --src rerun = your re-run: bench/rerun, or $RERUN_OUT (the Docker image sets
+# it to folders under /shared, which is on the host)
+RERUN = os.environ.get("RERUN_OUT") or os.path.join(BENCH, "rerun")
 
 
 def rows(path, key="instance"):
@@ -45,6 +48,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--src", default=os.path.join(BENCH, "results"))
     src = ap.parse_args().src
+    src = RERUN if src == "rerun" else src
     out, bad = [], 0
 
     def claim(where, text, written, got):

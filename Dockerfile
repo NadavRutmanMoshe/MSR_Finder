@@ -22,4 +22,7 @@ RUN bash install.sh ${INSTALL_ARGS} && rm -rf .build
 RUN bash -c "source env.sh && ./smoke_test.sh"
 
 # every shell in the container starts with env.sh loaded (install.sh added it to ~/.bashrc)
+# What the README's commands create goes to /shared -- with  docker run -v "$PWD/shared:/shared"
+# that is shared/ on the host: tables and figures in shared/tables, re-runs in shared/rerun.
+ENV PAPER_OUT=/shared/tables RERUN_OUT=/shared/rerun
 CMD ["bash"]

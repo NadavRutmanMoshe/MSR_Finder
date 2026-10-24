@@ -36,6 +36,9 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BENCH = os.path.dirname(HERE)
+# where re-runs go: bench/rerun, or $RERUN_OUT (the Docker image sets it to
+# /shared/rerun, so a re-run in the container lands on the host)
+RERUN = os.environ.get("RERUN_OUT") or os.path.join(BENCH, "rerun")
 
 # (file, key column, answer columns, time column)
 CHECKS = [
@@ -90,7 +93,7 @@ def compare(rec, new, cols, tcol):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--rerun", default=os.path.join(BENCH, "rerun"))
+    ap.add_argument("--rerun", default=RERUN)
     ap.add_argument("--recorded", default=os.path.join(BENCH, "results"))
     ap.add_argument("-v", "--verbose", action="store_true")
     a = ap.parse_args()

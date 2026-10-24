@@ -55,6 +55,9 @@ import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BENCH = os.path.dirname(HERE)
+# where re-runs go: bench/rerun, or $RERUN_OUT (the Docker image sets it to
+# /shared/rerun, so a re-run in the container lands on the host)
+RERUN = os.environ.get("RERUN_OUT") or os.path.join(BENCH, "rerun")
 REPO = os.path.dirname(BENCH)
 sys.path.insert(0, HERE)
 import bench_lib as BL  # noqa: E402
@@ -160,7 +163,7 @@ def main():
     ap.add_argument("--instances", nargs="+", metavar="NAME", help="only these instances")
     ap.add_argument("--only", default=",".join(GROUPS), help="comma-separated groups (default: all)")
     ap.add_argument("--corpus", choices=("ip3", "ip4", "both"), default="both")
-    ap.add_argument("--out", default=os.path.join(BENCH, "rerun"))
+    ap.add_argument("--out", default=RERUN)
     ap.add_argument("--plan", action="store_true", help="print the plan and exit")
     a = ap.parse_args()
     groups = [g.strip() for g in a.only.split(",") if g.strip()]

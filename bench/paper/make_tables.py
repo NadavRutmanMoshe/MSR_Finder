@@ -52,6 +52,9 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BENCH = os.path.dirname(HERE)
+# --src rerun = your re-run: bench/rerun, or $RERUN_OUT (the Docker image sets
+# it, and PAPER_OUT, to folders under /shared, which is on the host)
+RERUN = os.environ.get("RERUN_OUT") or os.path.join(BENCH, "rerun")
 PY = sys.executable
 
 
@@ -276,10 +279,10 @@ def main():
     ap.add_argument("--subset", action="store_true",
                     help="--src is a partial re-run: build every table twice over the instances it "
                          "has -- from the recorded rows and from the re-run -- and compare the two")
-    ap.add_argument("--out", default=os.path.join(HERE, "out"))
+    ap.add_argument("--out", default=os.environ.get("PAPER_OUT") or os.path.join(HERE, "out"))
     ap.add_argument("--list", action="store_true")
     a = ap.parse_args()
-    src, out = os.path.abspath(a.src), os.path.abspath(a.out)
+    src, out = os.path.abspath(RERUN if a.src == "rerun" else a.src), os.path.abspath(a.out)
     F = floats(src)
     if a.list:
         for n, (files, view, what, _) in F.items():
