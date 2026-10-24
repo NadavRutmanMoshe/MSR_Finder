@@ -60,8 +60,9 @@ Select operations for biased_arbiter.txt
 ENTER/SPACE select · ↑/↓ move · a all · ENTER on Start runs · q quit
 ```
 
-Select operations 1 and 4 (move with the arrows, ENTER or SPACE to select),
-then move to **▶ Start** and press ENTER. Operation 1 returns the MSR
+Operation 1 is already selected (`[x]`). Move down to operation 4 with the
+arrow keys and press ENTER or SPACE to select it, then move to **▶ Start** and
+press ENTER. Operation 1 returns the MSR
 R = {(r1,0), (r2,0)}:
 
 ```
@@ -87,13 +88,31 @@ inputs for `!r1 U (r2 & !r1)`: `r1` cannot be requested until `r2` is requested
 without `r1`. It is printed in the HOA format (accepting states in green) and
 saved as a picture next to the input, `examples/biased_arbiter_mtsr.png`.
 
-To skip the menu, give the operations on the command line:
+To skip the menu, give the operations on the command line with `--run`. Each
+of the following is a separate example.
+
+The paper's session, operations 1 and 4:
 
 ```
 python3 scripts/tracemsr.py examples/biased_arbiter.txt --run 1,4
+```
+
+All four operations:
+
+```
 python3 scripts/tracemsr.py examples/example_1.txt --run all
-python3 scripts/tracemsr.py examples/example_1.txt --run 2,3 --timeout 300
+```
+
+The MSR (operation 1) with HyperQB instead of AutoHyper:
+
+```
 python3 scripts/tracemsr.py examples/example_1.txt --run 1 --hyperQB
+```
+
+Checking the candidate cause in the file's `[cause]` block against the MTSR
+(operation 4):
+
+```
 python3 scripts/tracemsr.py examples/example_1_cause.txt --run 4 --check
 ```
 
