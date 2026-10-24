@@ -9,6 +9,7 @@ tools see the same machine state.
     python3 scripts/rerun.py --full             # all 987 instances (~45 h)
     python3 scripts/rerun.py --instances arbiter2__e09 TorcsGearing__e02
     python3 scripts/rerun.py --only msr,mtsr-corp
+    python3 scripts/rerun.py --corpus my_folder   # your own instances (see below)
 
 Run from bench/ with the system python3; each tool is started under the
 interpreter it needs (bench_lib: SPOT_PY, EXPLAIN_PY). Results go to
@@ -18,6 +19,15 @@ bench/rerun/ (--out to change) in the same layout as bench/results/, so
     ~/micromamba/envs/spot/bin/python3 paper/make_tables.py --src rerun --subset
 
 work on it directly. The shipped results are never written to.
+
+YOUR OWN INSTANCES
+------------------
+--corpus DIR runs the same comparison on every input file in DIR (the format
+of docs/TOOL.md), with --timeout seconds per tool (default 120). Instances
+go through the paper's gate first (scripts/pi_gate.py: the trace is a run of
+the system and the effect holds on it); the others are skipped (--no-gate to
+keep them). Results go to bench/rerun/<DIR's name>/, in the layout of
+bench/results/ip3, and the end prints how many instances each tool answered.
 
 Stoppable and resumable: Ctrl-C at any point, then the same command again.
 Every driver appends one row per instance to its CSV and skips the instances
@@ -99,10 +109,10 @@ def available():
     return why
 
 
-def selection(full, names):
+def selection(full, names, corpora=CORPORA):
     """[(tag, path, timeout)] in run order."""
     out = []
-    for tag, corpus, t in CORPORA:
+    for tag, corpus, t in corpora:
         by_ip = {}
         for f in sorted(os.listdir(corpus)):
             if not f.endswith(".txt"):
@@ -146,6 +156,24 @@ def recorded_seconds(sel, groups):
     return tot
 
 
+def summary(res, secs):
+    """--corpus DIR: how many instances each tool answered, by status."""
+    took = f"{secs / 60:.0f} min" if secs < 3600 else f"{secs / 3600:.1f} h"
+    print(f"\ndone in {took}.  Results: {res}/  (one CSV per tool)\n")
+    for rel in ("MSR/msr_autohyper.csv", "MSR/msr_hyperqb.csv", "MSR/explainhyper.csv",
+                "MTSR_CORP/mtsr.csv", "MTSR_CORP/corp.csv",
+                "MTSR_CATS_check/mtsr.csv", "MTSR_CATS_check/cats_check.csv"):
+        p = os.path.join(res, rel)
+        if not os.path.exists(p):
+            continue
+        rows = list(csv.DictReader(open(p, newline="")))
+        col = next((c for c in (rows[0] if rows else {}) if c.endswith("status")), None)
+        counts = {}
+        for r in rows:
+            counts[r.get(col, "?")] = counts.get(r.get(col, "?"), 0) + 1
+        print(f"  {rel:32s} " + ", ".join(f"{k} {v}" for k, v in sorted(counts.items())))
+
+
 # --------------------------------------------------------------------------- #
 def run(label, cmd, cwd, log):
     t0 = time.monotonic()
@@ -163,7 +191,10 @@ def main():
     ap.add_argument("--full", action="store_true", help="all instances, not the subset")
     ap.add_argument("--instances", nargs="+", metavar="NAME", help="only these instances")
     ap.add_argument("--only", default=",".join(GROUPS), help="comma-separated groups (default: all)")
-    ap.add_argument("--corpus", choices=("ip3", "ip4", "both"), default="both")
+    ap.add_argument("--corpus", default="both", metavar="{ip3,ip4,both,DIR}",
+                    help="one of the paper's corpora, or a folder of your own instances")
+    ap.add_argument("--timeout", type=int, default=120, help="per tool, for --corpus DIR (default 120 s)")
+    ap.add_argument("--no-gate", action="store_true", help="--corpus DIR: do not skip instances that fail the gate")
     ap.add_argument("--out", default=RERUN)
     ap.add_argument("--plan", action="store_true", help="print the plan and exit")
     a = ap.parse_args()
@@ -172,26 +203,50 @@ def main():
         if g not in GROUPS:
             sys.exit(f"unknown group {g}; groups: {', '.join(GROUPS)}")
     out = os.path.abspath(a.out)
-    sel = selection(a.full, set(a.instances or []))
-    if a.corpus != "both":
-        sel = [s for s in sel if s[0] == a.corpus]
+    own = a.corpus not in ("ip3", "ip4", "both")
+    if own:
+        folder = os.path.abspath(a.corpus)
+        if not os.path.isdir(folder):
+            sys.exit(f"--corpus: {a.corpus} is neither ip3, ip4, both nor a folder")
+        tag = os.path.basename(folder)
+        sel = selection(True, set(a.instances or []), ((tag, folder, a.timeout),))
+        groups = [g for g in groups if g not in ("cats-sketch", "handcrafted")]
+    else:
+        sel = selection(a.full, set(a.instances or []))
+        if a.corpus != "both":
+            sel = [s for s in sel if s[0] == a.corpus]
     why = available()
 
-    n3, n4 = sum(s[0] == "ip3" for s in sel), sum(s[0] == "ip4" for s in sel)
-    est = recorded_seconds(sel, groups)
-    if not a.instances:          # the fixed sets: ~0.3 h of cats-sketch, ~10 min handcrafted
-        est += 0.3 * 3600 * ("cats-sketch" in groups) + 600 * ("handcrafted" in groups)
-    print(f"instances: {n3} with |IP| <= 3 (120 s), {n4} with |IP| = 4 (300 s); groups: {', '.join(groups)}")
-    print(f"on the machine of the paper this took {est / 3600:.1f} h (expect more in a VM)")
+    if own:
+        per = sum({"msr": 2, "explainhyper": 1, "mtsr-corp": 2, "cats-check": 2}.get(g, 0) for g in groups)
+        print(f"instances: {len(sel)} in {folder} ({a.timeout} s per tool); groups: {', '.join(groups)}")
+        print(f"at most {len(sel) * per * a.timeout / 3600:.1f} h (if every tool ran out of time)")
+    else:
+        n3, n4 = sum(s[0] == "ip3" for s in sel), sum(s[0] == "ip4" for s in sel)
+        est = recorded_seconds(sel, groups)
+        if not a.instances:          # the fixed sets: ~0.3 h of cats-sketch, ~10 min handcrafted
+            est += 0.3 * 3600 * ("cats-sketch" in groups) + 600 * ("handcrafted" in groups)
+        print(f"instances: {n3} with |IP| <= 3 (120 s), {n4} with |IP| = 4 (300 s); groups: {', '.join(groups)}")
+        print(f"on the machine of the paper this took {est / 3600:.1f} h (expect more in a VM)")
     for k, v in why.items():
         print(f"  not available: {k}: {v}")
-    print(f"results: {out}")
+    print(f"results: {os.path.join(out, tag) if own else out}")
     if a.plan:
         return
     if "autohyper" in why or "spot" in why:
         sys.exit("AutoHyper and spot are required; run install.sh first.")
 
     os.makedirs(out, exist_ok=True)
+    if own and not a.no_gate:
+        gate = os.path.join(out, tag)
+        os.makedirs(gate, exist_ok=True)
+        subprocess.call([BL.SPOT_PY, os.path.join(HERE, "pi_gate.py"), *[p for _, p, _ in sel], "--quiet",
+                         "-o", os.path.join(gate, "gate_ok.txt"), "--csv", os.path.join(gate, "gate.csv")],
+                        stdout=subprocess.DEVNULL)
+        ok = {os.path.abspath(l.strip()) for l in open(os.path.join(gate, "gate_ok.txt")) if l.strip()}
+        print(f"gate: {sum(os.path.abspath(p) in ok for _, p, _ in sel)} of {len(sel)} instances pass "
+              f"(the others are skipped; why: {os.path.join(gate, 'gate.csv')})")
+        sel = [x for x in sel if os.path.abspath(x[1]) in ok]
     with open(os.path.join(out, "instances.txt"), "a") as f:
         f.write("".join(f"{t}/{os.path.basename(p)}\n" for t, p, _ in sel))
     work = os.path.join(out, ".work")
@@ -229,7 +284,7 @@ def main():
         if "mtsr-corp" in groups and "corp" not in why:
             run("mtsr+corp", [spy, S("mtsr_corp_bench.py"), mine, "--no-gate", "--timeout", str(t),
                               "-o", os.path.join(res, "MTSR_CORP")], HERE, log)
-        if "cats-check" in groups and tag == "ip3" and "cats" not in why:
+        if "cats-check" in groups and tag != "ip4" and "cats" not in why:
             run("cats-check", [spy, S("mtsr_cats_check_bench.py"), mine, "--no-gate",
                                "--timeout", str(t), "-o", os.path.join(res, "MTSR_CATS_check")],
                 os.path.join(res, "MTSR_CATS_check"), log)
@@ -252,6 +307,9 @@ def main():
             subprocess.call([spy, os.path.join(pdir, "cats_handcrafted.py"), "--run", "--timeout", "120"],
                             cwd=pdir, env=env, stdout=open(log, "a"), stderr=subprocess.STDOUT)
     shutil.rmtree(work, ignore_errors=True)
+    if own:
+        summary(os.path.join(out, tag), time.monotonic() - started)
+        return
     src = "rerun" if out == os.path.abspath(RERUN) else out
     print(f"\ndone in {(time.monotonic() - started) / 3600:.1f} h.  Next, from the artifact folder:\n"
           f"  python3 bench/scripts/compare_runs.py" + ("" if src == "rerun" else f" --rerun {out}") + "\n"

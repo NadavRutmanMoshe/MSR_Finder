@@ -7,7 +7,8 @@
 #
 # Ctrl-C is safe at any point; the same command again continues where it stopped.
 # Results go to bench/rerun/, never over bench/results/.
-# Loads ../env.sh itself, so a terminal without it works too.
-cd "$(dirname "$0")" || exit 1
-[ -f ../env.sh ] && . ../env.sh
-exec python3 scripts/rerun.py "$@"
+# Loads ../env.sh itself, so a terminal without it works too. No cd: a
+# --corpus folder is relative to where you are.
+here="$(cd "$(dirname "$0")" && pwd)"
+[ -f "$here/../env.sh" ] && . "$here/../env.sh"
+exec python3 "$here/scripts/rerun.py" "$@"
