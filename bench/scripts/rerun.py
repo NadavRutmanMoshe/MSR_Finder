@@ -26,21 +26,21 @@ it already has, so a stopped run loses at most the instance in flight.
 PER INSTANCE, IN THIS ORDER (as for the recorded runs)
 ------------------------------------------------------
     msr         MSR with AutoHyper, then with HyperQB          msr_bench.py
-    eh          ExplainHyper, the tool of [11]                 explainhyper_bench.py
+    explainhyper  ExplainHyper, the tool of [11]               explainhyper_bench.py
     mtsr-corp   the MTSR, then CORP                            mtsr_corp_bench.py
     cats-check  the MTSR --check and CATS --check on the       mtsr_cats_check_bench.py
                 same random candidate (|IP| <= 3 only)
 Timeout: 120 s per tool per instance for |IP| <= 3, 300 s for |IP| = 4.
 
 After the corpora, two fixed sets that do not depend on the corpus:
-    sketch      MTSR vs CATS sketch, CATS's X^k error family   mtsr_cats_sketch_bench.py
-    curated     CORP's arbiters (Table 6) and CATS's           paper/corp_curated.py
-                hand-crafted instances (Table 4)               paper/cats_handcrafted.py
+    cats-sketch  MTSR vs CATS sketch, CATS's X^k error family  mtsr_cats_sketch_bench.py
+    handcrafted  CORP's arbiters (Table 6) and CATS's          paper/corp_curated.py
+                 hand-crafted instances (Table 4)              paper/cats_handcrafted.py
 
 THE SUBSET
 ----------
 Every 10th instance of each |IP| class, in name order (83 of 823 with
-|IP| <= 3, 17 of 164 with |IP| = 4), plus all of sketch and curated. Systematic
+|IP| <= 3, 17 of 164 with |IP| = 4), plus all of cats-sketch and handcrafted. Systematic
 rather than random, so it spreads over the systems and is the same for
 everyone. --plan prints how long these instances took on the machine of the
 paper; budget more on a slower machine or in a VM.
@@ -65,7 +65,8 @@ import bench_lib as BL  # noqa: E402
 CORPORA = (("ip3", os.path.join(BENCH, "CATS_RL_ip3"), 120),
            ("ip4", os.path.join(BENCH, "CATS_RL_ip4"), 300))
 RECORDED = os.path.join(BENCH, "results")
-GROUPS = ("msr", "eh", "mtsr-corp", "cats-check", "sketch", "curated")
+GROUPS = ("msr", "explainhyper", "mtsr-corp", "cats-check", "cats-sketch", "handcrafted")
+OLD_NAMES = {"eh": "explainhyper", "sketch": "cats-sketch", "curated": "handcrafted"}
 STRIDE = 10
 
 
@@ -90,7 +91,7 @@ def available():
     if not os.path.exists(BL.SPOT_PY):
         why["spot"] = f"no spot environment at {BL.SPOT_PY} (set SPOT_ENV_PY)"
     if not os.path.exists(BL.EXPLAIN_PY) or not os.path.isdir(os.path.join(BENCH, "tools", "ExplainHyper")):
-        why["eh"] = "ExplainHyper or its environment missing (tools/fetch.sh, install.sh --baselines)"
+        why["explainhyper"] = "ExplainHyper or its environment missing (tools/fetch.sh, install.sh --baselines)"
     if not os.path.exists(os.path.join(BENCH, "tools", "CORP", "corp.py")):
         why["corp"] = "CORP missing (tools/fetch.sh corp)"
     if not os.path.exists(os.path.join(BENCH, "tools", "CATS", "app", "CATS")):
@@ -125,7 +126,7 @@ def recorded_seconds(sel, groups):
     """How long the selected instances took when the paper's results were
     measured (wall clock, all selected tools). A TIMEOUT counts its full time."""
     cols = {"msr": [("MSR/msr_autohyper.csv", "wall_s"), ("MSR/msr_hyperqb.csv", "wall_s")],
-            "eh": [("MSR/explainhyper.csv", "wall_s")],
+            "explainhyper": [("MSR/explainhyper.csv", "wall_s")],
             "mtsr-corp": [("MTSR_CORP/mtsr.csv", "mtsr_s"), ("MTSR_CORP/corp.csv", "corp_s")],
             "cats-check": [("MTSR_CATS_check/mtsr.csv", "mtsr_s"), ("MTSR_CATS_check/cats_check.csv", "cats_s")]}
     cache, tot = {}, 0.0
@@ -166,7 +167,7 @@ def main():
     ap.add_argument("--out", default=RERUN)
     ap.add_argument("--plan", action="store_true", help="print the plan and exit")
     a = ap.parse_args()
-    groups = [g.strip() for g in a.only.split(",") if g.strip()]
+    groups = [OLD_NAMES.get(g.strip(), g.strip()) for g in a.only.split(",") if g.strip()]
     for g in groups:
         if g not in GROUPS:
             sys.exit(f"unknown group {g}; groups: {', '.join(GROUPS)}")
@@ -178,8 +179,8 @@ def main():
 
     n3, n4 = sum(s[0] == "ip3" for s in sel), sum(s[0] == "ip4" for s in sel)
     est = recorded_seconds(sel, groups)
-    if not a.instances:          # the fixed sets: ~0.3 h of sketch, ~10 min curated
-        est += 0.3 * 3600 * ("sketch" in groups) + 600 * ("curated" in groups)
+    if not a.instances:          # the fixed sets: ~0.3 h of cats-sketch, ~10 min handcrafted
+        est += 0.3 * 3600 * ("cats-sketch" in groups) + 600 * ("handcrafted" in groups)
     print(f"instances: {n3} with |IP| <= 3 (120 s), {n4} with |IP| = 4 (300 s); groups: {', '.join(groups)}")
     print(f"on the machine of the paper this took {est / 3600:.1f} h (expect more in a VM)")
     for k, v in why.items():
@@ -221,7 +222,7 @@ def main():
                                     "--no-gate", "--timeout", str(t), "--out",
                                     os.path.join(res, "MSR", "msr_hyperqb.csv")],
                     os.path.join(res, "cwd_hyperqb"), log)
-        if "eh" in groups and "eh" not in why:
+        if "explainhyper" in groups and "explainhyper" not in why:
             run("explainhyper", [epy, S("explainhyper_bench.py"), "--corpus", one, "--no-gate",
                                  "--timeout", str(t), "--out", os.path.join(res, "MSR", "explainhyper.csv")],
                 HERE, log)
@@ -233,27 +234,28 @@ def main():
                                "--timeout", str(t), "-o", os.path.join(res, "MTSR_CATS_check")],
                 os.path.join(res, "MTSR_CATS_check"), log)
 
-    if "sketch" in groups and not a.instances and "cats" not in why:
-        print("[sketch] MTSR vs CATS sketch, 100 instances", flush=True)
-        run("sketch", [spy, S("mtsr_cats_sketch_bench.py"), BL.NEXTS, "--timeout", "120",
+    if "cats-sketch" in groups and not a.instances and "cats" not in why:
+        print("[cats-sketch] MTSR vs CATS sketch, 100 instances", flush=True)
+        run("cats-sketch", [spy, S("mtsr_cats_sketch_bench.py"), BL.NEXTS, "--timeout", "120",
                        "-o", os.path.join(out, "MTSR_CATS_sketch")], HERE, log)
-    if "curated" in groups and not a.instances:
+    if "handcrafted" in groups and not a.instances:
         os.makedirs(os.path.join(out, "curated"), exist_ok=True)
         env = dict(os.environ, BENCH_SRC=out, PAPER_OUT=os.path.join(out, "paper_out"))
         pdir = os.path.join(BENCH, "paper")
         if "corp" not in why:
-            print("[curated] CORP's arbiters (Table 6)", flush=True)
+            print("[handcrafted] CORP's arbiters (Table 6)", flush=True)
             for extra in (["--timeout", "120"], ["--timeout", "600", "--only", "full_4_GF"]):
                 subprocess.call([spy, os.path.join(pdir, "corp_curated.py"), "--run"] + extra,
                                 cwd=pdir, env=env, stdout=open(log, "a"), stderr=subprocess.STDOUT)
         if "cats" not in why:
-            print("[curated] CATS's hand-crafted instances (Table 4)", flush=True)
+            print("[handcrafted] CATS's hand-crafted instances (Table 4)", flush=True)
             subprocess.call([spy, os.path.join(pdir, "cats_handcrafted.py"), "--run", "--timeout", "120"],
                             cwd=pdir, env=env, stdout=open(log, "a"), stderr=subprocess.STDOUT)
     shutil.rmtree(work, ignore_errors=True)
-    print(f"\ndone in {(time.monotonic() - started) / 3600:.1f} h.  Next:\n"
-          f"  python3 scripts/compare_runs.py --rerun {out}\n"
-          f"  {spy} paper/make_tables.py --src {out} --subset")
+    src = "rerun" if out == os.path.abspath(RERUN) else out
+    print(f"\ndone in {(time.monotonic() - started) / 3600:.1f} h.  Next, from the artifact folder:\n"
+          f"  python3 bench/scripts/compare_runs.py" + ("" if src == "rerun" else f" --rerun {out}") + "\n"
+          f'  "$SPOT_ENV_PY" bench/paper/make_tables.py --src {src} --subset')
 
 
 if __name__ == "__main__":

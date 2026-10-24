@@ -68,8 +68,8 @@ the subset and the full run. Useful options:
 ./run.sh --out /some/dir                # somewhere else than bench/rerun
 ```
 
-Groups: `msr` (AutoHyper, HyperQB), `eh` (ExplainHyper), `mtsr-corp`,
-`cats-check`, `sketch`, `curated`. Every driver appends one row per instance and
+Groups: `msr` (AutoHyper, HyperQB), `explainhyper`, `mtsr-corp`,
+`cats-check`, `cats-sketch`, `handcrafted`. Every driver appends one row per instance and
 skips instances it already has, so a stopped run continues where it stopped.
 
 **Running the drivers on your own instances.** Each driver in `scripts/` takes a
