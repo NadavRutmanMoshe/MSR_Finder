@@ -72,6 +72,7 @@ import proc_guard           # noqa: E402
 FIELDS = [
     "instance", "model", "effect", "sys_states", "inputs", "outputs", "P", "L",
     "status", "size", "loop_size", "reason", "reason_complete",
+    "tau_prefix_len", "tau_cycle_len",
     "k", "semantics", "build_s", "certify_s", "wall_s", "err",
 ]
 
@@ -157,6 +158,9 @@ def measure(path, model, timeout, k, semantics, wall_limit=None):
     row["reason_complete"] = res.get("reason_complete", True)
     if res.get("status") in ("SAT_MSR", "SAT_SR"):
         row["size"], row["loop_size"], row["reason"] = reason_of(res)
+        # the shape of tau: a pin x@t* repeats every tau_cycle_len steps
+        td = res.get("table_data") or {}
+        row["tau_prefix_len"], row["tau_cycle_len"] = len(td.get("tau_prefix", [])), len(td.get("tau_cycle", []))
     return row
 
 

@@ -57,7 +57,9 @@ def sizes(n, row):
     if _SHAPES is None:
         _SHAPES = ({r["instance"]: r for r in csv.DictReader(open(SHAPES))}
                    if os.path.exists(SHAPES) else {})
-    shape = _SHAPES.get(n)
+    # re-runs store tau's shape in the MSR CSV; the recorded runs did not, so
+    # for them it comes from tau_shape_rerun.csv
+    shape = row if row.get("tau_cycle_len") else _SHAPES.get(n)
     if "*" in row["reason"]:
         if not shape or shape["reason"] != row["reason"]:
             raise RuntimeError(f"{n}: reason with a loop pin but no matching tau shape; "
