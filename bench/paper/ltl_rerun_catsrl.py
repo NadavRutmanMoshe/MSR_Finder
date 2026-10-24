@@ -1,8 +1,13 @@
-"""Re-run the Table data-ltl analysis (bench_stats_hoa + mtsr_ltl) on the plan-2
-benchmark (results_catsrl ip3 + ip4), into results/bench_stats_catsrl_ltl/.
-The old results/bench_stats/ (818-instance benchmark) is left untouched.
+"""Re-run the analysis behind Table 8 (bench_stats_hoa + mtsr_ltl): build every
+MTSR of the benchmark (ip3 + ip4) on 4 cores, then search for an equivalent LTL
+formula of size at most --max-size, enumerating formulas for at most --budget
+seconds per number of propositions.
 
-    ~/micromamba/envs/spot/bin/python3 bench/paper/ltl_rerun_catsrl.py [--max-size 9 --budget 240]
+    "$SPOT_ENV_PY" bench/paper/ltl_rerun_catsrl.py --max-size 9 --budget 240
+
+Writes <PAPER_OUT>/ltl_rerun/ (default bench/paper/out/ltl_rerun/), never over
+the recorded results/stats/mtsr_ltl.csv. The automata are cached in
+mtsr_hoa.json there, so a stopped run continues.
 """
 import csv, json, os, sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
