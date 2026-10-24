@@ -7,7 +7,7 @@ tools see the same machine state.
     python3 scripts/rerun.py --plan             # what would run, and how long it took us
     python3 scripts/rerun.py                    # the subset (about 1/10, 4.5 h on our laptop)
     python3 scripts/rerun.py --full             # all 987 instances (~45 h)
-    python3 scripts/rerun.py --instances arbiter2__e09 lilydemo23__e01
+    python3 scripts/rerun.py --instances arbiter2__e09 TorcsGearing__e02
     python3 scripts/rerun.py --only msr,mtsr-corp
 
 Run from bench/ with the system python3; each tool is started under the
