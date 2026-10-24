@@ -1,38 +1,57 @@
-# MSR_Finder
+# TraceMSR
 
-**Finding Minimal Sufficient Reasons (MSR) for temporal effects in reactive
-systems.**
+TraceMSR synthesizes sufficient reasons for LTL effects on traces of reactive
+systems. Given a reactive system, an LTL formula φ (the effect), and a trace π
+of the system that satisfies φ, a sufficient reason explains why π satisfies
+φ. TraceMSR produces two kinds of reasons:
 
-Given a reactive system (an automaton whose atomic propositions are split into
-environment **inputs** and system **outputs**), an LTL **effect** formula Φ,
-and an infinite execution **trace** π (a lasso), MSR_Finder answers the
-causality question:
+- **non-temporal reasons**: sets of events on π (an input and a time step), the
+  *minimal sufficient reason* (MSR). TraceMSR computes it by a reduction to
+  HyperLTL model checking, with AutoHyper or HyperQB;
+- **temporal reasons**: a property of the inputs, given as a Büchi automaton,
+  the *minimal temporal sufficient reason* (MTSR). TraceMSR computes it by an
+  automata construction in spot.
 
-> *Which input values, at which time steps, are responsible for the effect?*
+The two give a trace-local and a system-global explanation of the same effect.
+The paper is in [`paper/`](../paper/); this file is the tool's manual.
 
-A **Sufficient Reason (SR)** is a set of (input, time step) pairs of π such
-that *every* system trace that agrees with π on those pairs also satisfies Φ.
-A **Minimal Sufficient Reason (MSR)** is an SR from which no pair can be
-removed — the tightest explanation of why Φ happened on π.
+## What TraceMSR computes
 
-The problem is encoded in **HyperLTL** (a logic that quantifies over multiple
-traces at once) and solved with the model checker
-[AutoHyper](https://github.com/AutoHyper/autohyper).
+A reactive system has atomic propositions split into **inputs** IP and
+**outputs** OP, and is *input deterministic*: every sequence of inputs induces
+exactly one trace. Fix a system T, an LTL effect φ, and a trace π of T with
+π ⊨ φ.
+
+- A set R of events (pairs of a time step t and an input a) is a **sufficient
+  reason** (SR) if every trace of T that agrees with π on every event of R
+  satisfies φ. It is a **minimal sufficient reason** (MSR) if no strictly
+  smaller set is a sufficient reason. Since T is input deterministic, the set of
+  all events is always a sufficient reason; an MSR, however, does not always
+  exist.
+- A property P of input sequences is a **temporal sufficient reason** (TSR) if π
+  satisfies P and every trace of T that satisfies P also satisfies φ. It is the
+  **minimal temporal sufficient reason** (MTSR) if no strictly larger property
+  is a TSR, i.e. it is the weakest constraint on the inputs that still
+  guarantees φ. The MTSR always exists, is unique, and is ω-regular: it is the
+  product of T with an automaton for φ, projected onto the inputs.
 
 ## Quick start
 
-```sh
-source env.sh          # written by install.sh
-cd scripts
-python3 tracemsr.py ../examples/example_1.txt
-```
-
-or in Docker (see [Installation and Docker](#installation-and-docker)).
-
-This opens an interactive checklist:
+From the artifact folder (with the environment of `install.sh` loaded), run
+TraceMSR on the running example of the paper, the biased arbiter:
 
 ```
-Select operations for example_1.txt
+python3 scripts/tracemsr.py examples/biased_arbiter.txt
+```
+
+The system is biased towards `r1`: if `r1` and `r2` are requested at the same
+time, `g1` is granted and not `g2`, and once `r1` is requested, `g2` is never
+granted again. The effect is `F g2` on the trace `{r2,g2} ({})^ω`.
+
+TraceMSR opens a menu of its four operations:
+
+```
+Select operations for biased_arbiter.txt
  > [x] 1. MSR with the given PI
    [ ] 2. MSR for Phi — find a PI automatically
    [ ] 3. Model checking of Phi (counterexample + why)
@@ -41,23 +60,113 @@ Select operations for example_1.txt
 ENTER/SPACE select · ↑/↓ move · a all · ENTER on Start runs · q quit
 ```
 
-ENTER (or SPACE) toggles the highlighted analysis; move down to **▶ Start**
-and press ENTER to run the selection in order. The menu only picks analyses;
-the extras are flags given on the command line: `--with-tau` (the result
-table), `--hyperQB` (the solver) and `--check` (the MTSR mode). For scripts /
-CI, skip the menu with `--run`:
+Select operations 1 and 4 (move with the arrows, ENTER or SPACE to select),
+then move to **▶ Start** and press ENTER. Operation 1 returns the MSR
+R = {(r1,0), (r2,0)}:
 
-```sh
-python3 tracemsr.py ../examples/example_1.txt --run all
-python3 tracemsr.py ../examples/example_1.txt --run 2,3 --timeout 300
-python3 tracemsr.py ../examples/example_1.txt --run 1 --hyperQB
-python3 tracemsr.py ../examples/example_1_cause.txt --run 4 --check
+```
+Reason R:
+    { (r1,0), (r2,0) }
+
+=============================================
+TIME  | ACTUAL TRACE (Pi)   | REASON (R)
+=============================================
+0     | r1=F, r2=T          | <-- R pins r1, r2
+----- + ------------------- + ---------------
+CYCLE | (Repeating Pattern) |
+----- + ------------------- + ---------------
+1     | r1=F, r2=F          |
+=============================================
 ```
 
-## The result table
+Every trace in which `r1` is false and `r2` is true at time 0 satisfies the
+effect, and removing either event makes the reason not sufficient: if `r1`
+were not forced to be false at time 0, it could be requested then, and `g2`
+would never be granted. Operation 4 returns the MTSR, an automaton over the
+inputs for `!r1 U (r2 & !r1)`: `r1` cannot be requested until `r2` is requested
+without `r1`. It is printed in the HOA format (accepting states in green) and
+saved as a picture next to the input, `examples/biased_arbiter_mtsr.png`.
 
-Analyses 1–3 print the trace with the reason on it — one column, the actual
-trace π, with the (input, time) positions **pinned by R in green**:
+To skip the menu, give the operations on the command line:
+
+```
+python3 scripts/tracemsr.py examples/biased_arbiter.txt --run 1,4
+python3 scripts/tracemsr.py examples/example_1.txt --run all
+python3 scripts/tracemsr.py examples/example_1.txt --run 2,3 --timeout 300
+python3 scripts/tracemsr.py examples/example_1.txt --run 1 --hyperQB
+python3 scripts/tracemsr.py examples/example_1_cause.txt --run 4 --check
+```
+
+## Input file format
+
+The input is a single plain-text file with five labeled blocks, plus an
+optional sixth. For example, `examples/biased_arbiter.txt` (shortened):
+
+```
+[info]     Biased arbiter of ATVA'26 (Fig. 1) ...
+[inputs]   "r1" "r2"
+[effect]   F "g2"
+[lasso]    AP: "r1" "r2" "g1" "g2"
+           Prefix: {1 3}
+           Loop:   {}
+[cause]    !"r1" U ("r2" & !"r1")    (optional; only --check reads it)
+[system]   HOA: v1
+           Start: 0
+           AP: 4 "r1" "r2" "g1" "g2"
+           ...
+           --END--
+```
+
+The blocks are the following:
+
+- `[info]`: a description of the instance; TraceMSR ignores it.
+- `[inputs]`: declares the set IP of input propositions.
+- `[effect]`: the effect φ, the LTL formula for which we want to find a reason
+  (in spot's syntax).
+- `[lasso]`: declares the atomic propositions and the trace π, given as a
+  prefix and a loop that repeats forever. Each `{…}` lists the indices (into
+  the `AP:` line) of the propositions that are true at that step, so `{}` means
+  all are false. This block is optional, since three of the four operations do
+  not need a trace.
+- `[cause]`: optional; a candidate cause, used only with the option `--check`
+  to verify it.
+- `[system]`: the system, given as an automaton in the HOA format or as a
+  labeled transition system.
+
+Each block header must be alone on its line. Our definitions assume that the
+system is input deterministic, which guarantees that a sufficient reason always
+exists. Therefore, TraceMSR checks that the system is input deterministic, and
+rejects it otherwise (`NON_DETERMINISTIC`).
+
+## The four operations
+
+TraceMSR has four main operations. Operations 1–3 synthesize an MSR; if no MSR
+exists, TraceMSR reports this and displays a sufficient reason instead.
+Operation 4 synthesizes the MTSR, displays it as a Büchi automaton over the
+inputs, and outputs an image of it.
+
+1. Synthesizing an MSR for the trace given in `[lasso]`.
+2. Finding a trace π that satisfies φ (if one exists), and then synthesizing an
+   MSR for this trace.
+3. Model checking φ: finding a trace that does not satisfy φ (if one exists),
+   and then synthesizing an MSR for this trace and the effect ¬φ. If there is
+   none, every trace satisfies φ and the check passes.
+4. Synthesizing the MTSR using spot.
+   - (4a) With the flag `--check`: checking whether the candidate cause in
+     `[cause]` is equal to the MTSR (see [`--check`](#--check--mtsr-as-a-cause-checker)).
+
+Operations 2–4 do not require a trace. In operations 1–3, the default model
+checker is AutoHyper; `--hyperQB` uses HyperQB instead (see
+[`--hyperQB`](#--hyperqb--the-bounded-solver)), and `--with-tau` also shows
+the trace representation τ of the reason. Every operation reports its running
+time when it finishes; `--timeout N` limits each solver call to N seconds.
+
+## Reading the output
+
+Operations 1–3 print the reason R as a set of (input, time step) pairs, and
+the trace π with the events of R marked on it (`<-- R pins …`, in green). The
+trace is a lasso: the steps after `CYCLE` repeat forever, and an event in the
+loop is pinned at every repetition of that step. For example:
 
 ```
 Reason R:
@@ -78,42 +187,35 @@ CYCLE | (Repeating Pattern) |
 =============================================
 ```
 
-The witness τ is no longer shown by default. `"ip"_τ` is the *indicator* of
-membership in R — the query pins π with `{"ip"_τ} -> ({"ip"_π} <-> {"ip"_π2})`
-— so τ's `T`/`F` cells are exactly the green cells, and showing them as a
-second column of a *trace* invited reading a green `r1=T` under τ as "r1 is
-true here" even where π has `r1=F` at that pinned position. R itself is
-printed as an explicit set of pairs, which is the thing worth reading.
+With `--with-tau`, a second column shows τ, the trace that represents R in the
+HyperLTL encoding: an input is true in τ at time t exactly when (t, input) is
+in R. So τ's `T` cells are the pinned cells; they say *which* inputs are fixed,
+not their values (the values are π's).
 
-Add `--with-tau` to get the old two-column layout
-back — the `found reason representation Tau` block plus the τ column:
+Operation 4 prints the MTSR in the HOA format, with the accepting states in
+green (all green when every state is accepting), and saves it as
+`<input>_mtsr.png` next to the input file.
 
-```sh
-python3 tracemsr.py ../examples/example_1.txt --run 1 --with-tau
-```
+## Result statuses
 
-## The four analyses
-
-| # | analysis | needs `[lasso]`? | what it does |
-|---|----------|------------------|--------------|
-| 1 | **MSR with the given PI** | yes (greyed out if absent) | The classic flow: the MSR for the trace written in the file. |
-| 2 | **MSR for Φ — find a PI** | no | Asks AutoHyper for *some* system trace satisfying Φ (`∃π.Φ`, with witness). The found lasso is displayed and its MSR is computed. UNSAT means *no* trace satisfies Φ at all. |
-| 3 | **Model checking of Φ** | no | Checks `∃π.¬Φ`. UNSAT ⇒ **PASSED**: every trace satisfies Φ (the empty cause is then trivially sufficient). SAT ⇒ **FAILED**: the counterexample is displayed and the same MSR machinery runs on it with effect `¬Φ` — explaining *why the violation happened*. |
-| 4 | **MTSR — Minimal Temporal Sufficient Reason** | no | The automaton of (system × effect) projected onto the inputs and SAT-minimized: the minimal temporal shape of input behaviour that forces Φ. The minimized HOA is displayed with the **accepting states in green** (entirely green when the acceptance is `t` — every state accepting) and rendered to `<base>_mtsr.png` (spot + autfilt + graphviz). With `--check` it also verifies the instance's `[cause]` block against what it built. |
-
-Each analysis reports its wall-clock time when it finishes.
-
-Analyses 2 and 3 only need `[inputs]`, `[effect]` and `[system]` — the user
-never has to construct a trace by hand.
+| status | meaning |
+|--------|---------|
+| `SAT_MSR` | a minimal sufficient reason was found |
+| `SAT_SR` | a sufficient reason was found; with AutoHyper, no minimal one exists (for example for liveness effects such as `G F x`, where every reason can be made smaller) |
+| `INVALID_PI` | π is not a trace of the system, or π does not satisfy φ. The first is checked exactly before any solver runs, and the result names the step where the lasso leaves the system |
+| `NON_DETERMINISTIC` | the system is not input deterministic |
+| `UNKNOWN_BOUNDED` | `--hyperQB` only: nothing was found within the bound `k`; this does **not** prove that no reason exists |
+| `UNSAT_NO_CAUSE` | π is a trace of the system but has no sufficient reason. This cannot happen (the set of all events is always one); the tool still checks for it, as a test of the encoding |
 
 ## `--hyperQB` — the bounded solver
 
-Analysis 1 can be solved by [HyperQB 2.0](https://github.com/HyperQB/HyperRUSTY)
-instead of AutoHyper:
+The MSR of operations 1–3 can be computed with [HyperQB 2.0](https://github.com/HyperQB/HyperRUSTY)
+instead of AutoHyper (in operations 2 and 3, the trace itself is still found by
+AutoHyper):
 
 ```sh
-python3 tracemsr.py ../examples/example_1.txt --run 1 --hyperQB
-python3 tracemsr.py ../examples/example_1.txt --run 1 --hyperQB --k 8
+python3 scripts/tracemsr.py examples/example_1.txt --run 1 --hyperQB
+python3 scripts/tracemsr.py examples/example_1.txt --run 1 --hyperQB --k 8
 ```
 
 HyperQB is a **bounded** model checker: it unrolls the systems `k` steps and
@@ -203,14 +305,14 @@ Two more things worth knowing:
   and that is certified like any other candidate. It often holds: the reason is
   then complete (not truncated), printed on an unrolled π, and proved. When it
   does not hold, the witness is rejected rather than shown with a warning.
-* **Analyses 2 and 3 are split, not skipped.** Each is two steps — find a trace
+* **Operations 2 and 3 are split, not skipped.** Each is two steps — find a trace
   (or a counterexample), then explain it — and `--hyperQB` moves the second.
   The first stays on AutoHyper because it has to *read a trace out of the
   witness*, and HyperQB's model dump reports NuSMV `VAR`s only, so the system's
-  outputs (which are `DEFINE`s) never appear in it; analysis 3 additionally
+  outputs (which are `DEFINE`s) never appear in it; operation 3 additionally
   reports PASSED from an UNSAT, which a bounded UNSAT cannot support. Once the
   trace exists, explaining it is the ordinary MSR query and runs on whichever
-  backend was chosen. The tool prints which half went where. Analysis 4 uses no
+  backend was chosen. The tool prints which half went where. Operation 4 uses no
   solver at all.
 
 Under the hood the HyperQB path runs the *same* query on *symbolic* NuSMV
@@ -232,15 +334,15 @@ Setup). Without it, `--hyperQB` says exactly that and stops.
 
 CATS ("Checking and Sketching Causality in Reactive Systems") does not
 synthesize causes: you write a candidate cause into the instance and it decides
-whether that is one. `--check` gives MSR_Finder the same mode, using the
+whether that is one. `--check` gives TraceMSR the same mode, using the
 synthesizer it already has:
 
 ```sh
-python3 tracemsr.py ../examples/example_1_cause.txt --run 4 --check
+python3 scripts/tracemsr.py examples/example_1_cause.txt --run 4 --check
 ```
 
 The candidate goes in a `[cause]` block — the same block CATS uses, an LTL
-formula over the inputs (or a QPTL one; see below). Analysis 4 synthesizes the
+formula over the inputs (or a QPTL one; see below). Operation 4 synthesizes the
 MTSR as usual, and then asks spot whether the two accept the same input
 sequences:
 
@@ -265,7 +367,7 @@ MTSR, so the answer is yes or no:
 | `NOT_MTSR` | it is not: the two languages differ |
 | `ERROR` | unparseable, mentions non-input APs, or is a CATS *sketch* (`?{…}` holes) rather than a concrete formula |
 
-`--check` implies analysis 4 — asking it while running only analyses 1–3 adds
+`--check` implies operation 4 — asking it while running only operations 1–3 adds
 the MTSR to the run rather than refusing.
 
 ### Compared inside what the system can produce
@@ -337,8 +439,8 @@ therefore has a checker that does not read it at all, and instead asks whether
 its output *denotes* the right thing.
 
 ```sh
-~/micromamba/envs/spot/bin/python3 verify_smv.py ../examples/*.txt
-~/micromamba/envs/spot/bin/python3 verify_smv.py --self-test ../examples/atva2022_arbiter.txt
+"$SPOT_ENV_PY" scripts/verify_smv.py examples/*.txt
+"$SPOT_ENV_PY" scripts/verify_smv.py --self-test examples/atva2022_arbiter.txt
 ```
 
 Each module denotes an ω-language, and each has a reference language that
@@ -362,46 +464,10 @@ guessing. `--self-test` mutates the modules (negate an output, force `valid`
 true, redirect a δ edge, move the init state, shift the lasso loop, weaken an
 input) and confirms each mutant is caught.
 
-Analysis 4 also checks itself now: the minimized automaton is compared with the
+Operation 4 also checks itself now: the minimized automaton is compared with the
 pre-minimization projected product on every run, and a mismatch is reported
 loudly instead of producing a quietly wrong MTSR (`--check` refuses to give a
 verdict in that case).
-
-## Input file format
-
-```
-[info]       free-text description
-[inputs]     quoted AP names that are environment inputs, e.g. "i1" "i2"
-[cause]      a candidate cause to verify (optional — only --check reads it):
-             an LTL formula over the inputs, e.g.
-             "i1" & (X X (((!"i1") & (!"i2")) U ("i1" & (!"i2"))))
-[effect]     the LTL effect formula, e.g. F "error"
-[lasso]      the actual trace (optional — needed only for analysis 1):
-             AP: "i1" "i2" "error"      the trace's AP order
-             Prefix: {0 1} {0 1} {0}    one {index set} per step
-             Loop: {0 2}                the infinitely repeated part
-[system]     the system as a HOA automaton (HOA: v1 ... --END--)
-```
-
-A step's `{…}` lists the indices (into the `AP:` line) of the propositions
-that are **true** at that step; `{}` means all false. The system must be
-**input-deterministic** (same state + same inputs ⇒ same successor); this is
-validated before any query runs and violations are reported as
-`NON_DETERMINISTIC`.
-
-## Result statuses
-
-| status | meaning |
-|--------|---------|
-| `SAT_MSR` | a Minimal Sufficient Reason was found (green table, pins highlighted) |
-| `SAT_SR` | a Sufficient Reason exists but no *minimal* one (e.g. `G F x` liveness effects: any cause can be shrunk forever) |
-| `UNSAT_NO_CAUSE` | π is a valid trace but no sufficient cause exists |
-| `INVALID_PI` | the given lasso is not a real system trace, or Φ does not hold on it. The first is checked exactly, before any solver runs, and the result names the step where the lasso leaves the system |
-| `NON_DETERMINISTIC` | the system failed the input-determinism firewall |
-| `UNKNOWN_BOUNDED` | `--hyperQB` only: nothing was found within the bound `k`. **Not** a proof that no cause exists |
-
-Section headers must sit alone on their own line — that is what tells a
-`[cause]` header apart from the word "[cause]" inside the `[info]` prose.
 
 ## How it works
 
@@ -437,9 +503,9 @@ The waterfall then runs MSR → SR → PI_VAL: if no MSR exists it still reports
 sufficient reason when there is one, and otherwise distinguishes "valid trace,
 no cause" from "invalid trace".
 
-**Finding π automatically** (analysis 2) needs no scaffolding at all: `∃π.Φ`
+**Finding π automatically** (operation 2) needs no scaffolding at all: `∃π.Φ`
 on the Real system, with AutoHyper's `--witness` returning a lasso that is by
-construction a valid system trace satisfying Φ. **Model checking** (analysis
+construction a valid system trace satisfying Φ. **Model checking** (operation
 3) is the dual `∃π.¬Φ` — UNSAT proves `∀π.Φ`, and a SAT witness is the
 counterexample fed back into the causality analysis.
 
@@ -449,8 +515,9 @@ See the [README](../README.md): `install.sh` sets everything up on a clean
 Ubuntu (amd64 or arm64), and the `Dockerfile` builds the same installation in a
 container. Both end with `smoke_test.sh`.
 
-Analysis 4 writes its `<base>_mtsr.png` next to the input file; in Docker,
-mount a directory (`-v "$PWD/mine:/data"`) to keep it.
+Operation 4 writes its `<input>_mtsr.png` next to the input file; in Docker,
+copy it to the shared folder to see it on your machine
+(`cp examples/*_mtsr.png /shared/`).
 
 ## Repository layout
 
@@ -489,7 +556,7 @@ Dockerfile            install.sh in a clean Ubuntu 26.04 container
 The only persistent artifact is the rendered `<base>_mtsr.png` (written next
 to the input file). Solver temporaries — the generated systems and formulas,
 AutoHyper's `aut1.hoa`/`autRes.hoa`, HyperQB's `commands.txt`, and the
-synthesized trace files of analyses 2/3 — live in a private temporary
+synthesized trace files of operations 2/3 — live in a private temporary
 directory per run, which is also the solver's working directory, and are
 deleted when the run finishes. So runs can be started side by side, from the
 same directory or on files in the same folder, without reading each other's
@@ -497,7 +564,7 @@ files.
 
 Stopping a run cleans up after it however it is stopped: Ctrl-C, `kill`,
 `timeout`, or closing the terminal all shut down the solver in flight
-(AutoHyper, HyperQB, or the `autfilt` behind analysis 4) before the tool exits.
+(AutoHyper, HyperQB, or the `autfilt` behind operation 4) before the tool exits.
 
 ## Credits
 
@@ -507,8 +574,8 @@ Stopping a run cleans up after it however it is stopped: Ctrl-C, `kill`,
 * [spot](https://spot.lre.epita.fr/) — ω-automata manipulation, and the
   language equivalence `--check` is built on.
 * [HyperQB 2.0](https://github.com/HyperQB/HyperRUSTY) — Hsu et al., the
-  bounded HyperLTL model checker behind `--hyperQB` (not shipped here; see
-  Setup).
+  bounded HyperLTL model checker behind `--hyperQB` (not shipped here;
+  `install.sh` builds it at a pinned commit).
 * [CATS](https://github.com/cats-tool/cats) — Beutner, Finkbeiner, Frenkel and
   Metzger, "Checking and Sketching Causality in Reactive Systems". `--check`
   answers their question (is this candidate a cause?) and borrows their
