@@ -12,182 +12,279 @@ The tool is called TraceMSR in the paper; this repository is named
 * **Source repository:** https://github.com/NadavRutmanMoshe/MSR_Finder
 * **The paper as submitted:** [`paper/TACAS27_paper_5598.pdf`](paper/TACAS27_paper_5598.pdf)
 
-## Badges
+## Quickstart
 
-We apply for all three badges: **Available**, **Functional** and **Reusable**.
+### Requirements
 
-## Contents
+- Linux, amd64 or arm64 (the TACAS 2027 VM works).
+- About 7 GB of free disk and 8 GB of RAM.
+- Internet access during installation only.
 
-| what | where |
-|---|---|
-| the tool (Python, runs AutoHyper / HyperQB / spot) | `scripts/`, entry point `scripts/tracemsr.py` |
-| example inputs, including the running example of the paper | `examples/` |
-| AutoHyper (binary, GPL-3.0, shipped unchanged) | `external_tools/AutoHyper/` |
-| the benchmark of Section 5: 987 instances + every recorded result | `bench/` ([`bench/README.md`](bench/README.md)) |
-| the scripts that produce every table and figure of Section 5 and Appendix D | `bench/paper/` |
-| installation, smoke test, container | `install.sh`, `smoke_test.sh`, `Dockerfile` |
-| tool documentation: input format, the four operations, flags, statuses | [`docs/TOOL.md`](docs/TOOL.md) |
+### Setup (about 10 minutes; about 45 minutes on arm64)
 
-## Requirements and tested platforms
+Unzip the artifact, open a terminal, and go into its folder (the one that contains `install.sh`):
 
-* Linux, **amd64 or arm64**. No special hardware, no proprietary software.
-* About 7 GB of disk for the installation, 8 GB of RAM (16 GB to re-run the
-  full benchmark: a few instances reach the 6 GB memory cap of the MTSR
-  minimization).
-* Network access during installation only (all downloads are version-pinned).
+```
+unzip TraceMSR-artifact.zip
+cd TraceMSR-artifact
+```
 
-| platform | host | tested |
-|---|---|---|
-| Ubuntu 26.04 container (`Dockerfile`), amd64 | Windows 11 / Docker Desktop | install + smoke test |
-| Ubuntu 26.04 container (`Dockerfile`), arm64 | (emulated) | <!-- TODO --> |
-| Ubuntu 22.04 under WSL2, amd64 (Intel i7-8565U, 16 GB) | the machine the paper's numbers were measured on | everything |
-| TACAS 2027 VM, amd64 | a clean laptop | <!-- TODO --> |
+Then run these two commands, one after the other:
 
-## 1. Setup (about 10 minutes on amd64; longer on arm64)
-
-In the TACAS VM (or any Ubuntu with `build-essential`, `curl` and `git`), from
-the artifact directory:
-
-```sh
+```
 bash install.sh
 source env.sh
 ```
 
-`install.sh` installs everything under your home directory, without root and
-in pinned versions: spot 2.15.1 and Python 3.14 (via micromamba), the .NET 8
-runtime for AutoHyper, a Rust toolchain to build HyperQB 2.0, and the three
-tools the paper compares against (CATS, CORP, ExplainHyper) at the exact
-commits we used. On arm64 it builds spot from source, which is the slow part.
-Everything it does is logged to `install.log`. Run `source env.sh` in every new
-terminal.
+1. `bash install.sh` installs everything the tool and the benchmark need, under your home directory and without root. Every version is pinned, and everything it does is logged to `install.log`.
+2. `source env.sh` sets up this terminal for the tool. New terminals are set up automatically.
 
-**Alternatively, with Docker** (any host with Docker, amd64 or arm64):
+**Or with Docker.** In a terminal on your machine, in the artifact folder, run these two commands, one after the other:
 
-```sh
-docker build -t tracemsr .            # runs install.sh and the smoke test inside
-docker run --rm -it tracemsr          # a shell in the container, ready to use
+```
+docker build -t tracemsr .
+docker run --rm -it -v "$PWD/shared:/shared" tracemsr
 ```
 
-## 2. Smoke test (about 1 minute)
+1. `docker build` creates the image: it runs `install.sh` and then the smoke test inside it (about 10 minutes).
+2. `docker run` opens a terminal inside the container, in the artifact folder, ready to use. Every command below works there as written.
 
-```sh
+Everything inside the container is deleted when you leave it (`exit`), except the folder `/shared`: it is the folder `shared/` next to the artifact on your machine. We use this folder to store the results on your machine for easy access: inside the container, the commands below save their results there automatically.
+
+### Smoke test (about 1 minute)
+
+In the same terminal (or in the container), run:
+
+```
 ./smoke_test.sh
 ```
 
-It checks three things and ends with `SMOKE TEST PASSED`:
+It checks three things, and the last line should be `SMOKE TEST PASSED`:
 
-1. **the tool**: the MSR of `examples/example_1.txt` (AutoHyper), its MTSR
-   (spot, rendered to a PNG with graphviz), `--check`, and the HyperQB backend,
-   each against its known answer;
-2. **the paper's tables**: all 12 tables and figures of Section 5 and
-   Appendix D are regenerated from the recorded results and compared, number by
-   number, with the submitted paper (all must say `SAME`), and so are the 37
-   numbers quoted in the text;
-3. **the baselines**: one benchmark instance through every tool (AutoHyper,
-   HyperQB, ExplainHyper, MTSR, CORP, CATS), each answer compared with the
-   recorded one.
+1. **The tool:** runs each of the tool's operations on an example and compares the result with the known answer.
+2. **The paper's numbers:** regenerates all 12 tables and figures of the evaluation from our recorded results, and checks them number by number against the submitted paper. It does the same for the 37 numbers quoted in the text.
+3. **The other tools:** runs one benchmark instance through every tool we compare against (AutoHyper, HyperQB, ExplainHyper, CATS, CORP) and checks that each gives the recorded answer.
 
-## 3. Replicating the results of the paper
+## Available badge
 
-There are three levels. Each command below is run from the artifact directory
-after `source env.sh`.
+The artifact is permanently archived on Zenodo: https://doi.org/10.5281/zenodo.23589523.
+The source code is also on GitHub: https://github.com/NadavRutmanMoshe/MSR_Finder.
 
-### 3a. Every table and figure from the recorded results (1 minute)
+## Functional badge
 
-```sh
-cd bench/paper && "$SPOT_ENV_PY" make_tables.py
+### What's inside
+
+- `scripts/`: the tool itself (Python). The main script is `tracemsr.py`.
+- `examples/`: example inputs, including the running example of the paper (`biased_arbiter.txt`).
+- `external_tools/`: the HyperLTL model checkers the tool calls, AutoHyper (included) and HyperQB (built by `install.sh`).
+- `bench/`: the benchmark of Section 5 (it has its own [README](bench/README.md)):
+  - `CATS_RL_ip3/`, `CATS_RL_ip4/`: the 987 instances (823 with |IP| ≤ 3, 164 with |IP| = 4)
+  - `results/`: every result we recorded, one CSV per tool
+  - `paper/`: the scripts that regenerate every table and figure of Section 5 and Appendix D
+  - `scripts/`: the scripts that re-run the tools on the benchmark
+- `docs/`: documentation: how to use the tool (input format, operations, flags, results) and notes on how the benchmark was built.
+- `paper/`: the paper as submitted.
+- `install.sh`, `smoke_test.sh`, `Dockerfile`: installation and the smoke test (see Quickstart).
+
+### Tested platforms and resources
+
+We tested the artifact on:
+
+- **Our laptop** (Ubuntu 22.04 under WSL2, Intel i7-8565U, 4 cores, 16 GB RAM): every result in the paper was measured here.
+- **A clean Ubuntu 26.04 container** (the `Dockerfile`), amd64: install and smoke test.
+- **The same container on arm64** (emulated): install and smoke test.
+- **The TACAS 2027 VM** on a clean laptop: install, smoke test and the subset re-run. <!-- TODO laptop test -->
+
+How long each part takes, and what it needs:
+
+- Smoke test: about 1 minute.
+- All tables and figures from our recorded results: about 1 minute.
+- Re-running a subset of the benchmark (100 of the 987 instances): about 5 hours.
+- Re-running the full benchmark: about 45 hours, and 16 GB of RAM (a few instances use up to 6 GB).
+
+The tools run one at a time, on one instance at a time, so more cores don't make it faster. The times are from our laptop; expect more in a VM.
+
+### Reproducing the paper
+
+There are three levels, from quick to complete:
+
+1. All tables and figures from our recorded results (1 minute).
+2. Re-running a subset of the benchmark (about 5 hours).
+3. Re-running the full benchmark (about 45 hours).
+
+All commands are run from the artifact folder.
+
+#### 1. All tables and figures from our recorded results
+
+```
+"$SPOT_ENV_PY" bench/paper/make_tables.py
 ```
 
-This regenerates every table and figure of Section 5 and Appendix D into
-`bench/paper/out/` from the CSVs in `bench/results/`, and reports for each
-whether its numbers are those of the submitted paper (copies in
-`bench/paper/expected/`). The figures are compared through the numbers in their
-captions; their PDFs are next to the submitted ones to look at.
+This regenerates every table and figure of the evaluation (Section 5 and Appendix D) from our recorded results in `bench/results/`. For each one it prints `SAME` if its numbers are exactly those in the submitted paper. The new tables and figures go to `bench/paper/out/` (in Docker: `shared/tables/` on your machine).
 
-```sh
-"$SPOT_ENV_PY" check_text.py
+To regenerate a single table, add its name. For example, Table 1:
+
+```
+"$SPOT_ENV_PY" bench/paper/make_tables.py tab_main
 ```
 
-does the same for the 37 numbers the text quotes (abstract, Section 5,
-Appendix D): each sentence, the number written in the paper, and the number the
-data gives.
+prints
 
-| paper | file | command (`make_tables.py <name>`) | from |
-|---|---|---|---|
-| Table 1 | MSR and MTSR per number of inputs | `tab_main` | both corpora |
-| Table 2, Fig. 10 | AutoHyper vs. HyperQB | `tab_msr_backends` | both corpora |
-| Table 3 | MSR vs. ExplainHyper [11] | `tab_msreh` | both corpora |
-| Table 4 | CATS's hand-crafted instances | `tab_catshand` | `results/curated/` |
-| Fig. 7 | MTSR vs. CATS cause checking | `fig_data_cats_check_time` | \|IP\| ≤ 3 |
-| Table 5 | MTSR vs. CATS sketching | `tab_catssketch` | CATS's X^k family (`bench/nexts`) |
-| Table 6 | MTSR vs. CORP on CORP's arbiters | `tab_corpcurated` | `results/curated/` |
-| Table 7 | summary of the comparisons | `tab_data_resultsizes` | both corpora |
-| Fig. 6 | running time vs. system size | `fig_data_msr_mtsr_size_v1` | \|IP\| ≤ 3 |
-| Fig. 9 | MSR and ExplainHyper vs. system size | `fig_data_msr_size` | \|IP\| ≤ 3 |
-| Table 8 | LTL-expressibility of the MTSR | `tab_data_ltl` | `results/stats/` |
-| Figs. 4, 5 | the session of Section 4.5 | `cd scripts && python3 tracemsr.py ../examples/biased_arbiter.txt --run 1,4` | — |
-
-### 3b. Re-measure a representative subset (about 5 hours)
-
-```sh
-cd bench
-./run.sh --plan        # what will run, and how long it took on our machine
-./run.sh               # every 10th instance of each |IP| class: 83 + 17 instances
+```
+  tab_main                     SAME     Table 1: MSR and MTSR per |IP|
 ```
 
-This runs every tool on each selected instance in turn, as the recorded results
-were measured, with the paper's timeouts (120 s, 300 s for |IP| = 4), followed
-by the CATS sketch comparison and the curated instances of Tables 4 and 6. On
-the machine of the paper it takes 4.5 hours; expect more in a VM. Ctrl-C is
-safe at any point: the same command continues where it stopped. Results go to
-`bench/rerun/`; the recorded results are never touched. Then:
+and writes the table to `bench/paper/out/tables/tab_main.tex`. The names of all the tables and figures:
 
-```sh
-python3 scripts/compare_runs.py                              # instance by instance
-"$SPOT_ENV_PY" paper/make_tables.py --src rerun --subset     # the tables, recorded vs. yours
+- Table 1, MSR and MTSR by number of inputs: `tab_main`
+- Table 2 and Fig. 10, AutoHyper vs. HyperQB: `tab_msr_backends`
+- Table 3, MSR vs. ExplainHyper: `tab_msreh`
+- Table 4, CATS's hand-crafted instances: `tab_catshand`
+- Table 5, MTSR vs. CATS sketching: `tab_catssketch`
+- Table 6, MTSR vs. CORP on CORP's arbiters: `tab_corpcurated`
+- Table 7, summary of the comparisons: `tab_data_resultsizes`
+- Table 8, which MTSRs can be written as a small LTL formula: `tab_data_ltl`
+- Fig. 6, running time vs. system size: `fig_data_msr_mtsr_size_v1`
+- Fig. 7, MTSR vs. CATS cause checking: `fig_data_cats_check_time`
+- Fig. 9, MSR and ExplainHyper vs. system size: `fig_data_msr_size`
+
+Optionally, `"$SPOT_ENV_PY" bench/paper/check_text.py` checks the same way the 37 numbers quoted in the text of the paper.
+
+Figs. 4 and 5 (the example session of Section 4.5) come from running the tool on the paper's running example, with operations 1 (MSR) and 4 (MTSR):
+
+```
+python3 scripts/tracemsr.py examples/biased_arbiter.txt --run 1,4
 ```
 
-`compare_runs.py` compares the *answers* (status, reason size, automaton size,
-verdicts) of every tool on every instance with the recorded ones, and reports
-each as `same`, `timeout` (one side timed out — a matter of machine speed) or
-`DIFFERENT`, together with how much faster or slower your machine is.
-`make_tables.py --subset` builds every table twice over the re-run instances —
-from our recorded rows and from yours — so they can be read side by side.
-Running times differ between machines; the counts and sizes should not, up to
-instances that finish close to the timeout.
+The picture of the MTSR (Fig. 5) is saved next to the input, as `examples/biased_arbiter_mtsr.png`. If you use Docker and want the PNG of the MTSR saved on your machine, also run:
 
-### 3c. The full benchmark (about 45 hours)
-
-```sh
-cd bench
-./run.sh --full
-"$SPOT_ENV_PY" paper/make_tables.py --src rerun
+```
+cp examples/*_mtsr.png /shared/
 ```
 
-`./run.sh --corpus ip3`, `--only msr,mtsr-corp` or `--instances NAME ...` run a
-part of it (see `python3 scripts/rerun.py --help`). The two offline analyses
-behind Table 8 (the LTL search) and the benchmark generation itself are
-described in [`bench/README.md`](bench/README.md).
+#### 2. Re-running a subset of the benchmark (about 5 hours)
 
-## 4. Using the tool on your own inputs (Reusable)
+The subset is every 10th instance of the benchmark: 83 of the 823 instances with |IP| ≤ 3, and 17 of the 164 with |IP| = 4. To see what will run, and how long it took on our laptop:
 
-```sh
-cd scripts
-python3 tracemsr.py ../examples/example_1.txt              # interactive menu
-python3 tracemsr.py ../examples/example_1.txt --run all    # all four operations
-python3 tracemsr.py my_system.txt --run 1 --hyperQB        # MSR with HyperQB
+```
+bench/run.sh --plan
 ```
 
-An input is one text file with the system (a HOA automaton), the inputs, the
-LTL effect and optionally a trace. [`docs/TOOL.md`](docs/TOOL.md) documents the
-format, the four operations, every flag, the result statuses and the code
-structure. To run the benchmark drivers on a new set of instances, put the
-files in a directory and pass it with `--corpus` / as a path; see
-[`bench/README.md`](bench/README.md).
+Then start it:
+
+```
+bench/run.sh
+```
+
+It runs every tool on each instance in turn, as we did for the paper, with the paper's timeouts (120 s, and 300 s for |IP| = 4). Then it runs the CATS sketching comparison (Table 5) and the hand-crafted instances of Tables 4 and 6. It took 4.5 hours on our laptop; expect more in a VM. Keep the machine from going to sleep while it runs. You can stop it at any point with Ctrl-C: running the same command again continues where it stopped.
+
+The results go to `bench/rerun/` (in Docker: `shared/rerun/` on your machine); our recorded results are never changed. When it finishes, compare the two by running these two commands, one after the other:
+
+```
+python3 bench/scripts/compare_runs.py
+"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun --subset
+```
+
+1. `compare_runs.py` compares the answers of every tool on every instance with ours (the reason found, the automaton size, the verdict). It marks each as `same`, `timeout` (one side ran out of time, which depends on the machine's speed) or `DIFFERENT`. It also shows how much faster or slower your machine is than ours.
+2. `make_tables.py --src rerun --subset` builds every table twice over the instances you re-ran, once from our results and once from yours, so you can compare them side by side.
+
+Running times differ from machine to machine. The answers should not, except for instances that finish close to the timeout.
+
+#### 3. Re-running the full benchmark (about 45 hours)
+
+```
+bench/run.sh --full
+```
+
+This is the same as level 2, on all 987 instances. It took 45 hours on our laptop and needs 16 GB of RAM. It writes to the same folder as level 2, so the instances you already re-ran there are not run again. As in level 2, Ctrl-C stops it, and the same command continues where it stopped.
+
+When it finishes, build the tables and figures from your results by running these two commands, one after the other:
+
+```
+"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun
+"$SPOT_ENV_PY" bench/paper/check_text.py --src rerun
+```
+
+They work as in level 1, but on your results instead of ours. Tables that report running times will show `DIFFERS`, since times depend on the machine. The counts and sizes should match the paper, except for instances that finish close to the timeout. `compare_runs.py` (level 2) also works here.
+
+You can also run only part of the benchmark:
+
+- `bench/run.sh --full --corpus ip3`: only the instances with |IP| ≤ 3.
+- `bench/run.sh --full --only msr,mtsr-corp`: only some of the tools. The groups are:
+  - `msr`: MSR with AutoHyper and with HyperQB (Tables 1–3, Figs. 6, 9, 10)
+  - `explainhyper`: ExplainHyper (Table 3, Fig. 9)
+  - `mtsr-corp`: MTSR and CORP (Table 1, Fig. 6)
+  - `cats-check`: MTSR and CATS checking a candidate cause (Fig. 7)
+  - `cats-sketch`: MTSR and CATS sketching (Table 5)
+  - `handcrafted`: the hand-crafted instances of CATS (Table 4) and CORP (Table 6)
+
+  Table 7 summarizes all of them.
+- `bench/run.sh --instances arbiter2__e09 TorcsGearing__e02`: chosen instances.
+
+How the benchmark itself was generated, and the LTL search behind Table 8, are described in `bench/README.md`.
+
+## Reusable badge
+
+### Using the tool on your own inputs
+
+```
+python3 scripts/tracemsr.py examples/example_1.txt
+```
+
+This opens a menu of the tool's four operations:
+
+1. MSR with the given trace: the minimal sufficient reason for the effect on the trace in the file.
+2. MSR for the effect: finds a trace automatically.
+3. Model checking of the effect: a counterexample, and why.
+4. MTSR: the minimal temporal sufficient reason, as an automaton (also saved as a PNG next to the input).
+
+Move with the arrow keys, select with ENTER or SPACE, then choose **Start**. To skip the menu, give the operations directly. For example, all four:
+
+```
+python3 scripts/tracemsr.py examples/example_1.txt --run all
+```
+
+or the MSR with HyperQB instead of AutoHyper:
+
+```
+python3 scripts/tracemsr.py examples/example_1.txt --run 1 --hyperQB
+```
+
+In Docker, to get the PNGs on your machine: `cp examples/*_mtsr.png /shared/`.
+
+An input is one text file: the system (a HOA automaton), which propositions are inputs, the effect (an LTL formula), and optionally a trace. `docs/TOOL.md` documents the format, every operation and flag, and what each result means. The files in `examples/` are a good starting point.
+
+### Comparing the tools on your own instances
+
+Put your input files in a folder and run:
+
+```
+bench/run.sh --corpus my_folder
+```
+
+This runs the same comparison as in the paper on every file in the folder: MSR (with AutoHyper and HyperQB), ExplainHyper, MTSR, CORP and CATS, with 120 seconds per tool (change it with `--timeout`). Like the paper's benchmark, it first skips instances where the trace is not a run of the system or the effect does not hold on it. The results go to `bench/rerun/my_folder/`, one CSV per tool, and at the end it prints how many instances each tool answered, and how. In Docker, put the folder inside `shared/` on your machine and run `bench/run.sh --corpus /shared/my_folder`.
+
+### Installing only the tool
+
+If you only want TraceMSR and not the tools we compare against, run:
+
+```
+bash install.sh --tool-only
+```
+
+This installs spot, the .NET runtime for AutoHyper, and HyperQB, about half of the full installation. The top of `install.sh` lists every dependency with its exact version, for installing them another way.
 
 ## License
 
-Our code is under the MIT license ([`LICENSE`](LICENSE)). AutoHyper
-(`external_tools/AutoHyper/`) is GPL-3.0, shipped unchanged with its license.
-CATS and CORP (GPL-3.0) and ExplainHyper (MIT) are downloaded by `install.sh`,
-not included.
+Our code is under the MIT license (see [`LICENSE`](LICENSE)).
+
+The artifact also uses tools by others, each under its own license:
+
+- AutoHyper (GPL-3.0) is included in `external_tools/AutoHyper/`, unchanged, with its license file.
+- `install.sh` downloads the others; they are not part of the artifact:
+  - HyperQB: MIT
+  - CORP: GPL-3.0
+  - ExplainHyper: MIT
+  - CATS: its repository states no license
+  - spot: GPL-3.0
+
