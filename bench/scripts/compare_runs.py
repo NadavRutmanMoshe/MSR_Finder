@@ -19,8 +19,10 @@ compares the ANSWER, never the time:
 
 Each comparison is one of
     same       the same answer
-    timeout    one side timed out (or ran out of memory) and the other did not:
-               a question of machine speed, not of the answer. Both times shown
+    timeout    one side ran out of time or memory: it timed out, or it used the
+               whole time limit and returned what it had by then (HyperQB falls
+               back from an MSR to a sufficient reason). A question of machine
+               speed, not of the answer; both times shown (-v lists them)
     DIFFERENT  both answered, and the answers differ
 
 and the times are summarized as the ratio re-run / recorded (median per tool),
@@ -81,12 +83,17 @@ def num(x):
         return None
 
 
-def compare(rec, new, cols, tcol):
+def compare(rec, new, cols, tcol, limit=None):
+    """same / timeout / DIFFERENT. `timeout` when either side ran out of time:
+    it timed out, or it used up the whole time limit and returned what it had
+    by then (HyperQB falls back from MSR to SR at the limit)."""
     a = tuple((rec.get(c) or "").strip() for c in cols)
     b = tuple((new.get(c) or "").strip() for c in cols)
     if a == b:
         return "same", a, b
-    if timed_out(rec) != timed_out(new):
+    if timed_out(rec) or timed_out(new):
+        return "timeout", a, b
+    if limit and any((num(r.get(tcol)) or 0) >= limit for r in (rec, new)):
         return "timeout", a, b
     return "DIFFERENT", a, b
 
@@ -100,10 +107,11 @@ def main():
     bad = 0
     print(f"re-run:   {a.rerun}\nrecorded: {a.recorded}\n")
     print(f"{'':30s} {'rows':>5s} {'same':>5s} {'timeout':>8s} {'DIFFERENT':>10s}   time re-run/recorded (median)")
-    jobs = [(os.path.join(part, f), k, c, t, f"{lab} ({part}, |IP|{'<=3' if part == 'ip3' else '=4'})")
-            for part in ("ip3", "ip4") for f, k, c, t, lab in CHECKS] + FIXED
+    jobs = [(os.path.join(part, f), k, c, t, f"{lab} ({part}, |IP|{'<=3' if part == 'ip3' else '=4'})",
+             120 if part == "ip3" else 300)
+            for part in ("ip3", "ip4") for f, k, c, t, lab in CHECKS] + [j + (None,) for j in FIXED]
     details = []
-    for rel, key, cols, tcol, label in jobs:
+    for rel, key, cols, tcol, label, limit in jobs:
         new = rows(os.path.join(a.rerun, rel), key)
         if not new:
             continue
@@ -113,7 +121,7 @@ def main():
         for k, r in new.items():
             if k not in rec:
                 continue
-            v, x, y = compare(rec[k], r, cols, tcol)
+            v, x, y = compare(rec[k], r, cols, tcol, limit)
             count[v] += 1
             ta, tb = num(rec[k].get(tcol)), num(r.get(tcol))
             if v == "same" and ta and tb and ta > 0.05:
