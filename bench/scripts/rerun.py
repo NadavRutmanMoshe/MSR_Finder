@@ -251,7 +251,7 @@ def main():
         f.write("".join(f"{t}/{os.path.basename(p)}\n" for t, p, _ in sel))
     work = os.path.join(out, ".work")
     log = os.path.join(out, "rerun.log")
-    py, spy, epy = sys.executable, BL.SPOT_PY, BL.EXPLAIN_PY
+    spy, epy = BL.SPOT_PY, BL.EXPLAIN_PY
     S = lambda f: os.path.join(HERE, f)
     started = time.monotonic()
 
@@ -268,12 +268,14 @@ def main():
         el = (time.monotonic() - started) / 3600
         print(f"[{i}/{len(sel)}] {tag}/{name}   ({el:.1f} h so far)", flush=True)
         if "msr" in groups:
-            run("msr autohyper", [py, S("msr_bench.py"), "--model", "autohyper", "--corpus", one,
+            # under spot's python, as for the recorded runs: the HyperQB
+            # pipeline shrinks a non-minimal witness only with spot in-process
+            run("msr autohyper", [spy, S("msr_bench.py"), "--model", "autohyper", "--corpus", one,
                                   "--no-gate", "--timeout", str(t), "--out",
                                   os.path.join(res, "MSR", "msr_autohyper.csv")],
                 os.path.join(res, "cwd_autohyper"), log)
             if "hyperqb" not in why:
-                run("msr hyperqb", [py, S("msr_bench.py"), "--model", "hyperqb", "--corpus", one,
+                run("msr hyperqb", [spy, S("msr_bench.py"), "--model", "hyperqb", "--corpus", one,
                                     "--no-gate", "--timeout", str(t), "--out",
                                     os.path.join(res, "MSR", "msr_hyperqb.csv")],
                     os.path.join(res, "cwd_hyperqb"), log)

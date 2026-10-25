@@ -20,7 +20,7 @@
 #   ~/micromamba/envs/explainhyper       python 3.11 + spot 2.11.6 + ExplainHyper's packages
 #   ~/.dotnet                            .NET 8 runtime (AutoHyper), .NET 7 SDK (CATS)
 #   ~/.rustup, ~/.cargo                  Rust 1.97.1 (HyperQB's build only)
-#   external_tools/HyperQB/...           the HyperQB binary
+#   external_tools/HyperQB/...           the HyperQB binary (crates: external_tools/HyperQB.Cargo.lock)
 #   bench/tools/{CATS,CORP,ExplainHyper} the baselines, at pinned commits
 #   .env/bin                             links to autfilt, ltl2tgba, ..., dot
 #   env.sh                               the environment for the commands in README.md
@@ -185,13 +185,17 @@ if [ "$HYPERQB" = 1 ]; then
             net git -C "$src" fetch -q --depth 1 origin "$HYPERQB_REV"
             run git -C "$src" checkout -q FETCH_HEAD
         fi
+        # HyperQB does not commit its Cargo.lock, so a plain build takes the newest
+        # crate versions of the day; these are the ones of the build that produced
+        # the paper's results (a newer set changes some answers), used --locked
+        cp "$ROOT/external_tools/HyperQB.Cargo.lock" "$src/Cargo.lock"
         # bindgen (z3-sys) parses z3.h with conda's libclang, and asks a clang
         # executable for the header search path: conda's too (CLANG_PATH), not
         # whatever clang is on PATH -- the TACAS VM has Ubuntu's, whose builtin
         # headers shadow conda's and leave uint64_t undefined
         ( cd "$src" && Z3_SYS_Z3_HEADER="$HQ_ENV/include/z3.h" LIBRARY_PATH="$HQ_ENV/lib" \
               LD_LIBRARY_PATH="$HQ_ENV/lib" LIBCLANG_PATH="$HQ_ENV/lib" CLANG_PATH="$HQ_ENV/bin/clang" \
-              "$HOME/.cargo/bin/cargo" "+$RUST_VERSION" build --release ) >> "$LOG" 2>&1 \
+              "$HOME/.cargo/bin/cargo" "+$RUST_VERSION" build --release --locked ) >> "$LOG" 2>&1 \
             || die "HyperQB build failed"
         mkdir -p "$(dirname "$HQ_BIN")"
         cp "$src/target/release/HyperRUSTY" "$HQ_BIN"
