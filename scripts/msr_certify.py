@@ -54,12 +54,12 @@ Verified against the benchmark's independent AutoHyper checker
 RUNNING WITHOUT spot IN-PROCESS
 -------------------------------
 tracemsr runs on the system python; spot usually lives in a micromamba
-environment.  `certify()` shells out to $SPOT_ENV_PY when the bindings are not
-importable here, the same trick smv_formulas.normalize_effect uses.  If neither
+environment.  `certify()` and `shrink()` shell out to $SPOT_ENV_PY when the
+bindings are not importable here, the same trick smv_formulas.normalize_effect uses.  If neither
 is available it returns UNAVAILABLE, and the caller must not upgrade a bounded
 verdict on its own.
 
-That subprocess is the ONLY process this module can start, it is a leaf (spot
+That subprocess is the ONLY kind of process this module can start, it is a leaf (spot
 runs in-process there; converter and smv_builder shell out to nothing), and it
 goes through proc_guard so a timeout or a Ctrl-C takes it down with everything
 else -- see _certify_via_spot_env.  Under the benchmark, which already runs on
@@ -347,12 +347,13 @@ def _certify_via_spot_env(path, tau_prefix, tau_cycle, want_minimal, timeout):
 
 
 # --------------------------------------------------------------------------- #
-def shrink(path, tau_prefix, tau_cycle):
+def shrink(path, tau_prefix, tau_cycle, timeout=120):
     """Drop pins from a SUFFICIENT R while it stays sufficient.
 
-    Needs spot in-process (it is |R| emptiness checks in a loop, which is not
-    worth a subprocess each); returns R unchanged when the bindings are not
-    importable here.
+    Runs in spot: in-process when the bindings are importable here, otherwise
+    the whole loop in one $SPOT_ENV_PY subprocess, like certify(). Returns R
+    unchanged only when neither is available. (Before 2026-10-25 it skipped the
+    subprocess, so under a python without spot a reducible R stayed SAT_SR.)
 
     Greedy, one whole pin at a time (a loop pin is one pin: it recurs), so it
     terminates in |R| checks and the result is still a lasso the pipeline can
@@ -363,7 +364,11 @@ def shrink(path, tau_prefix, tau_cycle):
     try:
         import spot                                        # noqa: F401
     except ImportError:
-        return [set(s) for s in tau_prefix], [set(s) for s in tau_cycle]
+        return _shrink_via_spot_env(path, tau_prefix, tau_cycle, timeout)
+    return _shrink_here(path, tau_prefix, tau_cycle)
+
+
+def _shrink_here(path, tau_prefix, tau_cycle):
     tp = [set(s) for s in tau_prefix]
     tc = [set(s) for s in tau_cycle]
     for block, t, ap in [("p", t, a) for t, s in enumerate(tp) for a in sorted(s)] + \
@@ -373,6 +378,32 @@ def shrink(path, tau_prefix, tau_cycle):
         if not sufficient_here(path, tp, tc):
             target.add(ap)
     return tp, tc
+
+
+def _shrink_via_spot_env(path, tau_prefix, tau_cycle, timeout):
+    unchanged = [set(s) for s in tau_prefix], [set(s) for s in tau_cycle]
+    if not os.path.exists(SPOT_ENV_PY):
+        return unchanged
+    payload = json.dumps({"path": path,
+                          "tau_prefix": [sorted(s) for s in tau_prefix],
+                          "tau_cycle": [sorted(s) for s in tau_cycle]})
+    code = ("import sys, json; sys.path.insert(0, %r); import msr_certify as m; "
+            "a = json.loads(sys.argv[1]); "
+            "tp, tc = m._shrink_here(a['path'], "
+            "[set(s) for s in a['tau_prefix']], [set(s) for s in a['tau_cycle']]); "
+            "print(json.dumps([[sorted(s) for s in tp], [sorted(s) for s in tc]]))" % _HERE)
+    try:
+        # the same leaf subprocess as _certify_via_spot_env, for the same reasons
+        r = proc_guard.run([SPOT_ENV_PY, "-c", code, payload], timeout=timeout)
+    except (OSError, subprocess.SubprocessError):
+        return unchanged
+    if r.returncode != 0 or not r.stdout.strip():
+        return unchanged
+    try:
+        tp, tc = json.loads(r.stdout.strip().splitlines()[-1])
+    except ValueError:
+        return unchanged
+    return [set(s) for s in tp], [set(s) for s in tc]
 
 
 # --------------------------------------------------------------------------- #
