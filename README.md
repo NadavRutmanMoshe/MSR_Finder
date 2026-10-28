@@ -138,7 +138,7 @@ How long each part takes, and what it needs:
 
 - Smoke test: about 1 minute.
 - Quick test: about 10 minutes.
-- Re-running the datasets of the paper: from 1 minute to 42 hours each (see [Reproducing the paper](#reproducing-the-paper)); all of them, about 45 hours, and 16 GB of RAM (a few instances use up to 6 GB). With the subset of the benchmark, about 4.5 hours.
+- Re-running the datasets of the paper: each dataset takes a different time (see [Reproducing the paper](#reproducing-the-paper)). All of them take about 45 hours and need 16 GB of RAM (a few instances use up to 6 GB); with the subset of the benchmark, about 4.5 hours.
 
 The tools run one at a time, on one instance at a time, so more cores don't make it faster. The times are from our laptop; expect more in a VM.
 
