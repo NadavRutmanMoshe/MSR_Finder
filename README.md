@@ -201,8 +201,6 @@ To generate from this data:
   "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun fig_data_msr_size
   ```
 
-After a full run, `"$SPOT_ENV_PY" bench/paper/check_text.py --src rerun` also checks the 37 numbers quoted in the text of the paper.
-
 #### Dataset `cats-check`: Fig. 7
 
 To regenerate the data, run MTSR and CATS on the same candidate cause, on the subset of 83 instances (about 12 minutes):
@@ -280,7 +278,7 @@ To generate from this data:
   "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_corpcurated
   ```
 
-CORP does not minimize its automata, so their size can vary from run to run (on `full_4_GF`: 284 states in the paper, sometimes 286).
+CORP does not minimize its automata, so their size can vary from run to run and from machine to machine (on `full_4_GF`, the paper reports 284 states; we also got 286 on the same machine).
 
 #### Dataset `ltl`: Table 8
 
@@ -316,6 +314,8 @@ cp examples/*_mtsr.png /shared/
 #### All datasets at once
 
 Without `--dataset`, `bench/run.sh` runs all six datasets one after the other: `bench/run.sh` for the subset (about 4.5 hours), or `bench/run.sh --full` for everything (about 45 hours). Then `"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun` builds all the tables and figures, and `python3 bench/scripts/compare_runs.py` compares the answers instance by instance.
+
+After a full run of all datasets, `"$SPOT_ENV_PY" bench/paper/check_text.py --src rerun` also checks the 37 numbers quoted in the text of the paper.
 
 How the benchmark itself was generated is described in `bench/README.md`.
 
