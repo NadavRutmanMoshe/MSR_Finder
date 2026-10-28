@@ -387,7 +387,7 @@ def from_rerun(src, out, names):
             print()
         else:
             o_rec, o_you = os.path.join(out, "recorded"), os.path.join(out, "yours")
-            print(f"[{what}] re-run on part of the instances ({sizes}); each float over "
+            print(f"[{what}] re-run on part of the instances ({sizes}); each table and figure over "
                   f"those instances, from our results and from yours:")
             for x in notes:
                 print(f"  note: {x}")
@@ -398,7 +398,7 @@ def from_rerun(src, out, names):
         worst = max(worst, w)
     print("The tables and figures: tables/ and figures/ (a dataset re-run in full) or yours/ "
           f"next to recorded/ (in part), under {out}")
-    print("Times depend on the machine, so a float that prints a time can differ there; "
+    print("Times depend on the machine, so a table that prints times can differ there; "
           "the counts and sizes should not.")
     return worst
 
@@ -421,7 +421,7 @@ def main():
     names = a.names or list(F)
     for n in names:
         if n not in F:
-            sys.exit(f"unknown float {n}; see --list")
+            sys.exit(f"unknown table or figure {n}; see --list")
 
     if src == os.path.abspath(os.path.join(BENCH, "results")):
         print(f"reading  {src}\nwriting  {out}\n")

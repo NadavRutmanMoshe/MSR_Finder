@@ -33,7 +33,7 @@ if ( cd "$ROOT/bench/paper" && "$SPY" make_tables.py --out "$WORK/tables" ) > "$
     grep -E '^  (tab|fig)_' "$WORK/tables.txt"
     ok "every regenerated table and figure has the paper's numbers"
 else
-    cat "$WORK/tables.txt"; bad "make_tables.py: some float differs or failed"
+    cat "$WORK/tables.txt"; bad "make_tables.py: some table or figure differs or failed"
 fi
 if ( cd "$ROOT/bench/paper" && "$SPY" check_text.py ) > "$WORK/text.txt" 2>&1; then
     ok "$(tail -1 "$WORK/text.txt")"

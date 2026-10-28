@@ -130,7 +130,7 @@ We tested the artifact on:
 
 - **Our laptop** (Ubuntu 22.04 under WSL2, Intel i7-8565U, 4 cores, 16 GB RAM): every result in the paper was measured here.
 - **The `Dockerfile`** (a clean Ubuntu 26.04 container): install and smoke test, on amd64 and on arm64 (emulated).
-- **The TACAS 2027 VM**, amd64, on a clean laptop: install, smoke test and most of the subset re-run (94 of 100 instances).
+- **The TACAS 2027 VM**, amd64, on a clean laptop: install, smoke test, quick test and most of the subset re-run (94 of 100 instances).
 - **The TACAS 2027 VM**, arm64, on a Mac with an Apple M3 Max (36 GB RAM): install and smoke test.
 
 How long each part takes, and what it needs:
