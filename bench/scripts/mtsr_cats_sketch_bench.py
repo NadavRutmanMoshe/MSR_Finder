@@ -240,6 +240,8 @@ def main():
                     default=os.path.join(BL.RESULTS, "MTSR_CATS_sketch"))
     ap.add_argument('--timeout', type=int, default=120)
     ap.add_argument('--limit', type=int, default=0)
+    ap.add_argument('--every', type=int, default=1,
+                    help="every n-th instance in name order (the quick test: 10)")
     ap.add_argument('--workdir', default=None)
     args = ap.parse_args()
     BL.install_sigint()
@@ -251,6 +253,7 @@ def main():
             index = {r['name']: r for r in csv.DictReader(f)}
 
     cats_files = sorted(glob.glob(os.path.join(args.bench, "cats", "*.txt")))
+    cats_files = cats_files[::args.every]
     if args.limit:
         cats_files = cats_files[:args.limit]
 

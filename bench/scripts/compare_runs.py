@@ -16,13 +16,15 @@ compares the ANSWER, never the time:
     CATS check                 the candidate (must be identical), CATS's verdict
     CATS sketch                status, the found cause's size, agreement with the MTSR
     handcrafted (Tables 4, 6)  as above, per named instance
+    LTL search (Table 8)       per MTSR: its size, counter-freeness, the smallest formula's size
 
 Each comparison is one of
     same       the same answer
     timeout    one side ran out of time or memory: it timed out, or it used the
                whole time limit and returned what it had by then (HyperQB falls
-               back from an MSR to a sufficient reason). A question of machine
-               speed, not of the answer; both times shown (-v lists them)
+               back from an MSR to a sufficient reason; the LTL search reached a
+               different formula size within its time budget). A question of
+               machine speed, not of the answer; both times shown (-v lists them)
     DIFFERENT  both answered, and the answers differ
 
 and the times are summarized as the ratio re-run / recorded (median per tool),
@@ -59,6 +61,7 @@ FIXED = [
      "mtsr_s", "Table 6 (CORP arbiters)"),
     ("handcrafted/cats_handcrafted.csv", "label", ["cats_status", "mtsr_status", "mtsr_states", "verdict"],
      "cats_s", "Table 4 (CATS hand-crafted)"),
+    ("stats/mtsr_ltl.csv", "key", ["states", "counter_free", "ltl_size"], None, "Table 8 (LTL search)"),
 ]
 TIMEOUTISH = ("TIMEOUT", "MO", "MEMOUT", "UNKNOWN_BOUNDED")
 
@@ -92,6 +95,8 @@ def compare(rec, new, cols, tcol, limit=None):
     if a == b:
         return "same", a, b
     if timed_out(rec) or timed_out(new):
+        return "timeout", a, b
+    if rec.get("search_bound", "") != new.get("search_bound", ""):   # LTL search budget
         return "timeout", a, b
     if limit and any((num(r.get(tcol)) or 0) >= limit for r in (rec, new)):
         return "timeout", a, b

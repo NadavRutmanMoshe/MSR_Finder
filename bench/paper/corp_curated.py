@@ -416,12 +416,12 @@ def mtsr_ltl_of(hoa_path, inputs):
     return ""
 
 
-def run(timeout, only=None, with_msr=True):
+def run(timeout, only=None, with_msr=True, exclude=()):
     os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
     work = os.path.join(paths.OUT, "work", "corp_curated")
     rows = []
     for key, fam, n, effect, tex in catalogue():
-        if only and only not in key:
+        if only and only not in key or key in exclude:
             continue
         path = os.path.join(INST_DIR, key + ".txt")
         data = CC.parse_instance(path)
@@ -667,6 +667,7 @@ def main():
     ap.add_argument("--table", action="store_true")
     ap.add_argument("--timeout", type=int, default=120)
     ap.add_argument("--only")
+    ap.add_argument("--exclude", nargs="+", default=[], help="skip these instances (the quick test)")
     ap.add_argument("--no-msr", action="store_true",
                     help="skip the MSR column (Hadar, 2026-10-05: not needed here)")
     a = ap.parse_args()
@@ -677,7 +678,7 @@ def main():
     if a.run:
         # The table has no MSR column (Hadar, 2026-10-05), and msr_cause.py is
         # not shipped: the artifact always runs without it.
-        run(a.timeout, a.only, with_msr=False)
+        run(a.timeout, a.only, with_msr=False, exclude=a.exclude)
     if a.table:
         table()
     if not (a.gen or a.gen_orig or a.run or a.table):

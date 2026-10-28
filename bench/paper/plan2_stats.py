@@ -168,7 +168,9 @@ def build_view():
         w.writeheader()
         w.writerows(out)
     for f in ("extra_nexts.csv", "mtsr_ltl.csv", "mtsr_ltl_meta.json", "tau_shape_rerun.csv"):
-        link(os.path.join(OLD_STATS, f), os.path.join(STATS, f))
+        # BENCH_SRC/stats when it has them (make_tables puts a re-run's LTL search there)
+        own = os.path.join(SRC, "stats", f)
+        link(own if os.path.exists(own) else os.path.join(OLD_STATS, f), os.path.join(STATS, f))
     return {r["instance"]: r for r in out}, g, systems3
 
 

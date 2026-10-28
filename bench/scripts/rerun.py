@@ -5,10 +5,11 @@ measured: every tool on one instance before moving on to the next, so that all
 tools see the same machine state.
 
     python3 scripts/rerun.py --plan             # what would run, and how long it took us
+    python3 scripts/rerun.py --quick            # a few instances of every dataset (~10 min)
     python3 scripts/rerun.py                    # the subset (about 1/10, 4.5 h on our laptop)
     python3 scripts/rerun.py --full             # all 987 instances (~45 h)
+    python3 scripts/rerun.py --dataset cats-sketch      # one dataset (see below)
     python3 scripts/rerun.py --instances arbiter2__e09 TorcsGearing__e02
-    python3 scripts/rerun.py --only msr,mtsr-corp
     python3 scripts/rerun.py --corpus my_folder   # your own instances (see below)
 
 Run from bench/ with the system python3; each tool is started under the
@@ -16,7 +17,7 @@ interpreter it needs (bench_lib: SPOT_PY, EXPLAIN_PY). Results go to
 bench/rerun/ (--out to change) in the same layout as bench/results/, so
 
     python3 scripts/compare_runs.py               # instance by instance against the recorded rows
-    ~/micromamba/envs/spot/bin/python3 paper/make_tables.py --src rerun --subset
+    ~/micromamba/envs/spot/bin/python3 paper/make_tables.py --src rerun
 
 work on it directly. The shipped results are never written to.
 
@@ -33,27 +34,49 @@ Stoppable and resumable: Ctrl-C at any point, then the same command again.
 Every driver appends one row per instance to its CSV and skips the instances
 it already has, so a stopped run loses at most the instance in flight.
 
-PER INSTANCE, IN THIS ORDER (as for the recorded runs)
-------------------------------------------------------
-    msr         MSR with AutoHyper, then with HyperQB          msr_bench.py
-    explainhyper  ExplainHyper, the tool of [11]               explainhyper_bench.py
-    mtsr-corp   the MTSR, then CORP                            mtsr_corp_bench.py
-    cats-check  the MTSR --check and CATS --check on the       mtsr_cats_check_bench.py
-                same random candidate (|IP| <= 3 only)
-Timeout: 120 s per tool per instance for |IP| <= 3, 300 s for |IP| = 4.
+DATASETS
+--------
+Every table and figure of the paper is made from exactly one dataset
+(Table 7 sums up three comparisons: its first two rows come from `main`, the
+third from `cats-sketch`). --dataset picks some (comma-separated; default all):
 
-After the corpora, two fixed sets that do not depend on the corpus:
-    cats-sketch  MTSR vs CATS sketch, CATS's X^k error family  mtsr_cats_sketch_bench.py
-    handcrafted  CORP's arbiters (Table 6) and CATS's          paper/corp_curated.py
-                 hand-crafted instances (Table 4)              paper/cats_handcrafted.py
+    main             the 987 instances: per instance, in this order (as for the
+                     recorded runs)                                  Tables 1, 2, 3, 7
+                       MSR with AutoHyper, then with HyperQB      msr_bench.py      Figs. 6, 9, 10
+                       ExplainHyper, the tool of [11]             explainhyper_bench.py
+                       the MTSR, then CORP                        mtsr_corp_bench.py
+    cats-check       the 823 instances with |IP| <= 3: the MTSR --check
+                     and CATS --check on the same random candidate
+                                              mtsr_cats_check_bench.py    Fig. 7
+    cats-sketch      MTSR vs CATS sketch on CATS's X^k error family (100)
+                                              mtsr_cats_sketch_bench.py   Tables 5, 7
+    cats-handcrafted CATS's hand-crafted instances (11)
+                                              paper/cats_handcrafted.py   Table 4
+    corp-arbiters    the arbiters of CORP's Table 1 (15)
+                                              paper/corp_curated.py       Table 6
+    ltl              the LTL search over every MTSR of `main`
+                                              paper/ltl_rerun_catsrl.py   Table 8
+
+Timeout: 120 s per tool per instance for |IP| <= 3, 300 s for |IP| = 4.
+The parts of `main` can also be named on their own: msr, explainhyper,
+mtsr-corp (handcrafted = cats-handcrafted + corp-arbiters).
 
 THE SUBSET
 ----------
 Every 10th instance of each |IP| class, in name order (83 of 823 with
-|IP| <= 3, 17 of 164 with |IP| = 4), plus all of cats-sketch and handcrafted. Systematic
+|IP| <= 3, 17 of 164 with |IP| = 4), plus the other datasets whole. Systematic
 rather than random, so it spreads over the systems and is the same for
 everyone. --plan prints how long these instances took on the machine of the
 paper; budget more on a slower machine or in a VM.
+
+THE QUICK TEST
+--------------
+--quick: every dataset on a few instances, about 10 minutes. The 16 instances
+of QUICK below (4, 5, 5 and 2 with |IP| = 1, 2, 3, 4; different systems and
+different answers, and every tool finished them well within its timeout, so a
+slower machine gives the same answers), every 10th CATS sketch instance, the
+hand-crafted instances of CATS and CORP (but full_4_GF), and the LTL search
+over the MTSRs of the 16. 8 minutes on the machine of the paper.
 """
 import argparse
 import csv
@@ -75,9 +98,21 @@ import bench_lib as BL  # noqa: E402
 CORPORA = (("ip3", os.path.join(BENCH, "CATS_RL_ip3"), 120),
            ("ip4", os.path.join(BENCH, "CATS_RL_ip4"), 300))
 RECORDED = os.path.join(BENCH, "results")
-GROUPS = ("msr", "explainhyper", "mtsr-corp", "cats-check", "cats-sketch", "handcrafted")
-OLD_NAMES = {"eh": "explainhyper", "sketch": "cats-sketch", "curated": "handcrafted"}
+STEPS = ("msr", "explainhyper", "mtsr-corp", "cats-check", "cats-sketch", "cats-handcrafted",
+         "corp-arbiters", "ltl")
+DATASETS = ("main", "cats-check", "cats-sketch", "cats-handcrafted", "corp-arbiters", "ltl")
+ALIASES = {"main": ("msr", "explainhyper", "mtsr-corp"),
+           "handcrafted": ("cats-handcrafted", "corp-arbiters"),
+           "eh": ("explainhyper",), "sketch": ("cats-sketch",), "curated": ("corp-arbiters",)}
 STRIDE = 10
+# --quick: see THE QUICK TEST above
+QUICK = ("example101__e02", "lilydemo09__e05", "ltl2dba_U11__e09", "ltl2dba_Q1__e03",
+         "TorcsAccelerating__e03", "ltl2dba_alpha4__e02", "ltl2dpa16__e02", "ltl2dba_beta1__e04",
+         "lift2__e02", "lilydemo24__e06", "LightsMin_6bea956e__e05", "ltl2dba_U13__e00",
+         "ltl2dba09__e00", "ltl2dpa06__e09", "Gamemodule__e07", "lilydemo21__e06")
+# minutes on the machine of the paper, for --plan
+FIXED_MIN = {"cats-sketch": 20, "cats-handcrafted": 1, "corp-arbiters": 3, "ltl": 6}
+QUICK_MIN = {"cats-sketch": 2, "cats-handcrafted": 1, "corp-arbiters": 1, "ltl": 1}
 
 
 # --------------------------------------------------------------------------- #
@@ -175,12 +210,12 @@ def summary(res, secs):
 
 
 # --------------------------------------------------------------------------- #
-def run(label, cmd, cwd, log):
+def run(label, cmd, cwd, log, env=None):
     t0 = time.monotonic()
     with open(log, "a") as lf:
         lf.write(f"\n== {label}  {time.strftime('%F %T')}\n$ {' '.join(cmd)}\n")
         lf.flush()
-        rc = subprocess.call(cmd, cwd=cwd, stdout=lf, stderr=subprocess.STDOUT)
+        rc = subprocess.call(cmd, cwd=cwd, stdout=lf, stderr=subprocess.STDOUT, env=env)
     if rc != 0:
         print(f"      [{label}] exit {rc} -- see {log}")
     return time.monotonic() - t0
@@ -189,8 +224,10 @@ def run(label, cmd, cwd, log):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--full", action="store_true", help="all instances, not the subset")
+    ap.add_argument("--quick", action="store_true", help="a few instances of every dataset (~10 min)")
     ap.add_argument("--instances", nargs="+", metavar="NAME", help="only these instances")
-    ap.add_argument("--only", default=",".join(GROUPS), help="comma-separated groups (default: all)")
+    ap.add_argument("--dataset", "--only", dest="only", default=",".join(DATASETS),
+                    help="comma-separated datasets (default: all): " + ", ".join(DATASETS))
     ap.add_argument("--corpus", default="both", metavar="{ip3,ip4,both,DIR}",
                     help="one of the paper's corpora, or a folder of your own instances")
     ap.add_argument("--timeout", type=int, default=120, help="per tool, for --corpus DIR (default 120 s)")
@@ -198,10 +235,16 @@ def main():
     ap.add_argument("--out", default=RERUN)
     ap.add_argument("--plan", action="store_true", help="print the plan and exit")
     a = ap.parse_args()
-    groups = [OLD_NAMES.get(g.strip(), g.strip()) for g in a.only.split(",") if g.strip()]
-    for g in groups:
-        if g not in GROUPS:
-            sys.exit(f"unknown group {g}; groups: {', '.join(GROUPS)}")
+    groups = []
+    for g in (g.strip() for g in a.only.split(",") if g.strip()):
+        for x in ALIASES.get(g, (g,)):
+            if x not in STEPS:
+                sys.exit(f"unknown dataset {g}; datasets: {', '.join(DATASETS)}")
+            if x not in groups:
+                groups.append(x)
+    groups.sort(key=STEPS.index)
+    if a.quick and (a.full or a.instances):
+        sys.exit("--quick is its own selection; drop --full / --instances")
     out = os.path.abspath(a.out)
     own = a.corpus not in ("ip3", "ip4", "both")
     if own:
@@ -210,11 +253,13 @@ def main():
             sys.exit(f"--corpus: {a.corpus} is neither ip3, ip4, both nor a folder")
         tag = os.path.basename(folder)
         sel = selection(True, set(a.instances or []), ((tag, folder, a.timeout),))
-        groups = [g for g in groups if g not in ("cats-sketch", "handcrafted")]
+        groups = [g for g in groups if g in ("msr", "explainhyper", "mtsr-corp", "cats-check")]
     else:
-        sel = selection(a.full, set(a.instances or []))
+        sel = selection(a.full, set(QUICK if a.quick else a.instances or []))
         if a.corpus != "both":
             sel = [s for s in sel if s[0] == a.corpus]
+        if not set(groups) & {"msr", "explainhyper", "mtsr-corp", "cats-check"}:
+            sel = []                 # only datasets that are not per instance
     why = available()
 
     if own:
@@ -224,10 +269,13 @@ def main():
     else:
         n3, n4 = sum(s[0] == "ip3" for s in sel), sum(s[0] == "ip4" for s in sel)
         est = recorded_seconds(sel, groups)
-        if not a.instances:          # the fixed sets: ~0.3 h of cats-sketch, ~10 min handcrafted
-            est += 0.3 * 3600 * ("cats-sketch" in groups) + 600 * ("handcrafted" in groups)
-        print(f"instances: {n3} with |IP| <= 3 (120 s), {n4} with |IP| = 4 (300 s); groups: {', '.join(groups)}")
-        print(f"on the machine of the paper this took {est / 3600:.1f} h (expect more in a VM)")
+        if not a.instances:          # the datasets that are not per instance
+            est += 60 * sum((QUICK_MIN if a.quick else FIXED_MIN).get(g, 0) for g in groups)
+        if sel:
+            print(f"instances: {n3} with |IP| <= 3 (120 s), {n4} with |IP| = 4 (300 s)")
+        print(f"runs: {', '.join(groups)}")
+        took = f"{est / 3600:.1f} h" if est >= 3600 else f"{max(1, round(est / 60))} min"
+        print(f"on the machine of the paper this took {took} (expect more in a VM)")
     for k, v in why.items():
         print(f"  not available: {k}: {v}")
     print(f"results: {os.path.join(out, tag) if own else out}")
@@ -291,23 +339,42 @@ def main():
                                "--timeout", str(t), "-o", os.path.join(res, "MTSR_CATS_check")],
                 os.path.join(res, "MTSR_CATS_check"), log)
 
+    # the datasets that are not per instance (each skipped once its results exist)
     if "cats-sketch" in groups and not a.instances and "cats" not in why:
-        print("[cats-sketch] MTSR vs CATS sketch, 100 instances", flush=True)
+        n = "10" if a.quick else "100"
+        print(f"[cats-sketch] MTSR vs CATS sketch, {n} instances", flush=True)
         run("cats-sketch", [spy, S("mtsr_cats_sketch_bench.py"), BL.NEXTS, "--timeout", "120",
-                       "-o", os.path.join(out, "MTSR_CATS_sketch")], HERE, log)
-    if "handcrafted" in groups and not a.instances:
-        os.makedirs(os.path.join(out, "handcrafted"), exist_ok=True)
-        env = dict(os.environ, BENCH_SRC=out, PAPER_OUT=os.path.join(out, "paper_out"))
-        pdir = os.path.join(BENCH, "paper")
-        if "corp" not in why:
-            print("[handcrafted] CORP's arbiters (Table 6)", flush=True)
-            for extra in (["--timeout", "120"], ["--timeout", "600", "--only", "full_4_GF"]):
-                subprocess.call([spy, os.path.join(pdir, "corp_curated.py"), "--run"] + extra,
-                                cwd=pdir, env=env, stdout=open(log, "a"), stderr=subprocess.STDOUT)
-        if "cats" not in why:
-            print("[handcrafted] CATS's hand-crafted instances (Table 4)", flush=True)
-            subprocess.call([spy, os.path.join(pdir, "cats_handcrafted.py"), "--run", "--timeout", "120"],
-                            cwd=pdir, env=env, stdout=open(log, "a"), stderr=subprocess.STDOUT)
+                            "--every", "10" if a.quick else "1",
+                            "-o", os.path.join(out, "MTSR_CATS_sketch")], HERE, log)
+    pdir = os.path.join(BENCH, "paper")
+    env = dict(os.environ, BENCH_SRC=out, PAPER_OUT=os.path.join(out, "paper_out"))
+    hand = os.path.join(out, "handcrafted")
+    if "corp-arbiters" in groups and not a.instances and "corp" not in why:
+        if os.path.exists(os.path.join(hand, "corp_curated.csv")):
+            print("[corp-arbiters] already done", flush=True)
+        else:
+            print("[corp-arbiters] CORP's arbiters (Table 6)", flush=True)
+            os.makedirs(hand, exist_ok=True)
+            # full_4_GF again with 600 s, as recorded; the quick test leaves it out
+            # (the heaviest: MTSR runs into its 6 GB memory cap after about a minute)
+            for extra in ([["--timeout", "120", "--exclude", "full_4_GF"]] if a.quick else
+                          [["--timeout", "120"], ["--timeout", "600", "--only", "full_4_GF"]]):
+                run("corp-arbiters", [spy, os.path.join(pdir, "corp_curated.py"), "--run"] + extra,
+                    pdir, log, env)
+    if "cats-handcrafted" in groups and not a.instances and "cats" not in why:
+        if os.path.exists(os.path.join(hand, "cats_handcrafted.csv")):
+            print("[cats-handcrafted] already done", flush=True)
+        else:
+            print("[cats-handcrafted] CATS's hand-crafted instances (Table 4)", flush=True)
+            os.makedirs(hand, exist_ok=True)
+            run("cats-handcrafted", [spy, os.path.join(pdir, "cats_handcrafted.py"), "--run",
+                                     "--timeout", "120"], pdir, log, env)
+    if "ltl" in groups and not a.instances:
+        # the MTSRs of our recorded `main` run, so that this dataset stands alone
+        print("[ltl] the LTL search over the MTSRs (Table 8; uses 4 cores)", flush=True)
+        run("ltl", [spy, os.path.join(pdir, "ltl_rerun_catsrl.py"), "--max-size", "9", "--budget", "240"]
+            + (["--instances", *QUICK] if a.quick else []),
+            pdir, log, dict(os.environ, LTL_OUT=os.path.join(out, "stats")))
     shutil.rmtree(work, ignore_errors=True)
     if own:
         summary(os.path.join(out, tag), time.monotonic() - started)
@@ -315,7 +382,7 @@ def main():
     src = "rerun" if out == os.path.abspath(RERUN) else out
     print(f"\ndone in {(time.monotonic() - started) / 3600:.1f} h.  Next, from the artifact folder:\n"
           f"  python3 bench/scripts/compare_runs.py" + ("" if src == "rerun" else f" --rerun {out}") + "\n"
-          f'  "$SPOT_ENV_PY" bench/paper/make_tables.py --src {src} --subset')
+          f'  "$SPOT_ENV_PY" bench/paper/make_tables.py --src {src}')
 
 
 if __name__ == "__main__":
