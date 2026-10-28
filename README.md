@@ -153,7 +153,7 @@ Every table and figure of the evaluation (Section 5 and Appendix D) is made from
 | `cats-sketch` | MTSR and CATS sketching, on CATS's 100 instances | 20 min | Tables 5, 7 |
 | `cats-handcrafted` | MTSR and CATS on CATS's 11 hand-crafted instances | 1 min | Table 4 |
 | `corp-arbiters` | MTSR and CORP on the 15 arbiters of CORP's paper | 3 min | Table 6 |
-| `ltl` | the search for an LTL formula equivalent to each MTSR | 6 min (4 cores) | Table 8 |
+| `ltl` | the search for an LTL formula equivalent to each MTSR | 6 min | Table 8 |
 
 All commands are run from the artifact folder. The results go to `bench/rerun/` (in Docker: `shared/rerun/` on your machine); our recorded results, in `bench/results/`, are never changed. A run can be stopped at any point with Ctrl-C: running the same command again continues where it stopped. Keep the machine from going to sleep while it runs.
 
@@ -288,7 +288,7 @@ On `full_4_GF`, CORP's answer varies from run to run: an automaton of 284 states
 
 #### Dataset `ltl`: Table 8
 
-To regenerate the data of Table 8, build the MTSR of every benchmark instance and search for the smallest equivalent LTL formula, up to size 9 (about 6 minutes, on 4 cores):
+To regenerate the data of Table 8, build the MTSR of every benchmark instance and search for the smallest equivalent LTL formula, up to size 9 (about 6 minutes):
 
 ```
 bench/run.sh --dataset ltl

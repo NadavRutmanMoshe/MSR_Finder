@@ -51,7 +51,7 @@ A re-run (`bench/run.sh`) writes the same files, in the same layout, to `bench/r
 
 ## The offline analysis
 
-**Table 8** (which MTSRs can be written as a small LTL formula) needs more than the benchmark runs. For each MTSR of the benchmark, it searches all LTL formulas up to size 9 for one with the same language (about 6 minutes, on 4 cores). This is dataset `ltl` (`bench/run.sh --dataset ltl`, which runs `bench/paper/ltl_rerun_catsrl.py --max-size 9 --budget 240`). The result goes to `rerun/stats/mtsr_ltl.csv`; the recorded one is `results/stats/mtsr_ltl.csv`.
+**Table 8** (which MTSRs can be written as a small LTL formula) needs more than the benchmark runs. For each MTSR of the benchmark, it searches all LTL formulas up to size 9 for one with the same language (about 6 minutes). This is dataset `ltl` (`bench/run.sh --dataset ltl`, which runs `bench/paper/ltl_rerun_catsrl.py --max-size 9 --budget 240`). The result goes to `rerun/stats/mtsr_ltl.csv`; the recorded one is `results/stats/mtsr_ltl.csv`.
 
 ## More
 
