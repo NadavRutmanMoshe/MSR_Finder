@@ -38,7 +38,7 @@ We tested the artifact on the TACAS 2027 VM, in VirtualBox. To set it up:
 
    or download it on your machine and then copy it in through a VirtualBox shared folder.
 
-### Setup (about 10 minutes; about 45 minutes on arm64)
+### Setup (about 10 minutes; longer on arm64, where spot is compiled from source)
 
 Unzip the artifact (or extract it with the file manager), open a terminal, and go into its folder (the one that contains `install.sh`):
 
@@ -129,8 +129,7 @@ The source code is also on GitHub: https://github.com/NadavRutmanMoshe/MSR_Finde
 We tested the artifact on:
 
 - **Our laptop** (Ubuntu 22.04 under WSL2, Intel i7-8565U, 4 cores, 16 GB RAM): every result in the paper was measured here.
-- **A clean Ubuntu 26.04 container** (the `Dockerfile`), amd64: install and smoke test.
-- **The same container on arm64** (emulated): install and smoke test.
+- **The `Dockerfile`** (a clean Ubuntu 26.04 container): install and smoke test, on amd64 and on arm64 (emulated).
 - **The TACAS 2027 VM**, amd64, on a clean laptop: install, smoke test and most of the subset re-run (94 of 100 instances).
 - **The TACAS 2027 VM**, arm64, on a Mac with an Apple M3 Max (36 GB RAM): install and smoke test.
 
