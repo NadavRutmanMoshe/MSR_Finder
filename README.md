@@ -157,64 +157,55 @@ Every table and figure of the evaluation (Section 5 and Appendix D) is made from
 
 All commands are run from the artifact folder. The results go to `bench/rerun/` (in Docker: `shared/rerun/` on your machine); our recorded results, in `bench/results/`, are never changed. A run can be stopped at any point with Ctrl-C: running the same command again continues where it stopped. Keep the machine from going to sleep while it runs.
 
-How to read the output of `make_tables.py --src rerun`:
+How to read `make_tables.py --src rerun`:
 
-- **A dataset you re-ran in full:** each table and figure is compared with the submitted paper, and prints `SAME` if its numbers are exactly those in the paper. The new files go to `bench/paper/out/tables/` and `bench/paper/out/figures/` (in Docker: `shared/tables/`).
-- **A dataset you re-ran in part** (the subset, the quick test, or a run you stopped): each table and figure is built over the instances you re-ran, once from our results (`bench/paper/out/recorded/`) and once from yours (`bench/paper/out/yours/`), and prints `SAME` if the two agree.
+- If you re-ran a whole dataset, each table is compared with the paper.
+- If you re-ran only part of it (the subset, the quick test, or a stopped run), each table is compared with the same table built from our results, over the same instances.
 
-Running times differ from machine to machine, so a table that prints times shows `SAME except times` when everything else agrees. The counts and sizes should not differ, except for instances that finish close to the timeout; where they do, it shows `DIFFERS` and prints the rows that differ. To compare the answers instance by instance, run `python3 bench/scripts/compare_runs.py` (see [Quick test](#quick-test-about-10-minutes)).
+It prints `SAME` when the numbers agree, `SAME except times` when only running times differ, and `DIFFERS` otherwise (expected only for instances that finish close to the timeout). The tables go to `bench/paper/out/` (in Docker: `shared/tables/`).
 
 #### Dataset `main`: Tables 1, 2, 3 and Figs. 6, 9, 10
 
-To regenerate the data of Tables 1, 2, 3 and Figs. 6, 9, 10, run every tool on the benchmark, the subset of 100 instances (about 4 hours):
+To regenerate the data, run every tool on the subset of 100 instances (about 4 hours):
 
 ```
 bench/run.sh --dataset main
 ```
 
-or all 987 instances (about 42 hours, and 16 GB of RAM: a few instances use up to 6 GB):
+or on all 987 instances (about 42 hours):
 
 ```
 bench/run.sh --dataset main --full
 ```
 
-The subset is every 10th instance: 83 of the 823 instances with |IP| ≤ 3, and 17 of the 164 with |IP| = 4. To see what will run, and how long it took on our laptop, add `--plan`. To run only the instances with |IP| ≤ 3 (about 18 hours in full), add `--corpus ip3`.
+To generate from this data:
 
-To generate from this data Table 1 (MSR and MTSR by number of inputs), run:
-
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_main
-```
-
-Table 2 and Fig. 10 (AutoHyper vs. HyperQB):
-
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_msr_backends
-```
-
-Table 3 (MSR vs. ExplainHyper):
-
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_msreh
-```
-
-Fig. 6 (running time vs. system size):
-
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun fig_data_msr_mtsr_size_v1
-```
-
-Fig. 9 (MSR and ExplainHyper vs. system size):
-
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun fig_data_msr_size
-```
+- Table 1 (MSR and MTSR by number of inputs):
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_main
+  ```
+- Table 2 and Fig. 10 (AutoHyper vs. HyperQB):
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_msr_backends
+  ```
+- Table 3 (MSR vs. ExplainHyper):
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_msreh
+  ```
+- Fig. 6 (running time vs. system size):
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun fig_data_msr_mtsr_size_v1
+  ```
+- Fig. 9 (MSR and ExplainHyper vs. system size):
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun fig_data_msr_size
+  ```
 
 After a full run, `"$SPOT_ENV_PY" bench/paper/check_text.py --src rerun` also checks the 37 numbers quoted in the text of the paper.
 
 #### Dataset `cats-check`: Fig. 7
 
-To regenerate the data of Fig. 7, run MTSR and CATS on the same candidate cause, on the subset (83 instances, about 12 minutes):
+To regenerate the data, run MTSR and CATS on the same candidate cause, on the subset of 83 instances (about 12 minutes):
 
 ```
 bench/run.sh --dataset cats-check
@@ -226,81 +217,87 @@ or on all 823 instances with |IP| ≤ 3 (about 1.8 hours):
 bench/run.sh --dataset cats-check --full
 ```
 
-To generate from this data Fig. 7 (MTSR vs. CATS cause checking), run:
+To generate from this data:
 
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun fig_data_cats_check_time
-```
+- Fig. 7 (MTSR vs. CATS cause checking):
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun fig_data_cats_check_time
+  ```
 
 #### Dataset `cats-sketch`: Tables 5 and 7
 
-To regenerate the data of Table 5, run MTSR and CATS sketching on CATS's 100 instances (about 20 minutes):
+To regenerate the data, run MTSR and CATS sketching on CATS's 100 instances (about 20 minutes):
 
 ```
 bench/run.sh --dataset cats-sketch
 ```
 
-To generate from this data Table 5 (MTSR vs. CATS sketching), run:
+To generate from this data:
 
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_catssketch
-```
+- Table 5 (MTSR vs. CATS sketching):
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_catssketch
+  ```
 
 #### Table 7: summary of the comparisons
 
-Table 7 sums up three comparisons, one per row: MSR vs. ExplainHyper and MTSR vs. CORP come from dataset `main`, and MTSR vs. CATS sketching from dataset `cats-sketch`. To generate it from your data, run:
+Table 7 sums up three comparisons, one per row: MSR vs. ExplainHyper and MTSR vs. CORP come from dataset `main`, and MTSR vs. CATS sketching from dataset `cats-sketch`. If you re-ran only one of the two, the rows of the other come from our results.
 
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_data_resultsizes
-```
+To generate from this data:
 
-If you re-ran only one of the two datasets, the rows of the other come from our results, and the output says so.
+- Table 7:
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_data_resultsizes
+  ```
 
 #### Dataset `cats-handcrafted`: Table 4
 
-To regenerate the data of Table 4, run MTSR and CATS on CATS's 11 hand-crafted instances (about 1 minute):
+To regenerate the data, run MTSR and CATS on CATS's 11 hand-crafted instances (about 1 minute):
 
 ```
 bench/run.sh --dataset cats-handcrafted
 ```
 
-To generate from this data Table 4, run:
+To generate from this data:
 
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_catshand
-```
+- Table 4 (CATS's hand-crafted instances):
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_catshand
+  ```
 
 #### Dataset `corp-arbiters`: Table 6
 
-To regenerate the data of Table 6, run MTSR and CORP on the 15 arbiters of CORP's paper (about 3 minutes; one of them, `full_4_GF`, uses 6 GB of RAM):
+To regenerate the data, run MTSR and CORP on the 15 arbiters of CORP's paper (about 3 minutes):
 
 ```
 bench/run.sh --dataset corp-arbiters
 ```
 
-To generate from this data Table 6, run:
+To generate from this data:
 
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_corpcurated
-```
+- Table 6 (MTSR vs. CORP on CORP's arbiters):
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_corpcurated
+  ```
 
-On `full_4_GF`, CORP's answer varies from run to run: an automaton of 284 states (as in the paper) or 286. This is CORP's own behavior; the quick test leaves this instance out.
+CORP does not minimize its automata, so their size can vary from run to run (on `full_4_GF`: 284 states in the paper, sometimes 286).
 
 #### Dataset `ltl`: Table 8
 
-To regenerate the data of Table 8, build the MTSR of every benchmark instance and search for the smallest equivalent LTL formula, up to size 9 (about 6 minutes):
+To regenerate the data, build the MTSR of every benchmark instance and search for the smallest equivalent LTL formula, up to size 9 (about 6 minutes):
 
 ```
 bench/run.sh --dataset ltl
 ```
 
-To generate from this data Table 8, run:
+To generate from this data:
 
-```
-"$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_data_ltl
-```
+- Table 8 (which MTSRs can be written as a small LTL formula):
+  ```
+  "$SPOT_ENV_PY" bench/paper/make_tables.py --src rerun tab_data_ltl
+  ```
 
-The search stops after 4 minutes per number of inputs, so on a slower machine it may reach a smaller formula size; `compare_runs.py` then marks the affected automata as `timeout`.
+The search has a time limit, so a slower machine may reach a smaller formula size; `compare_runs.py` then marks those automata as `timeout`.
 
 #### Figs. 4 and 5: the running example
 
