@@ -1,6 +1,6 @@
 # TraceMSR — artifact
 
-Artifact of the TACAS 2027 tool paper
+Artifact of the tool paper submitted to TACAS 2027
 
 > **TraceMSR: A Tool for Synthesizing Sufficient Reasons for Reactive Systems**
 > Nadav Rutman Moshe and Hadar Frenkel (EasyChair submission #5598)
